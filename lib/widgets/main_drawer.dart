@@ -36,11 +36,58 @@ class MainDrawer extends StatelessWidget {
                         primary: _theme.highlightColor,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Text(
+                        'Create A Workout',
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w900,
+                          fontSize: _mediaQuery.size.height * 0.03,
+                        ),
+                      ),
+                    ),
                     onPressed: () {},
-                    child: Text('Create A Workout'),
                   ),
                 ),
-              )
+              ),
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: Container(
+                  width: double.infinity,
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.075,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: _theme.highlightColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Text(
+                        'Saved Workouts',
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w900,
+                          fontSize: _mediaQuery.size.height * 0.03,
+                        ),
+                      ),
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
+              ),
+              Container(
+                height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
+                width: double.infinity,
+                child: Text(
+                  'Questions',
+                  style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w900,
+                    fontSize: _mediaQuery.size.height * 0.03,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
