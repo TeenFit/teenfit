@@ -76,15 +76,19 @@ class MainDrawer extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
-                width: double.infinity,
-                child: Text(
-                  'Questions',
-                  style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w900,
-                    fontSize: _mediaQuery.size.height * 0.03,
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: Container(
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.08,
+                  width: double.infinity,
+                  child: Text(
+                    'Questions?',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Roboto',
+                      fontWeight: FontWeight.w900,
+                      fontSize: _mediaQuery.size.height * 0.05,
+                    ),
                   ),
                 ),
               ),
