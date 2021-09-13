@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:teenfit/Custom/my_flutter_app_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
@@ -77,10 +78,13 @@ class MainDrawer extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(
+                height: (_mediaQuery.size.height - _appBarHieght) * 0.02,
+              ),
               Padding(
                 padding: EdgeInsets.all(15),
                 child: Container(
-                  height: (_mediaQuery.size.height - _appBarHieght) * 0.08,
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.055,
                   width: double.infinity,
                   child: Text(
                     'Questions?',
@@ -96,16 +100,44 @@ class MainDrawer extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(15),
                 child: Container(
-                  height: (_mediaQuery.size.height - _appBarHieght) * 0.08,
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.03,
                   width: _mediaQuery.size.width,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          launch('https://www.instagram.com/teenfittest/');
+                        },
                         icon: Icon(
                           MyFlutterApp.instagram,
+                          size: _mediaQuery.size.height * 0.09,
+                          color: Colors.red,
+                        ),
+                      ),
+                      SizedBox(
+                        width: _mediaQuery.size.width * 0.08,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          launch('https://www.facebook.com/teenfittest/');
+                        },
+                        icon: Icon(
+                          MyFlutterApp.facebook_squared,
+                          size: _mediaQuery.size.height * 0.09,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      SizedBox(
+                        width: _mediaQuery.size.width * 0.08,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          launch('https://teenfittest.tumblr.com/');
+                        },
+                        icon: Icon(
+                          MyFlutterApp.tumblr_squared,
                           size: _mediaQuery.size.height * 0.09,
                         ),
                       ),
