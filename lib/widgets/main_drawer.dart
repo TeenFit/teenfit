@@ -101,47 +101,50 @@ class MainDrawer extends StatelessWidget {
                 padding: EdgeInsets.all(15),
                 child: Container(
                   height: (_mediaQuery.size.height - _appBarHieght) * 0.03,
-                  width: _mediaQuery.size.width,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          launch('https://www.instagram.com/teenfittest/');
-                        },
-                        icon: Icon(
-                          MyFlutterApp.instagram,
-                          size: _mediaQuery.size.height * 0.09,
-                          color: Colors.red,
+                  width: double.infinity,
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            launch('https://www.instagram.com/teenfittest/');
+                          },
+                          icon: Icon(
+                            MyFlutterApp.instagram,
+                            size: _mediaQuery.size.height * 0.09,
+                            color: Colors.red,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: _mediaQuery.size.width * 0.08,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          launch('https://www.facebook.com/teenfittest/');
-                        },
-                        icon: Icon(
-                          MyFlutterApp.facebook_squared,
-                          size: _mediaQuery.size.height * 0.09,
-                          color: Colors.blue,
+                        SizedBox(
+                          width: 15,
                         ),
-                      ),
-                      SizedBox(
-                        width: _mediaQuery.size.width * 0.08,
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          launch('https://teenfittest.tumblr.com/');
-                        },
-                        icon: Icon(
-                          MyFlutterApp.tumblr_squared,
-                          size: _mediaQuery.size.height * 0.09,
+                        IconButton(
+                          onPressed: () {
+                            launch('https://www.facebook.com/teenfittest/');
+                          },
+                          icon: Icon(
+                            MyFlutterApp.facebook_squared,
+                            size: _mediaQuery.size.height * 0.09,
+                            color: Colors.blue,
+                          ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          width: 15,
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            launch('https://teenfittest.tumblr.com/');
+                          },
+                          icon: Icon(
+                            MyFlutterApp.tumblr_squared,
+                            size: _mediaQuery.size.height * 0.09,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )
