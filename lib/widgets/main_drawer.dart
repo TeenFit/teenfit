@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teenfit/Custom/my_flutter_app_icons.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
@@ -92,6 +93,26 @@ class MainDrawer extends StatelessWidget {
                   ),
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: Container(
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.08,
+                  width: _mediaQuery.size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          MyFlutterApp.instagram,
+                          size: _mediaQuery.size.height * 0.09,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),
