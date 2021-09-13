@@ -25,6 +25,21 @@ class MainDrawer extends StatelessWidget {
                   'assets/images/teen_fit_logo_withtext_white.png',
                   fit: BoxFit.contain,
                 ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: Container(
+                  width: double.infinity,
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.075,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: _theme.highlightColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    onPressed: () {},
+                    child: Text('Create A Workout'),
+                  ),
+                ),
               )
             ],
           ),

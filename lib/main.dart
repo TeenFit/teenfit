@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primaryColor: Color(0xffF0A037),
           primaryColorDark: Color(0xffAE7E3F),
-          disabledColor: Color(0xffA4B1BA),
+          highlightColor: Color(0xffA4B1BA),
           accentColor: Color(0xffD3D3D3)),
       home: HomeScreen(),
       routes: {
