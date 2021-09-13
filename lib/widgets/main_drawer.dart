@@ -9,18 +9,26 @@ class MainDrawer extends StatelessWidget {
         AppBar().preferredSize.height + _mediaQuery.padding.top;
 
     return Drawer(
-      child: Column(
-        children: [
-          SizedBox(
-            height: (_mediaQuery.size.height - _appBarHieght) * 0.1,
+      child: Container(
+        height: _mediaQuery.size.height - _appBarHieght,
+        width: double.infinity,
+        color: _theme.accentColor,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: double.infinity,
+                height: (_mediaQuery.size.height - _appBarHieght) * 0.25,
+                child: Image.asset(
+                  'assets/images/teen_fit_logo_withtext_white.png',
+                  fit: BoxFit.contain,
+                ),
+              )
+            ],
           ),
-          Container(
-            width: double.infinity,
-            height: (_mediaQuery.size.height - _appBarHieght) * 0.25,
-            child:
-                Image.asset('assets/images/teen_fit_logo_withtext_white.png'),
-          )
-        ],
+        ),
       ),
     );
   }
