@@ -98,7 +98,7 @@ class MainDrawer extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
                 child: Container(
                   height: (_mediaQuery.size.height - _appBarHieght) * 0.03,
                   width: double.infinity,
@@ -145,6 +145,29 @@ class MainDrawer extends StatelessWidget {
                         ),
                       ],
                     ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: _mediaQuery.size.height * 0.25,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                child: Container(
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.09,
+                  width: double.infinity,
+                  child: TextButton(
+                    child: Text(
+                      'Log Out?',
+                      style: TextStyle(
+                        color: _theme.highlightColor,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w900,
+                        fontSize: _mediaQuery.size.height * 0.04,
+                      ),
+                      textAlign: TextAlign.right,
+                    ),
+                    onPressed: () {},
                   ),
                 ),
               )
