@@ -114,12 +114,12 @@ class MainDrawer extends StatelessWidget {
                           },
                           icon: Icon(
                             MyFlutterApp.instagram,
-                            size: _mediaQuery.size.height * 0.09,
+                            size: _mediaQuery.size.height * 0.05,
                             color: Colors.red,
                           ),
                         ),
                         SizedBox(
-                          width: 15,
+                          width: 3,
                         ),
                         IconButton(
                           onPressed: () {
@@ -127,12 +127,12 @@ class MainDrawer extends StatelessWidget {
                           },
                           icon: Icon(
                             MyFlutterApp.facebook_squared,
-                            size: _mediaQuery.size.height * 0.09,
+                            size: _mediaQuery.size.height * 0.05,
                             color: Colors.blue,
                           ),
                         ),
                         SizedBox(
-                          width: 15,
+                          width: 3,
                         ),
                         IconButton(
                           onPressed: () {
@@ -140,7 +140,7 @@ class MainDrawer extends StatelessWidget {
                           },
                           icon: Icon(
                             MyFlutterApp.tumblr_squared,
-                            size: _mediaQuery.size.height * 0.09,
+                            size: _mediaQuery.size.height * 0.05,
                           ),
                         ),
                       ],
