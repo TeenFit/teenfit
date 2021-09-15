@@ -23,6 +23,7 @@ class SearchResultWorkouts extends StatelessWidget {
         padding: EdgeInsets.all(15),
         child: ListView.builder(
           itemBuilder: (ctx, index) => WorkoutTile(workouts[index]),
+          itemCount: workouts.length,
         ),
       ),
     );

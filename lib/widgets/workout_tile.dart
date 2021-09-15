@@ -24,7 +24,7 @@ class WorkoutTile extends StatelessWidget {
           Ink.image(
             fit: BoxFit.cover,
             image: workout.bannerImage.isEmpty
-                ? AssetImage('asset/images/BannerImageUnavailable.png')
+                ? AssetImage('assets/images/BannerImageUnavailable.png')
                 : AssetImage(workout.bannerImage),
             child: InkWell(
               onTap: () {},
@@ -46,7 +46,7 @@ class WorkoutTile extends StatelessWidget {
                   fontSize: (_mediaQuery.size.height - _appBarHieght) * 0.06,
                   shadows: <Shadow>[
                     Shadow(
-                      offset: Offset(4.0, 4.0),
+                      offset: Offset(3.0, 3.0),
                       blurRadius: 1.0,
                       color: Color.fromARGB(255, 128, 128, 128),
                     ),
