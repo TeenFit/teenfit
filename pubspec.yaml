@@ -53,6 +53,7 @@ flutter:
   - assets/images/LoginPage.png
   - assets/images/SignUp.png
   - assets/images/teen_fit_logo_withtext_white.png
+  - assets/images/BannerImageUnavailable.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:teenfit/auth/login_screen.dart';
 import 'package:teenfit/auth/signup_screen.dart';
 import 'package:teenfit/home_screen.dart';
+import 'package:teenfit/providers/searchbar.dart';
 import 'package:teenfit/providers/workouts.dart';
 
 import './auth/intro_page.dart';
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<Workouts>(
           create: (ctx) => Workouts(),
+        ),
+        ChangeNotifierProvider<SearchBarFunctions>(
+          create: (ctx) => SearchBarFunctions(),
         ),
       ],
       child: MaterialApp(
