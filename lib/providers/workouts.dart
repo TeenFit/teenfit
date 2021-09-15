@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:teenfit/providers/exercise.dart';
 import 'package:teenfit/providers/workout.dart';
 
 class Workouts with ChangeNotifier {
@@ -15,6 +16,48 @@ class Workouts with ChangeNotifier {
       facebookLink: '',
       tumblrLink: '',
       bannerImage: '',
+      exercises: [
+        Exercise(
+          exerciseId: 'w1:uid:e1',
+          name: 'Wide Pushups',
+          timeSeconds: 30,
+          restTime: 15,
+          exerciseLink:
+              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+        ),
+        Exercise(
+          exerciseId: 'w1:uid:e1',
+          name: 'Wide Pushups',
+          timeSeconds: 30,
+          restTime: 15,
+          exerciseLink:
+              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+        ),
+        Exercise(
+          exerciseId: 'w1:uid:e1',
+          name: 'Wide Pushups',
+          timeSeconds: 30,
+          restTime: 15,
+          exerciseLink:
+              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+        ),
+        Exercise(
+          exerciseId: 'w1:uid:e1',
+          name: 'Wide Pushups',
+          timeSeconds: 30,
+          restTime: 15,
+          exerciseLink:
+              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+        ),
+        Exercise(
+          exerciseId: 'w1:uid:e1',
+          name: 'Wide Pushups',
+          timeSeconds: 30,
+          restTime: 15,
+          exerciseLink:
+              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+        ),
+      ],
     ),
   ];
 }

@@ -1,3 +1,5 @@
+import 'package:teenfit/providers/exercise.dart';
+
 class Workout {
   final String creatorName;
   final String workoutUiD;
@@ -6,6 +8,7 @@ class Workout {
   final String facebookLink;
   final String tumblrLink;
   final String bannerImage;
+  final List<Exercise> exercises;
 
   Workout({
     required this.creatorName,
@@ -15,5 +18,6 @@ class Workout {
     required this.facebookLink,
     required this.tumblrLink,
     required this.bannerImage,
+    required this.exercises
   });
 }
