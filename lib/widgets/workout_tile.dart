@@ -29,7 +29,7 @@ class WorkoutTile extends StatelessWidget {
             child: InkWell(
               onTap: () {},
             ),
-            height: (_mediaQuery.size.height - _appBarHieght) * 0.35,
+            height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
             width: double.infinity,
           ),
           Center(

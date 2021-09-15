@@ -4,7 +4,7 @@ import 'package:teenfit/providers/workouts.dart';
 import 'package:teenfit/widgets/workout_tile.dart';
 
 class SearchResultWorkouts extends StatelessWidget {
-  String? searchTerm;
+  final String? searchTerm;
 
   SearchResultWorkouts(this.searchTerm);
 
