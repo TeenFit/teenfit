@@ -13,14 +13,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Provider.of<SearchBarFunctions>(context).filteredSearchHistory =
-  //       Provider.of<SearchBarFunctions>(context).filterSearchTerms(null);
-  // }
+  late FloatingSearchBarController controller;
 
-  //search bar
+  @override
+  void initState() {
+    super.initState();
+    controller = FloatingSearchBarController();
+    Provider.of<SearchBarFunctions>(context).filteredSearchHistory =
+        Provider.of<SearchBarFunctions>(context).filterSearchTerms(null);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +36,34 @@ class _HomeScreenState extends State<HomeScreen> {
     final _appBarHieght =
         AppBar().preferredSize.height + _mediaQuery.padding.top;
 
-    // var searchBarFunctions = Provider.of<SearchBarFunctions>(context);
+    var searchBarFunctions = Provider.of<SearchBarFunctions>(context);
 
     return Scaffold(
       drawer: MainDrawer(),
       backgroundColor: _theme.primaryColor,
-      body: SearchResultWorkouts(null),
+      body: FloatingSearchBar(
+        controller: controller,
+        body: FloatingSearchBarScrollNotifier(
+          child: SearchResultWorkouts(
+            searchBarFunctions.selectedTerm,
+          ),
+        ),
+        builder: (context, transition) {
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Material(
+              color: Colors.white,
+              elevation: 4.0,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: Colors.accents.map((color) {
+                  return Container(height: 112, color: color);
+                }).toList(),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

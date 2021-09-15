@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:teenfit/providers/workout.dart';
 
 class WorkoutTile extends StatelessWidget {
-  Workout workout;
+  final Workout workout;
 
   WorkoutTile(this.workout);
 
@@ -11,7 +11,6 @@ class WorkoutTile extends StatelessWidget {
     final _mediaQuery = MediaQuery.of(context);
     final _appBarHieght =
         AppBar().preferredSize.height + _mediaQuery.padding.top;
-    final _theme = Theme.of(context);
 
     return Card(
       clipBehavior: Clip.hardEdge,
