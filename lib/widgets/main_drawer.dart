@@ -53,31 +53,31 @@ class MainDrawer extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(15),
-                child: Container(
-                  width: double.infinity,
-                  height: (_mediaQuery.size.height - _appBarHieght) * 0.075,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: _theme.highlightColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                    child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Text(
-                        'Saved Workouts',
-                        style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w900,
-                          fontSize: _mediaQuery.size.height * 0.03,
-                        ),
-                      ),
-                    ),
-                    onPressed: () {},
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.all(15),
+              //   child: Container(
+              //     width: double.infinity,
+              //     height: (_mediaQuery.size.height - _appBarHieght) * 0.075,
+              //     child: ElevatedButton(
+              //       style: ElevatedButton.styleFrom(
+              //           primary: _theme.highlightColor,
+              //           shape: RoundedRectangleBorder(
+              //               borderRadius: BorderRadius.circular(10))),
+              //       child: FittedBox(
+              //         fit: BoxFit.fitWidth,
+              //         child: Text(
+              //           'Saved Workouts',
+              //           style: TextStyle(
+              //             fontFamily: 'Roboto',
+              //             fontWeight: FontWeight.w900,
+              //             fontSize: _mediaQuery.size.height * 0.03,
+              //           ),
+              //         ),
+              //       ),
+              //       onPressed: () {},
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: (_mediaQuery.size.height - _appBarHieght) * 0.02,
               ),
