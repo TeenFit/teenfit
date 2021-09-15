@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:teenfit/widgets/main_drawer.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const routeName = '/home-screen';
 
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
@@ -12,20 +18,6 @@ class HomeScreen extends StatelessWidget {
         AppBar().preferredSize.height + _mediaQuery.padding.top;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: _theme.primaryColor,
-        elevation: 0,
-        leading: Builder(
-          builder: (context) => IconButton(
-            color: Colors.white,
-            iconSize: _mediaQuery.size.height * 0.08,
-            icon: Icon(Icons.menu_rounded),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          ),
-        ),
-      ),
       drawer: MainDrawer(),
       backgroundColor: _theme.primaryColor,
     );
