@@ -59,5 +59,56 @@ class Workouts with ChangeNotifier {
         ),
       ],
     ),
+    Workout(
+      creatorName: 'Muqeeth Khan',
+      workoutUiD: 'w1:uid',
+      workoutName: 'Body Weight Workout',
+      instagramLink: '',
+      facebookLink: '',
+      tumblrLink: '',
+      bannerImage: '',
+      exercises: [
+        Exercise(
+          exerciseId: 'w1:uid:e1',
+          name: 'Wide Pushups',
+          timeSeconds: 30,
+          restTime: 15,
+          exerciseLink:
+              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+        ),
+        Exercise(
+          exerciseId: 'w1:uid:e1',
+          name: 'Wide Pushups',
+          timeSeconds: 30,
+          restTime: 15,
+          exerciseLink:
+              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+        ),
+        Exercise(
+          exerciseId: 'w1:uid:e1',
+          name: 'Wide Pushups',
+          timeSeconds: 30,
+          restTime: 15,
+          exerciseLink:
+              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+        ),
+        Exercise(
+          exerciseId: 'w1:uid:e1',
+          name: 'Wide Pushups',
+          timeSeconds: 30,
+          restTime: 15,
+          exerciseLink:
+              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+        ),
+        Exercise(
+          exerciseId: 'w1:uid:e1',
+          name: 'Wide Pushups',
+          timeSeconds: 30,
+          restTime: 15,
+          exerciseLink:
+              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+        ),
+      ],
+    ),
   ];
 }
