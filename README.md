@@ -1,4 +1,4 @@
-# teenfit
+# TeenFit
 
 A new Flutter project.
 
