@@ -14,13 +14,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late FloatingSearchBarController controller;
+  late FloatingSearchBarController searchBarController;
 
   late List<Workout> workouts;
 
   @override
   void didChangeDependencies() {
-    controller = FloatingSearchBarController();
+    searchBarController = FloatingSearchBarController();
     filteredSearchHistory = filterSearchTerms(null);
     workouts = Provider.of<Workouts>(context).workouts;
     super.didChangeDependencies();
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    controller.dispose();
+    searchBarController.dispose();
     super.dispose();
   }
 
@@ -38,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
     'fuchsia',
     'flutter',
     'widgets',
-    'resocoder',
   ];
 
   late List<Workout> filteredSearchHistory;
@@ -109,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
           style: Theme.of(context).textTheme.headline6,
         ),
         hint: 'Search...',
-        controller: controller,
+        controller: searchBarController,
         body: FloatingSearchBarScrollNotifier(
           child: SearchResultWorkouts(
             null,
@@ -125,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
             addSearchTerm(query);
             selectedTerm = query;
           });
-          controller.close();
+          searchBarController.close();
         },
         builder: (context, transition) {
           return ClipRRect(
