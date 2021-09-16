@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:provider/provider.dart';
-import 'package:teenfit/providers/workout.dart';
-import 'package:teenfit/providers/workouts.dart';
 import 'package:teenfit/widgets/main_drawer.dart';
 import 'package:teenfit/widgets/search_result_workouts.dart';
 
@@ -14,23 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late FloatingSearchBarController searchBarController;
-
-  List<Workout> workouts;
-
-  @override
-  void didChangeDependencies() {
-    searchBarController = FloatingSearchBarController();
-    filteredSearchHistory = filterSearchTerms(null);
-    workouts = Provider.of<Workouts>(context).workouts;
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    searchBarController.dispose();
-    super.dispose();
-  }
+  late FloatingSearchBarController controller;
 
   static const historyLength = 3;
 
@@ -38,21 +19,20 @@ class _HomeScreenState extends State<HomeScreen> {
     'fuchsia',
     'flutter',
     'widgets',
+    'resocoder',
   ];
 
-  late List<Workout> filteredSearchHistory;
+  late List<String> filteredSearchHistory;
 
   String? selectedTerm;
 
-  List<Workout> filterSearchTerms(
+  List<String> filterSearchTerms(
     String? filter,
   ) {
     if (filter != null && filter.isNotEmpty) {
-      return workouts
-          .where((term) => term.workoutName.contains(filter))
-          .toList();
+      return _searchHistory.where((term) => term.startsWith(filter)).toList();
     } else {
-      return workouts.toList();
+      return _searchHistory.toList();
     }
   }
 
@@ -82,12 +62,25 @@ class _HomeScreenState extends State<HomeScreen> {
     addSearchTerm(term);
   }
 
+  @override
+  void didChangeDependencies() {
+    controller = FloatingSearchBarController();
+    filteredSearchHistory = filterSearchTerms(null);
+    super.didChangeDependencies();
+  }
+
   // @override
   // void didChangeDependencies() {
   //   super.didChangeDependencies();
   //   controller = FloatingSearchBarController();
   //   filteredSearchHistory = filterSearchTerms(null);
   // }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
           style: Theme.of(context).textTheme.headline6,
         ),
         hint: 'Search...',
-        controller: searchBarController,
+        controller: controller,
         body: FloatingSearchBarScrollNotifier(
           child: SearchResultWorkouts(
             null,
@@ -124,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
             addSearchTerm(query);
             selectedTerm = query;
           });
-          searchBarController.close();
+          controller.close();
         },
         builder: (context, transition) {
           return ClipRRect(

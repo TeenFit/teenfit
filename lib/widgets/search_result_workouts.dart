@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:teenfit/providers/workout.dart';
 import 'package:teenfit/providers/workouts.dart';
 import 'package:teenfit/widgets/workout_tile.dart';
 
@@ -14,7 +15,7 @@ class SearchResultWorkouts extends StatelessWidget {
     final _appBarHieght =
         AppBar().preferredSize.height + _mediaQuery.padding.top;
 
-    List workouts = Provider.of<Workouts>(context).workouts;
+    List<Workout> workouts = Provider.of<Workouts>(context).workouts;
 
     return SingleChildScrollView(
       child: Column(
@@ -29,7 +30,10 @@ class SearchResultWorkouts extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.all(15),
               child: ListView.builder(
-                itemBuilder: (ctx, index) => WorkoutTile(workouts[index]),
+                itemBuilder: (ctx, index) => searchTerm == null
+                    ? WorkoutTile(workouts[index])
+                    : WorkoutTile(Provider.of<Workouts>(context)
+                        .findByName(searchTerm!)[index]),
                 itemCount: workouts.length,
               ),
             ),

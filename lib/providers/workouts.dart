@@ -62,7 +62,7 @@ class Workouts with ChangeNotifier {
     Workout(
       creatorName: 'Muqeeth Khan',
       workoutUiD: 'w1:uid',
-      workoutName: 'Body Weight Workout',
+      workoutName: 'Dumbell Workout',
       instagramLink: '',
       facebookLink: '',
       tumblrLink: '',
@@ -111,4 +111,10 @@ class Workouts with ChangeNotifier {
       ],
     ),
   ];
+
+  List<Workout> findByName(String name) {
+    return workouts
+        .where((workout) => workout.creatorName.contains(name))
+        .toList();
+  }
 }
