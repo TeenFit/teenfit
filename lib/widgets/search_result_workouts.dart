@@ -16,15 +16,25 @@ class SearchResultWorkouts extends StatelessWidget {
 
     List workouts = Provider.of<Workouts>(context).workouts;
 
-    return Container(
-      height: _mediaQuery.size.height - _appBarHieght,
-      width: _mediaQuery.size.width,
-      child: Padding(
-        padding: EdgeInsets.all(15),
-        child: ListView.builder(
-          itemBuilder: (ctx, index) => WorkoutTile(workouts[index]),
-          itemCount: workouts.length,
-        ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(
+            height: _appBarHieght,
+            width: _mediaQuery.size.width,
+          ),
+          Container(
+            height: _mediaQuery.size.height - _appBarHieght,
+            width: _mediaQuery.size.width,
+            child: Padding(
+              padding: EdgeInsets.all(15),
+              child: ListView.builder(
+                itemBuilder: (ctx, index) => WorkoutTile(workouts[index]),
+                itemCount: workouts.length,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

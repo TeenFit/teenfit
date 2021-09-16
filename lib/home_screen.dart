@@ -63,11 +63,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
     controller = FloatingSearchBarController();
     filteredSearchHistory = filterSearchTerms(null);
+    super.didChangeDependencies();
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   controller = FloatingSearchBarController();
+  //   filteredSearchHistory = filterSearchTerms(null);
+  // }
 
   @override
   void dispose() {
@@ -89,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: controller,
         body: FloatingSearchBarScrollNotifier(
           child: SearchResultWorkouts(
-            selectedTerm,
+            null,
           ),
         ),
         builder: (context, transition) {
