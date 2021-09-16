@@ -14,7 +14,7 @@ class MainDrawer extends StatelessWidget {
       child: Container(
         height: _mediaQuery.size.height - _appBarHieght,
         width: double.infinity,
-        color: _theme.accentColor,
+        color: _theme.cardColor,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

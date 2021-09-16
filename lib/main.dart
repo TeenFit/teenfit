@@ -31,10 +31,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'TeenFit',
         theme: ThemeData(
-            primaryColor: Color(0xffF0A037),
-            primaryColorDark: Color(0xffAE7E3F),
-            highlightColor: Color(0xffA4B1BA),
-            accentColor: Color(0xffD3D3D3)),
+          primaryColor: Color(0xffF0A037),
+          primaryColorDark: Color(0xffAE7E3F),
+          highlightColor: Color(0xffA4B1BA),
+          cardColor: Color(0xffD3D3D3),
+        ),
         home: HomeScreen(),
         routes: {
           IntroPage.routeName: (ctx) => IntroPage(),
