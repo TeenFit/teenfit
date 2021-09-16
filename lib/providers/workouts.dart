@@ -3,7 +3,7 @@ import 'package:teenfit/providers/exercise.dart';
 import 'package:teenfit/providers/workout.dart';
 
 class Workouts with ChangeNotifier {
-  List get workouts {
+  List<Workout> get workouts {
     return [..._workouts];
   }
 

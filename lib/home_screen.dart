@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:teenfit/providers/workout.dart';
+import 'package:teenfit/providers/workouts.dart';
 import 'package:teenfit/widgets/main_drawer.dart';
 import 'package:teenfit/widgets/search_result_workouts.dart';
 
@@ -13,6 +16,22 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late FloatingSearchBarController controller;
 
+  @override
+  void didChangeDependencies() {
+    controller = FloatingSearchBarController();
+    filteredSearchHistory = filterSearchTerms(null);
+    workouts = Provider.of<Workouts>(context).workouts;
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  late List<Workout> workouts;
+
   static const historyLength = 3;
 
   List<String> _searchHistory = [
@@ -24,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late List<String> filteredSearchHistory;
 
-  late String selectedTerm;
+  String? selectedTerm;
 
   List<String> filterSearchTerms(
     String? filter,
@@ -62,25 +81,12 @@ class _HomeScreenState extends State<HomeScreen> {
     addSearchTerm(term);
   }
 
-  @override
-  void didChangeDependencies() {
-    controller = FloatingSearchBarController();
-    filteredSearchHistory = filterSearchTerms(null);
-    super.didChangeDependencies();
-  }
-
   // @override
   // void didChangeDependencies() {
   //   super.didChangeDependencies();
   //   controller = FloatingSearchBarController();
   //   filteredSearchHistory = filterSearchTerms(null);
   // }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,12 +99,32 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: MainDrawer(),
       backgroundColor: _theme.primaryColor,
       body: FloatingSearchBar(
+        actions: [FloatingSearchBarAction.searchToClear()],
+        transition: CircularFloatingSearchBarTransition(),
+        physics: BouncingScrollPhysics(),
+        title: Text(
+          selectedTerm ?? 'Search...',
+          style: Theme.of(context).textTheme.headline6,
+        ),
+        hint: 'Search...',
         controller: controller,
         body: FloatingSearchBarScrollNotifier(
           child: SearchResultWorkouts(
             null,
           ),
         ),
+        onQueryChanged: (query) {
+          setState(() {
+            filteredSearchHistory = filterSearchTerms(query);
+          });
+        },
+        onSubmitted: (query) {
+          setState(() {
+            addSearchTerm(query);
+            selectedTerm = query;
+          });
+          controller.close();
+        },
         builder: (context, transition) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(8),
