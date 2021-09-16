@@ -16,6 +16,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late FloatingSearchBarController controller;
 
+  late List<Workout> workouts;
+
   @override
   void didChangeDependencies() {
     controller = FloatingSearchBarController();
@@ -30,8 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  late List<Workout> workouts;
-
   static const historyLength = 3;
 
   List<String> _searchHistory = [
@@ -41,17 +41,19 @@ class _HomeScreenState extends State<HomeScreen> {
     'resocoder',
   ];
 
-  late List<String> filteredSearchHistory;
+  late List<Workout> filteredSearchHistory;
 
   String? selectedTerm;
 
-  List<String> filterSearchTerms(
+  List<Workout> filterSearchTerms(
     String? filter,
   ) {
     if (filter != null && filter.isNotEmpty) {
-      return _searchHistory.where((term) => term.startsWith(filter)).toList();
+      return workouts
+          .where((term) => term.workoutName.contains(filter))
+          .toList();
     } else {
-      return _searchHistory.toList();
+      return workouts.toList();
     }
   }
 
