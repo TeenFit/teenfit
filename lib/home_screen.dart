@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:provider/provider.dart';
-import 'package:teenfit/providers/searchbar.dart';
 import 'package:teenfit/widgets/main_drawer.dart';
 import 'package:teenfit/widgets/search_result_workouts.dart';
 
@@ -15,12 +13,60 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late FloatingSearchBarController controller;
 
+  static const historyLength = 3;
+
+  List<String> _searchHistory = [
+    'fuchsia',
+    'flutter',
+    'widgets',
+    'resocoder',
+  ];
+
+  late List<String> filteredSearchHistory;
+
+  late String selectedTerm;
+
+  List<String> filterSearchTerms(
+    String? filter,
+  ) {
+    if (filter != null && filter.isNotEmpty) {
+      return _searchHistory.where((term) => term.startsWith(filter)).toList();
+    } else {
+      return _searchHistory.toList();
+    }
+  }
+
+  void addSearchTerm(String term) {
+    //removes duplicates
+    if (_searchHistory.contains(term)) {
+      putSearchTermFirst(term);
+      return;
+    }
+    _searchHistory.insert(0, term);
+
+    //reduces lenght of search history
+    if (_searchHistory.length > historyLength) {
+      _searchHistory.removeRange(0, _searchHistory.length - historyLength);
+    }
+    // Changes in _searchHistory mean that we have to update the filteredSearchHistory
+    filteredSearchHistory = filterSearchTerms(null);
+  }
+
+  void deleteSearchTerm(String term) {
+    _searchHistory.removeWhere((t) => t == term);
+    filteredSearchHistory = filterSearchTerms(null);
+  }
+
+  void putSearchTermFirst(String term) {
+    deleteSearchTerm(term);
+    addSearchTerm(term);
+  }
+
   @override
   void initState() {
     super.initState();
     controller = FloatingSearchBarController();
-    Provider.of<SearchBarFunctions>(context).filteredSearchHistory =
-        Provider.of<SearchBarFunctions>(context).filterSearchTerms(null);
+    filteredSearchHistory = filterSearchTerms(null);
   }
 
   @override
@@ -36,8 +82,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final _appBarHieght =
         AppBar().preferredSize.height + _mediaQuery.padding.top;
 
-    var searchBarFunctions = Provider.of<SearchBarFunctions>(context);
-
     return Scaffold(
       drawer: MainDrawer(),
       backgroundColor: _theme.primaryColor,
@@ -45,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: controller,
         body: FloatingSearchBarScrollNotifier(
           child: SearchResultWorkouts(
-            searchBarFunctions.selectedTerm,
+            selectedTerm,
           ),
         ),
         builder: (context, transition) {
