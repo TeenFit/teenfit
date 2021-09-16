@@ -15,12 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static const historyLength = 3;
 
-  List<String> _searchHistory = [
-    'fuchsia',
-    'flutter',
-    'widgets',
-    'resocoder',
-  ];
+  List<String> _searchHistory = [];
 
   late List<String> filteredSearchHistory;
 
@@ -107,11 +102,6 @@ class _HomeScreenState extends State<HomeScreen> {
             null,
           ),
         ),
-        onQueryChanged: (query) {
-          setState(() {
-            filteredSearchHistory = filterSearchTerms(query);
-          });
-        },
         onSubmitted: (query) {
           setState(() {
             addSearchTerm(query);
@@ -124,12 +114,67 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(8),
             child: Material(
               color: Colors.white,
-              elevation: 4.0,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: Colors.accents.map((color) {
-                  return Container(height: 112, color: color);
-                }).toList(),
+              elevation: 4,
+              child: Builder(
+                builder: (context) {
+                  if (filteredSearchHistory.isEmpty &&
+                      controller.query.isEmpty) {
+                    return Container(
+                      height: 56,
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Start searching',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                    );
+                  } else if (filteredSearchHistory.isEmpty) {
+                    return ListTile(
+                      title: Text(controller.query),
+                      leading: const Icon(Icons.search),
+                      onTap: () {
+                        setState(() {
+                          addSearchTerm(controller.query);
+                          selectedTerm = controller.query;
+                        });
+                        controller.close();
+                      },
+                    );
+                  } else {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: filteredSearchHistory
+                          .map(
+                            (term) => ListTile(
+                              title: Text(
+                                term,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              leading: const Icon(Icons.history),
+                              trailing: IconButton(
+                                icon: const Icon(Icons.clear),
+                                onPressed: () {
+                                  setState(() {
+                                    deleteSearchTerm(term);
+                                  });
+                                },
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  putSearchTermFirst(term);
+                                  selectedTerm = term;
+                                });
+                                controller.close();
+                              },
+                            ),
+                          )
+                          .toList(),
+                    );
+                  }
+                },
               ),
             ),
           );
