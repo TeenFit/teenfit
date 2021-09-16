@@ -16,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late FloatingSearchBarController searchBarController;
 
-  late List<Workout> workouts;
+  List<Workout> workouts;
 
   @override
   void didChangeDependencies() {
