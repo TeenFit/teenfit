@@ -41,15 +41,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
     //reduces lenght of search history
     if (_searchHistory.length > historyLength) {
-      _searchHistory.removeRange(0, _searchHistory.length - historyLength);
+      _searchHistory.removeAt(4);
     }
     // Changes in _searchHistory mean that we have to update the filteredSearchHistory
-    filteredSearchHistory = filterSearchTerms(null);
+    filteredSearchHistory = filterSearchTerms(term);
   }
 
   void deleteSearchTerm(String term) {
     _searchHistory.removeWhere((t) => t == term);
-    filteredSearchHistory = filterSearchTerms(null);
+    filteredSearchHistory = filterSearchTerms(term);
   }
 
   void putSearchTermFirst(String term) {
@@ -58,18 +58,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  void didChangeDependencies() {
+  void initState() {
     controller = FloatingSearchBarController();
     filteredSearchHistory = filterSearchTerms(null);
-    super.didChangeDependencies();
+    super.initState();
   }
-
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   controller = FloatingSearchBarController();
-  //   filteredSearchHistory = filterSearchTerms(null);
-  // }
 
   @override
   void dispose() {
@@ -81,8 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
-    final _appBarHieght =
-        AppBar().preferredSize.height + _mediaQuery.padding.top;
 
     return Scaffold(
       drawer: MainDrawer(),
@@ -99,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: controller,
         body: FloatingSearchBarScrollNotifier(
           child: SearchResultWorkouts(
-            null,
+            selectedTerm,
           ),
         ),
         onSubmitted: (query) {

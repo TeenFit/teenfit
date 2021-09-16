@@ -15,7 +15,7 @@ class SearchResultWorkouts extends StatelessWidget {
     final _appBarHieght =
         AppBar().preferredSize.height + _mediaQuery.padding.top;
 
-    List<Workout> workouts = Provider.of<Workouts>(context).workouts;
+    var workoutprovider = Provider.of<Workouts>(context);
 
     return SingleChildScrollView(
       child: Column(
@@ -31,10 +31,10 @@ class SearchResultWorkouts extends StatelessWidget {
               padding: EdgeInsets.all(15),
               child: ListView.builder(
                 itemBuilder: (ctx, index) => searchTerm == null
-                    ? WorkoutTile(workouts[index])
+                    ? WorkoutTile(workoutprovider.workouts[index])
                     : WorkoutTile(Provider.of<Workouts>(context)
                         .findByName(searchTerm!)[index]),
-                itemCount: workouts.length,
+                itemCount: workoutprovider.findByName(searchTerm!).length,
               ),
             ),
           ),
