@@ -15,7 +15,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static const historyLength = 3;
 
-  List<String> _searchHistory = [];
+  List<String> _searchHistory = [
+    'Body Weight Workout',
+    'Dumbell Workout',
+    'Advanced Body Weight'
+  ];
 
   late List<String> filteredSearchHistory;
 
@@ -27,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (filter != null && filter.isNotEmpty) {
       return _searchHistory.where((term) => term.startsWith(filter)).toList();
     } else {
-      return _searchHistory.toList();
+      return _searchHistory.reversed.toList();
     }
   }
 
@@ -37,19 +41,19 @@ class _HomeScreenState extends State<HomeScreen> {
       putSearchTermFirst(term);
       return;
     }
-    _searchHistory.insert(0, term);
+    _searchHistory.add(term);
 
     //reduces lenght of search history
     if (_searchHistory.length > historyLength) {
-      _searchHistory.removeAt(4);
+      _searchHistory.removeRange(0, _searchHistory.length - historyLength);
     }
     // Changes in _searchHistory mean that we have to update the filteredSearchHistory
-    filteredSearchHistory = filterSearchTerms(term);
+    filteredSearchHistory = filterSearchTerms(null);
   }
 
   void deleteSearchTerm(String term) {
     _searchHistory.removeWhere((t) => t == term);
-    filteredSearchHistory = filterSearchTerms(term);
+    filteredSearchHistory = filterSearchTerms(null);
   }
 
   void putSearchTermFirst(String term) {
@@ -79,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: MainDrawer(),
       backgroundColor: _theme.primaryColor,
       body: FloatingSearchBar(
+        margins: EdgeInsets.all(15),
         actions: [FloatingSearchBarAction.searchToClear()],
         transition: CircularFloatingSearchBarTransition(),
         physics: BouncingScrollPhysics(),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:teenfit/providers/workout.dart';
 import 'package:teenfit/providers/workouts.dart';
 import 'package:teenfit/widgets/workout_tile.dart';
 
@@ -30,11 +29,17 @@ class SearchResultWorkouts extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.all(15),
               child: ListView.builder(
-                itemBuilder: (ctx, index) => searchTerm == null
-                    ? WorkoutTile(workoutprovider.workouts[index])
-                    : WorkoutTile(Provider.of<Workouts>(context)
-                        .findByName(searchTerm!)[index]),
-                itemCount: workoutprovider.findByName(searchTerm!).length,
+                itemBuilder: (ctx, index) {
+                  if (searchTerm == null) {
+                    return WorkoutTile(workoutprovider.workouts[index]);
+                  } else {
+                    return WorkoutTile(Provider.of<Workouts>(context, listen: false)
+                        .findByName(searchTerm!)[index]);
+                  }
+                },
+                itemCount: searchTerm != null
+                    ? workoutprovider.findByName(searchTerm!).length
+                    : workoutprovider.workouts.length,
               ),
             ),
           ),
