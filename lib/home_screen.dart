@@ -130,7 +130,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         'Start searching',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.caption,
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontSize: _mediaQuery.size.height * 0.02,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Roboto',
+                        ),
                       ),
                     );
                   } else if (filteredSearchHistory.isEmpty) {

@@ -39,8 +39,22 @@ class SearchResultWorkouts extends StatelessWidget {
                     return Container(
                       height: _mediaQuery.size.height * 0.03,
                       width: _mediaQuery.size.width,
-                      child: Text(
-                        'No Search Results Available',
+                      child: Center(
+                        child: Container(
+                          height:
+                              (_mediaQuery.size.height - _appBarHieght) * 0.5,
+                          width: double.infinity,
+                          child: Text(
+                            'No Search Results Available',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: _mediaQuery.size.height * 0.025,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Roboto',
+                            ),
+                          ),
+                        ),
                       ),
                     );
                   } else {
