@@ -32,7 +32,7 @@ class MainDrawer extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: _mediaQuery.size.height * 0.15,
+                height: _mediaQuery.size.height * 0.02,
               ),
               Padding(
                 padding: EdgeInsets.all(15),
@@ -60,7 +60,7 @@ class MainDrawer extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: (_mediaQuery.size.height - _appBarHieght) * 0.02,
+                height: (_mediaQuery.size.height - _appBarHieght) * 0.15,
               ),
               Padding(
                 padding: EdgeInsets.all(15),
