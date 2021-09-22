@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/providers/workouts.dart';
 import 'package:teenfit/widgets/workout_tile.dart';
@@ -11,8 +12,7 @@ class SearchResultWorkouts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
-    final _appBarHieght =
-        AppBar().preferredSize.height + _mediaQuery.padding.top;
+    final _appBarHieght = AppBar().preferredSize.height;
 
     var workoutprovider = Provider.of<Workouts>(context);
 
@@ -20,7 +20,7 @@ class SearchResultWorkouts extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: _mediaQuery.padding.top,
+            height: _appBarHieght,
             width: _mediaQuery.size.width,
           ),
           Container(

@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
         borderRadius: BorderRadius.circular(20),
         margins: EdgeInsets.fromLTRB(
           20,
-          _mediaQuery.padding.top,
+          _mediaQuery.padding.top * 1.5,
           20,
           0,
         ),
