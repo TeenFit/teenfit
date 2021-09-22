@@ -114,7 +114,7 @@ class Workouts with ChangeNotifier {
 
   List<Workout> findByName(String name) {
     return workouts
-        .where((workout) => workout.creatorName.contains(name))
+        .where((workout) => workout.workoutName.contains(name))
         .toList();
   }
 }

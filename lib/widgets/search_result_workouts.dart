@@ -32,13 +32,21 @@ class SearchResultWorkouts extends StatelessWidget {
                 itemBuilder: (ctx, index) {
                   if (searchTerm == null) {
                     return WorkoutTile(workoutprovider.workouts[index]);
+                  } else if (workoutprovider
+                      .findByName(searchTerm!)
+                      .toList()
+                      .isEmpty) {
+                    return Container();
                   } else {
-                    return WorkoutTile(Provider.of<Workouts>(context, listen: false)
-                        .findByName(searchTerm!)[index]);
+                    return WorkoutTile(
+                        Provider.of<Workouts>(context, listen: false)
+                            .findByName(searchTerm!)[index]);
                   }
                 },
                 itemCount: searchTerm != null
-                    ? workoutprovider.findByName(searchTerm!).length
+                    ? workoutprovider.findByName(searchTerm!).toList().isEmpty
+                        ? 1
+                        : workoutprovider.findByName(searchTerm!).length
                     : workoutprovider.workouts.length,
               ),
             ),
