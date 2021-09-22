@@ -83,7 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: MainDrawer(),
       backgroundColor: _theme.primaryColor,
       body: FloatingSearchBar(
-        margins: EdgeInsets.all(15),
+        backgroundColor: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        margins: EdgeInsets.all(20),
         actions: [FloatingSearchBarAction.searchToClear()],
         transition: CircularFloatingSearchBarTransition(),
         physics: BouncingScrollPhysics(),
