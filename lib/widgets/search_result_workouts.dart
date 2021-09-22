@@ -20,7 +20,7 @@ class SearchResultWorkouts extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: _appBarHieght,
+            height: _mediaQuery.padding.top,
             width: _mediaQuery.size.width,
           ),
           Container(

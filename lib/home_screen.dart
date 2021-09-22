@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
           20,
           _mediaQuery.padding.top,
           20,
-          _mediaQuery.size.height * 0.05,
+          0,
         ),
         actions: [FloatingSearchBarAction.searchToClear()],
         transition: CircularFloatingSearchBarTransition(),

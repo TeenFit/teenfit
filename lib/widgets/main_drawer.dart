@@ -20,6 +20,9 @@ class MainDrawer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(
+                height: _mediaQuery.padding.top,
+              ),
               Container(
                 width: double.infinity,
                 height: (_mediaQuery.size.height - _appBarHieght) * 0.25,
