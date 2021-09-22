@@ -36,7 +36,13 @@ class SearchResultWorkouts extends StatelessWidget {
                       .findByName(searchTerm!)
                       .toList()
                       .isEmpty) {
-                    return Container();
+                    return Container(
+                      height: _mediaQuery.size.height * 0.03,
+                      width: _mediaQuery.size.width,
+                      child: Text(
+                        'No Search Results Available',
+                      ),
+                    );
                   } else {
                     return WorkoutTile(
                         Provider.of<Workouts>(context, listen: false)
