@@ -13,9 +13,9 @@ class Workouts with ChangeNotifier {
       creatorName: 'Muqeeth Khan',
       workoutUiD: 'w1:uid',
       workoutName: 'Body Weight Workout',
-      instagramLink: '',
-      facebookLink: '',
-      tumblrLink: '',
+      instagram: '',
+      facebook: '',
+      tumblrPageLink: '',
       bannerImage: '',
       exercises: [
         Exercise(
@@ -64,9 +64,9 @@ class Workouts with ChangeNotifier {
       creatorName: 'Muqeeth Khan',
       workoutUiD: 'w1:uid',
       workoutName: 'Dumbell Workout',
-      instagramLink: '',
-      facebookLink: '',
-      tumblrLink: '',
+      instagram: '',
+      facebook: '',
+      tumblrPageLink: '',
       bannerImage: '',
       exercises: [
         Exercise(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:teenfit/Custom/my_flutter_app_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../providers/workout.dart';
 
@@ -95,6 +97,66 @@ class WorkoutPage extends StatelessWidget {
                                       fontSize: _mediaQuery.size.height * 0.035,
                                       letterSpacing: 1,
                                     ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 25),
+                              child: Container(
+                                height:
+                                    (_mediaQuery.size.height - _appBarHeight) *
+                                        0.02,
+                                width: _mediaQuery.size.width * 0.55,
+                                child: FittedBox(
+                                  fit: BoxFit.fitWidth,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      workout.instagram.isEmpty
+                                          ? SizedBox()
+                                          : IconButton(
+                                              onPressed: () {
+                                                launch(
+                                                    'https://www.instagram.com/${workout.instagram}/');
+                                              },
+                                              icon: Icon(
+                                                MyFlutterApp.instagram,
+                                                size: _mediaQuery.size.height *
+                                                    0.045,
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                      workout.facebook.isEmpty
+                                          ? SizedBox()
+                                          : IconButton(
+                                              onPressed: () {
+                                                launch(
+                                                    'https://www.facebook.com/${workout.facebook}/');
+                                              },
+                                              icon: Icon(
+                                                MyFlutterApp.facebook_squared,
+                                                size: _mediaQuery.size.height *
+                                                    0.045,
+                                                color: Colors.blue,
+                                              ),
+                                            ),
+                                      workout.tumblrPageLink.isEmpty
+                                          ? SizedBox()
+                                          : IconButton(
+                                              onPressed: () {
+                                                launch(workout.tumblrPageLink);
+                                              },
+                                              icon: Icon(
+                                                MyFlutterApp.tumblr_squared,
+                                                size: _mediaQuery.size.height *
+                                                    0.045,
+                                              ),
+                                            ),
+                                    ],
                                   ),
                                 ),
                               ),
