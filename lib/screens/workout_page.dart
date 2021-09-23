@@ -104,14 +104,14 @@ class WorkoutPage extends StatelessWidget {
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 25),
+                                  horizontal: 15, vertical: 2),
                               child: Container(
                                 height:
                                     (_mediaQuery.size.height - _appBarHeight) *
-                                        0.02,
+                                        0.13,
                                 width: _mediaQuery.size.width * 0.55,
                                 child: FittedBox(
-                                  fit: BoxFit.fitWidth,
+                                  fit: BoxFit.fitHeight,
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
