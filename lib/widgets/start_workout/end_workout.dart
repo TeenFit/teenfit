@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '/screens/exercise_screen.dart';
+import 'package:teenfit/Custom/custom_dialog.dart';
+import 'package:teenfit/screens/workout_page.dart';
 
 class EndWorkout extends StatelessWidget {
   @override
@@ -61,14 +62,19 @@ class EndWorkout extends StatelessWidget {
                       fontSize: _mediaQuery.size.height * 0.035),
                 ),
                 onPressed: () {
-                  Navigator.of(context)
-                      .popUntil(ModalRoute.withName(ExerciseScreen.routeName));
+                  showDialog(
+                      context: context,
+                      builder: (ctx) => CustomDialogBox(
+                          'End Workout',
+                          'Are You Sure You Want To End Your Workout?',
+                          'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
+                          WorkoutPage.routeName));
                 },
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    primary: _theme.primaryColor),
+                    primary: _theme.highlightColor),
               ),
             ),
           ),
