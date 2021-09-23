@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:teenfit/Custom/custom_dialog.dart';
-import 'package:teenfit/screens/workout_page.dart';
+import '/Custom/custom_dialog.dart';
+import '/screens/workout_page.dart';
 
 class EndWorkout extends StatelessWidget {
   @override
