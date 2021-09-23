@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/auth/login_screen.dart';
 import 'package:teenfit/auth/signup_screen.dart';
-import 'package:teenfit/home_screen.dart';
+import 'package:teenfit/screens/home_screen.dart';
 
 import 'package:teenfit/providers/workouts.dart';
 
