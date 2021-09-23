@@ -18,16 +18,38 @@ class ExerciseTiles extends StatelessWidget {
       height: _mediaQuery.size.height * 0.2,
       width: _mediaQuery.size.width,
       child: Card(
+        color: _theme.shadowColor,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              height: _mediaQuery.size.height * 0.015,
-              width: _mediaQuery.size.width * 0.07,
-              child: FadeInImage(
-                placeholder: AssetImage('assets/images/loading-gif.gif'),
-                image: NetworkImage(exercise.exerciseImageLink),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Container(
+                height: _mediaQuery.size.height * 0.18,
+                width: _mediaQuery.size.width * 0.5,
+                child: FadeInImage(
+                  placeholder: AssetImage('assets/images/loading-gif.gif'),
+                  image: NetworkImage(exercise.exerciseImageLink),
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 15, 10, 15),
+              child: Container(
+                width: _mediaQuery.size.width * 0.3,
+                height: _mediaQuery.size.height * 0.18,
+                child: Text(
+                  exercise.name,
+                  maxLines: 2,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'PTSans',
+                    fontSize: _mediaQuery.size.height * 0.035,
+                    letterSpacing: 1,
+                  ),
+                ),
               ),
             )
           ],

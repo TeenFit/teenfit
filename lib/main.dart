@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
           primaryColorDark: Color(0xffAE7E3F),
           highlightColor: Color(0xffA4B1BA),
           cardColor: Color(0xffD3D3D3),
+          shadowColor: Color(0xff878787),
         ),
         home: HomeScreen(),
         routes: {
