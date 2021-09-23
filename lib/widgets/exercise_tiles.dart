@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:teenfit/providers/exercise.dart';
+
+import '../providers/exercise.dart';
 
 class ExerciseTiles extends StatelessWidget {
   final Exercise exercise;

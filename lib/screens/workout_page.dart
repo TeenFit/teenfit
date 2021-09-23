@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:teenfit/widgets/exercise_tiles.dart';
+import 'package:teenfit/screens/exercise_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../widgets/exercise_tiles.dart';
 import '../Custom/my_flutter_app_icons.dart';
-
 import '../providers/workout.dart';
 
 class WorkoutPage extends StatelessWidget {
@@ -198,7 +198,10 @@ class WorkoutPage extends StatelessWidget {
                         fontFamily: 'PTSans',
                         fontSize: _mediaQuery.size.height * 0.035),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(ExerciseScreen.routeName,
+                        arguments: workout.exercises);
+                  },
                 ),
               ),
             ),
