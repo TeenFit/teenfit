@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teenfit/Custom/custom_dialog.dart';
 import 'package:teenfit/screens/exercise_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -199,8 +200,7 @@ class WorkoutPage extends StatelessWidget {
                         fontSize: _mediaQuery.size.height * 0.035),
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushNamed(ExerciseScreen.routeName,
-                        arguments: workout.exercises);
+                    showDialog(context: context, builder: (ctx) => CustomDialogBox('Are You Ready?', 'Grab a Water Bottle, Warmup, Lets Do This', 'assets/images/water_bottle.jpg', ExerciseScreen.routeName));
                   },
                 ),
               ),

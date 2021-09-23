@@ -59,6 +59,8 @@ flutter:
   - assets/images/rest_page.png
   - assets/images/end_page.jpg
   - assets/images/teen_fit_logo_white_withpeople_withbackground.png
+  - assets/images/water_bottle.jpg
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

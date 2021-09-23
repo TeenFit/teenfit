@@ -74,17 +74,23 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                       },
                       child: Text(
                         'No',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).popUntil(
-                            ModalRoute.withName(widget.navigationYesRouteName));
+                        if (widget.navigationYesRouteName == '/workout-page') {
+                          Navigator.of(context).popUntil(ModalRoute.withName(
+                              widget.navigationYesRouteName));
+                        } else if (widget.navigationYesRouteName ==
+                            '/exercise-screen') {
+                          Navigator.of(context)
+                              .pushNamed(widget.navigationYesRouteName);
+                        }
                       },
                       child: Text(
                         'Yes',
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     ),
                   ],
