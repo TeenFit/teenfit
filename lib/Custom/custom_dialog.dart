@@ -7,9 +7,10 @@ class CustomDialogBox extends StatefulWidget {
   final String description;
   final String img;
   final String navigationYesRouteName;
+  final arguments;
 
   const CustomDialogBox(
-      this.title, this.description, this.img, this.navigationYesRouteName);
+      this.title, this.description, this.img, this.navigationYesRouteName, this.arguments);
 
   @override
   _CustomDialogBoxState createState() => _CustomDialogBoxState();
@@ -85,8 +86,8 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                         } else if (widget.navigationYesRouteName ==
                             '/exercise-screen') {
                           Navigator.of(context)
-                              .pushNamed(widget.navigationYesRouteName);
-                        }
+                              .pushNamed(widget.navigationYesRouteName, arguments: widget.arguments);
+                        } 
                       },
                       child: Text(
                         'Yes',

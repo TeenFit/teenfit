@@ -200,7 +200,14 @@ class WorkoutPage extends StatelessWidget {
                         fontSize: _mediaQuery.size.height * 0.035),
                   ),
                   onPressed: () {
-                    showDialog(context: context, builder: (ctx) => CustomDialogBox('Are You Ready?', 'Grab a Water Bottle, Warmup, Lets Do This', 'assets/images/water_bottle.jpg', ExerciseScreen.routeName));
+                    showDialog(
+                        context: context,
+                        builder: (ctx) => CustomDialogBox(
+                            'Are You Ready?',
+                            'Grab a Water Bottle, Warmup, Lets Do This',
+                            'assets/images/water_bottle.jpg',
+                            ExerciseScreen.routeName,
+                            workout.exercises));
                   },
                 ),
               ),

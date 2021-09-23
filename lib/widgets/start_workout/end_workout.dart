@@ -68,7 +68,8 @@ class EndWorkout extends StatelessWidget {
                           'End Workout',
                           'Are You Sure You Want To End Your Workout?',
                           'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
-                          WorkoutPage.routeName));
+                          WorkoutPage.routeName,
+                          ''));
                 },
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

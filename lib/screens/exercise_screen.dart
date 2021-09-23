@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:teenfit/Custom/custom_dialog.dart';
+import 'package:teenfit/screens/workout_page.dart';
 import 'package:teenfit/widgets/start_workout/end_workout.dart';
 
 import '../widgets/start_workout/exercise_page.dart';
@@ -39,6 +41,21 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: _theme.shadowColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (ctx) => CustomDialogBox(
+                  'End Workout',
+                  'Are You Sure You Want To End Your Workout?',
+                  'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
+                  WorkoutPage.routeName,
+                  ''),
+            );
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
         iconTheme: IconThemeData(
           color: Colors.white,
         ),
