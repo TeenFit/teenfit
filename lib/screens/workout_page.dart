@@ -80,9 +80,15 @@ class WorkoutPage extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 0, 15, 5),
+                              padding: const EdgeInsets.fromLTRB(5, 5, 15, 5),
                               child: Text(
-                                workout.creatorName
+                                'by: ${workout.creatorName}',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'PTSans',
+                                  fontSize: _mediaQuery.size.height * 0.035,
+                                  letterSpacing: 1,
+                                ),
                               ),
                             ),
                           ],
