@@ -179,6 +179,37 @@ class WorkoutPage extends StatelessWidget {
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Container(
+                height: _mediaQuery.size.height * 0.07,
+                width: _mediaQuery.size.width,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      primary: _theme.primaryColor),
+                  child: Text(
+                    'Start Workout',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'PTSans',
+                        fontSize: _mediaQuery.size.height * 0.035),
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: SingleChildScrollView(
+                child: Container(
+                  height: _mediaQuery.size.height * 0.5,
+                  width: _mediaQuery.size.width,
+                ),
+              ),
+            )
           ],
         ),
       ),

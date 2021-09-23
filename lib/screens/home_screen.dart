@@ -95,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [FloatingSearchBarAction.searchToClear()],
         transition: CircularFloatingSearchBarTransition(),
         physics: BouncingScrollPhysics(),
+        
         title: Text(
           selectedTerm ?? 'Search...',
           style: Theme.of(context).textTheme.headline6,
