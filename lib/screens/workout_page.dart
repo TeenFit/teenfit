@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:teenfit/Custom/my_flutter_app_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../Custom/my_flutter_app_icons.dart';
 
 import '../providers/workout.dart';
 
