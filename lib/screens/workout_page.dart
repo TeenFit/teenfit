@@ -16,6 +16,7 @@ class WorkoutPage extends StatelessWidget {
     final Workout workout =
         ModalRoute.of(context)!.settings.arguments as Workout;
     return Scaffold(
+      backgroundColor: _theme.highlightColor,
       resizeToAvoidBottomInset: false,
       body: Container(
         height: _mediaQuery.size.height,
