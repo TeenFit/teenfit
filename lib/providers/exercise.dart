@@ -2,7 +2,7 @@ class Exercise {
   final String name;
   final int timeSeconds;
   final int restTime;
-  final String exerciseLink;
+  final String exerciseImageLink;
   final String exerciseId;
 
   Exercise({
@@ -10,6 +10,6 @@ class Exercise {
     required this.name,
     required this.timeSeconds,
     required this.restTime,
-    required this.exerciseLink,
+    required this.exerciseImageLink,
   });
 }

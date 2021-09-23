@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teenfit/widgets/exercise_tiles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../Custom/my_flutter_app_icons.dart';
@@ -180,7 +181,7 @@ class WorkoutPage extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               child: Container(
                 height: _mediaQuery.size.height * 0.07,
                 width: _mediaQuery.size.width,
@@ -202,11 +203,16 @@ class WorkoutPage extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: SingleChildScrollView(
                 child: Container(
                   height: _mediaQuery.size.height * 0.5,
                   width: _mediaQuery.size.width,
+                  child: ListView.builder(
+                    itemBuilder: (ctx, index) =>
+                        ExerciseTiles(workout.exercises[index]),
+                    itemCount: workout.exercises.length,
+                  ),
                 ),
               ),
             )

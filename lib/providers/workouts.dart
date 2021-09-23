@@ -23,39 +23,39 @@ class Workouts with ChangeNotifier {
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
-          exerciseLink:
+          exerciseImageLink:
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
         Exercise(
-          exerciseId: 'w1:uid:e1',
+          exerciseId: 'w1:uid:e2',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
-          exerciseLink:
+          exerciseImageLink:
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
         Exercise(
-          exerciseId: 'w1:uid:e1',
+          exerciseId: 'w1:uid:e3',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
-          exerciseLink:
+          exerciseImageLink:
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
         Exercise(
-          exerciseId: 'w1:uid:e1',
+          exerciseId: 'w1:uid:e4',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
-          exerciseLink:
+          exerciseImageLink:
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
         Exercise(
-          exerciseId: 'w1:uid:e1',
+          exerciseId: 'w1:uid:e5',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
-          exerciseLink:
+          exerciseImageLink:
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
       ],
@@ -74,39 +74,39 @@ class Workouts with ChangeNotifier {
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
-          exerciseLink:
+          exerciseImageLink:
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
         Exercise(
-          exerciseId: 'w1:uid:e1',
+          exerciseId: 'w1:uid:e2',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
-          exerciseLink:
+          exerciseImageLink:
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
         Exercise(
-          exerciseId: 'w1:uid:e1',
+          exerciseId: 'w1:uid:e3',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
-          exerciseLink:
+          exerciseImageLink:
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
         Exercise(
-          exerciseId: 'w1:uid:e1',
+          exerciseId: 'w1:uid:e4',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
-          exerciseLink:
+          exerciseImageLink:
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
         Exercise(
-          exerciseId: 'w1:uid:e1',
+          exerciseId: 'w1:uid:e5',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
-          exerciseLink:
+          exerciseImageLink:
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
       ],
