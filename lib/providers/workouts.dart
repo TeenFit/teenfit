@@ -13,7 +13,7 @@ class Workouts with ChangeNotifier {
       creatorName: 'Muqeeth Khan',
       workoutUiD: 'w1:uid',
       workoutName: 'Body Weight Workout',
-      instagram: '',
+      instagram: 'teenfittest',
       facebook: '',
       tumblrPageLink: '',
       bannerImage: '',
