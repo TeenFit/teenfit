@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:teenfit/providers/workout.dart';
+
+import '../providers/workout.dart';
 
 class WorkoutTile extends StatelessWidget {
   final Workout workout;
@@ -26,7 +27,9 @@ class WorkoutTile extends StatelessWidget {
                 ? AssetImage('assets/images/BannerImageUnavailable.png')
                 : AssetImage(workout.bannerImage),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                
+              },
             ),
             height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
             width: double.infinity,

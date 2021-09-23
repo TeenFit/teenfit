@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:teenfit/providers/exercise.dart';
-import 'package:teenfit/providers/workout.dart';
+
+import './exercise.dart';
+import './workout.dart';
 
 class Workouts with ChangeNotifier {
   List<Workout> get workouts {

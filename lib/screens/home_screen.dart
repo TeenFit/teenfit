@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:teenfit/widgets/main_drawer.dart';
-import 'package:teenfit/widgets/search_result_workouts.dart';
+
+import '../widgets/main_drawer.dart';
+import '../widgets/search_result_workouts.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home-screen';

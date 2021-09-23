@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:teenfit/auth/login_screen.dart';
-import 'package:teenfit/auth/signup_screen.dart';
-import 'package:teenfit/screens/home_screen.dart';
 
-import 'package:teenfit/providers/workouts.dart';
-
+import './auth/login_screen.dart';
+import './auth/signup_screen.dart';
+import './screens/home_screen.dart';
+import './providers/workouts.dart';
+import './screens/workout_page.dart';
 import './auth/intro_page.dart';
 
 void main() {
@@ -41,7 +41,8 @@ class MyApp extends StatelessWidget {
           IntroPage.routeName: (ctx) => IntroPage(),
           LoginScreen.routeName: (ctx) => LoginScreen(),
           SignupScreen.routeName: (ctx) => SignupScreen(),
-          HomeScreen.routeName: (ctx) => HomeScreen()
+          HomeScreen.routeName: (ctx) => HomeScreen(),
+          WorkoutPage.routeName: (ctx) => WorkoutPage(),
         },
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:teenfit/providers/workouts.dart';
-import 'package:teenfit/widgets/workout_tile.dart';
+
+import '../providers/workouts.dart';
+import '../widgets/workout_tile.dart';
 
 class SearchResultWorkouts extends StatelessWidget {
   final String? searchTerm;
