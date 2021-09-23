@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:teenfit/widgets/start_workout/end_workout.dart';
 
 import '../widgets/start_workout/exercise_page.dart';
 import '../providers/exercise.dart';
@@ -15,7 +16,10 @@ class ExerciseScreen extends StatefulWidget {
 
 class _ExerciseScreenState extends State<ExerciseScreen> {
   CarouselController _carouselController = CarouselController();
-  CountDownController _countDownController = CountDownController();
+
+  void goToNext() {
+    _carouselController.nextPage();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +28,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     final _appBarHeight =
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
+    CountDownController _countDownController = CountDownController();
+    CountDownController _restCountDownController = CountDownController();
     //add carousel
 
     final List<Exercise> exercises =
@@ -51,14 +57,19 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                 enableInfiniteScroll: false,
                 autoPlay: false,
                 reverse: false,
-                enlargeCenterPage: true,
+                enlargeCenterPage: false,
               ),
               carouselController: _carouselController,
               items: [
                 ...exercises.map(
                   (exercise) => ExercisePage(
-                      exercise, _carouselController, _countDownController),
+                    exercise,
+                    goToNext,
+                    _countDownController,
+                    _restCountDownController,
+                  ),
                 ),
+                EndWorkout(),
               ],
             ),
           )
