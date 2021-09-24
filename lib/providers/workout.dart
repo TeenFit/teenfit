@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import './exercise.dart';
 
 class Workout {
