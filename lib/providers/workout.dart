@@ -1,8 +1,11 @@
+import 'dart:html';
+
 import './exercise.dart';
 
 class Workout {
   final String creatorName;
-  final String workoutUiD;
+  final String creatorId;
+  final String workoutId;
   final String workoutName;
   final String instagram;
   final String facebook;
@@ -12,7 +15,8 @@ class Workout {
 
   Workout(
       {required this.creatorName,
-      required this.workoutUiD,
+      required this.creatorId,
+      required this.workoutId,
       required this.workoutName,
       required this.instagram,
       required this.facebook,

@@ -11,7 +11,8 @@ class Workouts with ChangeNotifier {
   List<Workout> _workouts = [
     Workout(
       creatorName: 'Muqeeth Khan',
-      workoutUiD: 'w1:uid',
+      workoutId: 'w1',
+      creatorId: 'uid',
       workoutName: 'Body Weight Workout',
       instagram: 'teenfittest',
       facebook: '',
@@ -19,7 +20,7 @@ class Workouts with ChangeNotifier {
       bannerImage: '',
       exercises: [
         Exercise(
-          exerciseId: 'w1:uid:e1',
+          exerciseId: 'e1',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
@@ -27,7 +28,7 @@ class Workouts with ChangeNotifier {
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
         Exercise(
-          exerciseId: 'w1:uid:e2',
+          exerciseId: 'e2',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
@@ -35,7 +36,7 @@ class Workouts with ChangeNotifier {
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
         Exercise(
-          exerciseId: 'w1:uid:e3',
+          exerciseId: 'e3',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
@@ -43,7 +44,7 @@ class Workouts with ChangeNotifier {
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
         Exercise(
-          exerciseId: 'w1:uid:e4',
+          exerciseId: 'e4',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
@@ -51,7 +52,7 @@ class Workouts with ChangeNotifier {
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
         Exercise(
-          exerciseId: 'w1:uid:e5',
+          exerciseId: 'e5',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
@@ -62,7 +63,8 @@ class Workouts with ChangeNotifier {
     ),
     Workout(
       creatorName: 'Muqeeth Khan',
-      workoutUiD: 'w1:uid',
+      workoutId: 'w2',
+      creatorId: 'UID',
       workoutName: 'Dumbell Workout',
       instagram: '',
       facebook: '',
@@ -70,7 +72,7 @@ class Workouts with ChangeNotifier {
       bannerImage: '',
       exercises: [
         Exercise(
-          exerciseId: 'w1:uid:e1',
+          exerciseId: 'e1',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
@@ -78,7 +80,7 @@ class Workouts with ChangeNotifier {
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
         Exercise(
-          exerciseId: 'w1:uid:e2',
+          exerciseId: 'e2',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
@@ -86,7 +88,7 @@ class Workouts with ChangeNotifier {
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
         Exercise(
-          exerciseId: 'w1:uid:e3',
+          exerciseId: 'e3',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
@@ -94,7 +96,7 @@ class Workouts with ChangeNotifier {
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
         Exercise(
-          exerciseId: 'w1:uid:e4',
+          exerciseId: 'e4',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
@@ -102,7 +104,7 @@ class Workouts with ChangeNotifier {
               'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
         ),
         Exercise(
-          exerciseId: 'w1:uid:e5',
+          exerciseId: 'e5',
           name: 'Wide Pushups',
           timeSeconds: 30,
           restTime: 15,
@@ -117,5 +119,9 @@ class Workouts with ChangeNotifier {
     return workouts
         .where((workout) => workout.workoutName.contains(name))
         .toList();
+  }
+
+  List<Workout> findByCreatorId(String id) {
+    return workouts.where((workout) => workout.creatorId == id).toList();
   }
 }
