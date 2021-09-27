@@ -11,9 +11,6 @@ class ExerciseTiles extends StatelessWidget {
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
-    final _appBarHeight =
-        (AppBar().preferredSize.height + _mediaQuery.padding.top);
-    final _statusBarHeight = _mediaQuery.padding.top;
 
     return Container(
       height: _mediaQuery.size.height * 0.2,
