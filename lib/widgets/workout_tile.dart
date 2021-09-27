@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:teenfit/screens/workout_page.dart';
+import 'package:teenfit/Custom/custom_dialog.dart';
 
+import '../screens/workout_page.dart';
 import '../providers/workout.dart';
 
 // ignore: must_be_immutable
@@ -78,7 +79,19 @@ class WorkoutTile extends StatelessWidget {
                         iconSize: (_mediaQuery.size.height * 0.06),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (ctx) => CustomDialogBox(
+                                'Are You Sure?',
+                                'This Action Will Delete The Workout And It Can Never Be Recoverd',
+                                'assets/images/trash.png',
+                                'pop',
+                                workout.workoutId),
+                          );
+                          // Provider.of<Workouts>(context, listen: false)
+                          //     .deleteWorkout(workout.workoutId);
+                        },
                         icon: Icon(Icons.delete_outline),
                         color: Colors.red[300],
                         iconSize: (_mediaQuery.size.height * 0.06),

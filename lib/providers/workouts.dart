@@ -121,7 +121,12 @@ class Workouts with ChangeNotifier {
         .toList();
   }
 
-  List<Workout> findByCreatorId(String id) {
-    return workouts.where((workout) => workout.creatorId == id).toList();
+  List<Workout> findByCreatorId(String creatorId) {
+    return workouts.where((workout) => workout.creatorId == creatorId).toList();
+  }
+
+  Future<void> deleteWorkout(String workoutId) async {
+    _workouts.removeWhere((workout) => workout.workoutId == workoutId);
+    notifyListeners();
   }
 }

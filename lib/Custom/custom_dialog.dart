@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'constants.dart';
+import 'package:provider/provider.dart';
+import '../providers/workouts.dart';
 
 class CustomDialogBox extends StatefulWidget {
   final String title;
@@ -9,8 +11,8 @@ class CustomDialogBox extends StatefulWidget {
   final String navigationYesRouteName;
   final arguments;
 
-  const CustomDialogBox(
-      this.title, this.description, this.img, this.navigationYesRouteName, this.arguments);
+  const CustomDialogBox(this.title, this.description, this.img,
+      this.navigationYesRouteName, this.arguments);
 
   @override
   _CustomDialogBoxState createState() => _CustomDialogBoxState();
@@ -85,9 +87,14 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                               widget.navigationYesRouteName));
                         } else if (widget.navigationYesRouteName ==
                             '/exercise-screen') {
-                          Navigator.of(context)
-                              .pushNamed(widget.navigationYesRouteName, arguments: widget.arguments);
-                        } 
+                          Navigator.of(context).pushNamed(
+                              widget.navigationYesRouteName,
+                              arguments: widget.arguments);
+                        } else if (widget.navigationYesRouteName == 'pop') {
+                          Provider.of<Workouts>(context, listen: false)
+                              .deleteWorkout(widget.arguments.toString())
+                              .then((_) => Navigator.of(context).pop());
+                        }
                       },
                       child: Text(
                         'Yes',
