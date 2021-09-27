@@ -225,10 +225,17 @@ class WorkoutPage extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
+      floatingActionButton: workout.creatorId == 'uid'
+          ? FloatingActionButton(
+              onPressed: () {},
+              child: Icon(Icons.edit),
+              backgroundColor: _theme.highlightColor,
+            )
+          : null,
     );
   }
 }
