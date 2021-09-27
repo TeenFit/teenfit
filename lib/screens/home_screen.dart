@@ -88,14 +88,13 @@ class _HomeScreenState extends State<HomeScreen> {
         borderRadius: BorderRadius.circular(20),
         margins: EdgeInsets.fromLTRB(
           20,
-          _mediaQuery.padding.top * 1.5,
+          _mediaQuery.size.height * 0.05,
           20,
           0,
         ),
         actions: [FloatingSearchBarAction.searchToClear()],
         transition: CircularFloatingSearchBarTransition(),
         physics: BouncingScrollPhysics(),
-        
         title: Text(
           selectedTerm ?? 'Search...',
           style: Theme.of(context).textTheme.headline6,
