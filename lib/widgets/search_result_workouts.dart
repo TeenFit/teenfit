@@ -31,36 +31,48 @@ class SearchResultWorkouts extends StatelessWidget {
               child: ListView.builder(
                 itemBuilder: (ctx, index) {
                   if (searchTerm == null) {
-                    return WorkoutTile(workoutprovider.workouts[index]);
+                    return WorkoutTile(workoutprovider.workouts[index], false);
                   } else if (workoutprovider
                       .findByName(searchTerm!)
                       .toList()
                       .isEmpty) {
                     return Container(
-                      height: _mediaQuery.size.height * 0.03,
+                      height: (_mediaQuery.size.height - _appBarHieght),
                       width: _mediaQuery.size.width,
-                      child: Center(
-                        child: Container(
-                          height:
-                              (_mediaQuery.size.height - _appBarHieght) * 0.5,
-                          width: double.infinity,
-                          child: Text(
-                            'No Search Results Available',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: _mediaQuery.size.height * 0.025,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Roboto',
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: (_mediaQuery.size.height - _appBarHieght) *
+                                0.05,
+                          ),
+                          Container(
+                            height: (_mediaQuery.size.height - _appBarHieght) *
+                                0.05,
+                            width: _mediaQuery.size.width * 0.8,
+                            child: FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                'No Search Results Available...',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: _mediaQuery.size.height * 0.025,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Roboto',
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                     );
                   } else {
                     return WorkoutTile(
-                        Provider.of<Workouts>(context, listen: false)
-                            .findByName(searchTerm!)[index]);
+                      Provider.of<Workouts>(context, listen: false)
+                          .findByName(searchTerm!)[index],
+                      false,
+                    );
                   }
                 },
                 itemCount: searchTerm != null

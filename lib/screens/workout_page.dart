@@ -20,6 +20,7 @@ class WorkoutPage extends StatelessWidget {
 
     final Workout workout =
         ModalRoute.of(context)!.settings.arguments as Workout;
+
     return Scaffold(
       backgroundColor: _theme.highlightColor,
       resizeToAvoidBottomInset: false,
@@ -229,13 +230,6 @@ class WorkoutPage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: workout.creatorId == 'uid'
-          ? FloatingActionButton(
-              onPressed: () {},
-              child: Icon(Icons.edit),
-              backgroundColor: _theme.highlightColor,
-            )
-          : null,
     );
   }
 }
