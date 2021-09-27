@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:teenfit/screens/add_workout_screen.dart';
 
 import 'screens/create_a_workout_screen.dart';
 import './screens/exercise_screen.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
           WorkoutPage.routeName: (ctx) => WorkoutPage(),
           ExerciseScreen.routeName: (ctx) => ExerciseScreen(),
           CreateWorkout.routeName: (ctx) => CreateWorkout(),
+          AddWorkoutScreen.routeName: (ctx) => AddWorkoutScreen(),
         },
       ),
     );

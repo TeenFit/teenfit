@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:teenfit/Custom/custom_dialog.dart';
 
+import '../Custom/custom_dialog.dart';
+import '../screens/add_workout_screen.dart';
 import '../screens/workout_page.dart';
 import '../providers/workout.dart';
 
@@ -73,9 +74,12 @@ class WorkoutTile extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(AddWorkoutScreen.routeName);
+                        },
                         icon: Icon(Icons.edit),
-                        color: Colors.grey,
+                        color: Colors.grey[100],
                         iconSize: (_mediaQuery.size.height * 0.06),
                       ),
                       IconButton(
