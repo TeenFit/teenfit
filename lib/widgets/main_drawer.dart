@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../screens/create_a_workout.dart';
+import '../screens/create_a_workout_screen.dart';
 import '../Custom/my_flutter_app_icons.dart';
 
 class MainDrawer extends StatelessWidget {
