@@ -75,8 +75,9 @@ class WorkoutTile extends StatelessWidget {
                       ),
                       IconButton(
                         onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed(AddWorkoutScreen.routeName);
+                          Navigator.of(context).pushNamed(
+                              AddWorkoutScreen.routeName,
+                              arguments: workout);
                         },
                         icon: Icon(Icons.edit),
                         color: Colors.grey[100],

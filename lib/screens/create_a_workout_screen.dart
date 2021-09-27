@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import './add_workout_screen.dart';
 import '/providers/workouts.dart';
 import '/widgets/workout_tile.dart';
 
@@ -27,7 +28,9 @@ class CreateWorkout extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(AddWorkoutScreen.routeName);
+              },
               icon: Icon(
                 Icons.add_box_outlined,
                 color: Colors.white,
