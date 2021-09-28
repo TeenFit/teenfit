@@ -33,7 +33,12 @@ class AddWorkoutScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [],
+          children: [
+            SizedBox(
+              height: _mediaQuery.size.height * 0.05,
+            ),
+            
+          ],
         ),
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:teenfit/auth/login_screen.dart';
+import './login_screen.dart';
 
-import '../screens/home_screen.dart';
+import '../home_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   static const routeName = '/signup-screen';

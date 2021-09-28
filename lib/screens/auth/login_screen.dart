@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:teenfit/auth/signup_screen.dart';
+import '../auth/signup_screen.dart';
 import 'package:teenfit/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {

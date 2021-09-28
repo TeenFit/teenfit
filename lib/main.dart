@@ -5,12 +5,12 @@ import 'package:teenfit/screens/add_workout_screen.dart';
 
 import 'screens/create_a_workout_screen.dart';
 import './screens/exercise_screen.dart';
-import './auth/login_screen.dart';
-import './auth/signup_screen.dart';
+import './screens/auth/login_screen.dart';
+import './screens/auth/signup_screen.dart';
 import './screens/home_screen.dart';
 import './providers/workouts.dart';
 import './screens/workout_page.dart';
-import './auth/intro_page.dart';
+import './screens/auth/intro_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
