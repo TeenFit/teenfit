@@ -14,91 +14,105 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isLoading = false;
   final _formkey = GlobalKey<FormState>();
 
-  void _submit() async {
-    if (!_formkey.currentState!.validate()) {
-      return;
-    }
-    Navigator.of(context).pushNamed(HomeScreen.routeName);
-  }
-
-  Widget buildEmailField() {
-    return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        fillColor: Colors.white,
-        filled: true,
-        errorMaxLines: 1,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-        ),
-        labelText: ' Email',
-        labelStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
-      ),
-      style: TextStyle(
-        fontSize: 20,
-      ),
-      textInputAction: TextInputAction.next,
-      validator: (value) {
-        if (value.toString().isEmpty) {
-          return 'Email is Required';
-        } else if (!value.toString().contains('@')) {
-          return 'Invalid Email';
-        } else if (value.toString().contains(' ')) {
-          return 'Please Remove Spaces';
-        }
-        return null;
-      },
-    );
-  }
-
-  Widget buildPasswordField() {
-    return TextFormField(
-      obscureText: hidePass,
-      decoration: InputDecoration(
-        suffixIcon: IconButton(
-          icon: Icon(hidePass ? Icons.visibility_off : Icons.visibility),
-          onPressed: () {
-            if (hidePass == true) {
-              setState(() {
-                hidePass = false;
-              });
-            } else {
-              setState(() {
-                hidePass = true;
-              });
-            }
-          },
-        ),
-        fillColor: Colors.white,
-        filled: true,
-        errorMaxLines: 1,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-        ),
-        labelText: ' Password',
-        labelStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
-      ),
-      style: TextStyle(
-        fontSize: 20,
-      ),
-      textInputAction: TextInputAction.done,
-      validator: (value) {
-        if (value.toString().isEmpty) {
-          return 'Password is Required';
-        } else if (value.toString().contains(' ')) {
-          return 'Please Remove Spaces';
-        }
-        return null;
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
     final _appBarHieght =
         AppBar().preferredSize.height + _mediaQuery.padding.top;
+
+    String _email = 'email';
+    String _password = 'password';
+
+    void _submit() async {
+      if (!_formkey.currentState!.validate()) {
+        return;
+      }
+
+      _formkey.currentState!.save();
+      print(_email);
+      print(_password);
+
+      Navigator.of(context).pushNamed(HomeScreen.routeName);
+    }
+
+    Widget buildEmailField() {
+      return TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+          fillColor: Colors.white,
+          filled: true,
+          errorMaxLines: 1,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          labelText: ' Email',
+          labelStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
+        ),
+        style: TextStyle(
+          fontSize: 20,
+        ),
+        textInputAction: TextInputAction.next,
+        validator: (value) {
+          if (value.toString().isEmpty) {
+            return 'Email is Required';
+          } else if (!value.toString().contains('@')) {
+            return 'Invalid Email';
+          } else if (value.toString().contains(' ')) {
+            return 'Please Remove Spaces';
+          }
+          return null;
+        },
+        onSaved: (input) {
+          _email = input.toString();
+        },
+      );
+    }
+
+    Widget buildPasswordField() {
+      return TextFormField(
+        obscureText: hidePass,
+        decoration: InputDecoration(
+          suffixIcon: IconButton(
+            icon: Icon(hidePass ? Icons.visibility_off : Icons.visibility),
+            onPressed: () {
+              if (hidePass == true) {
+                setState(() {
+                  hidePass = false;
+                });
+              } else {
+                setState(() {
+                  hidePass = true;
+                });
+              }
+            },
+          ),
+          fillColor: Colors.white,
+          filled: true,
+          errorMaxLines: 1,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          labelText: ' Password',
+          labelStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
+        ),
+        style: TextStyle(
+          fontSize: 20,
+        ),
+        textInputAction: TextInputAction.done,
+        validator: (value) {
+          if (value.toString().isEmpty) {
+            return 'Password is Required';
+          } else if (value.toString().contains(' ')) {
+            return 'Please Remove Spaces';
+          }
+          return null;
+        },
+        onSaved: (input) {
+          _password = input.toString();
+        },
+      );
+    }
 
     return Scaffold(
       resizeToAvoidBottomInset: true,

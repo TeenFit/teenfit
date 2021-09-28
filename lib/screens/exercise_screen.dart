@@ -18,6 +18,8 @@ class ExerciseScreen extends StatefulWidget {
 
 class _ExerciseScreenState extends State<ExerciseScreen> {
   CarouselController _carouselController = CarouselController();
+  CountDownController _countDownController = CountDownController();
+  CountDownController _restCountDownController = CountDownController();
 
   void goToNext() {
     _carouselController.nextPage();
@@ -30,8 +32,6 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     final _appBarHeight =
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
-    CountDownController _countDownController = CountDownController();
-    CountDownController _restCountDownController = CountDownController();
     //add carousel
 
     final List<Exercise> exercises =

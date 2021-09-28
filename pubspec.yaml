@@ -61,6 +61,8 @@ flutter:
   - assets/images/teen_fit_logo_white_withpeople_withbackground.png
   - assets/images/water_bottle.jpg
   - assets/images/trash.png
+  - assets/images/ImageUploadError.png
+  - assets/images/UploadImage.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

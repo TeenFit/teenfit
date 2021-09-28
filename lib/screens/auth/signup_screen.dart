@@ -19,6 +19,12 @@ class _SignupScreenState extends State<SignupScreen> {
   final GlobalKey<FormState> _formkey1 = GlobalKey<FormState>();
 
   @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
