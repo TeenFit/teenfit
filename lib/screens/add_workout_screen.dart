@@ -12,11 +12,26 @@ class AddWorkoutScreen extends StatefulWidget {
 class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   final _formKey3 = GlobalKey<FormState>();
   final _imageUrlController = TextEditingController();
+  final _imageUrlFocusNode = FocusNode();
+
+  @override
+  void didChangeDependencies() {
+    _imageUrlFocusNode.addListener(_updateImageUrl);
+    super.didChangeDependencies();
+  }
 
   @override
   void dispose() {
+    _imageUrlFocusNode.removeListener(_updateImageUrl);
+    _imageUrlFocusNode.dispose();
     _imageUrlController.dispose();
     super.dispose();
+  }
+
+  void _updateImageUrl() {
+    if (!_imageUrlFocusNode.hasFocus) {
+      setState(() {});
+    }
   }
 
   @override
@@ -27,6 +42,11 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
     String imageUrl = '';
+    String workoutName = '';
+    String creatorName = '';
+    String instagramLink = '';
+    String tumblrLink = '';
+    String facebookLink = '';
 
     Workout? workout = ModalRoute.of(context)?.settings.arguments as Workout?;
 
@@ -36,26 +56,30 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       }
 
       _formKey3.currentState!.save();
-      print(_imageUrlController.text);
+      print(imageUrl);
 
       Navigator.of(context).pop();
     }
 
     Widget buildAddImage() {
       return Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(10.0),
         child: Container(
-          height: (_mediaQuery.size.height - _appBarHeight) * 0.25,
+          height: (_mediaQuery.size.height - _appBarHeight) * 0.4,
           width: _mediaQuery.size.width,
-          child: Row(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: _mediaQuery.size.height * 0.25,
-                width: _mediaQuery.size.height * 0.25,
+                height: _mediaQuery.size.height * 0.28,
+                width: _mediaQuery.size.width,
                 child: _imageUrlController.text.isEmpty
                     ? Image.asset('assets/images/UploadImage.png')
                     : FadeInImage(
                         image: AssetImage(_imageUrlController.text),
+                        placeholderErrorBuilder: (context, _, __) =>
+                            Image.asset('assets/images/loading-gif.gif'),
                         imageErrorBuilder: (context, image, stackTrace) =>
                             Image.asset('assets/images/ImageUploadError.png'),
                         placeholder:
@@ -66,16 +90,17 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
               Expanded(
                 child: TextFormField(
                   controller: _imageUrlController,
+                  focusNode: _imageUrlFocusNode,
                   decoration: InputDecoration(
                     labelText: 'Image URL',
                     labelStyle:
-                        TextStyle(fontSize: _mediaQuery.size.height * 0.03),
+                        TextStyle(fontSize: _mediaQuery.size.height * 0.02),
                   ),
                   style: TextStyle(
                     fontSize: 20,
                   ),
                   keyboardType: TextInputType.url,
-                  textInputAction: TextInputAction.done,
+                  textInputAction: TextInputAction.next,
                   onEditingComplete: () {
                     setState(() {});
                   },
@@ -93,6 +118,168 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 ),
               ),
             ],
+          ),
+        ),
+      );
+    }
+
+    Widget buildCreatorName() {
+      return Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Container(
+          height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+          width: _mediaQuery.size.width,
+          child: TextFormField(
+            decoration: InputDecoration(
+              labelText: 'Creator Name',
+              labelStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
+            ),
+            style: TextStyle(
+              fontSize: 20,
+            ),
+            keyboardType: TextInputType.url,
+            textInputAction: TextInputAction.next,
+            validator: (value) {
+              if (value.toString().isEmpty) {
+                return 'Name is Required';
+              }
+              return null;
+            },
+            onSaved: (input) {
+              creatorName = input.toString();
+            },
+          ),
+        ),
+      );
+    }
+
+    Widget buildWorkoutName() {
+      return Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Container(
+          height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+          width: _mediaQuery.size.width,
+          child: TextFormField(
+            decoration: InputDecoration(
+              labelText: 'Workout Name',
+              labelStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
+            ),
+            style: TextStyle(
+              fontSize: 20,
+            ),
+            keyboardType: TextInputType.url,
+            textInputAction: TextInputAction.next,
+            validator: (value) {
+              if (value.toString().isEmpty) {
+                return 'Name is Required';
+              }
+              return null;
+            },
+            onSaved: (input) {
+              workoutName = input.toString();
+            },
+          ),
+        ),
+      );
+    }
+
+    Widget buildInstagramLink() {
+      return Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Container(
+          height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+          width: _mediaQuery.size.width,
+          child: TextFormField(
+            decoration: InputDecoration(
+              hintText: 'Optional',
+              hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
+              labelText: 'Instagram Link',
+              labelStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
+            ),
+            style: TextStyle(
+              fontSize: 20,
+            ),
+            keyboardType: TextInputType.url,
+            textInputAction: TextInputAction.next,
+            validator: (value) {
+              if (value.toString().contains(' ')) {
+                return 'Please Remove Spaces';
+              } else if (Uri.parse(value.toString()).isAbsolute) {
+                return 'Not a Valid Link';
+              }
+              return null;
+            },
+            onSaved: (input) {
+              instagramLink = input.toString();
+            },
+          ),
+        ),
+      );
+    }
+
+    Widget buildTumblrLink() {
+      return Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Container(
+          height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+          width: _mediaQuery.size.width,
+          child: TextFormField(
+            decoration: InputDecoration(
+              hintText: 'Optional',
+              hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
+              labelText: 'Tumblr Link',
+              labelStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
+            ),
+            style: TextStyle(
+              fontSize: 20,
+            ),
+            keyboardType: TextInputType.url,
+            textInputAction: TextInputAction.next,
+            validator: (value) {
+              if (value.toString().contains(' ')) {
+                return 'Please Remove Spaces';
+              } else if (Uri.parse(value.toString()).isAbsolute) {
+                return 'Not a Valid Link';
+              }
+              return null;
+            },
+            onSaved: (input) {
+              tumblrLink = input.toString();
+            },
+          ),
+        ),
+      );
+    }
+
+    Widget buildFacebookLink() {
+      return Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Container(
+          height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+          width: _mediaQuery.size.width,
+          child: TextFormField(
+            decoration: InputDecoration(
+              hintText: 'Optional',
+              hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
+              labelText: 'Facebook Link',
+              labelStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
+            ),
+            style: TextStyle(
+              fontSize: 20,
+            ),
+            keyboardType: TextInputType.url,
+            textInputAction: TextInputAction.done,
+            validator: (value) {
+              if (value.toString().contains(' ')) {
+                return 'Please Remove Spaces';
+              } else if (Uri.parse(value.toString()).isAbsolute) {
+                return 'Not a Valid Link';
+              }
+              return null;
+            },
+            onSaved: (input) {
+              facebookLink = input.toString();
+            },
           ),
         ),
       );
@@ -119,15 +306,20 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       body: Container(
         height: _mediaQuery.size.height - _appBarHeight,
         width: _mediaQuery.size.width,
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey3,
+        child: Form(
+          key: _formKey3,
+          child: SingleChildScrollView(
             child: Column(
               children: [
                 SizedBox(
-                  height: (_mediaQuery.size.height - _appBarHeight) * 0.05,
+                  height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
                 ),
                 buildAddImage(),
+                buildCreatorName(),
+                buildWorkoutName(),
+                buildInstagramLink(),
+                buildTumblrLink(),
+                buildFacebookLink(),
               ],
             ),
           ),

@@ -128,8 +128,11 @@ class WorkoutPage extends StatelessWidget {
                                             ? SizedBox()
                                             : IconButton(
                                                 onPressed: () {
-                                                  launch(
-                                                      'https://www.instagram.com/${workout.instagram}/');
+                                                  try {
+                                                    launch(workout.instagram);
+                                                  } catch (e) {
+                                                    return null;
+                                                  }
                                                 },
                                                 icon: Icon(
                                                   MyFlutterApp.instagram,
@@ -143,8 +146,11 @@ class WorkoutPage extends StatelessWidget {
                                             ? SizedBox()
                                             : IconButton(
                                                 onPressed: () {
-                                                  launch(
-                                                      'https://www.facebook.com/${workout.facebook}/');
+                                                  try {
+                                                    launch(workout.facebook);
+                                                  } catch (e) {
+                                                    return null;
+                                                  }
                                                 },
                                                 icon: Icon(
                                                   MyFlutterApp.facebook_squared,
@@ -158,8 +164,12 @@ class WorkoutPage extends StatelessWidget {
                                             ? SizedBox()
                                             : IconButton(
                                                 onPressed: () {
-                                                  launch(
-                                                      workout.tumblrPageLink);
+                                                  try {
+                                                    launch(
+                                                        workout.tumblrPageLink);
+                                                  } catch (e) {
+                                                    return null;
+                                                  }
                                                 },
                                                 icon: Icon(
                                                   MyFlutterApp.tumblr_squared,

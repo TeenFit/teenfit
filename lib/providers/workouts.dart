@@ -14,7 +14,7 @@ class Workouts with ChangeNotifier {
       workoutId: 'w1',
       creatorId: 'uid',
       workoutName: 'Body Weight Workout',
-      instagram: 'teenfittest',
+      instagram: 'https://www.instagram.com/teenfittest/',
       facebook: '',
       tumblrPageLink: '',
       bannerImage: '',
