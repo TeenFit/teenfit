@@ -17,7 +17,7 @@ class Workouts with ChangeNotifier {
       instagram: 'https://www.instagram.com/teenfittest/',
       facebook: '',
       tumblrPageLink: '',
-      bannerImage: '',
+      bannerImage: 'assets/images/BannerImageUnavailable.png',
       exercises: [
         Exercise(
           exerciseId: 'e1',

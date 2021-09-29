@@ -68,7 +68,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             instagram: workout.instagram,
             facebook: workout.facebook,
             tumblrPageLink: workout.tumblrPageLink,
-            bannerImage: workout.bannerImage,
+            bannerImage: _imageUrlController.text = workout.bannerImage,
             exercises: workout.exercises,
           );
 
@@ -122,7 +122,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 width: double.infinity,
                 height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                 child: TextFormField(
-                  initialValue: workout != null ? workout.bannerImage : '',
+                  controller: _imageUrlController,
                   focusNode: _imageUrlFocusNode,
                   decoration: InputDecoration(
                     hintText: 'Image URL',
