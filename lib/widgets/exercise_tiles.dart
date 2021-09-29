@@ -70,8 +70,8 @@ class ExerciseTiles extends StatelessWidget {
                                       AddExerciseScreen.routeName,
                                       arguments: {
                                         'exercises': exercises,
-                                        'edit': false,
-                                        'exercise': null
+                                        'edit': true,
+                                        'exercise': exercise,
                                       },
                                     );
                                   },
