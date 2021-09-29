@@ -240,8 +240,11 @@ class WorkoutPage extends StatelessWidget {
                   height: _mediaQuery.size.height * 0.5,
                   width: _mediaQuery.size.width,
                   child: ListView.builder(
-                    itemBuilder: (ctx, index) =>
-                        ExerciseTiles(workout.exercises[index]),
+                    itemBuilder: (ctx, index) => ExerciseTiles(
+                        workout.exercises[index],
+                        _mediaQuery.size.width,
+                        false,
+                        () {}),
                     itemCount: workout.exercises.length,
                   ),
                 ),

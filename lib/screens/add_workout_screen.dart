@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:teenfit/providers/exercise.dart';
+import 'package:teenfit/widgets/exercise_tiles.dart';
 import 'package:uuid/uuid.dart';
 
 import '../providers/workouts.dart';
@@ -73,12 +75,31 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     final _appBarHeight =
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
+    List<Exercise> exercises = workout != null ? workout!.exercises : [];
+
+    void deleteExercise(String exerciseId) {
+      exercises.removeWhere((exercise) => exercise.exerciseId == exerciseId);
+      setState(() {});
+    }
+
     Future<void> _submit() async {
       if (!_formKey3.currentState!.validate()) {
         return;
       }
 
       _formKey3.currentState!.save();
+
+      newWorkout = Workout(
+        creatorName: newWorkout!.creatorName,
+        creatorId: newWorkout!.creatorId,
+        workoutId: newWorkout!.workoutId,
+        workoutName: newWorkout!.workoutName,
+        instagram: newWorkout!.instagram,
+        facebook: newWorkout!.facebook,
+        tumblrPageLink: newWorkout!.tumblrPageLink,
+        bannerImage: newWorkout!.tumblrPageLink,
+        exercises: exercises,
+      );
 
       await Provider.of<Workouts>(context, listen: false)
           .addWorkout(newWorkout!)
@@ -417,12 +438,15 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                     width: 10,
                   ),
                 ),
-                // child: ListView.builder(
-                //   itemBuilder: (ctx, index) {
-                //     return();
-                //   },
-                //   itemCount: 1,
-                // ),
+                child: ListView.builder(
+                  itemBuilder: (ctx, index) => ExerciseTiles(
+                    exercises[index],
+                    _mediaQuery.size.width * 0.9,
+                    true,
+                    deleteExercise,
+                  ),
+                  itemCount: exercises.length,
+                ),
               ),
             ],
           ),

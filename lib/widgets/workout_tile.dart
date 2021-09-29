@@ -110,8 +110,6 @@ class WorkoutTile extends StatelessWidget {
                                 'pop',
                                 workout.workoutId),
                           );
-                          // Provider.of<Workouts>(context, listen: false)
-                          //     .deleteWorkout(workout.workoutId);
                         },
                         icon: Icon(Icons.delete_outline),
                         color: Colors.red[300],
