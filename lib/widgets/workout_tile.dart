@@ -33,7 +33,7 @@ class WorkoutTile extends StatelessWidget {
               placeholder: AssetImage('assets/images/loading-gif.gif'),
               placeholderErrorBuilder: (context, _, __) => Image.asset(
                 'assets/images/loading-gif.gif',
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
               ),
               fit: BoxFit.cover,
               image: workout.bannerImage.isEmpty
