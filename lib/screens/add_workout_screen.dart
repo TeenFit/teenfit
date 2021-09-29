@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:teenfit/providers/workouts.dart';
+import 'package:uuid/uuid.dart';
 
 import '../providers/workout.dart';
 
@@ -41,12 +44,18 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     final _appBarHeight =
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
-    String imageUrl = '';
-    String workoutName = '';
-    String creatorName = '';
-    String instagramLink = '';
-    String tumblrLink = '';
-    String facebookLink = '';
+    var uuid = Uuid();
+
+    Workout newWorkout = Workout(
+        creatorName: '',
+        creatorId: 'uid',
+        workoutId: uuid.v4(),
+        workoutName: '',
+        instagram: '',
+        facebook: '',
+        tumblrPageLink: '',
+        bannerImage: '',
+        exercises: []);
 
     Workout? workout = ModalRoute.of(context)?.settings.arguments as Workout?;
 
@@ -56,16 +65,19 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       }
 
       _formKey3.currentState!.save();
-      print(imageUrl);
 
-      Navigator.of(context).pop();
+      print(newWorkout);
+
+      await Provider.of<Workouts>(context)
+          .addWorkout(newWorkout)
+          .then((_) => Navigator.of(context).pop());
     }
 
     Widget buildAddImage() {
       return Padding(
         padding: const EdgeInsets.all(10.0),
         child: Container(
-          height: (_mediaQuery.size.height - _appBarHeight) * 0.4,
+          height: (_mediaQuery.size.height - _appBarHeight) * 0.5,
           width: _mediaQuery.size.width,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -92,8 +104,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                   controller: _imageUrlController,
                   focusNode: _imageUrlFocusNode,
                   decoration: InputDecoration(
-                    labelText: 'Image URL',
-                    labelStyle:
+                    hintText: 'Image URL',
+                    hintStyle:
                         TextStyle(fontSize: _mediaQuery.size.height * 0.02),
                   ),
                   style: TextStyle(
@@ -113,7 +125,17 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                     return null;
                   },
                   onSaved: (input) {
-                    imageUrl = input.toString();
+                    newWorkout = Workout(
+                      creatorName: newWorkout.creatorName,
+                      creatorId: newWorkout.creatorId,
+                      workoutId: newWorkout.workoutId,
+                      workoutName: newWorkout.workoutName,
+                      instagram: newWorkout.instagram,
+                      facebook: newWorkout.facebook,
+                      tumblrPageLink: newWorkout.tumblrPageLink,
+                      bannerImage: input.toString(),
+                      exercises: newWorkout.exercises,
+                    );
                   },
                 ),
               ),
@@ -131,8 +153,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           width: _mediaQuery.size.width,
           child: TextFormField(
             decoration: InputDecoration(
-              labelText: 'Creator Name',
-              labelStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
+              hintText: 'Creator Name',
+              hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
             ),
             style: TextStyle(
               fontSize: 20,
@@ -146,7 +168,17 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
               return null;
             },
             onSaved: (input) {
-              creatorName = input.toString();
+              newWorkout = Workout(
+                creatorName: input.toString(),
+                creatorId: newWorkout.creatorId,
+                workoutId: newWorkout.workoutId,
+                workoutName: newWorkout.workoutName,
+                instagram: newWorkout.instagram,
+                facebook: newWorkout.facebook,
+                tumblrPageLink: newWorkout.tumblrPageLink,
+                bannerImage: newWorkout.bannerImage,
+                exercises: newWorkout.exercises,
+              );
             },
           ),
         ),
@@ -161,8 +193,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           width: _mediaQuery.size.width,
           child: TextFormField(
             decoration: InputDecoration(
-              labelText: 'Workout Name',
-              labelStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
+              hintText: 'Workout Name',
+              hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
             ),
             style: TextStyle(
               fontSize: 20,
@@ -176,7 +208,17 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
               return null;
             },
             onSaved: (input) {
-              workoutName = input.toString();
+              newWorkout = Workout(
+                creatorName: newWorkout.creatorName,
+                creatorId: newWorkout.creatorId,
+                workoutId: newWorkout.workoutId,
+                workoutName: input.toString(),
+                instagram: newWorkout.instagram,
+                facebook: newWorkout.facebook,
+                tumblrPageLink: newWorkout.tumblrPageLink,
+                bannerImage: newWorkout.bannerImage,
+                exercises: newWorkout.exercises,
+              );
             },
           ),
         ),
@@ -191,10 +233,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           width: _mediaQuery.size.width,
           child: TextFormField(
             decoration: InputDecoration(
-              hintText: 'Optional',
+              labelText: 'Instagram Link (optional)',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
-              labelText: 'Instagram Link',
-              labelStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
             ),
             style: TextStyle(
               fontSize: 20,
@@ -210,7 +250,17 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
               return null;
             },
             onSaved: (input) {
-              instagramLink = input.toString();
+              newWorkout = Workout(
+                creatorName: newWorkout.creatorName,
+                creatorId: newWorkout.creatorId,
+                workoutId: newWorkout.workoutId,
+                workoutName: newWorkout.workoutName,
+                instagram: input.toString(),
+                facebook: newWorkout.facebook,
+                tumblrPageLink: newWorkout.tumblrPageLink,
+                bannerImage: newWorkout.bannerImage,
+                exercises: newWorkout.exercises,
+              );
             },
           ),
         ),
@@ -225,10 +275,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           width: _mediaQuery.size.width,
           child: TextFormField(
             decoration: InputDecoration(
-              hintText: 'Optional',
+              hintText: 'Tumblr Link (optional)',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
-              labelText: 'Tumblr Link',
-              labelStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
             ),
             style: TextStyle(
               fontSize: 20,
@@ -244,7 +292,17 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
               return null;
             },
             onSaved: (input) {
-              tumblrLink = input.toString();
+              newWorkout = Workout(
+                creatorName: newWorkout.creatorName,
+                creatorId: newWorkout.creatorId,
+                workoutId: newWorkout.workoutId,
+                workoutName: newWorkout.workoutName,
+                instagram: newWorkout.instagram,
+                facebook: newWorkout.facebook,
+                tumblrPageLink: input.toString(),
+                bannerImage: newWorkout.bannerImage,
+                exercises: newWorkout.exercises,
+              );
             },
           ),
         ),
@@ -259,10 +317,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           width: _mediaQuery.size.width,
           child: TextFormField(
             decoration: InputDecoration(
-              hintText: 'Optional',
+              hintText: 'Facebook Link (Optional)',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
-              labelText: 'Facebook Link',
-              labelStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
             ),
             style: TextStyle(
               fontSize: 20,
@@ -278,14 +334,80 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
               return null;
             },
             onSaved: (input) {
-              facebookLink = input.toString();
+              newWorkout = Workout(
+                creatorName: newWorkout.creatorName,
+                creatorId: newWorkout.creatorId,
+                workoutId: newWorkout.workoutId,
+                workoutName: newWorkout.workoutName,
+                instagram: newWorkout.instagram,
+                facebook: input.toString(),
+                tumblrPageLink: newWorkout.tumblrPageLink,
+                bannerImage: newWorkout.bannerImage,
+                exercises: newWorkout.exercises,
+              );
             },
           ),
         ),
       );
     }
 
-    //add exercises button
+    Widget buildAddExercises() {
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        child: Container(
+          height: _mediaQuery.size.height * 0.7,
+          width: _mediaQuery.size.width,
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(
+                    0, 0, 0, _mediaQuery.size.height * 0.01),
+                child: Container(
+                  width: _mediaQuery.size.width,
+                  height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: _theme.cardColor,
+                      onPrimary: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: Text(
+                      'Add Exercise',
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w900,
+                        fontSize: _mediaQuery.size.height * 0.03,
+                      ),
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
+              ),
+              Container(
+                height: _mediaQuery.size.height * 0.6,
+                width: _mediaQuery.size.width,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                    color: _theme.cardColor,
+                    width: 10,
+                  ),
+                ),
+                // child: ListView.builder(
+                //   itemBuilder: (ctx, index) {
+                //     return();
+                //   },
+                //   itemCount: 1,
+                // ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
 
     return Scaffold(
       backgroundColor: _theme.highlightColor,
@@ -322,6 +444,34 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 buildInstagramLink(),
                 buildTumblrLink(),
                 buildFacebookLink(),
+                buildAddExercises(),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Container(
+                    width: _mediaQuery.size.width,
+                    height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: _theme.primaryColor,
+                        onPrimary: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w900,
+                          fontSize: _mediaQuery.size.height * 0.03,
+                        ),
+                      ),
+                      onPressed: () {
+                        _submit();
+                      },
+                    ),
+                  ),
+                )
               ],
             ),
           ),

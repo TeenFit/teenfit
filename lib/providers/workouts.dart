@@ -125,6 +125,11 @@ class Workouts with ChangeNotifier {
     return workouts.where((workout) => workout.creatorId == creatorId).toList();
   }
 
+  Future<void> addWorkout(Workout workout) async {
+    _workouts.insert(0, workout);
+    notifyListeners();
+  }
+
   Future<void> deleteWorkout(String workoutId) async {
     _workouts.removeWhere((workout) => workout.workoutId == workoutId);
     notifyListeners();
