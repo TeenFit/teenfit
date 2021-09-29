@@ -58,13 +58,25 @@ class ExerciseTiles extends StatelessWidget {
                       ),
                     ),
                     isDeleteable
-                        ? IconButton(
-                            onPressed: () {
-                              delete(exercise.exerciseId);
-                            },
-                            icon: Icon(Icons.delete),
-                            color: Colors.red,
-                            iconSize: _mediaQuery.size.height * 0.05,
+                        ? FittedBox(
+                            child: Row(
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.edit),
+                                  color: Colors.grey[200],
+                                  iconSize: _mediaQuery.size.height * 0.05,
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    delete(exercise.exerciseId);
+                                  },
+                                  icon: Icon(Icons.delete),
+                                  color: Colors.red,
+                                  iconSize: _mediaQuery.size.height * 0.05,
+                                ),
+                              ],
+                            ),
                           )
                         : SizedBox(),
                   ],
