@@ -16,10 +16,39 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   final _formKey3 = GlobalKey<FormState>();
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
+  var uuid = Uuid();
+  Workout? newWorkout;
+  Workout? workout;
 
   @override
   void didChangeDependencies() {
     _imageUrlFocusNode.addListener(_updateImageUrl);
+    workout = ModalRoute.of(context)?.settings.arguments as Workout?;
+
+    newWorkout = workout == null
+        ? Workout(
+            creatorName: '',
+            creatorId: 'uid',
+            workoutId: uuid.v4(),
+            workoutName: '',
+            instagram: '',
+            facebook: '',
+            tumblrPageLink: '',
+            bannerImage: '',
+            exercises: [],
+          )
+        : Workout(
+            creatorName: workout!.creatorName,
+            creatorId: workout!.creatorId,
+            workoutId: workout!.workoutId,
+            workoutName: workout!.workoutName,
+            instagram: workout!.instagram,
+            facebook: workout!.facebook,
+            tumblrPageLink: workout!.tumblrPageLink,
+            bannerImage: _imageUrlController.text = workout!.bannerImage,
+            exercises: workout!.exercises,
+          );
+
     super.didChangeDependencies();
   }
 
@@ -44,34 +73,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     final _appBarHeight =
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
-    var uuid = Uuid();
-
-    Workout? workout = ModalRoute.of(context)?.settings.arguments as Workout?;
-
-    Workout newWorkout = workout == null
-        ? Workout(
-            creatorName: '',
-            creatorId: 'uid',
-            workoutId: uuid.v4(),
-            workoutName: '',
-            instagram: '',
-            facebook: '',
-            tumblrPageLink: '',
-            bannerImage: '',
-            exercises: [],
-          )
-        : Workout(
-            creatorName: workout.creatorName,
-            creatorId: workout.creatorId,
-            workoutId: workout.workoutId,
-            workoutName: workout.workoutName,
-            instagram: workout.instagram,
-            facebook: workout.facebook,
-            tumblrPageLink: workout.tumblrPageLink,
-            bannerImage: _imageUrlController.text = workout.bannerImage,
-            exercises: workout.exercises,
-          );
-
     Future<void> _submit() async {
       if (!_formKey3.currentState!.validate()) {
         return;
@@ -79,10 +80,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
       _formKey3.currentState!.save();
 
-      print(newWorkout);
-
       await Provider.of<Workouts>(context, listen: false)
-          .addWorkout(newWorkout)
+          .addWorkout(newWorkout!)
           .then((_) => Navigator.of(context).pop());
     }
 
@@ -147,15 +146,15 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                   },
                   onSaved: (input) {
                     newWorkout = Workout(
-                      creatorName: newWorkout.creatorName,
-                      creatorId: newWorkout.creatorId,
-                      workoutId: newWorkout.workoutId,
-                      workoutName: newWorkout.workoutName,
-                      instagram: newWorkout.instagram,
-                      facebook: newWorkout.facebook,
-                      tumblrPageLink: newWorkout.tumblrPageLink,
+                      creatorName: newWorkout!.creatorName,
+                      creatorId: newWorkout!.creatorId,
+                      workoutId: newWorkout!.workoutId,
+                      workoutName: newWorkout!.workoutName,
+                      instagram: newWorkout!.instagram,
+                      facebook: newWorkout!.facebook,
+                      tumblrPageLink: newWorkout!.tumblrPageLink,
                       bannerImage: input.toString(),
-                      exercises: newWorkout.exercises,
+                      exercises: newWorkout!.exercises,
                     );
                   },
                 ),
@@ -173,7 +172,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
-            initialValue: workout != null ? workout.creatorName : '',
+            initialValue: workout != null ? workout!.creatorName : '',
             decoration: InputDecoration(
               hintText: 'Creator Name',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
@@ -192,14 +191,14 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             onSaved: (input) {
               newWorkout = Workout(
                 creatorName: input.toString(),
-                creatorId: newWorkout.creatorId,
-                workoutId: newWorkout.workoutId,
-                workoutName: newWorkout.workoutName,
-                instagram: newWorkout.instagram,
-                facebook: newWorkout.facebook,
-                tumblrPageLink: newWorkout.tumblrPageLink,
-                bannerImage: newWorkout.bannerImage,
-                exercises: newWorkout.exercises,
+                creatorId: newWorkout!.creatorId,
+                workoutId: newWorkout!.workoutId,
+                workoutName: newWorkout!.workoutName,
+                instagram: newWorkout!.instagram,
+                facebook: newWorkout!.facebook,
+                tumblrPageLink: newWorkout!.tumblrPageLink,
+                bannerImage: newWorkout!.bannerImage,
+                exercises: newWorkout!.exercises,
               );
             },
           ),
@@ -214,7 +213,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
-            initialValue: workout != null ? workout.workoutName : '',
+            initialValue: workout != null ? workout!.workoutName : '',
             decoration: InputDecoration(
               hintText: 'Workout Name',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
@@ -232,15 +231,15 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
-                creatorName: newWorkout.creatorName,
-                creatorId: newWorkout.creatorId,
-                workoutId: newWorkout.workoutId,
+                creatorName: newWorkout!.creatorName,
+                creatorId: newWorkout!.creatorId,
+                workoutId: newWorkout!.workoutId,
                 workoutName: input.toString(),
-                instagram: newWorkout.instagram,
-                facebook: newWorkout.facebook,
-                tumblrPageLink: newWorkout.tumblrPageLink,
-                bannerImage: newWorkout.bannerImage,
-                exercises: newWorkout.exercises,
+                instagram: newWorkout!.instagram,
+                facebook: newWorkout!.facebook,
+                tumblrPageLink: newWorkout!.tumblrPageLink,
+                bannerImage: newWorkout!.bannerImage,
+                exercises: newWorkout!.exercises,
               );
             },
           ),
@@ -255,7 +254,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
-            initialValue: workout != null ? workout.instagram : '',
+            initialValue: workout != null ? workout!.instagram : '',
             maxLines: 2,
             decoration: InputDecoration(
               hintText: 'Instagram Link (optional)',
@@ -275,15 +274,15 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
-                creatorName: newWorkout.creatorName,
-                creatorId: newWorkout.creatorId,
-                workoutId: newWorkout.workoutId,
-                workoutName: newWorkout.workoutName,
+                creatorName: newWorkout!.creatorName,
+                creatorId: newWorkout!.creatorId,
+                workoutId: newWorkout!.workoutId,
+                workoutName: newWorkout!.workoutName,
                 instagram: input.toString(),
-                facebook: newWorkout.facebook,
-                tumblrPageLink: newWorkout.tumblrPageLink,
-                bannerImage: newWorkout.bannerImage,
-                exercises: newWorkout.exercises,
+                facebook: newWorkout!.facebook,
+                tumblrPageLink: newWorkout!.tumblrPageLink,
+                bannerImage: newWorkout!.bannerImage,
+                exercises: newWorkout!.exercises,
               );
             },
           ),
@@ -298,7 +297,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
-            initialValue: workout != null ? workout.tumblrPageLink : '',
+            initialValue: workout != null ? workout!.tumblrPageLink : '',
             decoration: InputDecoration(
               hintText: 'Tumblr Link (optional)',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
@@ -316,15 +315,15 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
-                creatorName: newWorkout.creatorName,
-                creatorId: newWorkout.creatorId,
-                workoutId: newWorkout.workoutId,
-                workoutName: newWorkout.workoutName,
-                instagram: newWorkout.instagram,
-                facebook: newWorkout.facebook,
+                creatorName: newWorkout!.creatorName,
+                creatorId: newWorkout!.creatorId,
+                workoutId: newWorkout!.workoutId,
+                workoutName: newWorkout!.workoutName,
+                instagram: newWorkout!.instagram,
+                facebook: newWorkout!.facebook,
                 tumblrPageLink: input.toString(),
-                bannerImage: newWorkout.bannerImage,
-                exercises: newWorkout.exercises,
+                bannerImage: newWorkout!.bannerImage,
+                exercises: newWorkout!.exercises,
               );
             },
           ),
@@ -339,7 +338,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
-            initialValue: workout != null ? workout.facebook : '',
+            initialValue: workout != null ? workout!.facebook : '',
             decoration: InputDecoration(
               hintText: 'Facebook Link (Optional)',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
@@ -357,15 +356,15 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
-                creatorName: newWorkout.creatorName,
-                creatorId: newWorkout.creatorId,
-                workoutId: newWorkout.workoutId,
-                workoutName: newWorkout.workoutName,
-                instagram: newWorkout.instagram,
+                creatorName: newWorkout!.creatorName,
+                creatorId: newWorkout!.creatorId,
+                workoutId: newWorkout!.workoutId,
+                workoutName: newWorkout!.workoutName,
+                instagram: newWorkout!.instagram,
                 facebook: input.toString(),
-                tumblrPageLink: newWorkout.tumblrPageLink,
-                bannerImage: newWorkout.bannerImage,
-                exercises: newWorkout.exercises,
+                tumblrPageLink: newWorkout!.tumblrPageLink,
+                bannerImage: newWorkout!.bannerImage,
+                exercises: newWorkout!.exercises,
               );
             },
           ),
