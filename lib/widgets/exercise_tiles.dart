@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../screens/add_exercise_screen.dart';
 import '../providers/exercise.dart';
 
 class ExerciseTiles extends StatelessWidget {
@@ -7,8 +8,10 @@ class ExerciseTiles extends StatelessWidget {
   final double size;
   final bool isDeleteable;
   final Function delete;
+  final List<Exercise> exercises;
 
-  ExerciseTiles(this.exercise, this.size, this.isDeleteable, this.delete);
+  ExerciseTiles(
+      this.exercise, this.size, this.isDeleteable, this.delete, this.exercises);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +65,16 @@ class ExerciseTiles extends StatelessWidget {
                             child: Row(
                               children: [
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed(
+                                      AddExerciseScreen.routeName,
+                                      arguments: {
+                                        'exercises': exercises,
+                                        'edit': false,
+                                        'exercise': null
+                                      },
+                                    );
+                                  },
                                   icon: Icon(Icons.edit),
                                   color: Colors.grey[200],
                                   iconSize: _mediaQuery.size.height * 0.05,
