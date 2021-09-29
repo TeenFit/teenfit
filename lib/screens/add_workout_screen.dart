@@ -285,6 +285,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       );
     }
 
+    //add exercises button
 
     return Scaffold(
       backgroundColor: _theme.highlightColor,
