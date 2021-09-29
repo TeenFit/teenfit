@@ -34,10 +34,16 @@ class WorkoutPage extends StatelessWidget {
               width: double.infinity,
               child: Stack(
                 children: [
-                  Image.asset(
-                    workout.bannerImage.isEmpty
-                        ? 'assets/images/BannerImageUnavailable.png'
-                        : workout.bannerImage,
+                  FadeInImage(
+                    placeholder: AssetImage('assets/images/loading-gif.gif'),
+                    placeholderErrorBuilder: (context, _, __) =>
+                        Image.asset('assets/images/loading-gif.gif'),
+                    fit: BoxFit.fill,
+                    image: workout.bannerImage.isEmpty
+                        ? AssetImage('assets/images/BannerImageUnavailable.png')
+                        : AssetImage(workout.bannerImage),
+                    imageErrorBuilder: (image, _, __) =>
+                        Image.asset('assets/images/ImageUploadError.png'),
                   ),
                   FittedBox(
                     fit: BoxFit.fitHeight,

@@ -26,19 +26,31 @@ class WorkoutTile extends StatelessWidget {
       child: Stack(
         alignment: isDeletable ? Alignment.centerLeft : Alignment.center,
         children: [
-          Ink.image(
-            fit: BoxFit.cover,
-            image: workout.bannerImage.isEmpty
-                ? AssetImage('assets/images/BannerImageUnavailable.png')
-                : AssetImage(workout.bannerImage),
+          Container(
+            height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
+            width: double.infinity,
+            child: FadeInImage(
+              placeholder: AssetImage('assets/images/loading-gif.gif'),
+              placeholderErrorBuilder: (context, _, __) =>
+                  Image.asset('assets/images/loading-gif.gif'),
+              fit: BoxFit.fill,
+              image: workout.bannerImage.isEmpty
+                  ? AssetImage('assets/images/BannerImageUnavailable.png')
+                  : AssetImage(workout.bannerImage),
+              imageErrorBuilder: (image, _, __) =>
+                  Image.asset('assets/images/ImageUploadError.png'),
+            ),
+          ),
+          Container(
+            height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
+            width: double.infinity,
             child: InkWell(
+              borderRadius: BorderRadius.circular(25),
               onTap: () {
                 Navigator.of(context)
                     .pushNamed(WorkoutPage.routeName, arguments: workout);
               },
             ),
-            height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
-            width: double.infinity,
           ),
           isDeletable
               ? Container(

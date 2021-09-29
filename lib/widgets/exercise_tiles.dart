@@ -27,6 +27,8 @@ class ExerciseTiles extends StatelessWidget {
                 height: _mediaQuery.size.height * 0.18,
                 width: _mediaQuery.size.width * 0.5,
                 child: FadeInImage(
+                  imageErrorBuilder: (context, image, _) =>
+                      Image.asset('assets/images/ImageUploadError.png',),
                   placeholder: AssetImage('assets/images/loading-gif.gif'),
                   image: NetworkImage(exercise.exerciseImageLink),
                   fit: BoxFit.contain,

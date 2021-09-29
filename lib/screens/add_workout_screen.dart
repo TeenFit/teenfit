@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:teenfit/providers/workouts.dart';
 import 'package:uuid/uuid.dart';
 
+import '../providers/workouts.dart';
 import '../providers/workout.dart';
 
 class AddWorkoutScreen extends StatefulWidget {
@@ -46,18 +46,31 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
     var uuid = Uuid();
 
-    Workout newWorkout = Workout(
-        creatorName: '',
-        creatorId: 'uid',
-        workoutId: uuid.v4(),
-        workoutName: '',
-        instagram: '',
-        facebook: '',
-        tumblrPageLink: '',
-        bannerImage: '',
-        exercises: []);
-
     Workout? workout = ModalRoute.of(context)?.settings.arguments as Workout?;
+
+    Workout newWorkout = workout == null
+        ? Workout(
+            creatorName: '',
+            creatorId: 'uid',
+            workoutId: uuid.v4(),
+            workoutName: '',
+            instagram: '',
+            facebook: '',
+            tumblrPageLink: '',
+            bannerImage: '',
+            exercises: [],
+          )
+        : Workout(
+            creatorName: workout.creatorName,
+            creatorId: workout.creatorId,
+            workoutId: workout.workoutId,
+            workoutName: workout.workoutName,
+            instagram: workout.instagram,
+            facebook: workout.facebook,
+            tumblrPageLink: workout.tumblrPageLink,
+            bannerImage: workout.bannerImage,
+            exercises: workout.exercises,
+          );
 
     Future<void> _submit() async {
       if (!_formKey3.currentState!.validate()) {
@@ -68,7 +81,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
       print(newWorkout);
 
-      await Provider.of<Workouts>(context)
+      await Provider.of<Workouts>(context, listen: false)
           .addWorkout(newWorkout)
           .then((_) => Navigator.of(context).pop());
     }
@@ -77,10 +90,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       return Padding(
         padding: const EdgeInsets.all(10.0),
         child: Container(
-          height: (_mediaQuery.size.height - _appBarHeight) * 0.5,
+          height: (_mediaQuery.size.height - _appBarHeight) * 0.43,
           width: _mediaQuery.size.width,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
@@ -152,6 +165,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
+            initialValue: workout != null ? workout.creatorName : '',
             decoration: InputDecoration(
               hintText: 'Creator Name',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
@@ -192,6 +206,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
+            initialValue: workout != null ? workout.workoutName : '',
             decoration: InputDecoration(
               hintText: 'Workout Name',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
@@ -232,8 +247,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
+            initialValue: workout != null ? workout.instagram : '',
+            maxLines: 2,
             decoration: InputDecoration(
-              labelText: 'Instagram Link (optional)',
+              hintText: 'Instagram Link (optional)',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
             ),
             style: TextStyle(
@@ -244,9 +261,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             validator: (value) {
               if (value.toString().contains(' ')) {
                 return 'Please Remove Spaces';
-              } else if (Uri.parse(value.toString()).isAbsolute) {
-                return 'Not a Valid Link';
               }
+
               return null;
             },
             onSaved: (input) {
@@ -274,6 +290,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
+            initialValue: workout != null ? workout.tumblrPageLink : '',
             decoration: InputDecoration(
               hintText: 'Tumblr Link (optional)',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
@@ -286,8 +303,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             validator: (value) {
               if (value.toString().contains(' ')) {
                 return 'Please Remove Spaces';
-              } else if (Uri.parse(value.toString()).isAbsolute) {
-                return 'Not a Valid Link';
               }
               return null;
             },
@@ -316,6 +331,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
+            initialValue: workout != null ? workout.facebook : '',
             decoration: InputDecoration(
               hintText: 'Facebook Link (Optional)',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
@@ -328,8 +344,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             validator: (value) {
               if (value.toString().contains(' ')) {
                 return 'Please Remove Spaces';
-              } else if (Uri.parse(value.toString()).isAbsolute) {
-                return 'Not a Valid Link';
               }
               return null;
             },
