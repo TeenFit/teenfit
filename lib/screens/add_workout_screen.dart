@@ -90,10 +90,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       return Padding(
         padding: const EdgeInsets.all(10.0),
         child: Container(
-          height: (_mediaQuery.size.height - _appBarHeight) * 0.43,
+          height: (_mediaQuery.size.height - _appBarHeight) * 0.4,
           width: _mediaQuery.size.width,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
@@ -104,17 +104,25 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                     : FadeInImage(
                         image: AssetImage(_imageUrlController.text),
                         placeholderErrorBuilder: (context, _, __) =>
-                            Image.asset('assets/images/loading-gif.gif'),
+                            Image.asset(
+                          'assets/images/loading-gif.gif',
+                          fit: BoxFit.cover,
+                        ),
                         imageErrorBuilder: (context, image, stackTrace) =>
-                            Image.asset('assets/images/ImageUploadError.png'),
+                            Image.asset(
+                          'assets/images/ImageUploadError.png',
+                          fit: BoxFit.cover,
+                        ),
                         placeholder:
                             AssetImage('assets/images/loading-gif.gif'),
                         fit: BoxFit.contain,
                       ),
               ),
-              Expanded(
+              Container(
+                width: double.infinity,
+                height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                 child: TextFormField(
-                  controller: _imageUrlController,
+                  initialValue: workout != null ? workout.bannerImage : '',
                   focusNode: _imageUrlFocusNode,
                   decoration: InputDecoration(
                     hintText: 'Image URL',
