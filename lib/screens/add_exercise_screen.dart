@@ -20,7 +20,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
     List<Exercise> exercises = exercise['exercises'];
     bool isEdit = exercise['edit'];
-    Exercise _exercise = exercise['exercise'];
+    Exercise? _exercise = exercise['exercise'];
 
     return Scaffold(
       backgroundColor: _theme.highlightColor,
@@ -29,7 +29,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.white),
         title: Text(
-          isEdit ? 'Edit Your Workout' : 'Add A Workout',
+          isEdit ? 'Edit Your Exercise' : 'Add A Exercise',
           maxLines: 2,
           textAlign: TextAlign.start,
           style: TextStyle(
