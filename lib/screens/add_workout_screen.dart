@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:teenfit/screens/add_exercise_screen.dart';
 import 'package:uuid/uuid.dart';
 
+import '../screens/add_exercise_screen.dart';
 import '../providers/exercise.dart';
 import '../widgets/exercise_tiles.dart';
 import '../providers/workouts.dart';
