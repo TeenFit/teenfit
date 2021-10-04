@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Custom/custom_dialog.dart';
-import '../screens/add_workout_screen.dart';
+import '../screens/create_workout.dart';
 import '../screens/workout_page.dart';
 import '../providers/workout.dart';
 

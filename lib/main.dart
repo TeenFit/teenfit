@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import './screens/add_exercise_screen.dart';
-import './screens/add_workout_screen.dart';
-import './screens/create_a_workout_screen.dart';
+import 'screens/create_workout.dart';
+import 'screens/my_workouts.dart';
 import './screens/exercise_screen.dart';
 import './screens/auth/login_screen.dart';
 import './screens/auth/signup_screen.dart';
