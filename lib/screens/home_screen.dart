@@ -154,33 +154,67 @@ class _HomeScreenState extends State<HomeScreen> {
                   } else {
                     return Column(
                       mainAxisSize: MainAxisSize.min,
-                      children: filteredSearchHistory
-                          .map(
-                            (term) => ListTile(
-                              title: Text(
-                                term,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              leading: const Icon(Icons.history),
-                              trailing: IconButton(
-                                icon: const Icon(Icons.clear),
-                                onPressed: () {
+                      children: [
+                        ...filteredSearchHistory
+                            .map(
+                              (term) => ListTile(
+                                title: Text(
+                                  term,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                leading: const Icon(Icons.history),
+                                trailing: IconButton(
+                                  icon: const Icon(Icons.clear),
+                                  onPressed: () {
+                                    setState(() {
+                                      deleteSearchTerm(term);
+                                    });
+                                  },
+                                ),
+                                onTap: () {
                                   setState(() {
-                                    deleteSearchTerm(term);
+                                    putSearchTermFirst(term);
+                                    selectedTerm = term;
                                   });
+                                  controller.close();
                                 },
                               ),
-                              onTap: () {
+                            )
+                            .toList(),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Container(
+                            width: double.infinity,
+                            height: _mediaQuery.size.height * 0.05,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: _theme.primaryColor),
+                              onPressed: () {
                                 setState(() {
-                                  putSearchTermFirst(term);
-                                  selectedTerm = term;
+                                  selectedTerm = null;
                                 });
                                 controller.close();
                               },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Clear Search',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: _mediaQuery.size.height * 0.028,
+                                      fontFamily: 'Roboto',
+                                    ),
+                                  ),
+                                  Icon(Icons.clear),
+                                ],
+                              ),
                             ),
-                          )
-                          .toList(),
+                          ),
+                        )
+                      ],
                     );
                   }
                 },

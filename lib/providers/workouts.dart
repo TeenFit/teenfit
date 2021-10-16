@@ -117,7 +117,13 @@ class Workouts with ChangeNotifier {
 
   List<Workout> findByName(String name) {
     return workouts
-        .where((workout) => workout.workoutName.contains(name))
+        .where(
+          (workout) =>
+              workout.workoutName.contains(name) ||
+              workout.workoutName.toLowerCase().contains(name) ||
+              workout.workoutName.toUpperCase().contains(name) ||
+              workout.workoutName.characters.contains(name),
+        )
         .toList();
   }
 
