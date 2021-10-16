@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/workouts.dart';
@@ -16,74 +17,70 @@ class SearchResultWorkouts extends StatelessWidget {
 
     var workoutprovider = Provider.of<Workouts>(context);
 
+    final fsb = FloatingSearchBar.of(context);
+
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(
-            height: _appBarHieght,
-            width: _mediaQuery.size.width,
-          ),
-          Container(
-            height: _mediaQuery.size.height - _appBarHieght,
-            width: _mediaQuery.size.width,
-            child: Padding(
-              padding: EdgeInsets.all(15),
-              child: ListView.builder(
-                itemBuilder: (ctx, index) {
-                  if (searchTerm == null) {
-                    return WorkoutTile(workoutprovider.workouts[index], false);
-                  } else if (workoutprovider
-                      .findByName(searchTerm!)
-                      .toList()
-                      .isEmpty) {
-                    return Container(
-                      height: (_mediaQuery.size.height - _appBarHieght),
-                      width: _mediaQuery.size.width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: (_mediaQuery.size.height - _appBarHieght) *
-                                0.05,
-                          ),
-                          Container(
-                            height: (_mediaQuery.size.height - _appBarHieght) *
-                                0.05,
-                            width: _mediaQuery.size.width * 0.8,
-                            child: FittedBox(
-                              fit: BoxFit.fitWidth,
-                              child: Text(
-                                'No Search Results Available...',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: _mediaQuery.size.height * 0.025,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Roboto',
-                                ),
-                              ),
+      child: Container(
+        height: _mediaQuery.size.height,
+        width: _mediaQuery.size.width,
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: ListView.builder(
+            padding: EdgeInsets.only(
+                top: fsb!.value.height + fsb.value.margins.vertical),
+            itemBuilder: (ctx, index) {
+              if (searchTerm == null) {
+                return WorkoutTile(workoutprovider.workouts[index], false);
+              } else if (workoutprovider
+                  .findByName(searchTerm!)
+                  .toList()
+                  .isEmpty) {
+                return Container(
+                  height: (_mediaQuery.size.height - _appBarHieght),
+                  width: _mediaQuery.size.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height:
+                            (_mediaQuery.size.height - _appBarHieght) * 0.05,
+                      ),
+                      Container(
+                        height:
+                            (_mediaQuery.size.height - _appBarHieght) * 0.05,
+                        width: _mediaQuery.size.width * 0.8,
+                        child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Text(
+                            'No Search Results Available...',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: _mediaQuery.size.height * 0.025,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Roboto',
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    );
-                  } else {
-                    return WorkoutTile(
-                      Provider.of<Workouts>(context, listen: false)
-                          .findByName(searchTerm!)[index],
-                      false,
-                    );
-                  }
-                },
-                itemCount: searchTerm != null
-                    ? workoutprovider.findByName(searchTerm!).toList().isEmpty
-                        ? 1
-                        : workoutprovider.findByName(searchTerm!).length
-                    : workoutprovider.workouts.length,
-              ),
-            ),
+                    ],
+                  ),
+                );
+              } else {
+                return WorkoutTile(
+                  Provider.of<Workouts>(context, listen: false)
+                      .findByName(searchTerm!)[index],
+                  false,
+                );
+              }
+            },
+            itemCount: searchTerm != null
+                ? workoutprovider.findByName(searchTerm!).toList().isEmpty
+                    ? 1
+                    : workoutprovider.findByName(searchTerm!).length
+                : workoutprovider.workouts.length,
           ),
-        ],
+        ),
       ),
     );
   }
