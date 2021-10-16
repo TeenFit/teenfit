@@ -93,6 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
           0,
         ),
         actions: [FloatingSearchBarAction.searchToClear()],
+        clearQueryOnClose: false,
         transition: CircularFloatingSearchBarTransition(),
         physics: BouncingScrollPhysics(),
         title: Text(
