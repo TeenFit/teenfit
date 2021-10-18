@@ -8,17 +8,19 @@ import '/providers/exercise.dart';
 class ExercisePage extends StatefulWidget {
   final Exercise exercise;
   final Function goToNext;
-  final CountDownController countDownController;
-  final CountDownController restCountDownController;
 
-  ExercisePage(this.exercise, this.goToNext, this.countDownController,
-      this.restCountDownController);
+  ExercisePage(
+    this.exercise,
+    this.goToNext,
+  );
 
   @override
   State<ExercisePage> createState() => _ExercisePageState();
 }
 
 class _ExercisePageState extends State<ExercisePage> {
+  CountDownController _countDownController = CountDownController();
+  CountDownController _restCountDownController = CountDownController();
   bool isRest = false;
 
   @override
@@ -32,7 +34,7 @@ class _ExercisePageState extends State<ExercisePage> {
         ? RestPage(
             widget.exercise,
             widget.goToNext,
-            widget.restCountDownController,
+            _restCountDownController,
           )
         : Container(
             height: (_mediaQuery.size.height - _appBarHeight) * 0.95,
@@ -86,7 +88,7 @@ class _ExercisePageState extends State<ExercisePage> {
                         iconSize:
                             (_mediaQuery.size.height - _appBarHeight) * 0.18,
                         onPressed: () {
-                          widget.countDownController.pause();
+                          _countDownController.pause();
                         },
                         icon: Icon(Icons.pause),
                         color: _theme.cardColor,
@@ -94,7 +96,7 @@ class _ExercisePageState extends State<ExercisePage> {
                       CircularCountDownTimer(
                         initialDuration: 0,
                         autoStart: true,
-                        controller: widget.countDownController,
+                        controller: _countDownController,
                         width: (_mediaQuery.size.height - _appBarHeight) * 0.15,
                         height:
                             (_mediaQuery.size.height - _appBarHeight) * 0.15,
@@ -123,7 +125,7 @@ class _ExercisePageState extends State<ExercisePage> {
                         iconSize:
                             (_mediaQuery.size.height - _appBarHeight) * 0.18,
                         onPressed: () {
-                          widget.countDownController.restart();
+                          _countDownController.restart();
                         },
                         icon: Icon(Icons.play_arrow),
                         color: _theme.cardColor,

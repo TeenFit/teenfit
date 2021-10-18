@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
 import 'package:teenfit/screens/workout_page.dart';
@@ -18,8 +17,6 @@ class ExerciseScreen extends StatefulWidget {
 
 class _ExerciseScreenState extends State<ExerciseScreen> {
   CarouselController _carouselController = CarouselController();
-  CountDownController _countDownController = CountDownController();
-  CountDownController _restCountDownController = CountDownController();
 
   void goToNext() {
     _carouselController.nextPage();
@@ -82,8 +79,6 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                   (exercise) => ExercisePage(
                     exercise,
                     goToNext,
-                    _countDownController,
-                    _restCountDownController,
                   ),
                 ),
                 EndWorkout(),
