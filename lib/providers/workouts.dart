@@ -25,7 +25,7 @@ class Workouts with ChangeNotifier {
           timeSeconds: 30,
           restTime: 15,
           exerciseImageLink:
-              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+              'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
         ),
         Exercise(
           exerciseId: 'e2',
@@ -33,7 +33,7 @@ class Workouts with ChangeNotifier {
           timeSeconds: 30,
           restTime: 15,
           exerciseImageLink:
-              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+              'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
         ),
         Exercise(
           exerciseId: 'e3',
@@ -41,7 +41,7 @@ class Workouts with ChangeNotifier {
           timeSeconds: 30,
           restTime: 15,
           exerciseImageLink:
-              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+              'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
         ),
         Exercise(
           exerciseId: 'e4',
@@ -49,7 +49,7 @@ class Workouts with ChangeNotifier {
           timeSeconds: 30,
           restTime: 15,
           exerciseImageLink:
-              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+              'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
         ),
         Exercise(
           exerciseId: 'e5',
@@ -57,7 +57,7 @@ class Workouts with ChangeNotifier {
           timeSeconds: 30,
           restTime: 15,
           exerciseImageLink:
-              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+              'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
         ),
       ],
     ),
@@ -77,7 +77,7 @@ class Workouts with ChangeNotifier {
           timeSeconds: 30,
           restTime: 15,
           exerciseImageLink:
-              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+              'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
         ),
         Exercise(
           exerciseId: 'e2',
@@ -85,7 +85,7 @@ class Workouts with ChangeNotifier {
           timeSeconds: 30,
           restTime: 15,
           exerciseImageLink:
-              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+              'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
         ),
         Exercise(
           exerciseId: 'e3',
@@ -93,7 +93,7 @@ class Workouts with ChangeNotifier {
           timeSeconds: 30,
           restTime: 15,
           exerciseImageLink:
-              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+              'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
         ),
         Exercise(
           exerciseId: 'e4',
@@ -101,7 +101,7 @@ class Workouts with ChangeNotifier {
           timeSeconds: 30,
           restTime: 15,
           exerciseImageLink:
-              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+              'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
         ),
         Exercise(
           exerciseId: 'e5',
@@ -109,7 +109,7 @@ class Workouts with ChangeNotifier {
           timeSeconds: 30,
           restTime: 15,
           exerciseImageLink:
-              'https://drive.google.com/uc?export=view&id=1aoR5jEnERbFzY7zPIQ6XUNirjoRX8Rbg',
+              'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
         ),
       ],
     ),
