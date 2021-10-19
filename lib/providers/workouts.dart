@@ -21,7 +21,7 @@ class Workouts with ChangeNotifier {
       exercises: [
         Exercise(
           exerciseId: 'e1',
-          name: 'Wide Pushups',
+          name: 'Pushups',
           reps: 10,
           sets: 3,
           restTime: 15,
@@ -39,7 +39,7 @@ class Workouts with ChangeNotifier {
         ),
         Exercise(
           exerciseId: 'e3',
-          name: 'Wide Pushups',
+          name: 'Diamond Pushups',
           reps: 10,
           sets: 3,
           restTime: 15,
