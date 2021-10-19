@@ -34,21 +34,26 @@ class WorkoutPage extends StatelessWidget {
               width: double.infinity,
               child: Stack(
                 children: [
-                  FadeInImage(
-                    placeholder: AssetImage('assets/images/loading-gif.gif'),
-                    placeholderErrorBuilder: (context, _, __) => Image.asset(
-                      'assets/images/loading-gif.gif',
-                      fit: BoxFit.contain,
-                    ),
-                    fit: BoxFit.cover,
-                    image: workout.bannerImage.isEmpty
-                        ? AssetImage('assets/images/BannerImageUnavailable.png')
-                        : AssetImage(workout.bannerImage),
-                    imageErrorBuilder: (image, _, __) => Image.asset(
-                      'assets/images/ImageUploadError.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  workout.bannerImage.isEmpty
+                      ? Image.asset(
+                          'assets/images/BannerImageUnavailable.png',
+                          fit: BoxFit.cover,
+                        )
+                      : FadeInImage(
+                          placeholder:
+                              AssetImage('assets/images/loading-gif.gif'),
+                          placeholderErrorBuilder: (context, _, __) =>
+                              Image.asset(
+                            'assets/images/loading-gif.gif',
+                            fit: BoxFit.contain,
+                          ),
+                          fit: BoxFit.cover,
+                          image: NetworkImage(workout.bannerImage),
+                          imageErrorBuilder: (image, _, __) => Image.asset(
+                            'assets/images/ImageUploadError.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                   FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Row(

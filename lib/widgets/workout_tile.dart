@@ -29,22 +29,25 @@ class WorkoutTile extends StatelessWidget {
           Container(
             height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
             width: double.infinity,
-            child: FadeInImage(
-              placeholder: AssetImage('assets/images/loading-gif.gif'),
-              placeholderErrorBuilder: (context, _, __) => Image.asset(
-                'assets/images/loading-gif.gif',
-                fit: BoxFit.contain,
-              ),
-              fit: BoxFit.cover,
-              //change
-              image: workout.bannerImage.isEmpty
-                  ? AssetImage('assets/images/BannerImageUnavailable.png')
-                  : AssetImage(workout.bannerImage),
-              imageErrorBuilder: (image, _, __) => Image.asset(
-                'assets/images/ImageUploadError.png',
-                fit: BoxFit.cover,
-              ),
-            ),
+            child: workout.bannerImage.isEmpty
+                ? Image.asset(
+                    'assets/images/BannerImageUnavailable.png',
+                    fit: BoxFit.cover,
+                  )
+                : FadeInImage(
+                    placeholder: AssetImage('assets/images/loading-gif.gif'),
+                    placeholderErrorBuilder: (context, _, __) => Image.asset(
+                      'assets/images/loading-gif.gif',
+                      fit: BoxFit.contain,
+                    ),
+                    fit: BoxFit.cover,
+                    //change
+                    image: NetworkImage(workout.bannerImage),
+                    imageErrorBuilder: (image, _, __) => Image.asset(
+                      'assets/images/ImageUploadError.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
           ),
           Container(
             height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
