@@ -22,6 +22,10 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     _carouselController.nextPage();
   }
 
+  void goToPrevious() {
+    _carouselController.previousPage();
+  }
+
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
@@ -79,6 +83,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                   (exercise) => ExercisePage(
                     exercise,
                     goToNext,
+                    goToPrevious,
                   ),
                 ),
                 EndWorkout(),

@@ -8,10 +8,12 @@ import '/providers/exercise.dart';
 class ExercisePage extends StatefulWidget {
   final Exercise exercise;
   final Function goToNext;
+  final Function goToPrevious;
 
   ExercisePage(
     this.exercise,
     this.goToNext,
+    this.goToPrevious,
   );
 
   @override
@@ -39,7 +41,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 _restCountDownController,
               )
             : Container(
-                height: (_mediaQuery.size.height - _appBarHeight) * 0.95,
+                height: (_mediaQuery.size.height - _appBarHeight),
                 width: _mediaQuery.size.width,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -145,7 +147,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 ),
               )
         : Container(
-            height: (_mediaQuery.size.height - _appBarHeight) * 0.95,
+            height: (_mediaQuery.size.height - _appBarHeight),
             width: _mediaQuery.size.width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -183,18 +185,71 @@ class _ExercisePageState extends State<ExercisePage> {
                   ),
                 ),
                 SizedBox(
-                  height: (_mediaQuery.size.height - _appBarHeight) * 0.15,
+                  height: (_mediaQuery.size.height - _appBarHeight) * 0.05,
                 ),
                 Container(
-                  height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
+                  height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                   width: double.infinity,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text('${widget.exercise.sets} sets'),
-                      Text('${widget.exercise.reps} reps'),
+                      Text(
+                        '${widget.exercise.sets} sets',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'PTSans',
+                          fontSize: _mediaQuery.size.height * 0.035,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                      Text(
+                        '${widget.exercise.reps} reps',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'PTSans',
+                          fontSize: _mediaQuery.size.height * 0.035,
+                          letterSpacing: 1,
+                        ),
+                      ),
                     ],
+                  ),
+                ),
+                SizedBox(
+                  height: (_mediaQuery.size.height - _appBarHeight) * 0.15,
+                ),
+                Container(
+                  height: (_mediaQuery.size.height - _appBarHeight) * 0.2,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: _theme.primaryColor),
+                              onPressed: () {
+                                widget.goToPrevious();
+                              },
+                              child: Text('Back')),
+                        ),
+                        SizedBox(
+                          width: _mediaQuery.size.width * 0.03,
+                        ),
+                        Expanded(
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: _theme.primaryColor),
+                              onPressed: () {
+                                widget.goToNext();
+                              },
+                              child: Text('Next')),
+                        )
+                      ],
+                    ),
                   ),
                 )
               ],
