@@ -24,7 +24,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   Workout? workout;
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     _imageUrlFocusNode.addListener(_updateImageUrl);
     workout = ModalRoute.of(context)?.settings.arguments as Workout?;
 
@@ -52,7 +52,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             exercises: workout!.exercises,
           );
 
-    super.initState();
+    super.didChangeDependencies();
   }
 
   @override
@@ -98,7 +98,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         instagram: newWorkout!.instagram,
         facebook: newWorkout!.facebook,
         tumblrPageLink: newWorkout!.tumblrPageLink,
-        bannerImage: newWorkout!.tumblrPageLink,
+        bannerImage: newWorkout!.bannerImage,
         exercises: exercises,
       );
 
@@ -147,7 +147,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 width: double.infinity,
                 height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                 child: TextFormField(
-                  controller: _imageUrlController,
+                  initialValue: workout != null ? workout!.bannerImage : '',
                   focusNode: _imageUrlFocusNode,
                   decoration: InputDecoration(
                     hintText: 'Image URL',
