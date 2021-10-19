@@ -11,8 +11,6 @@ class RestPage extends StatelessWidget {
 
   RestPage(this.exercise, this.goToNext, this._restCountDownController);
 
-
-
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
@@ -63,7 +61,7 @@ class RestPage extends StatelessWidget {
                     controller: _restCountDownController,
                     width: (_mediaQuery.size.height - _appBarHeight) * 0.15,
                     height: (_mediaQuery.size.height - _appBarHeight) * 0.15,
-                    duration: exercise.restTime,
+                    duration: exercise.restTime!.toInt(),
                     backgroundColor: _theme.shadowColor,
                     fillColor: _theme.primaryColor,
                     ringColor: _theme.highlightColor,

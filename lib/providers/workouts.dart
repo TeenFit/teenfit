@@ -20,33 +20,10 @@ class Workouts with ChangeNotifier {
       bannerImage: 'assets/images/BannerImageUnavailable.png',
       exercises: [
         Exercise(
-          exerciseId: 'e1',
+          exerciseId: 'e5',
           name: 'Wide Pushups',
-          timeSeconds: 30,
-          restTime: 15,
-          exerciseImageLink:
-              'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
-        ),
-        Exercise(
-          exerciseId: 'e2',
-          name: 'Wide Pushups',
-          timeSeconds: 30,
-          restTime: 15,
-          exerciseImageLink:
-              'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
-        ),
-        Exercise(
-          exerciseId: 'e3',
-          name: 'Wide Pushups',
-          timeSeconds: 30,
-          restTime: 15,
-          exerciseImageLink:
-              'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
-        ),
-        Exercise(
-          exerciseId: 'e4',
-          name: 'Wide Pushups',
-          timeSeconds: 30,
+          reps: 10,
+          sets: 3,
           restTime: 15,
           exerciseImageLink:
               'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
@@ -54,7 +31,35 @@ class Workouts with ChangeNotifier {
         Exercise(
           exerciseId: 'e5',
           name: 'Wide Pushups',
-          timeSeconds: 30,
+          reps: 10,
+          sets: 3,
+          restTime: 15,
+          exerciseImageLink:
+              'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
+        ),
+        Exercise(
+          exerciseId: 'e5',
+          name: 'Wide Pushups',
+          reps: 10,
+          sets: 3,
+          restTime: 15,
+          exerciseImageLink:
+              'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
+        ),
+        Exercise(
+          exerciseId: 'e5',
+          name: 'Wide Pushups',
+          reps: 10,
+          sets: 3,
+          restTime: 15,
+          exerciseImageLink:
+              'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
+        ),
+        Exercise(
+          exerciseId: 'e5',
+          name: 'Wide Pushups',
+          reps: 10,
+          sets: 3,
           restTime: 15,
           exerciseImageLink:
               'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',

@@ -1,9 +1,9 @@
 class Exercise {
   final String name;
-  final int timeSeconds;
-  final int restTime;
-  final String? reps;
-  final String? sets;
+  final int? timeSeconds;
+  final int? restTime;
+  final int? reps;
+  final int? sets;
   final String exerciseImageLink;
   final String exerciseId;
 
@@ -12,8 +12,8 @@ class Exercise {
     required this.name,
     this.reps,
     this.sets,
-    required this.timeSeconds,
-    required this.restTime,
+    this.timeSeconds,
+    this.restTime,
     required this.exerciseImageLink,
   });
 }
