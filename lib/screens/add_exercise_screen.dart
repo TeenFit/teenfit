@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../providers/exercise.dart';
 import 'package:uuid/uuid.dart';
 
 import '../providers/exercise.dart';
@@ -12,7 +13,42 @@ class AddExerciseScreen extends StatefulWidget {
 
 class _AddExerciseScreenState extends State<AddExerciseScreen> {
   final _formKey4 = GlobalKey<FormState>();
+  final _imageUrlController = TextEditingController();
+  final _imageUrlFocusNode = FocusNode();
   var uuid = Uuid();
+  List<Exercise>? exercises;
+  bool? isEdit;
+  Exercise? _exercise;
+  Exercise? exercise;
+
+  @override
+  void didChangeDependencies() {
+    Map exerciseProv = ModalRoute.of(context)!.settings.arguments as Map;
+
+    exercises = exerciseProv['exercises'];
+    isEdit = exerciseProv['edit'];
+    _exercise = exerciseProv['exercise'];
+
+    exercise = isEdit!
+        ? Exercise(
+            exerciseId: _exercise!.exerciseId,
+            name: _exercise!.name,
+            timeSeconds: _exercise!.timeSeconds,
+            restTime: _exercise!.restTime,
+            exerciseImageLink: _exercise!.exerciseImageLink,
+          )
+        : Exercise(
+            exerciseId: uuid.v1(),
+            name: '',
+            reps: null,
+            sets: null,
+            timeSeconds: null,
+            restTime: null,
+            exerciseImageLink: _imageUrlController.text =
+                exercise!.exerciseImageLink,
+          );
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,30 +57,85 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     final _appBarHeight =
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
-    Map exerciseProv = ModalRoute.of(context)!.settings.arguments as Map;
-
-    List<Exercise>? exercises = exerciseProv['exercises'];
-    bool isEdit = exerciseProv['edit'];
-    Exercise? _exercise = exerciseProv['exercise'];
-
-    Exercise exercise = isEdit
-        ? Exercise(
-            exerciseId: _exercise!.exerciseId,
-            name: _exercise.name,
-            timeSeconds: _exercise.timeSeconds,
-            restTime: _exercise.restTime,
-            exerciseImageLink: _exercise.exerciseImageLink)
-        : Exercise(
-            exerciseId: uuid.v1(),
-            name: '',
-            timeSeconds: 0,
-            restTime: 0,
-            exerciseImageLink: '',
-          );
-
     void addExercise() {
-      exercises!.insert(0, exercise);
+      exercises!.insert(0, exercise!);
       Navigator.of(context).pop();
+    }
+
+    Widget buildAddImage() {
+      return Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Container(
+          height: (_mediaQuery.size.height - _appBarHeight) * 0.4,
+          width: _mediaQuery.size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                height: _mediaQuery.size.height * 0.28,
+                width: _mediaQuery.size.width,
+                child: _imageUrlController.text.isEmpty
+                    ? Image.asset('assets/images/UploadImage.png')
+                    : FadeInImage(
+                        image: NetworkImage(_imageUrlController.text),
+                        placeholderErrorBuilder: (context, _, __) =>
+                            Image.asset(
+                          'assets/images/loading-gif.gif',
+                          fit: BoxFit.cover,
+                        ),
+                        imageErrorBuilder: (context, image, stackTrace) =>
+                            Image.asset(
+                          'assets/images/ImageUploadError.png',
+                          fit: BoxFit.cover,
+                        ),
+                        placeholder:
+                            AssetImage('assets/images/loading-gif.gif'),
+                        fit: BoxFit.contain,
+                      ),
+              ),
+              Container(
+                width: double.infinity,
+                height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                child: TextFormField(
+                  initialValue: isEdit! ? _exercise!.exerciseImageLink : '',
+                  focusNode: _imageUrlFocusNode,
+                  decoration: InputDecoration(
+                    hintText: 'Image URL',
+                    hintStyle:
+                        TextStyle(fontSize: _mediaQuery.size.height * 0.02),
+                  ),
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                  keyboardType: TextInputType.url,
+                  textInputAction: TextInputAction.next,
+                  onEditingComplete: () {
+                    setState(() {});
+                  },
+                  validator: (value) {
+                    if (value.toString().isEmpty) {
+                      return 'URL is Required';
+                    } else if (value.toString().contains(' ')) {
+                      return 'Please Remove Spaces';
+                    }
+                    return null;
+                  },
+                  onSaved: (input) {
+                    exercise = Exercise(
+                      exerciseId: exercise!.exerciseId,
+                      name: exercise!.name,
+                      timeSeconds: exercise!.timeSeconds,
+                      restTime: exercise!.restTime,
+                      exerciseImageLink: input.toString(),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
     }
 
     Widget buildExerciseName() {
@@ -54,7 +145,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
-            initialValue: isEdit ? _exercise!.name : '',
+            initialValue: isEdit! ? _exercise!.name : '',
             decoration: InputDecoration(
               hintText: 'Exercise Name',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
@@ -72,11 +163,12 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
             },
             onSaved: (input) {
               exercise = Exercise(
-                  exerciseId: exercise.exerciseId,
-                  name: input.toString(),
-                  timeSeconds: exercise.timeSeconds,
-                  restTime: exercise.restTime,
-                  exerciseImageLink: exercise.exerciseImageLink);
+                exerciseId: exercise!.exerciseId,
+                name: input.toString(),
+                timeSeconds: exercise!.timeSeconds,
+                restTime: exercise!.restTime,
+                exerciseImageLink: exercise!.exerciseImageLink,
+              );
             },
           ),
         ),
@@ -90,7 +182,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.white),
         title: Text(
-          isEdit ? 'Edit Your Exercise' : 'Add A Exercise',
+          isEdit! ? 'Edit Your Exercise' : 'Add A Exercise',
           maxLines: 2,
           textAlign: TextAlign.start,
           style: TextStyle(
@@ -112,6 +204,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                 SizedBox(
                   height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
                 ),
+                buildAddImage(),
                 buildExerciseName(),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
