@@ -185,10 +185,10 @@ class _ExercisePageState extends State<ExercisePage> {
                   ),
                 ),
                 SizedBox(
-                  height: (_mediaQuery.size.height - _appBarHeight) * 0.05,
+                  height: (_mediaQuery.size.height - _appBarHeight) * 0.2,
                 ),
                 Container(
-                  height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                  height: (_mediaQuery.size.height - _appBarHeight) * 0.045,
                   width: double.infinity,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -215,9 +215,7 @@ class _ExercisePageState extends State<ExercisePage> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: (_mediaQuery.size.height - _appBarHeight) * 0.15,
-                ),
+                SizedBox(),
                 Container(
                   height: (_mediaQuery.size.height - _appBarHeight) * 0.2,
                   width: double.infinity,
@@ -230,7 +228,7 @@ class _ExercisePageState extends State<ExercisePage> {
                         Expanded(
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  primary: _theme.primaryColor),
+                                  primary: _theme.highlightColor),
                               onPressed: () {
                                 widget.goToPrevious();
                               },
@@ -242,7 +240,7 @@ class _ExercisePageState extends State<ExercisePage> {
                         Expanded(
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  primary: _theme.primaryColor),
+                                  primary: _theme.highlightColor),
                               onPressed: () {
                                 widget.goToNext();
                               },

@@ -34,7 +34,7 @@ class EndWorkout extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
-                  'Good Work!',
+                  'Looking Good',
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Roboto',
