@@ -24,7 +24,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   Workout? workout;
 
   @override
-  void didChangeDependencies() {
+  void initState() {
     _imageUrlFocusNode.addListener(_updateImageUrl);
     workout = ModalRoute.of(context)?.settings.arguments as Workout?;
 
@@ -52,7 +52,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             exercises: workout!.exercises,
           );
 
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override
@@ -102,9 +102,13 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         exercises: exercises,
       );
 
-      await Provider.of<Workouts>(context, listen: false)
-          .addWorkout(newWorkout!)
-          .then((_) => Navigator.of(context).pop());
+      workout != null
+          ? await Provider.of<Workouts>(context, listen: false)
+              .updateWorkout(newWorkout!)
+              .then((_) => Navigator.of(context).pop())
+          : await Provider.of<Workouts>(context, listen: false)
+              .addWorkout(newWorkout!)
+              .then((_) => Navigator.of(context).pop());
     }
 
     Widget buildAddImage() {
@@ -123,7 +127,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 child: _imageUrlController.text.isEmpty
                     ? Image.asset('assets/images/UploadImage.png')
                     : FadeInImage(
-                        image: AssetImage(_imageUrlController.text),
+                        image: NetworkImage(_imageUrlController.text),
                         placeholderErrorBuilder: (context, _, __) =>
                             Image.asset(
                           'assets/images/loading-gif.gif',
@@ -450,12 +454,11 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 ),
                 child: ListView.builder(
                   itemBuilder: (ctx, index) => ExerciseTiles(
-                    exercises[index],
-                    _mediaQuery.size.width * 0.9,
-                    true,
-                    deleteExercise,
-                    exercises
-                  ),
+                      exercises[index],
+                      _mediaQuery.size.width * 0.9,
+                      true,
+                      deleteExercise,
+                      exercises),
                   itemCount: exercises.length,
                 ),
               ),

@@ -36,6 +36,7 @@ class WorkoutTile extends StatelessWidget {
                 fit: BoxFit.contain,
               ),
               fit: BoxFit.cover,
+              //change
               image: workout.bannerImage.isEmpty
                   ? AssetImage('assets/images/BannerImageUnavailable.png')
                   : AssetImage(workout.bannerImage),

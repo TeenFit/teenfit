@@ -141,6 +141,14 @@ class Workouts with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateWorkout(Workout workout) async {
+    int index = _workouts
+        .indexWhere((workouT) => workouT.workoutId == workout.workoutId);
+    _workouts.removeWhere((workouT) => workouT.workoutId == workout.workoutId);
+    _workouts.insert(index, workout);
+    notifyListeners();
+  }
+
   Future<void> deleteWorkout(String workoutId) async {
     _workouts.removeWhere((workout) => workout.workoutId == workoutId);
     notifyListeners();
