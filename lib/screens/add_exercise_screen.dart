@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import '../providers/exercise.dart';
 import 'package:uuid/uuid.dart';
 
-import '../providers/exercise.dart';
-
 class AddExerciseScreen extends StatefulWidget {
   static const routeName = '/add-exercise-screen';
 
@@ -17,25 +15,27 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
   final _imageUrlFocusNode = FocusNode();
   var uuid = Uuid();
   List<Exercise>? exercises;
-  bool? isEdit;
+  Map? exerciseProv;
+
   Exercise? _exercise;
   Exercise? exercise;
 
   @override
   void didChangeDependencies() {
-    Map exerciseProv = ModalRoute.of(context)!.settings.arguments as Map;
+    exerciseProv = ModalRoute.of(context)!.settings.arguments as Map;
 
-    exercises = exerciseProv['exercises'];
-    isEdit = exerciseProv['edit'];
-    _exercise = exerciseProv['exercise'];
+    exercises = exerciseProv!['exercises'];
 
-    exercise = isEdit!
+    _exercise = exerciseProv!['exercise'];
+
+    exercise = exerciseProv!['edit']
         ? Exercise(
             exerciseId: _exercise!.exerciseId,
             name: _exercise!.name,
             timeSeconds: _exercise!.timeSeconds,
             restTime: _exercise!.restTime,
-            exerciseImageLink: _exercise!.exerciseImageLink,
+            exerciseImageLink: _imageUrlController.text =
+                _exercise!.exerciseImageLink,
           )
         : Exercise(
             exerciseId: uuid.v1(),
@@ -44,10 +44,23 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
             sets: null,
             timeSeconds: null,
             restTime: null,
-            exerciseImageLink: _imageUrlController.text =
-                exercise!.exerciseImageLink,
+            exerciseImageLink: '',
           );
     super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _imageUrlFocusNode.removeListener(_updateImageUrl);
+    _imageUrlFocusNode.dispose();
+    _imageUrlController.dispose();
+    super.dispose();
+  }
+
+  void _updateImageUrl() {
+    if (!_imageUrlFocusNode.hasFocus) {
+      setState(() {});
+    }
   }
 
   @override
@@ -57,9 +70,18 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     final _appBarHeight =
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
+    bool isEdit = exerciseProv!['edit'];
+
     void addExercise() {
       exercises!.insert(0, exercise!);
       Navigator.of(context).pop();
+    }
+
+    void updateExercise() {
+      int index =
+          exercises!.indexWhere((element) => element.exerciseId == exercise!.exerciseId);
+      exercises!.removeAt(index);
+      exercises!.insert(index, exercise!);
     }
 
     Widget buildAddImage() {
@@ -75,7 +97,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
               Container(
                 height: _mediaQuery.size.height * 0.28,
                 width: _mediaQuery.size.width,
-                child: _imageUrlController.text.isEmpty
+                child: isEdit == false
                     ? Image.asset('assets/images/UploadImage.png')
                     : FadeInImage(
                         image: NetworkImage(_imageUrlController.text),
@@ -98,7 +120,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                 width: double.infinity,
                 height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                 child: TextFormField(
-                  initialValue: isEdit! ? _exercise!.exerciseImageLink : '',
+                  initialValue: isEdit ? _exercise!.exerciseImageLink : '',
                   focusNode: _imageUrlFocusNode,
                   decoration: InputDecoration(
                     hintText: 'Image URL',
@@ -145,7 +167,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
-            initialValue: isEdit! ? _exercise!.name : '',
+            initialValue: isEdit ? _exercise!.name : '',
             decoration: InputDecoration(
               hintText: 'Exercise Name',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
@@ -182,7 +204,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.white),
         title: Text(
-          isEdit! ? 'Edit Your Exercise' : 'Add A Exercise',
+          isEdit ? 'Edit Your Exercise' : 'Add A Exercise',
           maxLines: 2,
           textAlign: TextAlign.start,
           style: TextStyle(
