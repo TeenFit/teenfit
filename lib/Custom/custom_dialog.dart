@@ -8,11 +8,11 @@ class CustomDialogBox extends StatefulWidget {
   final String title;
   final String description;
   final String img;
-  final String navigationYesRouteName;
+  final String dialogOrganizerId;
   final arguments;
 
   const CustomDialogBox(this.title, this.description, this.img,
-      this.navigationYesRouteName, this.arguments);
+      this.dialogOrganizerId, this.arguments);
 
   @override
   _CustomDialogBoxState createState() => _CustomDialogBoxState();
@@ -82,18 +82,25 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                     ),
                     TextButton(
                       onPressed: () {
-                        if (widget.navigationYesRouteName == '/workout-page') {
-                          Navigator.of(context).popUntil(ModalRoute.withName(
-                              widget.navigationYesRouteName));
-                        } else if (widget.navigationYesRouteName ==
+                        if (widget.dialogOrganizerId == '/workout-page') {
+                          Navigator.of(context).popUntil(
+                              ModalRoute.withName(widget.dialogOrganizerId));
+                        } else if (widget.dialogOrganizerId ==
                             '/exercise-screen') {
                           Navigator.of(context).pushNamed(
-                              widget.navigationYesRouteName,
+                              widget.dialogOrganizerId,
                               arguments: widget.arguments);
-                        } else if (widget.navigationYesRouteName == 'pop') {
+                        } else if (widget.dialogOrganizerId == 'pop') {
                           Provider.of<Workouts>(context, listen: false)
                               .deleteWorkout(widget.arguments.toString())
                               .then((_) => Navigator.of(context).pop());
+                        } else if (widget.dialogOrganizerId ==
+                            'delete-exercise') {
+                          Function delete = widget.arguments['delete'];
+                          String id = widget.arguments['id'];
+
+                          delete(id);
+                          Navigator.of(context).pop();
                         }
                       },
                       child: Text(

@@ -20,7 +20,7 @@ class Workouts with ChangeNotifier {
       bannerImage: 'assets/images/BannerImageUnavailable.png',
       exercises: [
         Exercise(
-          exerciseId: 'e5',
+          exerciseId: 'e1',
           name: 'Wide Pushups',
           reps: 10,
           sets: 3,
@@ -29,7 +29,7 @@ class Workouts with ChangeNotifier {
               'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
         ),
         Exercise(
-          exerciseId: 'e5',
+          exerciseId: 'e2',
           name: 'Wide Pushups',
           reps: 10,
           sets: 3,
@@ -38,7 +38,7 @@ class Workouts with ChangeNotifier {
               'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
         ),
         Exercise(
-          exerciseId: 'e5',
+          exerciseId: 'e3',
           name: 'Wide Pushups',
           reps: 10,
           sets: 3,
@@ -47,7 +47,7 @@ class Workouts with ChangeNotifier {
               'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
         ),
         Exercise(
-          exerciseId: 'e5',
+          exerciseId: 'e4',
           name: 'Wide Pushups',
           reps: 10,
           sets: 3,

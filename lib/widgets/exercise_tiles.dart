@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../Custom/custom_dialog.dart';
 import '../screens/add_exercise_screen.dart';
 import '../providers/exercise.dart';
 
@@ -81,7 +82,19 @@ class ExerciseTiles extends StatelessWidget {
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    delete(exercise.exerciseId);
+                                    showDialog(
+                                      context: context,
+                                      builder: (ctx) => CustomDialogBox(
+                                        'Are You Sure?',
+                                        'This Action Will Delete The Exercise And It Can Never Be Recoverd',
+                                        'assets/images/trash.png',
+                                        'delete-exercise',
+                                        {
+                                          'delete': delete,
+                                          'id': exercise.exerciseId,
+                                        },
+                                      ),
+                                    );
                                   },
                                   icon: Icon(Icons.delete),
                                   color: Colors.red,
