@@ -21,6 +21,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
   Exercise? _exercise;
   Exercise? exercise;
+  bool switchOnOf = false;
 
   @override
   void didChangeDependencies() {
@@ -85,7 +86,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
     bool isEdit = exerciseProv!['edit'];
-    bool switchOnOf = false;
 
     Widget buildAddImage() {
       return Padding(
@@ -204,14 +204,17 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       return Center(
         child: Container(
           child: FlutterSwitch(
-            width: _mediaQuery.size.width * 0.2,
-            height: _mediaQuery.size.height * 0.08,
-            valueFontSize: _mediaQuery.size.height * 0.05,
-            toggleSize: _mediaQuery.size.height * 0.0,
+            width: _mediaQuery.size.width * 0.45,
+            height: _mediaQuery.size.height * 0.06,
+            valueFontSize: _mediaQuery.size.height * 0.03,
+            toggleSize: _mediaQuery.size.height * 0.04,
             value: switchOnOf,
+            activeText: 'Time',
+            inactiveText: 'Reps',
             borderRadius: 25,
             padding: 10,
             showOnOff: true,
+            disabled: false,
             onToggle: (status) {
               setState(() {
                 switchOnOf = status;
