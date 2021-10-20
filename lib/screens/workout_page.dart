@@ -230,7 +230,7 @@ class WorkoutPage extends StatelessWidget {
                         context: context,
                         builder: (ctx) => CustomDialogBox(
                             'Are You Ready?',
-                            'Grab a Water Bottle, Warmup, Lets Do This',
+                            'Grab a water bottle, warmup, lets do this',
                             'assets/images/water_bottle.jpg',
                             ExerciseScreen.routeName,
                             workout.exercises));

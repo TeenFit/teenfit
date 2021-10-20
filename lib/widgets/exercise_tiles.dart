@@ -86,7 +86,7 @@ class ExerciseTiles extends StatelessWidget {
                                       context: context,
                                       builder: (ctx) => CustomDialogBox(
                                         'Are You Sure?',
-                                        'This Action Will Delete The Exercise And It Can Never Be Recoverd',
+                                        'This action will delete the exercise and it can never be recoverd',
                                         'assets/images/trash.png',
                                         'delete-exercise',
                                         {

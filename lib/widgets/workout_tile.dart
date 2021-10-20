@@ -109,7 +109,7 @@ class WorkoutTile extends StatelessWidget {
                             context: context,
                             builder: (ctx) => CustomDialogBox(
                                 'Are You Sure?',
-                                'This Action Will Delete The Workout And It Can Never Be Recoverd',
+                                'This action will delete the workout and it can never be recoverd',
                                 'assets/images/trash.png',
                                 'pop',
                                 workout.workoutId),
