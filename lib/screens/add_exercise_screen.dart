@@ -39,6 +39,8 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
             restTime: _exercise!.restTime,
             exerciseImageLink: _imageUrlController.text =
                 _exercise!.exerciseImageLink,
+            sets: _exercise!.sets,
+            reps: _exercise!.reps,
           )
         : Exercise(
             exerciseId: uuid.v1(),
@@ -86,6 +88,12 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
     bool isEdit = exerciseProv!['edit'];
+
+    void _submit() {
+      if (!_formKey4.currentState!.validate()) {
+        return;
+      }
+    }
 
     Widget buildAddImage() {
       return Padding(
@@ -153,6 +161,8 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                       timeSeconds: exercise!.timeSeconds,
                       restTime: exercise!.restTime,
                       exerciseImageLink: input.toString(),
+                      reps: exercise!.reps,
+                      sets: exercise!.sets,
                     );
                   },
                 ),
@@ -178,7 +188,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
             style: TextStyle(
               fontSize: 20,
             ),
-            keyboardType: TextInputType.url,
             textInputAction: TextInputAction.next,
             validator: (value) {
               if (value.toString().isEmpty) {
@@ -208,6 +217,10 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
             height: _mediaQuery.size.height * 0.06,
             valueFontSize: _mediaQuery.size.height * 0.03,
             toggleSize: _mediaQuery.size.height * 0.04,
+            activeColor: _theme.primaryColor,
+            inactiveColor: _theme.shadowColor,
+            activeTextColor: Colors.white,
+            inactiveTextColor: Colors.white,
             value: switchOnOf,
             activeText: 'Time',
             inactiveText: 'Reps',
@@ -225,7 +238,61 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       );
     }
 
+    Widget buildRepsOrTime() {
+      return Container(
+        height: _mediaQuery.size.height * 0.2,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: switchOnOf
+              ? [
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Container(
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                      width: _mediaQuery.size.width,
+                      child: TextFormField(
+                        initialValue: isEdit
+                            ? _exercise!.timeSeconds == null
+                                ? ''
+                                : _exercise!.timeSeconds.toString()
+                            : '',
+                        decoration: InputDecoration(
+                          hintText: 'Exercise Time (sec)',
+                          hintStyle: TextStyle(
+                              fontSize: _mediaQuery.size.height * 0.02),
+                        ),
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
+                        validator: (value) {
+                          if (!int.parse(value.toString()).isNaN) {
+                            return 'Whole Numbers Only';
+                          }
+                          return null;
+                        },
+                        onSaved: (input) {
+                          exercise = Exercise(
+                            exerciseId: exercise!.exerciseId,
+                            name: exercise!.name,
+                            timeSeconds: exercise!.timeSeconds,
+                            restTime: exercise!.restTime,
+                            exerciseImageLink: exercise!.exerciseImageLink,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ]
+              : [],
+        ),
+      );
+    }
+
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: _theme.highlightColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -257,6 +324,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                 buildAddImage(),
                 buildExerciseName(),
                 buildSwitch(),
+                buildRepsOrTime(),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Container(

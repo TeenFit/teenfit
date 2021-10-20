@@ -37,7 +37,7 @@ class WorkoutPage extends StatelessWidget {
                   workout.bannerImage.isEmpty
                       ? Image.asset(
                           'assets/images/BannerImageUnavailable.png',
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         )
                       : FadeInImage(
                           placeholder:
@@ -45,13 +45,13 @@ class WorkoutPage extends StatelessWidget {
                           placeholderErrorBuilder: (context, _, __) =>
                               Image.asset(
                             'assets/images/loading-gif.gif',
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                           ),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                           image: NetworkImage(workout.bannerImage),
                           imageErrorBuilder: (image, _, __) => Image.asset(
                             'assets/images/ImageUploadError.png',
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                           ),
                         ),
                   FittedBox(

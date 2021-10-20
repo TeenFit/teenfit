@@ -469,6 +469,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: _theme.highlightColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
