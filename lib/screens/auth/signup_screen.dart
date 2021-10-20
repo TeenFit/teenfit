@@ -35,7 +35,9 @@ class _SignupScreenState extends State<SignupScreen> {
     String _password = 'password';
 
     void _submit() async {
-      String _errorMessage = '';
+      if (!_formkey1.currentState!.validate()) {
+        return;
+      }
 
       _formkey1.currentState!.save();
       print(_email);
@@ -50,13 +52,15 @@ class _SignupScreenState extends State<SignupScreen> {
           horizontal: (_mediaQuery.size.width * 0.09),
         ),
         child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-          ),
-          height: (_mediaQuery.size.height - _appBarHieght) * 0.075,
+          height: (_mediaQuery.size.height - _appBarHieght) * 0.1,
           width: _mediaQuery.size.width,
           child: TextFormField(
             decoration: InputDecoration(
+              helperText: ' ',
+              contentPadding: EdgeInsets.symmetric(
+                vertical: _mediaQuery.size.height * 0.05,
+                horizontal: _mediaQuery.size.height * 0.015,
+              ),
               fillColor: Colors.white,
               filled: true,
               errorMaxLines: 1,
@@ -65,12 +69,15 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               labelText: ' Email',
               labelStyle: TextStyle(
-                fontSize: _mediaQuery.size.height * 0.03,
+                fontSize: _mediaQuery.size.height * 0.023,
                 fontWeight: FontWeight.w800,
               ),
+              errorStyle: TextStyle(
+                  fontSize: _mediaQuery.size.height * 0.016,
+                  fontWeight: FontWeight.w800),
             ),
             style: TextStyle(
-              fontSize: _mediaQuery.size.height * 0.028,
+              fontSize: _mediaQuery.size.height * 0.023,
             ),
             textInputAction: TextInputAction.next,
             validator: (value) {
@@ -97,27 +104,23 @@ class _SignupScreenState extends State<SignupScreen> {
           horizontal: (_mediaQuery.size.width * 0.09),
         ),
         child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-          ),
-          height: (_mediaQuery.size.height - _appBarHieght) * 0.075,
+          height: (_mediaQuery.size.height - _appBarHieght) * 0.1,
           width: _mediaQuery.size.width,
           child: TextFormField(
             controller: textEditingController,
             obscureText: hidePass,
             decoration: InputDecoration(
+              helperText: ' ',
+              contentPadding: EdgeInsets.symmetric(
+                vertical: _mediaQuery.size.height * 0.05,
+                horizontal: _mediaQuery.size.height * 0.015,
+              ),
               suffixIcon: IconButton(
                 icon: Icon(hidePass ? Icons.visibility_off : Icons.visibility),
                 onPressed: () {
-                  if (hidePass == true) {
-                    setState(() {
-                      hidePass = false;
-                    });
-                  } else {
-                    setState(() {
-                      hidePass = true;
-                    });
-                  }
+                  setState(() {
+                    hidePass = !hidePass;
+                  });
                 },
               ),
               fillColor: Colors.white,
@@ -128,11 +131,14 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               labelText: ' Password',
               labelStyle: TextStyle(
-                  fontSize: _mediaQuery.size.height * 0.03,
+                  fontSize: _mediaQuery.size.height * 0.023,
+                  fontWeight: FontWeight.w800),
+              errorStyle: TextStyle(
+                  fontSize: _mediaQuery.size.height * 0.016,
                   fontWeight: FontWeight.w800),
             ),
             style: TextStyle(
-              fontSize: _mediaQuery.size.height * 0.028,
+              fontSize: _mediaQuery.size.height * 0.023,
             ),
             textInputAction: TextInputAction.next,
             validator: (value) {
@@ -157,42 +163,41 @@ class _SignupScreenState extends State<SignupScreen> {
           horizontal: (_mediaQuery.size.width * 0.09),
         ),
         child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-          ),
-          height: (_mediaQuery.size.height - _appBarHieght) * 0.075,
+          height: (_mediaQuery.size.height - _appBarHieght) * 0.1,
           width: _mediaQuery.size.width,
           child: TextFormField(
-            controller: textEditingController,
-            obscureText: hidePass,
+            obscureText: confirmPassHide,
             decoration: InputDecoration(
-              suffixIcon: IconButton(
-                icon: Icon(hidePass ? Icons.visibility_off : Icons.visibility),
-                onPressed: () {
-                  if (confirmPassHide == true) {
+                helperText: ' ',
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: _mediaQuery.size.height * 0.05,
+                  horizontal: _mediaQuery.size.height * 0.015,
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(confirmPassHide
+                      ? Icons.visibility_off
+                      : Icons.visibility),
+                  onPressed: () {
                     setState(() {
-                      confirmPassHide = false;
+                      confirmPassHide = !confirmPassHide;
                     });
-                  } else {
-                    setState(() {
-                      confirmPassHide = true;
-                    });
-                  }
-                },
-              ),
-              fillColor: Colors.white,
-              filled: true,
-              errorMaxLines: 1,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25),
-              ),
-              labelText: ' Confirm Password',
-              labelStyle: TextStyle(
-                  fontSize: _mediaQuery.size.height * 0.03,
-                  fontWeight: FontWeight.w800),
-            ),
+                  },
+                ),
+                fillColor: Colors.white,
+                filled: true,
+                errorMaxLines: 1,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                labelText: ' Confirm Password',
+                labelStyle: TextStyle(
+                    fontSize: _mediaQuery.size.height * 0.023,
+                    fontWeight: FontWeight.w800),
+                errorStyle: TextStyle(
+                    fontSize: _mediaQuery.size.height * 0.016,
+                    fontWeight: FontWeight.w800)),
             style: TextStyle(
-              fontSize: _mediaQuery.size.height * 0.028,
+              fontSize: _mediaQuery.size.height * 0.023,
             ),
             textInputAction: TextInputAction.done,
             validator: (value) {
@@ -238,19 +243,19 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: (_mediaQuery.size.height - _appBarHieght) * 0.29,
+                    height: (_mediaQuery.size.height - _appBarHieght) * 0.25,
                   ),
                   buildEmailField(),
                   SizedBox(
-                    height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
+                    height: (_mediaQuery.size.height - _appBarHieght) * 0.025,
                   ),
                   buildPasswordField(),
                   SizedBox(
-                    height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
+                    height: (_mediaQuery.size.height - _appBarHieght) * 0.025,
                   ),
                   buildConfirmPasswordField(),
                   SizedBox(
-                    height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
+                    height: (_mediaQuery.size.height - _appBarHieght) * 0.025,
                   ),
                   //SignUp Btn
                   Padding(
@@ -305,7 +310,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: (_mediaQuery.size.height - _appBarHieght) * 0.15,
+                    height: (_mediaQuery.size.height - _appBarHieght) * 0.19,
                   ),
                   //switch screens
                   Padding(

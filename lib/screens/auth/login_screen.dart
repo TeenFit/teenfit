@@ -40,6 +40,11 @@ class _LoginScreenState extends State<LoginScreen> {
       return TextFormField(
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
+          helperText: ' ',
+          contentPadding: EdgeInsets.symmetric(
+            vertical: _mediaQuery.size.height * 0.05,
+            horizontal: _mediaQuery.size.height * 0.015,
+          ),
           fillColor: Colors.white,
           filled: true,
           errorMaxLines: 1,
@@ -47,10 +52,15 @@ class _LoginScreenState extends State<LoginScreen> {
             borderRadius: BorderRadius.circular(25),
           ),
           labelText: ' Email',
-          labelStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
+          labelStyle: TextStyle(
+              fontSize: _mediaQuery.size.height * 0.023,
+              fontWeight: FontWeight.w800),
+          errorStyle: TextStyle(
+              fontSize: _mediaQuery.size.height * 0.016,
+              fontWeight: FontWeight.w800),
         ),
         style: TextStyle(
-          fontSize: 20,
+          fontSize: _mediaQuery.size.height * 0.023,
         ),
         textInputAction: TextInputAction.next,
         validator: (value) {
@@ -73,6 +83,11 @@ class _LoginScreenState extends State<LoginScreen> {
       return TextFormField(
         obscureText: hidePass,
         decoration: InputDecoration(
+          helperText: ' ',
+          contentPadding: EdgeInsets.symmetric(
+            vertical: _mediaQuery.size.height * 0.05,
+            horizontal: _mediaQuery.size.height * 0.015,
+          ),
           suffixIcon: IconButton(
             icon: Icon(hidePass ? Icons.visibility_off : Icons.visibility),
             onPressed: () {
@@ -94,10 +109,15 @@ class _LoginScreenState extends State<LoginScreen> {
             borderRadius: BorderRadius.circular(25),
           ),
           labelText: ' Password',
-          labelStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.w800),
+          labelStyle: TextStyle(
+              fontSize: _mediaQuery.size.height * 0.023,
+              fontWeight: FontWeight.w800),
+          errorStyle: TextStyle(
+              fontSize: _mediaQuery.size.height * 0.016,
+              fontWeight: FontWeight.w800),
         ),
         style: TextStyle(
-          fontSize: 20,
+          fontSize: _mediaQuery.size.height * 0.023,
         ),
         textInputAction: TextInputAction.done,
         validator: (value) {
@@ -146,33 +166,27 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: (_mediaQuery.size.height - _appBarHieght) * 0.29,
+                    height: (_mediaQuery.size.height - _appBarHieght) * 0.26,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: (_mediaQuery.size.width * 0.09),
                     ),
                     child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      height: (_mediaQuery.size.height - _appBarHieght) * 0.075,
+                      height: (_mediaQuery.size.height - _appBarHieght) * 0.1,
                       width: _mediaQuery.size.width,
                       child: buildEmailField(),
                     ),
                   ),
                   SizedBox(
-                    height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
+                    height: (_mediaQuery.size.height - _appBarHieght) * 0.025,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: (_mediaQuery.size.width * 0.09),
                     ),
                     child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      height: (_mediaQuery.size.height - _appBarHieght) * 0.075,
+                      height: (_mediaQuery.size.height - _appBarHieght) * 0.1,
                       width: _mediaQuery.size.width,
                       child: buildPasswordField(),
                     ),
@@ -201,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
+                    height: (_mediaQuery.size.height - _appBarHieght) * 0.045,
                   ),
                   //Login Btn
                   Padding(
