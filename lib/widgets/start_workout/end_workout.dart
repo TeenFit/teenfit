@@ -3,6 +3,10 @@ import '/Custom/custom_dialog.dart';
 import '/screens/workout_page.dart';
 
 class EndWorkout extends StatelessWidget {
+  final Function goToFirst;
+
+  EndWorkout(this.goToFirst);
+
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
@@ -66,10 +70,10 @@ class EndWorkout extends StatelessWidget {
                       context: context,
                       builder: (ctx) => CustomDialogBox(
                           'End Workout',
-                          'Are You Sure You Want To End Your Workout?',
+                          'Are you sure you want to end your workout?',
                           'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
-                          WorkoutPage.routeName,
-                          ''));
+                          '/workout-page-first',
+                          {'page1': goToFirst}));
                 },
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

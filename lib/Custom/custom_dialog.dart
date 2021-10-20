@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'constants.dart';
 import 'package:provider/provider.dart';
+
+import '../screens/workout_page.dart';
 import '../providers/workouts.dart';
 
 class CustomDialogBox extends StatefulWidget {
@@ -73,7 +74,13 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        if (widget.dialogOrganizerId == '/workout-page-first') {
+                          Function goToFirst = widget.arguments['page1'];
+                          goToFirst();
+                          Navigator.of(context).pop();
+                        } else {
+                          Navigator.of(context).pop();
+                        }
                       },
                       child: Text(
                         'No',
@@ -85,6 +92,10 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                         if (widget.dialogOrganizerId == '/workout-page') {
                           Navigator.of(context).popUntil(
                               ModalRoute.withName(widget.dialogOrganizerId));
+                        } else if (widget.dialogOrganizerId ==
+                            '/workout-page-first') {
+                          Navigator.of(context).popUntil(
+                              ModalRoute.withName(WorkoutPage.routeName));
                         } else if (widget.dialogOrganizerId ==
                             '/exercise-screen') {
                           Navigator.of(context).pushNamed(
