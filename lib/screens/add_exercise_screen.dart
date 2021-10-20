@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_switch/flutter_switch.dart';
+
 import '../providers/exercise.dart';
 import 'package:uuid/uuid.dart';
 
@@ -63,6 +65,18 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     }
   }
 
+  void addExercise() {
+    exercises!.insert(0, exercise!);
+    Navigator.of(context).pop();
+  }
+
+  void updateExercise() {
+    int index = exercises!
+        .indexWhere((element) => element.exerciseId == exercise!.exerciseId);
+    exercises!.removeAt(index);
+    exercises!.insert(index, exercise!);
+  }
+
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
@@ -71,18 +85,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
     bool isEdit = exerciseProv!['edit'];
-
-    void addExercise() {
-      exercises!.insert(0, exercise!);
-      Navigator.of(context).pop();
-    }
-
-    void updateExercise() {
-      int index =
-          exercises!.indexWhere((element) => element.exerciseId == exercise!.exerciseId);
-      exercises!.removeAt(index);
-      exercises!.insert(index, exercise!);
-    }
+    bool switchOnOf = false;
 
     Widget buildAddImage() {
       return Padding(
@@ -197,6 +200,28 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       );
     }
 
+    Widget buildSwitch() {
+      return Center(
+        child: Container(
+          child: FlutterSwitch(
+            width: _mediaQuery.size.width * 0.2,
+            height: _mediaQuery.size.height * 0.08,
+            valueFontSize: _mediaQuery.size.height * 0.05,
+            toggleSize: _mediaQuery.size.height * 0.0,
+            value: switchOnOf,
+            borderRadius: 25,
+            padding: 10,
+            showOnOff: true,
+            onToggle: (status) {
+              setState(() {
+                switchOnOf = status;
+              });
+            },
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: _theme.highlightColor,
       appBar: AppBar(
@@ -228,6 +253,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                 ),
                 buildAddImage(),
                 buildExerciseName(),
+                buildSwitch(),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Container(

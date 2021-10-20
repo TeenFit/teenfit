@@ -57,7 +57,7 @@ class ExerciseTiles extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'PTSans',
-                        fontSize: _mediaQuery.size.height * 0.035,
+                        fontSize: _mediaQuery.size.height * 0.025,
                         letterSpacing: 1,
                       ),
                     ),
