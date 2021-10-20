@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
+import './screens/auth/error_screen.dart';
+import './screens/auth/loading.dart';
 import './screens/add_exercise_screen.dart';
 import 'screens/create_workout.dart';
 import 'screens/my_workouts.dart';
@@ -23,6 +26,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -49,7 +54,22 @@ class MyApp extends StatelessWidget {
             cardColor: Color(0xffD3D3D3),
             shadowColor: Color(0xff878787),
           ),
-          home: IntroPage(),
+          home: FutureBuilder(
+            // Initialize FlutterFire:
+            future: _initialization,
+            builder: (context, snapshot) {
+              // Check for errors
+              if (snapshot.hasError) {
+                return ErrorScreen();
+              }
+              // Once complete, show your application
+              if (snapshot.connectionState == ConnectionState.done) {
+                return IntroPage();
+              }
+              // Otherwise, show something whilst waiting for initialization to complete
+              return LoadingScreen();
+            },
+          ),
           routes: {
             IntroPage.routeName: (ctx) => IntroPage(),
             LoginScreen.routeName: (ctx) => LoginScreen(),
