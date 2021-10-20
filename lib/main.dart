@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import './screens/auth/error_screen.dart';
 import './screens/auth/loading.dart';
@@ -25,8 +26,14 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  bool? isAuth;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +71,20 @@ class MyApp extends StatelessWidget {
               }
               // Once complete, show your application
               if (snapshot.connectionState == ConnectionState.done) {
-                return IntroPage();
+                FirebaseAuth.instance.authStateChanges().listen((User? user) {
+                  if (user == null) {
+                    print('user is signed out');
+                    setState(() {
+                      isAuth = false;
+                    });
+                  } else {
+                    setState(() {
+                      isAuth = true;
+                    });
+                  }
+                });
+
+                return isAuth! ? HomeScreen() : IntroPage();
               }
               // Otherwise, show something whilst waiting for initialization to complete
               return LoadingScreen();
