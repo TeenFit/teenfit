@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
             cardColor: Color(0xffD3D3D3),
             shadowColor: Color(0xff878787),
           ),
-          home: HomeScreen(),
+          home: IntroPage(),
           routes: {
             IntroPage.routeName: (ctx) => IntroPage(),
             LoginScreen.routeName: (ctx) => LoginScreen(),

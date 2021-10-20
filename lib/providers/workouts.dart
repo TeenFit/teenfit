@@ -69,7 +69,7 @@ class Workouts with ChangeNotifier {
     Workout(
       creatorName: 'Muqeeth Khan',
       workoutId: 'w2',
-      creatorId: 'UID',
+      creatorId: 'uid',
       workoutName: 'Dumbell Workout',
       instagram: '',
       facebook: '',

@@ -21,15 +21,19 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
   Exercise? _exercise;
   Exercise? exercise;
-  bool switchOnOf = false;
+  bool? switchOnOf;  
 
   @override
   void didChangeDependencies() {
     exerciseProv = ModalRoute.of(context)!.settings.arguments as Map;
 
+    
+
     exercises = exerciseProv!['exercises'];
 
     _exercise = exerciseProv!['exercise'];
+
+    switchOnOf = _exercise!.timeSeconds == null ? false : true;
 
     exercise = exerciseProv!['edit']
         ? Exercise(
@@ -70,6 +74,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
   void addExercise() {
     exercises!.insert(0, exercise!);
+    setState(() {});
     Navigator.of(context).pop();
   }
 
@@ -78,6 +83,15 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
         .indexWhere((element) => element.exerciseId == exercise!.exerciseId);
     exercises!.removeAt(index);
     exercises!.insert(index, exercise!);
+    setState(() {});
+    Navigator.of(context).pop();
+  }
+
+  bool isNumeric(String? s) {
+    if (s == null) {
+      return false;
+    }
+    return int.tryParse(s) == null;
   }
 
   @override
@@ -89,10 +103,34 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
     bool isEdit = exerciseProv!['edit'];
 
-    void _submit() {
+    Future<void> _submit() async {
       if (!_formKey4.currentState!.validate()) {
         return;
       }
+
+      _formKey4.currentState!.save();
+
+      exercise = switchOnOf!
+          ? Exercise(
+              exerciseId: exercise!.exerciseId,
+              name: exercise!.name,
+              exerciseImageLink: exercise!.exerciseImageLink,
+              sets: null,
+              reps: null,
+              timeSeconds: exercise!.timeSeconds,
+              restTime: exercise!.restTime,
+            )
+          : Exercise(
+              exerciseId: exercise!.exerciseId,
+              name: exercise!.name,
+              exerciseImageLink: exercise!.exerciseImageLink,
+              sets: exercise!.sets,
+              reps: exercise!.reps,
+              timeSeconds: null,
+              restTime: null,
+            );
+
+      isEdit ? updateExercise() : addExercise();
     }
 
     Widget buildAddImage() {
@@ -201,6 +239,8 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                 name: input.toString(),
                 timeSeconds: exercise!.timeSeconds,
                 restTime: exercise!.restTime,
+                sets: exercise!.sets,
+                reps: exercise!.reps,
                 exerciseImageLink: exercise!.exerciseImageLink,
               );
             },
@@ -221,7 +261,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
             inactiveColor: _theme.shadowColor,
             activeTextColor: Colors.white,
             inactiveTextColor: Colors.white,
-            value: switchOnOf,
+            value: switchOnOf!,
             activeText: 'Time',
             inactiveText: 'Reps',
             borderRadius: 25,
@@ -239,13 +279,13 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     }
 
     Widget buildRepsOrTime() {
-      return Container(
-        height: _mediaQuery.size.height * 0.2,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: switchOnOf
-              ? [
+      return switchOnOf!
+          ? Container(
+              height: _mediaQuery.size.height * 0.25,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Container(
@@ -268,8 +308,121 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                         keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.next,
                         validator: (value) {
-                          if (!int.parse(value.toString()).isNaN) {
-                            return 'Whole Numbers Only';
+                          if (value.toString().isEmpty) {
+                            return 'Needs A Value';
+                          } else if (isNumeric(value.toString())) {
+                            return 'Numbers Only';
+                          } else if (int.parse(value.toString()) == 0) {
+                            return 'Must be greater';
+                          } else if (int.parse(value.toString()) >= 301) {
+                            return '300 seconds is max';
+                          }
+                          return null;
+                        },
+                        onSaved: (input) {
+                          exercise = Exercise(
+                            exerciseId: exercise!.exerciseId,
+                            name: exercise!.name,
+                            timeSeconds: input.toString().isEmpty
+                                ? null
+                                : int.parse(input.toString()),
+                            restTime: exercise!.restTime,
+                            sets: exercise!.sets,
+                            reps: exercise!.reps,
+                            exerciseImageLink: exercise!.exerciseImageLink,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Container(
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                      width: _mediaQuery.size.width,
+                      child: TextFormField(
+                        initialValue: isEdit
+                            ? _exercise!.restTime == null
+                                ? ''
+                                : _exercise!.restTime.toString()
+                            : '',
+                        decoration: InputDecoration(
+                          hintText: 'Rest Time (sec)',
+                          hintStyle: TextStyle(
+                              fontSize: _mediaQuery.size.height * 0.02),
+                        ),
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
+                        validator: (value) {
+                          if (value.toString().isEmpty) {
+                            return 'Needs A Value';
+                          } else if (isNumeric(value.toString())) {
+                            return 'Numbers Only';
+                          } else if (int.parse(value.toString()) == 0) {
+                            return 'Must be greater';
+                          } else if (int.parse(value.toString()) >= 151) {
+                            return '150 seconds is max';
+                          }
+                          return null;
+                        },
+                        onSaved: (input) {
+                          exercise = Exercise(
+                            exerciseId: exercise!.exerciseId,
+                            name: exercise!.name,
+                            timeSeconds: exercise!.timeSeconds,
+                            restTime: input.toString().isEmpty
+                                ? null
+                                : int.parse(input.toString()),
+                            sets: exercise!.sets,
+                            reps: exercise!.reps,
+                            exerciseImageLink: exercise!.exerciseImageLink,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : Container(
+              height: _mediaQuery.size.height * 0.25,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Container(
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                      width: _mediaQuery.size.width,
+                      child: TextFormField(
+                        initialValue: isEdit
+                            ? _exercise!.sets == null
+                                ? ''
+                                : _exercise!.sets.toString()
+                            : '',
+                        decoration: InputDecoration(
+                          hintText: 'Sets',
+                          hintStyle: TextStyle(
+                              fontSize: _mediaQuery.size.height * 0.02),
+                        ),
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
+                        validator: (value) {
+                          if (value.toString().isEmpty) {
+                            return 'Needs A Value';
+                          } else if (isNumeric(value.toString())) {
+                            return 'Numbers Only';
+                          } else if (int.parse(value.toString()) == 0) {
+                            return 'Must be greater';
+                          } else if (int.parse(value.toString()) >= 11) {
+                            return '10 sets is max';
                           }
                           return null;
                         },
@@ -279,16 +432,68 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                             name: exercise!.name,
                             timeSeconds: exercise!.timeSeconds,
                             restTime: exercise!.restTime,
+                            sets: input.toString().isEmpty
+                                ? null
+                                : int.parse(input.toString()),
+                            reps: exercise!.reps,
                             exerciseImageLink: exercise!.exerciseImageLink,
                           );
                         },
                       ),
                     ),
                   ),
-                ]
-              : [],
-        ),
-      );
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Container(
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                      width: _mediaQuery.size.width,
+                      child: TextFormField(
+                        initialValue: isEdit
+                            ? _exercise!.reps == null
+                                ? ''
+                                : _exercise!.reps.toString()
+                            : '',
+                        decoration: InputDecoration(
+                          hintText: 'Reps',
+                          hintStyle: TextStyle(
+                              fontSize: _mediaQuery.size.height * 0.02),
+                        ),
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
+                        validator: (value) {
+                          if (value.toString().isEmpty) {
+                            return 'Needs A Value';
+                          } else if (isNumeric(value.toString())) {
+                            return 'Numbers Only';
+                          } else if (int.parse(value.toString()) == 0) {
+                            return 'Must be greater';
+                          } else if (int.parse(value.toString()) >= 26) {
+                            return '25 reps is max';
+                          }
+                          return null;
+                        },
+                        onSaved: (input) {
+                          exercise = Exercise(
+                            exerciseId: exercise!.exerciseId,
+                            name: exercise!.name,
+                            timeSeconds: exercise!.timeSeconds,
+                            restTime: exercise!.restTime,
+                            sets: exercise!.sets,
+                            reps: input.toString().isEmpty
+                                ? null
+                                : int.parse(input.toString()),
+                            exerciseImageLink: exercise!.exerciseImageLink,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
     }
 
     return Scaffold(
@@ -323,6 +528,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                 ),
                 buildAddImage(),
                 buildExerciseName(),
+                SizedBox(
+                  height: _mediaQuery.size.height * 0.03,
+                ),
                 buildSwitch(),
                 buildRepsOrTime(),
                 Padding(
@@ -346,7 +554,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                           fontSize: _mediaQuery.size.height * 0.03,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        _submit();
+                      },
                     ),
                   ),
                 )
