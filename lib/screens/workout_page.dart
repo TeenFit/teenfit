@@ -45,7 +45,7 @@ class WorkoutPage extends StatelessWidget {
                           placeholderErrorBuilder: (context, _, __) =>
                               Image.asset(
                             'assets/images/loading-gif.gif',
-                            fit: BoxFit.contain,
+                            fit: BoxFit.cover,
                           ),
                           fit: BoxFit.cover,
                           image: NetworkImage(workout.bannerImage),
