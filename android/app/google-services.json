@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "851298419338",
+    "project_id": "teenfit-c80dd",
+    "storage_bucket": "teenfit-c80dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851298419338:android:97dd936d5497cf8f10a373",
+        "android_client_info": {
+          "package_name": "com.muqeeth.teenfit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "851298419338-ou09hs4672d1213vb7n48aqts78adc4v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.muqeeth.teenfit",
+            "certificate_hash": "aa362cfc13b7a0f3844c5381bed3cfce47289099"
+          }
+        },
+        {
+          "client_id": "851298419338-fb4a556rg983mo7hua2vpeaj61udltds.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuK_dF8o8hhZ8ViODByJ9qYgjbJnREtW0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "851298419338-fb4a556rg983mo7hua2vpeaj61udltds.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
