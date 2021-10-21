@@ -35,7 +35,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool isInit = false;
   bool isLoading = true;
-  bool isAuth = true; 
 
   @override
   void didChangeDependencies() async {
@@ -45,7 +44,6 @@ class _MyAppState extends State<MyApp> {
       await Firebase.initializeApp();
     }
     setState(() {
-      isAuth = Provider.of<Auth>(context).isAuth();
       isInit = true;
       isLoading = false;
     });
@@ -84,7 +82,8 @@ class _MyAppState extends State<MyApp> {
           ),
           home: isLoading
               ? LoadingScreen()
-              : FutureBuilder(
+              : Consumer<Auth>(
+                  builder: (context, auth, _) => FutureBuilder(
                     // Initialize FlutterFire:
                     future: _initialization,
                     builder: (context, snapshot) {
@@ -94,13 +93,13 @@ class _MyAppState extends State<MyApp> {
                       }
                       // Once complete, show your application
                       if (snapshot.connectionState == ConnectionState.done) {
-                        return isAuth ? HomeScreen() : IntroPage();
+                        return auth.isAuth() ? HomeScreen() : IntroPage();
                       }
                       // Otherwise, show something whilst waiting for initialization to complete
                       return LoadingScreen();
                     },
                   ),
-                
+                ),
           routes: {
             IntroPage.routeName: (ctx) => IntroPage(),
             LoginScreen.routeName: (ctx) => LoginScreen(),
