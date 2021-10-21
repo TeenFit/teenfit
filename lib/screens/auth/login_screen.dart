@@ -16,7 +16,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool hidePass = true;
-  bool isLoading = false;
+
   bool _isLoading = false;
   final _formkey = GlobalKey<FormState>();
 
@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         _isLoading = true;
       });
-      
+
       try {
         await Provider.of<Auth>(context, listen: false)
             .login(
@@ -290,7 +290,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          child: isLoading
+                          child: _isLoading
                               ? CircularProgressIndicator()
                               : Row(
                                   mainAxisAlignment: MainAxisAlignment.center,

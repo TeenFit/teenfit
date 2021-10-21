@@ -25,14 +25,19 @@ class Auth with ChangeNotifier {
 
   Future<void> signup(String email, String password) async {
     try {
-      await FirebaseAuth.instance
+      await auth
           .createUserWithEmailAndPassword(
         email: email,
         password: password,
       )
           .then((_) async {
         if (user != null && !user!.emailVerified) {
-          await user!.sendEmailVerification();
+          try {
+            await user!.sendEmailVerification();
+            user!.reload();
+          } catch (e) {
+            throw HttpException('Email Not Verified Signup Failed');
+          }
         }
       });
       getCurrentUID();
@@ -47,8 +52,9 @@ class Auth with ChangeNotifier {
 
   Future<void> login(String email, String password) async {
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      await auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) => user!.reload());
     } on FirebaseAuthException catch (e) {
       throw HttpException(e.code.toString());
     } catch (_) {

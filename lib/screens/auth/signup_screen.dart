@@ -17,7 +17,6 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   bool hidePass = true;
   bool confirmPassHide = true;
-  bool isLoading = false;
   bool _isLoading = false;
 
   TextEditingController textEditingController = TextEditingController();
@@ -327,7 +326,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                           ),
                         ),
-                        child: isLoading
+                        child: _isLoading
                             ? CircularProgressIndicator()
                             : Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
