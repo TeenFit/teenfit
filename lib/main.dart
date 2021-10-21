@@ -27,7 +27,28 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool isInit = false;
+  bool isLoading = true;
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+
+    if (isInit == false) {
+      await Firebase.initializeApp();
+    }
+    setState(() {
+      isInit = true;
+      isLoading = false;
+    });
+  }
+
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   @override
@@ -59,24 +80,26 @@ class MyApp extends StatelessWidget {
             cardColor: Color(0xffD3D3D3),
             shadowColor: Color(0xff878787),
           ),
-          home: Consumer<Auth>(
-            builder: (context, auth, _) => FutureBuilder(
-              // Initialize FlutterFire:
-              future: _initialization,
-              builder: (context, snapshot) {
-                // Check for errors
-                if (snapshot.hasError) {
-                  return ErrorScreen();
-                }
-                // Once complete, show your application
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return auth.isAuth() ? HomeScreen() : IntroPage();
-                }
-                // Otherwise, show something whilst waiting for initialization to complete
-                return LoadingScreen();
-              },
-            ),
-          ),
+          home: isLoading
+              ? LoadingScreen()
+              : Consumer<Auth>(
+                  builder: (context, auth, _) => FutureBuilder(
+                    // Initialize FlutterFire:
+                    future: _initialization,
+                    builder: (context, snapshot) {
+                      // Check for errors
+                      if (snapshot.hasError) {
+                        return ErrorScreen();
+                      }
+                      // Once complete, show your application
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return auth.isAuth() ? HomeScreen() : IntroPage();
+                      }
+                      // Otherwise, show something whilst waiting for initialization to complete
+                      return LoadingScreen();
+                    },
+                  ),
+                ),
           routes: {
             IntroPage.routeName: (ctx) => IntroPage(),
             LoginScreen.routeName: (ctx) => LoginScreen(),

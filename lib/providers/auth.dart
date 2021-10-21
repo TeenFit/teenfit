@@ -10,7 +10,7 @@ class Auth with ChangeNotifier {
     auth.authStateChanges().listen((User? user) {
       if (user == null) {
         print('User is currently signed out!');
-        isAuthed = false;
+        isAuthed = true;
         notifyListeners();
       } else {
         print('User is signed in!');
