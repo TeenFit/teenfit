@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -85,7 +87,12 @@ class _MyAppState extends State<MyApp> {
               : Consumer<Auth>(
                   builder: (context, auth, _) => FutureBuilder(
                     // Initialize FlutterFire:
-                    future: _initialization,
+                    future: Future.delayed(
+                      const Duration(seconds: 1),
+                      () {
+                        return _initialization;
+                      },
+                    ),
                     builder: (context, snapshot) {
                       // Check for errors
                       if (snapshot.hasError) {
