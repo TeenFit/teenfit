@@ -3,10 +3,9 @@ import 'package:flutter/cupertino.dart';
 
 class Auth with ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
+  bool isAuthed = false;
 
   bool isAuth() {
-    bool isAuthed = false;
-
     auth.authStateChanges().listen((User? user) {
       if (user == null) {
         print('User is currently signed out!');
