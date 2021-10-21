@@ -273,7 +273,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: (_mediaQuery.size.height - _appBarHieght) * 0.045,
                   ),
                   //Login Btn
-                  Padding(
+                  _isLoading ?  CircularProgressIndicator(
+              strokeWidth: 4,
+              backgroundColor: _theme.shadowColor,
+              color: Colors.white,
+            ) : Padding(
                     padding: EdgeInsets.symmetric(
                         horizontal: _mediaQuery.size.width * 0.09),
                     child: Container(

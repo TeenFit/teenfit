@@ -59,42 +59,42 @@ class _SignupScreenState extends State<SignupScreen> {
       print(_password);
 
       setState(() {
-      _isLoading = true;
-    });
+        _isLoading = true;
+      });
 
-    //signup logic:
-    try {
-      await Provider.of<Auth>(context, listen: false)
-          .signup(
-            _email,
-            _password,
-          )
-          .then((value) => Navigator.of(context).push(PageRouteBuilder(
-              transitionDuration: Duration(seconds: 1),
-              transitionsBuilder: (ctx, animation, animationTime, child) {
-                return FadeTransition(
-                  opacity: animation,
-                  child: child,
-                );
-              },
-              pageBuilder: (ctx, animation, animationTime) {
-                return HomeScreen();
-              })));
-    } on HttpException catch (error) {
-      var errorMessage = 'Could Not Create Account, Try Again Later';
-      if (error.toString().contains('weak-password')) {
-        errorMessage = ('This Password Is To Weak');
-      } else if (error.toString().contains('email-already-in-use')) {
-        errorMessage = ('An Account Already Exists For That Email');
+      //signup logic:
+      try {
+        await Provider.of<Auth>(context, listen: false)
+            .signup(
+              _email,
+              _password,
+            )
+            .then((value) => Navigator.of(context).push(PageRouteBuilder(
+                transitionDuration: Duration(seconds: 1),
+                transitionsBuilder: (ctx, animation, animationTime, child) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  );
+                },
+                pageBuilder: (ctx, animation, animationTime) {
+                  return HomeScreen();
+                })));
+      } on HttpException catch (error) {
+        var errorMessage = 'Could Not Create Account, Try Again Later';
+        if (error.toString().contains('weak-password')) {
+          errorMessage = ('This Password Is To Weak');
+        } else if (error.toString().contains('email-already-in-use')) {
+          errorMessage = ('An Account Already Exists For That Email');
+        }
+        _showToast(errorMessage);
+      } catch (_) {
+        _showToast('Could Not Create Account, Try Again Later');
       }
-      _showToast(errorMessage);
-    } catch (_) {
-      _showToast('Could Not Create Account, Try Again Later');
-    }
 
-    setState(() {
-      _isLoading = false;
-    });
+      setState(() {
+        _isLoading = false;
+      });
     }
 
     Widget buildEmailField() {
@@ -327,7 +327,11 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                         ),
                         child: _isLoading
-                            ? CircularProgressIndicator()
+                            ? CircularProgressIndicator(
+                                strokeWidth: 4,
+                                backgroundColor: _theme.shadowColor,
+                                color: Colors.white,
+                              )
                             : Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
