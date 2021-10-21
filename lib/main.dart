@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import './providers/auth.dart';
 import './screens/auth/error_screen.dart';
 import './screens/auth/loading.dart';
 import './screens/add_exercise_screen.dart';
@@ -26,14 +27,8 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-  bool? isAuth;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +42,9 @@ class _MyAppState extends State<MyApp> {
       },
       child: MultiProvider(
         providers: [
+          ChangeNotifierProvider<Auth>(
+            create: (ctx) => Auth(),
+          ),
           ChangeNotifierProvider<Workouts>(
             create: (ctx) => Workouts(),
           ),
@@ -61,34 +59,23 @@ class _MyAppState extends State<MyApp> {
             cardColor: Color(0xffD3D3D3),
             shadowColor: Color(0xff878787),
           ),
-          home: FutureBuilder(
-            // Initialize FlutterFire:
-            future: _initialization,
-            builder: (context, snapshot) {
-              // Check for errors
-              if (snapshot.hasError) {
-                return ErrorScreen();
-              }
-              // Once complete, show your application
-              if (snapshot.connectionState == ConnectionState.done) {
-                FirebaseAuth.instance.authStateChanges().listen((User? user) {
-                  if (user == null) {
-                    print('user is signed out');
-                    setState(() {
-                      isAuth = false;
-                    });
-                  } else {
-                    setState(() {
-                      isAuth = true;
-                    });
-                  }
-                });
-
-                return isAuth! ? HomeScreen() : IntroPage();
-              }
-              // Otherwise, show something whilst waiting for initialization to complete
-              return LoadingScreen();
-            },
+          home: Consumer<Auth>(
+            builder: (context, auth, _) => FutureBuilder(
+              // Initialize FlutterFire:
+              future: _initialization,
+              builder: (context, snapshot) {
+                // Check for errors
+                if (snapshot.hasError) {
+                  return ErrorScreen();
+                }
+                // Once complete, show your application
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return auth.isAuth() ? HomeScreen() : IntroPage();
+                }
+                // Otherwise, show something whilst waiting for initialization to complete
+                return LoadingScreen();
+              },
+            ),
           ),
           routes: {
             IntroPage.routeName: (ctx) => IntroPage(),
