@@ -30,6 +30,7 @@ class Auth with ChangeNotifier {
       );
       getCurrentUID();
     } on FirebaseAuthException catch (e) {
+      print(e);
       throw HttpException(e.code.toString());
     } catch (e) {
       throw HttpException('Unable To Signup, Connect To Servers');
