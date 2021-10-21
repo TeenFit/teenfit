@@ -11,9 +11,11 @@ class Auth with ChangeNotifier {
       if (user == null) {
         print('User is currently signed out!');
         isAuthed = false;
+        notifyListeners();
       } else {
         print('User is signed in!');
         isAuthed = true;
+        notifyListeners();
       }
     });
     return isAuthed;
