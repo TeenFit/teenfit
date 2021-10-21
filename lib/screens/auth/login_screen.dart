@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+
+import '/Custom/http_execption.dart';
+import '/providers/auth.dart';
 import '../auth/signup_screen.dart';
-import 'package:teenfit/screens/home_screen.dart';
+import '/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login-screen';
@@ -12,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool hidePass = true;
   bool isLoading = false;
+  bool _isLoading = false;
   final _formkey = GlobalKey<FormState>();
 
   @override
@@ -24,16 +30,65 @@ class _LoginScreenState extends State<LoginScreen> {
     String _email = 'email';
     String _password = 'password';
 
+    void _showToast(String msg) {
+      Fluttertoast.showToast(
+        msg: msg,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 10,
+        webShowClose: true,
+        textColor: Colors.white,
+        backgroundColor: Colors.yellow.shade900,
+      );
+    }
+
     void _submit() async {
       if (!_formkey.currentState!.validate()) {
         return;
       }
 
       _formkey.currentState!.save();
-      print(_email);
-      print(_password);
 
-      Navigator.of(context).pushNamed(HomeScreen.routeName);
+      setState(() {
+        _isLoading = true;
+      });
+      
+      try {
+        await Provider.of<Auth>(context, listen: false)
+            .login(
+              _email,
+              _password,
+            )
+            .then((_) => setState(() {
+                  _isLoading = false;
+                }))
+            .then((_) => Navigator.of(context).push(PageRouteBuilder(
+                transitionDuration: Duration(seconds: 1),
+                transitionsBuilder: (ctx, animation, animationTime, child) {
+                  return FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  );
+                },
+                pageBuilder: (ctx, animation, animationTime) {
+                  return HomeScreen();
+                })));
+      } on HttpException catch (error) {
+        var errorMessage = 'Could Not Login, Try Again Later';
+        if (error.toString().contains('user-not-found')) {
+          errorMessage = ('This Account Does Not Exist');
+        } else if (error.toString().contains('wrong-password')) {
+          errorMessage = ('Wrong password or Email Provided');
+        }
+        _showToast(errorMessage);
+        setState(() {
+          _isLoading = false;
+        });
+      } catch (_) {
+        _showToast('Could Not Login, Try Again Later');
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
 
     Widget buildEmailField() {

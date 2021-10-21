@@ -93,7 +93,24 @@ class _MyAppState extends State<MyApp> {
                       }
                       // Once complete, show your application
                       if (snapshot.connectionState == ConnectionState.done) {
-                        return auth.isAuth() ? HomeScreen() : IntroPage();
+                        return StreamBuilder<User>(
+                          initialData: FirebaseAuth.instance.currentUser,
+                          stream: auth.onAuthStateChanged,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<User> snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.active) {
+                              var isAuth = snapshot.data;
+                              return isAuth != null
+                                  ? HomeScreen()
+                                  : IntroPage();
+                            } else if (snapshot.hasError) {
+                              return ErrorScreen();
+                            } else {
+                              return LoadingScreen();
+                            }
+                          },
+                        );
                       }
                       // Otherwise, show something whilst waiting for initialization to complete
                       return LoadingScreen();

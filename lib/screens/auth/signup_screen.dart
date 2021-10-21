@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
+import '/Custom/http_execption.dart';
+import '/providers/auth.dart';
 import './login_screen.dart';
-
 import '../home_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -15,6 +18,8 @@ class _SignupScreenState extends State<SignupScreen> {
   bool hidePass = true;
   bool confirmPassHide = true;
   bool isLoading = false;
+  bool _isLoading = false;
+
   TextEditingController textEditingController = TextEditingController();
   final GlobalKey<FormState> _formkey1 = GlobalKey<FormState>();
 
@@ -34,6 +39,17 @@ class _SignupScreenState extends State<SignupScreen> {
     String _email = 'email';
     String _password = 'password';
 
+    void _showToast(String msg) {
+      Fluttertoast.showToast(
+        msg: msg,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 10,
+        webShowClose: true,
+        textColor: Colors.white,
+        backgroundColor: Colors.yellow.shade900,
+      );
+    }
+
     void _submit() async {
       if (!_formkey1.currentState!.validate()) {
         return;
@@ -43,7 +59,43 @@ class _SignupScreenState extends State<SignupScreen> {
       print(_email);
       print(_password);
 
-      Navigator.of(context).pushNamed(HomeScreen.routeName);
+      setState(() {
+      _isLoading = true;
+    });
+
+    //signup logic:
+    try {
+      await Provider.of<Auth>(context, listen: false)
+          .signup(
+            _email,
+            _password,
+          )
+          .then((value) => Navigator.of(context).push(PageRouteBuilder(
+              transitionDuration: Duration(seconds: 1),
+              transitionsBuilder: (ctx, animation, animationTime, child) {
+                return FadeTransition(
+                  opacity: animation,
+                  child: child,
+                );
+              },
+              pageBuilder: (ctx, animation, animationTime) {
+                return HomeScreen();
+              })));
+    } on HttpException catch (error) {
+      var errorMessage = 'Could Not Create Account, Try Again Later';
+      if (error.toString().contains('weak-password')) {
+        errorMessage = ('This Password Is To Weak');
+      } else if (error.toString().contains('email-already-in-use')) {
+        errorMessage = ('An Account Already Exists For That Email');
+      }
+      _showToast(errorMessage);
+    } catch (_) {
+      _showToast('Could Not Create Account, Try Again Later');
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
     }
 
     Widget buildEmailField() {

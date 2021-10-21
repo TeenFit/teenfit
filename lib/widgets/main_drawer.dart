@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '/providers/auth.dart';
 import '../screens/my_workouts.dart';
 import '../Custom/my_flutter_app_icons.dart';
 
@@ -11,6 +14,19 @@ class MainDrawer extends StatelessWidget {
     final _theme = Theme.of(context);
     final _appBarHieght =
         AppBar().preferredSize.height + _mediaQuery.padding.top;
+
+    final auth = Provider.of<Auth>(context);
+
+    void _showToast(String msg) {
+      Fluttertoast.showToast(
+        msg: msg,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 10,
+        webShowClose: true,
+        textColor: Colors.white,
+        backgroundColor: Colors.yellow.shade900,
+      );
+    }
 
     return Drawer(
       child: Container(
@@ -152,7 +168,13 @@ class MainDrawer extends StatelessWidget {
                       ),
                       textAlign: TextAlign.right,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      try {
+                        await auth.logout(context);
+                      } catch (e) {
+                        _showToast('Unable To Logout Try Again Later');
+                      }
+                    },
                   ),
                 ),
               ),
