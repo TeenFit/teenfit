@@ -5,6 +5,7 @@ import '../Custom/http_execption.dart';
 
 class Auth with ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
+  User? user = FirebaseAuth.instance.currentUser;
 
   Stream<User>? get onAuthStateChanged {
     return isAuthChanged();
@@ -24,10 +25,16 @@ class Auth with ChangeNotifier {
 
   Future<void> signup(String email, String password) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
         email: email,
         password: password,
-      );
+      )
+          .then((_) async {
+        if (user != null && !user!.emailVerified) {
+          await user!.sendEmailVerification();
+        }
+      });
       getCurrentUID();
     } on FirebaseAuthException catch (e) {
       print(e);
