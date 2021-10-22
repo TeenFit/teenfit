@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
+import '/Custom/custom_dialog.dart';
 import '/providers/auth.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
@@ -238,7 +239,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 ),
                               ],
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => CustomDialogBox(
+                                    'Contact Us',
+                                    'Email us at teenfitness.fit@gmail.com',
+                                    'assets/images/Phone-Icon.jpg',
+                                    'contact-us',
+                                    ''),
+                              );
+                            },
                           ),
                         ),
                       ),

@@ -72,21 +72,25 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 alignment: Alignment.bottomRight,
                 child: Row(
                   children: [
-                    TextButton(
-                      onPressed: () {
-                        if (widget.dialogOrganizerId == '/workout-page-first') {
-                          Function goToFirst = widget.arguments['page1'];
-                          goToFirst();
-                          Navigator.of(context).pop();
-                        } else {
-                          Navigator.of(context).pop();
-                        }
-                      },
-                      child: Text(
-                        'No',
-                        style: TextStyle(fontSize: 18, color: Colors.black),
-                      ),
-                    ),
+                    widget.dialogOrganizerId == 'contact-us'
+                        ? SizedBox()
+                        : TextButton(
+                            onPressed: () {
+                              if (widget.dialogOrganizerId ==
+                                  '/workout-page-first') {
+                                Function goToFirst = widget.arguments['page1'];
+                                goToFirst();
+                                Navigator.of(context).pop();
+                              } else {
+                                Navigator.of(context).pop();
+                              }
+                            },
+                            child: Text(
+                              'No',
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.black),
+                            ),
+                          ),
                     TextButton(
                       onPressed: () {
                         if (widget.dialogOrganizerId == '/workout-page') {
@@ -112,10 +116,14 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
 
                           delete(id);
                           Navigator.of(context).pop();
+                        } else if (widget.dialogOrganizerId == 'contact-us') {
+                          Navigator.of(context).pop();
                         }
                       },
                       child: Text(
-                        'Yes',
+                        widget.dialogOrganizerId == 'contact-us'
+                            ? 'Back'
+                            : 'Yes',
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     ),

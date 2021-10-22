@@ -71,6 +71,7 @@ flutter:
   - assets/images/LoadingBackground.png
   - assets/images/ErrorScreen.png
   - assets/images/reset_password.png
+  - assets/images/Phone-Icon.jpg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
