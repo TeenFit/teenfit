@@ -42,40 +42,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           .then((_) => _showToast('Password Reset Email Sent'))
           .then((_) => Navigator.of(context).pop());
     } catch (e) {
-      _showToast('Could not Reset Password, Connect To Servers');
+      _showToast('Could Not Send Reset Password');
     }
     setState(() {
       _isLoading = false;
     });
-  }
-
-  Widget _buildEmailField() {
-    return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        errorMaxLines: 1,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        labelText: 'Email',
-        hintText: 'example@gmail.com',
-        labelStyle: TextStyle(fontSize: 15),
-      ),
-      textInputAction: TextInputAction.next,
-      validator: (value) {
-        if (value.toString().isEmpty) {
-          return 'Email is Required';
-        } else if (!value.toString().contains('@')) {
-          return 'Invalid Email';
-        } else if (value.toString().contains(' ')) {
-          return 'Please Remove Spaces';
-        }
-        return null;
-      },
-      onSaved: (value) {
-        _email = value.toString();
-      },
-    );
   }
 
   @override
@@ -85,117 +56,166 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     final _appBarHieght =
         AppBar().preferredSize.height + _mediaQuery.padding.top;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Password Reset',
-          textAlign: TextAlign.start,
-          style: TextStyle(
-            fontSize: _appBarHieght * 0.45,
-            letterSpacing: 1,
-            fontFamily: 'Anton',
-            fontWeight: FontWeight.w800,
+    Widget buildEmailField() {
+      return TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+          helperText: ' ',
+          contentPadding: EdgeInsets.symmetric(
+            vertical: _mediaQuery.size.height * 0.05,
+            horizontal: _mediaQuery.size.height * 0.015,
           ),
+          fillColor: Colors.white,
+          filled: true,
+          errorMaxLines: 1,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          labelText: ' Email',
+          labelStyle: TextStyle(
+              fontSize: _mediaQuery.size.height * 0.023,
+              fontWeight: FontWeight.w800),
+          errorStyle: TextStyle(
+              fontSize: _mediaQuery.size.height * 0.016,
+              fontWeight: FontWeight.w800),
         ),
-        backgroundColor: _theme.primaryColor,
-      ),
-      body: Container(
-        margin: EdgeInsets.all(24),
-        height: (_mediaQuery.size.height - _appBarHieght) + 100,
-        width: _mediaQuery.size.width,
-        child: Form(
-          key: _formkey,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: (_mediaQuery.size.height - _appBarHieght) * 0.03,
-                ),
-                Container(
-                  height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
-                  child: Image.asset(
-                    'assets/images/forgot_pass.png',
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                SizedBox(
-                  height: (_mediaQuery.size.height - _appBarHieght) * 0.02,
-                ),
-                Text(
-                  'Enter Your Email And We Will Send You Instructions.',
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: (_mediaQuery.size.height - _appBarHieght) * 0.04,
-                  ),
-                ),
-                SizedBox(
-                  height: (_mediaQuery.size.height - _appBarHieght) * 0.1,
-                ),
-                Container(
-                  height: (_mediaQuery.size.height - _appBarHieght) * 0.1,
-                  child: _buildEmailField(),
-                ),
-                SizedBox(
-                  height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
-                ),
+        style: TextStyle(
+          fontSize: _mediaQuery.size.height * 0.023,
+        ),
+        textInputAction: TextInputAction.next,
+        validator: (value) {
+          if (value.toString().isEmpty) {
+            return 'Email is Required';
+          } else if (!value.toString().contains('@')) {
+            return 'Invalid Email';
+          } else if (value.toString().contains(' ')) {
+            return 'Please Remove Spaces';
+          }
+          return null;
+        },
+        onSaved: (input) {
+          _email = input.toString();
+        },
+      );
+    }
 
-                //Login Btn
-                Container(
-                  height: (_mediaQuery.size.height - _appBarHieght) * 0.08,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(_theme.primaryColor),
-                      elevation: MaterialStateProperty.all(5),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      body: Stack(
+        children: [
+          Container(
+            height: _mediaQuery.size.height,
+            width: _mediaQuery.size.width,
+            child: Image.asset(
+              'assets/images/reset_password.png',
+              fit: BoxFit.fill,
+            ),
+          ),
+          Container(
+            height: (_mediaQuery.size.height),
+            width: _mediaQuery.size.width,
+            child: Form(
+              key: _formkey,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: _mediaQuery.size.width,
+                      height: _appBarHieght,
+                      alignment: Alignment.centerLeft,
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        iconSize: _appBarHieght * 0.4,
+                      ),
+                    ),
+                    SizedBox(
+                      height: (_mediaQuery.size.height - _appBarHieght) * 0.03,
+                    ),
+                    Text(
+                      'Enter Your Email And We Will Send You Instructions.',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize:
+                            (_mediaQuery.size.height - _appBarHieght) * 0.04,
+                      ),
+                    ),
+                    SizedBox(
+                      height: (_mediaQuery.size.height - _appBarHieght) * 0.1,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: (_mediaQuery.size.width * 0.09),
+                      ),
+                      child: Container(
+                        height: (_mediaQuery.size.height) * 0.1,
+                        width: (_mediaQuery.size.width),
+                        child: buildEmailField(),
+                      ),
+                    ),
+                    SizedBox(
+                      height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
+                    ),
+
+                    //Forgot Pass
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: (_mediaQuery.size.width * 0.09),
+                      ),
+                      child: Container(
+                        height:
+                            (_mediaQuery.size.height - _appBarHieght) * 0.08,
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(_theme.primaryColor),
+                            elevation: MaterialStateProperty.all(5),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                          ),
+                          child: _isLoading
+                              ? CircularProgressIndicator(
+                                  strokeWidth: 4,
+                                  backgroundColor: _theme.shadowColor,
+                                  color: Colors.white,
+                                )
+                              : Text(
+                                  'Forgot Password?',
+                                  style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontSize: (_mediaQuery.size.height -
+                                              _appBarHieght) *
+                                          0.03,
+                                      letterSpacing: 1,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                          onPressed: () {
+                            _submit();
+                          },
                         ),
                       ),
                     ),
-                    child: _isLoading
-                        ? CircularProgressIndicator()
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.email,
-                                color: Colors.white,
-                                size:
-                                    (_mediaQuery.size.height - _appBarHieght) *
-                                        0.04,
-                              ),
-                              SizedBox(
-                                width: _mediaQuery.size.width * 0.02,
-                              ),
-                              Text(
-                                'Send Instructions',
-                                style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontSize: (_mediaQuery.size.height -
-                                            _appBarHieght) *
-                                        0.03,
-                                    letterSpacing: 1),
-                              ),
-                            ],
-                          ),
-                    onPressed: () {
-                      _submit();
-                    },
-                  ),
+                    SizedBox(
+                      height: (_mediaQuery.size.height - _appBarHieght) * 0.19,
+                    ),
+                    SizedBox(
+                      height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
-                ),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

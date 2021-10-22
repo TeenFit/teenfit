@@ -372,44 +372,44 @@ class _SignupScreenState extends State<SignupScreen> {
                     padding: EdgeInsets.symmetric(
                         horizontal: _mediaQuery.size.width * 0.09),
                     child: Container(
-                        height:
-                            (_mediaQuery.size.height - _appBarHieght) * 0.08,
-                        width: double.infinity,
-                        child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: TextButton(
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Already Have An Account? | ',
-                                  style: TextStyle(
-                                      color: Colors.black54,
-                                      fontFamily: 'Roboto',
-                                      fontSize: (_mediaQuery.size.height -
-                                              _appBarHieght) *
-                                          0.015,
-                                      letterSpacing: 1,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  'Login',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: 'Roboto',
-                                      fontSize: (_mediaQuery.size.height -
-                                              _appBarHieght) *
-                                          0.015,
-                                      letterSpacing: 1,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .pushReplacementNamed(LoginScreen.routeName);
-                            },
+                      height: (_mediaQuery.size.height - _appBarHieght) * 0.08,
+                      width: double.infinity,
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: TextButton(
+                          child: Row(
+                            children: [
+                              Text(
+                                'Already Have An Account? | ',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontFamily: 'Roboto',
+                                    fontSize: (_mediaQuery.size.height -
+                                            _appBarHieght) *
+                                        0.015,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                'Login',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'Roboto',
+                                    fontSize: (_mediaQuery.size.height -
+                                            _appBarHieght) *
+                                        0.015,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
-                        )),
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushReplacementNamed(LoginScreen.routeName);
+                          },
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
