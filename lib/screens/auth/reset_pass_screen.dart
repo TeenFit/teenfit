@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../providers/auth.dart';
+import '/providers/auth.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   static const routeName = '/reset-pass-screen';

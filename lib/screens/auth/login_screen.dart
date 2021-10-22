@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:teenfit/screens/auth/reset_pass_screen.dart';
 
+import '/screens/auth/reset_pass_screen.dart';
 import '/Custom/http_execption.dart';
 import '/providers/auth.dart';
 import '../auth/signup_screen.dart';
