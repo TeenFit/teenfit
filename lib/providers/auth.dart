@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import '../Custom/http_execption.dart';
 
@@ -54,12 +55,14 @@ class Auth with ChangeNotifier {
 
   Future<void> logout(BuildContext context) async {
     try {
-      await auth.signOut();
+      await auth.signOut().then(
+            (_) => Phoenix.rebirth(context),
+          );
     } catch (e) {
       throw e;
     }
   }
-  
+
   Future<void> passwordReset(String _email) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: _email);
