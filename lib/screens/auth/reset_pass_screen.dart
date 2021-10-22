@@ -134,17 +134,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: (_mediaQuery.size.height - _appBarHieght) * 0.03,
+                      height: (_mediaQuery.size.height - _appBarHieght) * 0.25,
                     ),
-                    Text(
-                      'Enter Your Email And We Will Send You Instructions.',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize:
-                            (_mediaQuery.size.height - _appBarHieght) * 0.04,
-                      ),
-                    ),
+
                     SizedBox(
                       height: (_mediaQuery.size.height - _appBarHieght) * 0.1,
                     ),
@@ -208,7 +200,48 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       height: (_mediaQuery.size.height - _appBarHieght) * 0.19,
                     ),
                     SizedBox(
-                      height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
+                      height: (_mediaQuery.size.height - _appBarHieght) * 0.11,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: _mediaQuery.size.width * 0.09),
+                      child: Container(
+                        height:
+                            (_mediaQuery.size.height - _appBarHieght) * 0.06,
+                        width: double.infinity,
+                        child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: TextButton(
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Contact Us? | ',
+                                  style: TextStyle(
+                                      color: Colors.black54,
+                                      fontFamily: 'Roboto',
+                                      fontSize: (_mediaQuery.size.height -
+                                              _appBarHieght) *
+                                          0.01,
+                                      letterSpacing: 1,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  'Click Here',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Roboto',
+                                      fontSize: (_mediaQuery.size.height -
+                                              _appBarHieght) *
+                                          0.01,
+                                      letterSpacing: 1,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            onPressed: () {},
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
