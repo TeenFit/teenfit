@@ -244,7 +244,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 context: context,
                                 builder: (ctx) => CustomDialogBox(
                                     'Contact Us',
-                                    'Email us at teenfitness.fit@gmail.com',
+                                    '''Email us at teenfitness.fit@gmail.com
+or Dm us @teenfittest on instagram''',
                                     'assets/images/Phone-Icon.jpg',
                                     'contact-us',
                                     ''),
