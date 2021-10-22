@@ -59,4 +59,12 @@ class Auth with ChangeNotifier {
       throw e;
     }
   }
+  
+  Future<void> passwordReset(String _email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: _email);
+    } catch (e) {
+      throw e;
+    }
+  }
 }

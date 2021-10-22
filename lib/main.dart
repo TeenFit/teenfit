@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import './screens/auth/reset_pass_screen.dart';
 import './providers/auth.dart';
 import './screens/auth/error_screen.dart';
 import './screens/auth/loading.dart';
@@ -134,6 +135,7 @@ class _MyAppState extends State<MyApp> {
             CreateWorkout.routeName: (ctx) => CreateWorkout(),
             AddWorkoutScreen.routeName: (ctx) => AddWorkoutScreen(),
             AddExerciseScreen.routeName: (ctx) => AddExerciseScreen(),
+            ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
           },
         ),
       ),

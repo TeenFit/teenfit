@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:teenfit/screens/auth/reset_pass_screen.dart';
 
 import '/Custom/http_execption.dart';
 import '/providers/auth.dart';
@@ -266,65 +267,75 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed(ResetPasswordScreen.routeName);
+                      },
                     ),
                   ),
                   SizedBox(
                     height: (_mediaQuery.size.height - _appBarHieght) * 0.045,
                   ),
                   //Login Btn
-                  _isLoading ?  CircularProgressIndicator(
-              strokeWidth: 4,
-              backgroundColor: _theme.shadowColor,
-              color: Colors.white,
-            ) : Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: _mediaQuery.size.width * 0.09),
-                    child: Container(
-                      height: (_mediaQuery.size.height - _appBarHieght) * 0.08,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(_theme.primaryColor),
-                            elevation: MaterialStateProperty.all(5),
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                            ),
-                          ),
-                          child: _isLoading
-                              ? CircularProgressIndicator()
-                              : Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'LOGIN',
-                                      style: TextStyle(
-                                          fontFamily: 'Roboto',
-                                          fontSize: (_mediaQuery.size.height -
-                                                  _appBarHieght) *
-                                              0.03,
-                                          letterSpacing: 1,
-                                          fontWeight: FontWeight.bold),
+                  _isLoading
+                      ? CircularProgressIndicator(
+                          strokeWidth: 4,
+                          backgroundColor: _theme.shadowColor,
+                          color: Colors.white,
+                        )
+                      : Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: _mediaQuery.size.width * 0.09),
+                          child: Container(
+                            height: (_mediaQuery.size.height - _appBarHieght) *
+                                0.08,
+                            width: double.infinity,
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      _theme.primaryColor),
+                                  elevation: MaterialStateProperty.all(5),
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
                                     ),
-                                    SizedBox(
-                                      width: _mediaQuery.size.width * 0.02,
-                                    ),
-                                    Icon(
-                                      Icons.arrow_forward,
-                                      color: Colors.white,
-                                      size: (_mediaQuery.size.height -
-                                              _appBarHieght) *
-                                          0.04,
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                          onPressed: _submit),
-                    ),
-                  ),
+                                child: _isLoading
+                                    ? CircularProgressIndicator()
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'LOGIN',
+                                            style: TextStyle(
+                                                fontFamily: 'Roboto',
+                                                fontSize:
+                                                    (_mediaQuery.size.height -
+                                                            _appBarHieght) *
+                                                        0.03,
+                                                letterSpacing: 1,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          SizedBox(
+                                            width:
+                                                _mediaQuery.size.width * 0.02,
+                                          ),
+                                          Icon(
+                                            Icons.arrow_forward,
+                                            color: Colors.white,
+                                            size: (_mediaQuery.size.height -
+                                                    _appBarHieght) *
+                                                0.04,
+                                          ),
+                                        ],
+                                      ),
+                                onPressed: _submit),
+                          ),
+                        ),
                   SizedBox(
                     height: (_mediaQuery.size.height - _appBarHieght) * 0.21,
                   ),
