@@ -123,21 +123,57 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (context) {
                   if (filteredSearchHistory.isEmpty &&
                       controller.query.isEmpty) {
-                    return Container(
-                      height: 56,
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Start searching',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: _mediaQuery.size.height * 0.02,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Roboto',
+                    return Column(
+                      children: [
+                        Container(
+                          height: 56,
+                          width: double.infinity,
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Start searching',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: _mediaQuery.size.height * 0.02,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Roboto',
+                            ),
+                          ),
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Container(
+                            width: double.infinity,
+                            height: _mediaQuery.size.height * 0.05,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: _theme.primaryColor),
+                              onPressed: () {
+                                setState(() {
+                                  selectedTerm = null;
+                                });
+                                controller.close();
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Clear Search',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: _mediaQuery.size.height * 0.028,
+                                      fontFamily: 'Roboto',
+                                    ),
+                                  ),
+                                  Icon(Icons.clear),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     );
                   } else if (filteredSearchHistory.isEmpty) {
                     return ListTile(
@@ -213,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     );
                   }
