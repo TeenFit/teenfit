@@ -33,7 +33,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
     _exercise = exerciseProv!['exercise'];
 
-    switchOnOf = _exercise!.timeSeconds == null ? false : true;
+    switchOnOf = _exercise != null ? (_exercise!.timeSeconds == null ? false : true) : false;
 
     exercise = exerciseProv!['edit']
         ? Exercise(
