@@ -65,7 +65,7 @@ class MainDrawer extends StatelessWidget {
                     child: FittedBox(
                       fit: BoxFit.fitWidth,
                       child: Text(
-                        'My Workouts',
+                        'Create A Workout',
                         style: TextStyle(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w900,
