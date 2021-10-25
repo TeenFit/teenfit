@@ -55,12 +55,11 @@ class Auth with ChangeNotifier {
 
   Future<void> logout(BuildContext context) async {
     try {
-      await auth.signOut().then(
-            (_) => Phoenix.rebirth(context),
-          );
+      await auth.signOut();
     } catch (e) {
       throw e;
     }
+    Phoenix.rebirth(context);
   }
 
   Future<void> passwordReset(String _email) async {
