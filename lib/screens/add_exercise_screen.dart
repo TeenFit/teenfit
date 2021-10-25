@@ -27,8 +27,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
   void didChangeDependencies() {
     exerciseProv = ModalRoute.of(context)!.settings.arguments as Map;
 
-    
-
     exercises = exerciseProv!['exercises'];
 
     _exercise = exerciseProv!['exercise'];
