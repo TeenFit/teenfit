@@ -12,6 +12,7 @@ class Workouts with ChangeNotifier {
 
   List<Workout> _workouts = [
     Workout(
+      isPending: false,
       creatorName: 'Muqeeth Khan',
       workoutId: 'w1',
       creatorId: 'uid',
@@ -69,6 +70,7 @@ class Workouts with ChangeNotifier {
       ],
     ),
     Workout(
+      isPending: false,
       creatorName: 'Muqeeth Khan',
       workoutId: 'w2',
       creatorId: 'uid',

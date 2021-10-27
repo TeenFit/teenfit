@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:teenfit/providers/auth.dart';
 import 'package:uuid/uuid.dart';
 
 import '../screens/add_exercise_screen.dart';
@@ -24,15 +25,20 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   Workout? newWorkout;
   Workout? workout;
 
+  String? uid;
+
   @override
   void didChangeDependencies() {
     _imageUrlFocusNode.addListener(_updateImageUrl);
     workout = ModalRoute.of(context)?.settings.arguments as Workout?;
 
+    uid = Provider.of<Auth>(context).userId;
+
     newWorkout = workout == null
         ? Workout(
+            isPending: true,
             creatorName: '',
-            creatorId: 'uid',
+            creatorId: uid!,
             workoutId: uuid.v4(),
             workoutName: '',
             instagram: '',
@@ -42,6 +48,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             exercises: [],
           )
         : Workout(
+            isPending: true,
             creatorName: workout!.creatorName,
             creatorId: workout!.creatorId,
             workoutId: workout!.workoutId,
@@ -103,6 +110,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       _formKey3.currentState!.save();
 
       newWorkout = Workout(
+        isPending: true,
         creatorName: newWorkout!.creatorName,
         creatorId: newWorkout!.creatorId,
         workoutId: newWorkout!.workoutId,
@@ -188,6 +196,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                   },
                   onSaved: (input) {
                     newWorkout = Workout(
+                      isPending: newWorkout!.isPending,
                       creatorName: newWorkout!.creatorName,
                       creatorId: newWorkout!.creatorId,
                       workoutId: newWorkout!.workoutId,
@@ -232,6 +241,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                isPending: newWorkout!.isPending,
                 creatorName: input.toString(),
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,
@@ -273,6 +283,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                isPending: newWorkout!.isPending,
                 creatorName: newWorkout!.creatorName,
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,
@@ -316,6 +327,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                isPending: newWorkout!.isPending,
                 creatorName: newWorkout!.creatorName,
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,
@@ -357,6 +369,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                isPending: newWorkout!.isPending,
                 creatorName: newWorkout!.creatorName,
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,
@@ -398,6 +411,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                isPending: newWorkout!.isPending,
                 creatorName: newWorkout!.creatorName,
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,

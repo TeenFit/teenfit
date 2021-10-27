@@ -10,9 +10,11 @@ class Workout {
   final String tumblrPageLink;
   final String bannerImage;
   final List<Exercise> exercises;
+  final bool isPending;
 
   Workout(
-      {required this.creatorName,
+      {required this.isPending,
+      required this.creatorName,
       required this.creatorId,
       required this.workoutId,
       required this.workoutName,
