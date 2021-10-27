@@ -16,22 +16,27 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
   var uuid = Uuid();
-  List<Exercise>? exercises;
+
   Map? exerciseProv;
 
+  Function? addExercise;
+  Function? updateExercise;
   Exercise? _exercise;
   Exercise? newExercise;
-  bool? switchOnOf;  
+  bool? switchOnOf;
 
   @override
   void didChangeDependencies() {
     exerciseProv = ModalRoute.of(context)!.settings.arguments as Map;
 
-    exercises = exerciseProv!['exercises'];
-
     _exercise = exerciseProv!['exercise'];
 
-    switchOnOf = _exercise != null ? (_exercise!.timeSeconds == null ? false : true) : false;
+    addExercise = exerciseProv!['addExercise'];
+    updateExercise = exerciseProv!['updateExercise'];
+
+    switchOnOf = _exercise != null
+        ? (_exercise!.timeSeconds == null ? false : true)
+        : false;
 
     newExercise = exerciseProv!['edit']
         ? Exercise(
@@ -68,21 +73,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     if (!_imageUrlFocusNode.hasFocus) {
       setState(() {});
     }
-  }
-
-  void addExercise(Exercise exercisE) {
-    exercises!.insert(0, exercisE);
-    setState(() {});
-    Navigator.of(context).pop();
-  }
-
-  void updateExercise(Exercise exercisE) {
-    int index = exercises!
-        .indexWhere((element) => element.exerciseId == exercisE.exerciseId);
-    exercises!.removeAt(index);
-    exercises!.insert(index, exercisE);
-    setState(() {});
-    Navigator.of(context).pop();
   }
 
   bool isNumeric(String? s) {
@@ -128,7 +118,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
               restTime: null,
             );
 
-      isEdit ? updateExercise(newExercise!) : addExercise(newExercise!);
+      isEdit ? updateExercise!(newExercise!) : addExercise!(newExercise!);
     }
 
     Widget buildAddImage() {

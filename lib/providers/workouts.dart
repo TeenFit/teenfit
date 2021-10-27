@@ -154,7 +154,7 @@ class Workouts with ChangeNotifier {
         FirebaseFirestore.instance.collection('workouts');
     try {
       await workoutsCollection.doc().collection('workouts/${workout.workoutId}')
-          .add(workout as Map<String, dynamic>)
+          .add(workout as Map<String, Object>)
           .then((value) => _workouts.insert(0, workout));
     } catch (_) {
       throw HttpException('Unable To Create Workout, Try Again Later');

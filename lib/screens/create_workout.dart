@@ -109,6 +109,21 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       setState(() {});
     }
 
+    void addExercise(Exercise exercisE) {
+      exercises.insert(0, exercisE);
+      setState(() {});
+      Navigator.of(context).pop();
+    }
+
+    void updateExercise(Exercise exercisE) {
+      int index = exercises
+          .indexWhere((element) => element.exerciseId == exercisE.exerciseId);
+      exercises.removeAt(index);
+      exercises.insert(index, exercisE);
+      setState(() {});
+      Navigator.of(context).pop();
+    }
+
     Future<void> _submit() async {
       if (!_formKey3.currentState!.validate()) {
         return;
@@ -477,9 +492,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                       Navigator.of(context).pushNamed(
                         AddExerciseScreen.routeName,
                         arguments: {
-                          'exercises': exercises,
                           'edit': false,
-                          'exercise': null
+                          'exercise': null,
+                          'addExercise': addExercise,
+                          'updateExercise': updateExercise,
                         },
                       );
                     },
