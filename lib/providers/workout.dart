@@ -11,9 +11,11 @@ class Workout {
   final String bannerImage;
   final List<Exercise> exercises;
   final bool isPending;
+  final String datePosted;
 
   Workout(
-      {required this.isPending,
+      {required this.datePosted,
+        required this.isPending,
       required this.creatorName,
       required this.creatorId,
       required this.workoutId,

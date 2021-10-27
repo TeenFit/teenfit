@@ -6,12 +6,20 @@ import './exercise.dart';
 import './workout.dart';
 
 class Workouts with ChangeNotifier {
+  // void fetchAndSetWorkouts() async {
+  //   CollectionReference workoutsCollection =
+  //       FirebaseFirestore.instance.collection('workouts');
+
+  //   _workouts = workoutsCollection.doc() as List<Workout>;
+  // }
+
   List<Workout> get workouts {
     return [..._workouts];
   }
 
   List<Workout> _workouts = [
     Workout(
+      datePosted: '',
       isPending: false,
       creatorName: 'Muqeeth Khan',
       workoutId: 'w1',
@@ -70,6 +78,7 @@ class Workouts with ChangeNotifier {
       ],
     ),
     Workout(
+      datePosted: '',
       isPending: false,
       creatorName: 'Muqeeth Khan',
       workoutId: 'w2',

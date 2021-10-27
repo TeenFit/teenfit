@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/providers/auth.dart';
 import 'package:uuid/uuid.dart';
+import 'package:intl/intl.dart';
 
 import '../screens/add_exercise_screen.dart';
 import '../providers/exercise.dart';
@@ -46,6 +47,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             tumblrPageLink: '',
             bannerImage: '',
             exercises: [],
+            datePosted: DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()).toString(),
           )
         : Workout(
             isPending: true,
@@ -58,6 +60,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             tumblrPageLink: workout!.tumblrPageLink,
             bannerImage: _imageUrlController.text = workout!.bannerImage,
             exercises: workout!.exercises,
+            datePosted: DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()).toString(),
           );
 
     super.didChangeDependencies();
@@ -120,6 +123,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         tumblrPageLink: newWorkout!.tumblrPageLink,
         bannerImage: newWorkout!.bannerImage,
         exercises: exercises,
+        datePosted: newWorkout!.datePosted
       );
 
       try {
@@ -206,6 +210,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                       tumblrPageLink: newWorkout!.tumblrPageLink,
                       bannerImage: input.toString(),
                       exercises: newWorkout!.exercises,
+                      datePosted: newWorkout!.datePosted
                     );
                   },
                 ),
@@ -251,6 +256,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
                 exercises: newWorkout!.exercises,
+                datePosted: newWorkout!.datePosted
               );
             },
           ),
@@ -293,6 +299,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
                 exercises: newWorkout!.exercises,
+                datePosted: newWorkout!.datePosted
               );
             },
           ),
@@ -337,6 +344,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
                 exercises: newWorkout!.exercises,
+                datePosted: newWorkout!.datePosted
               );
             },
           ),
@@ -379,6 +387,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 tumblrPageLink: input.toString(),
                 bannerImage: newWorkout!.bannerImage,
                 exercises: newWorkout!.exercises,
+                datePosted: newWorkout!.datePosted
               );
             },
           ),
@@ -421,6 +430,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
                 exercises: newWorkout!.exercises,
+                datePosted: newWorkout!.datePosted
               );
             },
           ),
