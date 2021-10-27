@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -69,6 +70,17 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     }
   }
 
+  void _showToast(String msg) {
+    Fluttertoast.showToast(
+      msg: msg,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 10,
+      webShowClose: true,
+      textColor: Colors.white,
+      backgroundColor: Colors.yellow.shade900,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
@@ -102,13 +114,17 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         exercises: exercises,
       );
 
-      workout != null
-          ? await Provider.of<Workouts>(context, listen: false)
-              .updateWorkout(newWorkout!)
-              .then((_) => Navigator.of(context).pop())
-          : await Provider.of<Workouts>(context, listen: false)
-              .addWorkout(newWorkout!)
-              .then((_) => Navigator.of(context).pop());
+      try {
+        workout != null
+            ? await Provider.of<Workouts>(context, listen: false)
+                .updateWorkout(newWorkout!)
+                .then((_) => Navigator.of(context).pop())
+            : await Provider.of<Workouts>(context, listen: false)
+                .addWorkout(newWorkout!)
+                .then((_) => Navigator.of(context).pop());
+      } catch (e) {
+        _showToast(e.toString());
+      }
     }
 
     Widget buildAddImage() {

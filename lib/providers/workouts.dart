@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:teenfit/Custom/http_execption.dart';
 
 import './exercise.dart';
 import './workout.dart';
@@ -137,7 +139,15 @@ class Workouts with ChangeNotifier {
   }
 
   Future<void> addWorkout(Workout workout) async {
-    _workouts.insert(0, workout);
+    CollectionReference workoutsCollection =
+        FirebaseFirestore.instance.collection('workouts/${workout.workoutId}');
+    try {
+      await workoutsCollection
+          .add(workout)
+          .then((value) => _workouts.insert(0, workout));
+    } catch (_) {
+      throw HttpException('Unable To Create Workout, Try Again Later');
+    }
     notifyListeners();
   }
 
@@ -150,7 +160,15 @@ class Workouts with ChangeNotifier {
   }
 
   Future<void> deleteWorkout(String workoutId) async {
-    _workouts.removeWhere((workout) => workout.workoutId == workoutId);
+    CollectionReference workoutsCollection =
+        FirebaseFirestore.instance.collection('workouts/$workoutId');
+
+    try {
+      await workoutsCollection.doc().delete();
+      _workouts.removeWhere((workout) => workout.workoutId == workoutId);
+    } catch (_) {
+      throw HttpException('Unable To Delete Workout, Try Again Later');
+    }
     notifyListeners();
   }
 }
