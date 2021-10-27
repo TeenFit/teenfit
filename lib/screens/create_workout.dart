@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:teenfit/providers/auth.dart';
 import 'package:uuid/uuid.dart';
-import 'package:intl/intl.dart';
 
 import '../screens/add_exercise_screen.dart';
 import '../providers/exercise.dart';
@@ -25,21 +22,16 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   var uuid = Uuid();
   Workout? newWorkout;
   Workout? workout;
-  bool isLoading = false;
-  String? uid;
 
   @override
   void didChangeDependencies() {
     _imageUrlFocusNode.addListener(_updateImageUrl);
     workout = ModalRoute.of(context)?.settings.arguments as Workout?;
 
-    uid = Provider.of<Auth>(context).userId;
-
     newWorkout = workout == null
         ? Workout(
-            isPending: true,
             creatorName: '',
-            creatorId: uid!,
+            creatorId: 'uid',
             workoutId: uuid.v4(),
             workoutName: '',
             instagram: '',
@@ -47,12 +39,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             tumblrPageLink: '',
             bannerImage: '',
             exercises: [],
-            datePosted: DateFormat("yyyy-MM-dd hh:mm:ss")
-                .format(DateTime.now())
-                .toString(),
           )
         : Workout(
-            isPending: true,
             creatorName: workout!.creatorName,
             creatorId: workout!.creatorId,
             workoutId: workout!.workoutId,
@@ -62,9 +50,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             tumblrPageLink: workout!.tumblrPageLink,
             bannerImage: _imageUrlController.text = workout!.bannerImage,
             exercises: workout!.exercises,
-            datePosted: DateFormat("yyyy-MM-dd hh:mm:ss")
-                .format(DateTime.now())
-                .toString(),
           );
 
     super.didChangeDependencies();
@@ -84,17 +69,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     }
   }
 
-  void _showToast(String msg) {
-    Fluttertoast.showToast(
-      msg: msg,
-      gravity: ToastGravity.CENTER,
-      timeInSecForIosWeb: 10,
-      webShowClose: true,
-      textColor: Colors.white,
-      backgroundColor: Colors.yellow.shade900,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
@@ -109,19 +83,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       setState(() {});
     }
 
-    void addExercise(Exercise exercisE) {
-      exercises.add(exercisE);
-      setState(() {});
-    }
-
-    void updateExercise(Exercise exercisE) {
-      int index = exercises
-          .indexWhere((element) => element.exerciseId == exercisE.exerciseId);
-      exercises.removeAt(index);
-      exercises.insert(index, exercisE);
-      setState(() {});
-    }
-
     Future<void> _submit() async {
       if (!_formKey3.currentState!.validate()) {
         return;
@@ -130,37 +91,24 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       _formKey3.currentState!.save();
 
       newWorkout = Workout(
-          isPending: true,
-          creatorName: newWorkout!.creatorName,
-          creatorId: newWorkout!.creatorId,
-          workoutId: newWorkout!.workoutId,
-          workoutName: newWorkout!.workoutName,
-          instagram: newWorkout!.instagram,
-          facebook: newWorkout!.facebook,
-          tumblrPageLink: newWorkout!.tumblrPageLink,
-          bannerImage: newWorkout!.bannerImage,
-          exercises: exercises,
-          datePosted: newWorkout!.datePosted);
+        creatorName: newWorkout!.creatorName,
+        creatorId: newWorkout!.creatorId,
+        workoutId: newWorkout!.workoutId,
+        workoutName: newWorkout!.workoutName,
+        instagram: newWorkout!.instagram,
+        facebook: newWorkout!.facebook,
+        tumblrPageLink: newWorkout!.tumblrPageLink,
+        bannerImage: newWorkout!.bannerImage,
+        exercises: exercises,
+      );
 
-      setState(() {
-        isLoading = true;
-      });
-
-      try {
-        workout != null
-            ? await Provider.of<Workouts>(context, listen: false)
-                .updateWorkout(newWorkout!)
-                .then((_) => Navigator.of(context).pop())
-            : await Provider.of<Workouts>(context, listen: false)
-                .addWorkout(newWorkout!)
-                .then((_) => Navigator.of(context).pop());
-      } catch (e) {
-        _showToast(e.toString());
-      }
-
-      setState(() {
-        isLoading = false;
-      });
+      workout != null
+          ? await Provider.of<Workouts>(context, listen: false)
+              .updateWorkout(newWorkout!)
+              .then((_) => Navigator.of(context).pop())
+          : await Provider.of<Workouts>(context, listen: false)
+              .addWorkout(newWorkout!)
+              .then((_) => Navigator.of(context).pop());
     }
 
     Widget buildAddImage() {
@@ -224,17 +172,16 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                   },
                   onSaved: (input) {
                     newWorkout = Workout(
-                        isPending: newWorkout!.isPending,
-                        creatorName: newWorkout!.creatorName,
-                        creatorId: newWorkout!.creatorId,
-                        workoutId: newWorkout!.workoutId,
-                        workoutName: newWorkout!.workoutName,
-                        instagram: newWorkout!.instagram,
-                        facebook: newWorkout!.facebook,
-                        tumblrPageLink: newWorkout!.tumblrPageLink,
-                        bannerImage: input.toString(),
-                        exercises: newWorkout!.exercises,
-                        datePosted: newWorkout!.datePosted);
+                      creatorName: newWorkout!.creatorName,
+                      creatorId: newWorkout!.creatorId,
+                      workoutId: newWorkout!.workoutId,
+                      workoutName: newWorkout!.workoutName,
+                      instagram: newWorkout!.instagram,
+                      facebook: newWorkout!.facebook,
+                      tumblrPageLink: newWorkout!.tumblrPageLink,
+                      bannerImage: input.toString(),
+                      exercises: newWorkout!.exercises,
+                    );
                   },
                 ),
               ),
@@ -269,17 +216,16 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
-                  isPending: newWorkout!.isPending,
-                  creatorName: input.toString(),
-                  creatorId: newWorkout!.creatorId,
-                  workoutId: newWorkout!.workoutId,
-                  workoutName: newWorkout!.workoutName,
-                  instagram: newWorkout!.instagram,
-                  facebook: newWorkout!.facebook,
-                  tumblrPageLink: newWorkout!.tumblrPageLink,
-                  bannerImage: newWorkout!.bannerImage,
-                  exercises: newWorkout!.exercises,
-                  datePosted: newWorkout!.datePosted);
+                creatorName: input.toString(),
+                creatorId: newWorkout!.creatorId,
+                workoutId: newWorkout!.workoutId,
+                workoutName: newWorkout!.workoutName,
+                instagram: newWorkout!.instagram,
+                facebook: newWorkout!.facebook,
+                tumblrPageLink: newWorkout!.tumblrPageLink,
+                bannerImage: newWorkout!.bannerImage,
+                exercises: newWorkout!.exercises,
+              );
             },
           ),
         ),
@@ -311,17 +257,16 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
-                  isPending: newWorkout!.isPending,
-                  creatorName: newWorkout!.creatorName,
-                  creatorId: newWorkout!.creatorId,
-                  workoutId: newWorkout!.workoutId,
-                  workoutName: input.toString(),
-                  instagram: newWorkout!.instagram,
-                  facebook: newWorkout!.facebook,
-                  tumblrPageLink: newWorkout!.tumblrPageLink,
-                  bannerImage: newWorkout!.bannerImage,
-                  exercises: newWorkout!.exercises,
-                  datePosted: newWorkout!.datePosted);
+                creatorName: newWorkout!.creatorName,
+                creatorId: newWorkout!.creatorId,
+                workoutId: newWorkout!.workoutId,
+                workoutName: input.toString(),
+                instagram: newWorkout!.instagram,
+                facebook: newWorkout!.facebook,
+                tumblrPageLink: newWorkout!.tumblrPageLink,
+                bannerImage: newWorkout!.bannerImage,
+                exercises: newWorkout!.exercises,
+              );
             },
           ),
         ),
@@ -355,17 +300,16 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
-                  isPending: newWorkout!.isPending,
-                  creatorName: newWorkout!.creatorName,
-                  creatorId: newWorkout!.creatorId,
-                  workoutId: newWorkout!.workoutId,
-                  workoutName: newWorkout!.workoutName,
-                  instagram: input.toString(),
-                  facebook: newWorkout!.facebook,
-                  tumblrPageLink: newWorkout!.tumblrPageLink,
-                  bannerImage: newWorkout!.bannerImage,
-                  exercises: newWorkout!.exercises,
-                  datePosted: newWorkout!.datePosted);
+                creatorName: newWorkout!.creatorName,
+                creatorId: newWorkout!.creatorId,
+                workoutId: newWorkout!.workoutId,
+                workoutName: newWorkout!.workoutName,
+                instagram: input.toString(),
+                facebook: newWorkout!.facebook,
+                tumblrPageLink: newWorkout!.tumblrPageLink,
+                bannerImage: newWorkout!.bannerImage,
+                exercises: newWorkout!.exercises,
+              );
             },
           ),
         ),
@@ -397,17 +341,16 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
-                  isPending: newWorkout!.isPending,
-                  creatorName: newWorkout!.creatorName,
-                  creatorId: newWorkout!.creatorId,
-                  workoutId: newWorkout!.workoutId,
-                  workoutName: newWorkout!.workoutName,
-                  instagram: newWorkout!.instagram,
-                  facebook: newWorkout!.facebook,
-                  tumblrPageLink: input.toString(),
-                  bannerImage: newWorkout!.bannerImage,
-                  exercises: newWorkout!.exercises,
-                  datePosted: newWorkout!.datePosted);
+                creatorName: newWorkout!.creatorName,
+                creatorId: newWorkout!.creatorId,
+                workoutId: newWorkout!.workoutId,
+                workoutName: newWorkout!.workoutName,
+                instagram: newWorkout!.instagram,
+                facebook: newWorkout!.facebook,
+                tumblrPageLink: input.toString(),
+                bannerImage: newWorkout!.bannerImage,
+                exercises: newWorkout!.exercises,
+              );
             },
           ),
         ),
@@ -439,17 +382,16 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
-                  isPending: newWorkout!.isPending,
-                  creatorName: newWorkout!.creatorName,
-                  creatorId: newWorkout!.creatorId,
-                  workoutId: newWorkout!.workoutId,
-                  workoutName: newWorkout!.workoutName,
-                  instagram: newWorkout!.instagram,
-                  facebook: input.toString(),
-                  tumblrPageLink: newWorkout!.tumblrPageLink,
-                  bannerImage: newWorkout!.bannerImage,
-                  exercises: newWorkout!.exercises,
-                  datePosted: newWorkout!.datePosted);
+                creatorName: newWorkout!.creatorName,
+                creatorId: newWorkout!.creatorId,
+                workoutId: newWorkout!.workoutId,
+                workoutName: newWorkout!.workoutName,
+                instagram: newWorkout!.instagram,
+                facebook: input.toString(),
+                tumblrPageLink: newWorkout!.tumblrPageLink,
+                bannerImage: newWorkout!.bannerImage,
+                exercises: newWorkout!.exercises,
+              );
             },
           ),
         ),
@@ -490,10 +432,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                       Navigator.of(context).pushNamed(
                         AddExerciseScreen.routeName,
                         arguments: {
+                          'exercises': exercises,
                           'edit': false,
-                          'exercise': null,
-                          'addExercise': addExercise,
-                          'updateExercise': updateExercise,
+                          'exercise': null
                         },
                       );
                     },
@@ -513,13 +454,11 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 ),
                 child: ListView.builder(
                   itemBuilder: (ctx, index) => ExerciseTiles(
-                    exercises[index],
-                    _mediaQuery.size.width * 0.9,
-                    true,
-                    deleteExercise,
-                    addExercise,
-                    updateExercise,
-                  ),
+                      exercises[index],
+                      _mediaQuery.size.width * 0.9,
+                      true,
+                      deleteExercise,
+                      exercises),
                   itemCount: exercises.length,
                 ),
               ),
@@ -579,20 +518,14 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                       ),
-                      child: isLoading
-                          ? CircularProgressIndicator(
-                              strokeWidth: 4,
-                              backgroundColor: _theme.shadowColor,
-                              color: Colors.white,
-                            )
-                          : Text(
-                              'Submit',
-                              style: TextStyle(
-                                fontFamily: 'Roboto',
-                                fontWeight: FontWeight.w900,
-                                fontSize: _mediaQuery.size.height * 0.03,
-                              ),
-                            ),
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w900,
+                          fontSize: _mediaQuery.size.height * 0.03,
+                        ),
+                      ),
                       onPressed: () {
                         _submit();
                       },

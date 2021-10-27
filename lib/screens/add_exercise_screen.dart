@@ -16,29 +16,24 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
   var uuid = Uuid();
-
+  List<Exercise>? exercises;
   Map? exerciseProv;
 
-  Function? addExercise;
-  Function? updateExercise;
   Exercise? _exercise;
-  Exercise? newExercise;
-  bool? switchOnOf;
+  Exercise? exercise;
+  bool? switchOnOf;  
 
   @override
   void didChangeDependencies() {
     exerciseProv = ModalRoute.of(context)!.settings.arguments as Map;
 
+    exercises = exerciseProv!['exercises'];
+
     _exercise = exerciseProv!['exercise'];
 
-    addExercise = exerciseProv!['addExercise'];
-    updateExercise = exerciseProv!['updateExercise'];
+    switchOnOf = _exercise != null ? (_exercise!.timeSeconds == null ? false : true) : false;
 
-    switchOnOf = _exercise != null
-        ? (_exercise!.timeSeconds == null ? false : true)
-        : false;
-
-    newExercise = exerciseProv!['edit']
+    exercise = exerciseProv!['edit']
         ? Exercise(
             exerciseId: _exercise!.exerciseId,
             name: _exercise!.name,
@@ -75,6 +70,21 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     }
   }
 
+  void addExercise() {
+    exercises!.insert(0, exercise!);
+    setState(() {});
+    Navigator.of(context).pop();
+  }
+
+  void updateExercise() {
+    int index = exercises!
+        .indexWhere((element) => element.exerciseId == exercise!.exerciseId);
+    exercises!.removeAt(index);
+    exercises!.insert(index, exercise!);
+    setState(() {});
+    Navigator.of(context).pop();
+  }
+
   bool isNumeric(String? s) {
     if (s == null) {
       return false;
@@ -98,28 +108,27 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
       _formKey4.currentState!.save();
 
-      newExercise = switchOnOf!
+      exercise = switchOnOf!
           ? Exercise(
-              exerciseId: newExercise!.exerciseId,
-              name: newExercise!.name,
-              exerciseImageLink: newExercise!.exerciseImageLink,
+              exerciseId: exercise!.exerciseId,
+              name: exercise!.name,
+              exerciseImageLink: exercise!.exerciseImageLink,
               sets: null,
               reps: null,
-              timeSeconds: newExercise!.timeSeconds,
-              restTime: newExercise!.restTime,
+              timeSeconds: exercise!.timeSeconds,
+              restTime: exercise!.restTime,
             )
           : Exercise(
-              exerciseId: newExercise!.exerciseId,
-              name: newExercise!.name,
-              exerciseImageLink: newExercise!.exerciseImageLink,
-              sets: newExercise!.sets,
-              reps: newExercise!.reps,
+              exerciseId: exercise!.exerciseId,
+              name: exercise!.name,
+              exerciseImageLink: exercise!.exerciseImageLink,
+              sets: exercise!.sets,
+              reps: exercise!.reps,
               timeSeconds: null,
               restTime: null,
             );
 
-      isEdit ? updateExercise!(newExercise!) : addExercise!(newExercise!);
-      Navigator.of(context).pop();
+      isEdit ? updateExercise() : addExercise();
     }
 
     Widget buildAddImage() {
@@ -182,14 +191,14 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                     return null;
                   },
                   onSaved: (input) {
-                    newExercise = Exercise(
-                      exerciseId: newExercise!.exerciseId,
-                      name: newExercise!.name,
-                      timeSeconds: newExercise!.timeSeconds,
-                      restTime: newExercise!.restTime,
+                    exercise = Exercise(
+                      exerciseId: exercise!.exerciseId,
+                      name: exercise!.name,
+                      timeSeconds: exercise!.timeSeconds,
+                      restTime: exercise!.restTime,
                       exerciseImageLink: input.toString(),
-                      reps: newExercise!.reps,
-                      sets: newExercise!.sets,
+                      reps: exercise!.reps,
+                      sets: exercise!.sets,
                     );
                   },
                 ),
@@ -223,14 +232,14 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
               return null;
             },
             onSaved: (input) {
-              newExercise = Exercise(
-                exerciseId: newExercise!.exerciseId,
+              exercise = Exercise(
+                exerciseId: exercise!.exerciseId,
                 name: input.toString(),
-                timeSeconds: newExercise!.timeSeconds,
-                restTime: newExercise!.restTime,
-                sets: newExercise!.sets,
-                reps: newExercise!.reps,
-                exerciseImageLink: newExercise!.exerciseImageLink,
+                timeSeconds: exercise!.timeSeconds,
+                restTime: exercise!.restTime,
+                sets: exercise!.sets,
+                reps: exercise!.reps,
+                exerciseImageLink: exercise!.exerciseImageLink,
               );
             },
           ),
@@ -309,16 +318,16 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                           return null;
                         },
                         onSaved: (input) {
-                          newExercise = Exercise(
-                            exerciseId: newExercise!.exerciseId,
-                            name: newExercise!.name,
+                          exercise = Exercise(
+                            exerciseId: exercise!.exerciseId,
+                            name: exercise!.name,
                             timeSeconds: input.toString().isEmpty
                                 ? null
                                 : int.parse(input.toString()),
-                            restTime: newExercise!.restTime,
-                            sets: newExercise!.sets,
-                            reps: newExercise!.reps,
-                            exerciseImageLink: newExercise!.exerciseImageLink,
+                            restTime: exercise!.restTime,
+                            sets: exercise!.sets,
+                            reps: exercise!.reps,
+                            exerciseImageLink: exercise!.exerciseImageLink,
                           );
                         },
                       ),
@@ -358,16 +367,16 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                           return null;
                         },
                         onSaved: (input) {
-                          newExercise = Exercise(
-                            exerciseId: newExercise!.exerciseId,
-                            name: newExercise!.name,
-                            timeSeconds: newExercise!.timeSeconds,
+                          exercise = Exercise(
+                            exerciseId: exercise!.exerciseId,
+                            name: exercise!.name,
+                            timeSeconds: exercise!.timeSeconds,
                             restTime: input.toString().isEmpty
                                 ? null
                                 : int.parse(input.toString()),
-                            sets: newExercise!.sets,
-                            reps: newExercise!.reps,
-                            exerciseImageLink: newExercise!.exerciseImageLink,
+                            sets: exercise!.sets,
+                            reps: exercise!.reps,
+                            exerciseImageLink: exercise!.exerciseImageLink,
                           );
                         },
                       ),
@@ -416,16 +425,16 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                           return null;
                         },
                         onSaved: (input) {
-                          newExercise = Exercise(
-                            exerciseId: newExercise!.exerciseId,
-                            name: newExercise!.name,
-                            timeSeconds: newExercise!.timeSeconds,
-                            restTime: newExercise!.restTime,
+                          exercise = Exercise(
+                            exerciseId: exercise!.exerciseId,
+                            name: exercise!.name,
+                            timeSeconds: exercise!.timeSeconds,
+                            restTime: exercise!.restTime,
                             sets: input.toString().isEmpty
                                 ? null
                                 : int.parse(input.toString()),
-                            reps: newExercise!.reps,
-                            exerciseImageLink: newExercise!.exerciseImageLink,
+                            reps: exercise!.reps,
+                            exerciseImageLink: exercise!.exerciseImageLink,
                           );
                         },
                       ),
@@ -465,16 +474,16 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                           return null;
                         },
                         onSaved: (input) {
-                          newExercise = Exercise(
-                            exerciseId: newExercise!.exerciseId,
-                            name: newExercise!.name,
-                            timeSeconds: newExercise!.timeSeconds,
-                            restTime: newExercise!.restTime,
-                            sets: newExercise!.sets,
+                          exercise = Exercise(
+                            exerciseId: exercise!.exerciseId,
+                            name: exercise!.name,
+                            timeSeconds: exercise!.timeSeconds,
+                            restTime: exercise!.restTime,
+                            sets: exercise!.sets,
                             reps: input.toString().isEmpty
                                 ? null
                                 : int.parse(input.toString()),
-                            exerciseImageLink: newExercise!.exerciseImageLink,
+                            exerciseImageLink: exercise!.exerciseImageLink,
                           );
                         },
                       ),

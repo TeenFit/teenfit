@@ -9,11 +9,10 @@ class ExerciseTiles extends StatelessWidget {
   final double size;
   final bool isDeleteable;
   final Function delete;
-  final Function addExercise;
-  final Function updateExercise;
+  final List<Exercise> exercises;
 
   ExerciseTiles(
-      this.exercise, this.size, this.isDeleteable, this.delete, this.addExercise, this.updateExercise);
+      this.exercise, this.size, this.isDeleteable, this.delete, this.exercises);
 
   @override
   Widget build(BuildContext context) {
@@ -71,10 +70,9 @@ class ExerciseTiles extends StatelessWidget {
                                     Navigator.of(context).pushNamed(
                                       AddExerciseScreen.routeName,
                                       arguments: {
+                                        'exercises': exercises,
                                         'edit': true,
                                         'exercise': exercise,
-                                        'addExercise' : addExercise,
-                                        'updateExercise' : updateExercise,
                                       },
                                     );
                                   },

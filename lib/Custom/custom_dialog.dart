@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
 
@@ -21,19 +20,6 @@ class CustomDialogBox extends StatefulWidget {
 }
 
 class _CustomDialogBoxState extends State<CustomDialogBox> {
-  bool isLoading = false;
-
-  void _showToast(String msg) {
-    Fluttertoast.showToast(
-      msg: msg,
-      gravity: ToastGravity.CENTER,
-      timeInSecForIosWeb: 10,
-      webShowClose: true,
-      textColor: Colors.white,
-      backgroundColor: Colors.yellow.shade900,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -106,7 +92,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                             ),
                           ),
                     TextButton(
-                      onPressed: () async {
+                      onPressed: () {
                         if (widget.dialogOrganizerId == '/workout-page') {
                           Navigator.of(context).popUntil(
                               ModalRoute.withName(widget.dialogOrganizerId));
@@ -120,18 +106,9 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                               widget.dialogOrganizerId,
                               arguments: widget.arguments);
                         } else if (widget.dialogOrganizerId == 'pop') {
-                          setState(() {
-                            isLoading = true;
-                          });
-                          try {
-                            await Provider.of<Workouts>(context, listen: false)
-                                .deleteWorkout(widget.arguments.toString());
-                          } catch (e) {
-                            _showToast(e.toString());
-                          }
-                          setState(() {
-                            isLoading = false;
-                          });
+                          Provider.of<Workouts>(context, listen: false)
+                              .deleteWorkout(widget.arguments.toString())
+                              .then((_) => Navigator.of(context).pop());
                         } else if (widget.dialogOrganizerId ==
                             'delete-exercise') {
                           Function delete = widget.arguments['delete'];
@@ -163,11 +140,9 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
             backgroundColor: Colors.transparent,
             radius: Constants.avatarRadius,
             child: ClipRRect(
-              borderRadius:
-                  BorderRadius.all(Radius.circular(Constants.avatarRadius)),
-              child: Image.asset(
-                  isLoading ? 'assets/images/loading-gif.gif' : widget.img),
-            ),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(Constants.avatarRadius)),
+                child: Image.asset(widget.img)),
           ),
         ),
       ],

@@ -1,26 +1,15 @@
 import 'package:flutter/cupertino.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:teenfit/Custom/http_execption.dart';
 
 import './exercise.dart';
 import './workout.dart';
 
 class Workouts with ChangeNotifier {
-  // void fetchAndSetWorkouts() async {
-  //   CollectionReference workoutsCollection =
-  //       FirebaseFirestore.instance.collection('workouts');
-
-  //   _workouts = workoutsCollection.doc() as List<Workout>;
-  // }
-
   List<Workout> get workouts {
     return [..._workouts];
   }
 
   List<Workout> _workouts = [
     Workout(
-      datePosted: '',
-      isPending: false,
       creatorName: 'Muqeeth Khan',
       workoutId: 'w1',
       creatorId: 'uid',
@@ -78,8 +67,6 @@ class Workouts with ChangeNotifier {
       ],
     ),
     Workout(
-      datePosted: '',
-      isPending: false,
       creatorName: 'Muqeeth Khan',
       workoutId: 'w2',
       creatorId: 'uid',
@@ -150,15 +137,7 @@ class Workouts with ChangeNotifier {
   }
 
   Future<void> addWorkout(Workout workout) async {
-    CollectionReference workoutsCollection =
-        FirebaseFirestore.instance.collection('workouts');
-    try {
-      await workoutsCollection.doc().collection('workouts/${workout.workoutId}')
-          .add(workout as Map<String, Object>)
-          .then((value) => _workouts.insert(0, workout));
-    } catch (_) {
-      throw HttpException('Unable To Create Workout, Try Again Later');
-    }
+    _workouts.insert(0, workout);
     notifyListeners();
   }
 
@@ -171,15 +150,7 @@ class Workouts with ChangeNotifier {
   }
 
   Future<void> deleteWorkout(String workoutId) async {
-    CollectionReference workoutsCollection =
-        FirebaseFirestore.instance.collection('workouts/$workoutId');
-
-    try {
-      await workoutsCollection.doc().delete();
-      _workouts.removeWhere((workout) => workout.workoutId == workoutId);
-    } catch (_) {
-      throw HttpException('Unable To Delete Workout, Try Again Later');
-    }
+    _workouts.removeWhere((workout) => workout.workoutId == workoutId);
     notifyListeners();
   }
 }

@@ -22,9 +22,8 @@ import './providers/workouts.dart';
 import './screens/workout_page.dart';
 import './screens/auth/intro_page.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
