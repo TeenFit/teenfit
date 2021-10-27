@@ -119,6 +119,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
             );
 
       isEdit ? updateExercise!(newExercise!) : addExercise!(newExercise!);
+      Navigator.of(context).pop();
     }
 
     Widget buildAddImage() {

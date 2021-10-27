@@ -110,9 +110,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     }
 
     void addExercise(Exercise exercisE) {
-      exercises.insert(0, exercisE);
+      exercises.add(exercisE);
       setState(() {});
-      Navigator.of(context).pop();
     }
 
     void updateExercise(Exercise exercisE) {
@@ -121,7 +120,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       exercises.removeAt(index);
       exercises.insert(index, exercisE);
       setState(() {});
-      Navigator.of(context).pop();
     }
 
     Future<void> _submit() async {
@@ -515,11 +513,13 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 ),
                 child: ListView.builder(
                   itemBuilder: (ctx, index) => ExerciseTiles(
-                      exercises[index],
-                      _mediaQuery.size.width * 0.9,
-                      true,
-                      deleteExercise,
-                      exercises),
+                    exercises[index],
+                    _mediaQuery.size.width * 0.9,
+                    true,
+                    deleteExercise,
+                    addExercise,
+                    updateExercise,
+                  ),
                   itemCount: exercises.length,
                 ),
               ),
