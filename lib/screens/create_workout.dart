@@ -22,35 +22,28 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   var uuid = Uuid();
   Workout? newWorkout;
   Workout? workout;
+  bool isEdit = false;
+  var workoutProv;
 
   @override
   void didChangeDependencies() {
     _imageUrlFocusNode.addListener(_updateImageUrl);
-    workout = ModalRoute.of(context)?.settings.arguments as Workout?;
+    workoutProv = ModalRoute.of(context)!.settings.arguments;
 
-    newWorkout = workout == null
-        ? Workout(
-            creatorName: '',
-            creatorId: 'uid',
-            workoutId: uuid.v4(),
-            workoutName: '',
-            instagram: '',
-            facebook: '',
-            tumblrPageLink: '',
-            bannerImage: '',
-            exercises: [],
-          )
-        : Workout(
-            creatorName: workout!.creatorName,
-            creatorId: workout!.creatorId,
-            workoutId: workout!.workoutId,
-            workoutName: workout!.workoutName,
-            instagram: workout!.instagram,
-            facebook: workout!.facebook,
-            tumblrPageLink: workout!.tumblrPageLink,
-            bannerImage: _imageUrlController.text = workout!.bannerImage,
-            exercises: workout!.exercises,
-          );
+    workout = workoutProv['workout'];
+    isEdit = workoutProv['isEdit'];
+
+    newWorkout = Workout(
+      creatorName: workout!.creatorName,
+      creatorId: workout!.creatorId,
+      workoutId: workout!.workoutId,
+      workoutName: workout!.workoutName,
+      instagram: workout!.instagram,
+      facebook: workout!.facebook,
+      tumblrPageLink: workout!.tumblrPageLink,
+      bannerImage: _imageUrlController.text = workout!.bannerImage,
+      exercises: workout!.exercises,
+    );
 
     super.didChangeDependencies();
   }
@@ -76,10 +69,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     final _appBarHeight =
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
-    List<Exercise> exercises = workout != null ? workout!.exercises : [];
-
     void deleteExercise(String exerciseId) {
-      exercises.removeWhere((exercise) => exercise.exerciseId == exerciseId);
+      workout!.exercises
+          .removeWhere((exercise) => exercise.exerciseId == exerciseId);
       setState(() {});
     }
 
@@ -99,10 +91,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         facebook: newWorkout!.facebook,
         tumblrPageLink: newWorkout!.tumblrPageLink,
         bannerImage: newWorkout!.bannerImage,
-        exercises: exercises,
+        exercises: newWorkout!.exercises,
       );
 
-      workout != null
+      isEdit
           ? await Provider.of<Workouts>(context, listen: false)
               .updateWorkout(newWorkout!)
               .then((_) => Navigator.of(context).pop())
@@ -147,7 +139,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 width: double.infinity,
                 height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                 child: TextFormField(
-                  initialValue: workout != null ? workout!.bannerImage : '',
+                  initialValue: workout!.bannerImage,
                   focusNode: _imageUrlFocusNode,
                   decoration: InputDecoration(
                     hintText: 'Image URL',
@@ -198,7 +190,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
-            initialValue: workout != null ? workout!.creatorName : '',
+            initialValue: workout!.creatorName,
             decoration: InputDecoration(
               hintText: 'Creator Name',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
@@ -239,7 +231,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
-            initialValue: workout != null ? workout!.workoutName : '',
+            initialValue: workout!.workoutName,
             decoration: InputDecoration(
               hintText: 'Workout Name',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
@@ -280,7 +272,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
-            initialValue: workout != null ? workout!.instagram : '',
+            initialValue: workout!.instagram,
             maxLines: 2,
             decoration: InputDecoration(
               hintText: 'Instagram Link (optional)',
@@ -323,7 +315,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
-            initialValue: workout != null ? workout!.tumblrPageLink : '',
+            initialValue: workout!.tumblrPageLink,
             decoration: InputDecoration(
               hintText: 'Tumblr Link (optional)',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
@@ -364,7 +356,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
-            initialValue: workout != null ? workout!.facebook : '',
+            initialValue: workout!.facebook,
             decoration: InputDecoration(
               hintText: 'Facebook Link (Optional)',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
@@ -396,6 +388,21 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           ),
         ),
       );
+    }
+
+    void addExercise(Exercise exercise) {
+      newWorkout!.exercises.insert(0, exercise);
+      setState(() {});
+      Navigator.of(context).pop();
+    }
+
+    void updateExercise(Exercise exercise) {
+      int index = newWorkout!.exercises
+          .indexWhere((element) => element.exerciseId == exercise.exerciseId);
+      newWorkout!.exercises.removeAt(index);
+      newWorkout!.exercises.insert(index, exercise);
+      setState(() {});
+      Navigator.of(context).pop();
     }
 
     Widget buildAddExercises() {
@@ -432,9 +439,18 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                       Navigator.of(context).pushNamed(
                         AddExerciseScreen.routeName,
                         arguments: {
-                          'exercises': exercises,
+                          'addExercise': addExercise,
+                          'updateExercise': updateExercise,
                           'edit': false,
-                          'exercise': null
+                          'exercise': Exercise(
+                            exerciseId: uuid.v1(),
+                            name: '',
+                            reps: null,
+                            sets: null,
+                            timeSeconds: null,
+                            restTime: null,
+                            exerciseImageLink: '',
+                          ),
                         },
                       );
                     },
@@ -454,12 +470,14 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 ),
                 child: ListView.builder(
                   itemBuilder: (ctx, index) => ExerciseTiles(
-                      exercises[index],
-                      _mediaQuery.size.width * 0.9,
-                      true,
-                      deleteExercise,
-                      exercises),
-                  itemCount: exercises.length,
+                    newWorkout!.exercises[index],
+                    _mediaQuery.size.width * 0.9,
+                    true,
+                    deleteExercise,
+                    addExercise,
+                    updateExercise,
+                  ),
+                  itemCount: newWorkout!.exercises.length,
                 ),
               ),
             ],
@@ -476,7 +494,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.white),
         title: Text(
-          workout == null ? 'Add A Workout' : 'Edit Your Workout',
+          isEdit ? 'Edit A Workout' : 'Create A Workout',
           maxLines: 2,
           textAlign: TextAlign.start,
           style: TextStyle(

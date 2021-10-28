@@ -55,8 +55,8 @@ class WorkoutTile extends StatelessWidget {
             child: InkWell(
               borderRadius: BorderRadius.circular(25),
               onTap: () {
-                Navigator.of(context)
-                    .pushNamed(WorkoutPage.routeName, arguments: workout);
+                Navigator.of(context).pushNamed(WorkoutPage.routeName,
+                    arguments: {'workout': workout, 'isEdit': true});
               },
             ),
           ),

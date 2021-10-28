@@ -4,7 +4,6 @@ class ErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
-    final _theme = Theme.of(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

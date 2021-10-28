@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
+import '/providers/workout.dart';
 import 'create_workout.dart';
 import '/providers/workouts.dart';
 import '/widgets/workout_tile.dart';
@@ -14,6 +16,8 @@ class CreateWorkout extends StatelessWidget {
     final _theme = Theme.of(context);
     final _appBarHeight =
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
+
+    var uuid = Uuid();
 
     final workout = Provider.of<Workouts>(context);
 
@@ -29,7 +33,23 @@ class CreateWorkout extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: IconButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(AddWorkoutScreen.routeName);
+                Navigator.of(context).pushNamed(
+                  AddWorkoutScreen.routeName,
+                  arguments: {
+                    'workout': Workout(
+                      creatorName: '',
+                      creatorId: 'uid',
+                      workoutId: uuid.v4(),
+                      workoutName: '',
+                      instagram: '',
+                      facebook: '',
+                      tumblrPageLink: '',
+                      bannerImage: '',
+                      exercises: [],
+                    ),
+                    'isEdit': false
+                  },
+                );
               },
               icon: Icon(
                 Icons.add_box_outlined,

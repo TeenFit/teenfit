@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '/Custom/custom_dialog.dart';
-import '/screens/workout_page.dart';
 
 class EndWorkout extends StatelessWidget {
   final Function goToFirst;

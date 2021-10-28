@@ -16,43 +16,25 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
   var uuid = Uuid();
-  List<Exercise>? exercises;
-  Map? exerciseProv;
 
-  Exercise? _exercise;
-  Exercise? exercise;
-  bool? switchOnOf;  
+  Map? exerciseProv;
+  Exercise? newExercise;
+  bool? switchOnOf;
+  Function? addExercise;
+  Function? updateExercise;
 
   @override
   void didChangeDependencies() {
     exerciseProv = ModalRoute.of(context)!.settings.arguments as Map;
 
-    exercises = exerciseProv!['exercises'];
+    newExercise = exerciseProv!['exercise'];
 
-    _exercise = exerciseProv!['exercise'];
+    addExercise = exerciseProv!['addExercise'];
 
-    switchOnOf = _exercise != null ? (_exercise!.timeSeconds == null ? false : true) : false;
+    updateExercise = exerciseProv!['updateExercise'];
 
-    exercise = exerciseProv!['edit']
-        ? Exercise(
-            exerciseId: _exercise!.exerciseId,
-            name: _exercise!.name,
-            timeSeconds: _exercise!.timeSeconds,
-            restTime: _exercise!.restTime,
-            exerciseImageLink: _imageUrlController.text =
-                _exercise!.exerciseImageLink,
-            sets: _exercise!.sets,
-            reps: _exercise!.reps,
-          )
-        : Exercise(
-            exerciseId: uuid.v1(),
-            name: '',
-            reps: null,
-            sets: null,
-            timeSeconds: null,
-            restTime: null,
-            exerciseImageLink: '',
-          );
+    switchOnOf = newExercise!.timeSeconds == null ? false : true;
+
     super.didChangeDependencies();
   }
 
@@ -68,21 +50,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     if (!_imageUrlFocusNode.hasFocus) {
       setState(() {});
     }
-  }
-
-  void addExercise() {
-    exercises!.insert(0, exercise!);
-    setState(() {});
-    Navigator.of(context).pop();
-  }
-
-  void updateExercise() {
-    int index = exercises!
-        .indexWhere((element) => element.exerciseId == exercise!.exerciseId);
-    exercises!.removeAt(index);
-    exercises!.insert(index, exercise!);
-    setState(() {});
-    Navigator.of(context).pop();
   }
 
   bool isNumeric(String? s) {
@@ -108,27 +75,27 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
       _formKey4.currentState!.save();
 
-      exercise = switchOnOf!
+      newExercise = switchOnOf!
           ? Exercise(
-              exerciseId: exercise!.exerciseId,
-              name: exercise!.name,
-              exerciseImageLink: exercise!.exerciseImageLink,
+              exerciseId: newExercise!.exerciseId,
+              name: newExercise!.name,
+              exerciseImageLink: newExercise!.exerciseImageLink,
               sets: null,
               reps: null,
-              timeSeconds: exercise!.timeSeconds,
-              restTime: exercise!.restTime,
+              timeSeconds: newExercise!.timeSeconds,
+              restTime: newExercise!.restTime,
             )
           : Exercise(
-              exerciseId: exercise!.exerciseId,
-              name: exercise!.name,
-              exerciseImageLink: exercise!.exerciseImageLink,
-              sets: exercise!.sets,
-              reps: exercise!.reps,
+              exerciseId: newExercise!.exerciseId,
+              name: newExercise!.name,
+              exerciseImageLink: newExercise!.exerciseImageLink,
+              sets: newExercise!.sets,
+              reps: newExercise!.reps,
               timeSeconds: null,
               restTime: null,
             );
 
-      isEdit ? updateExercise() : addExercise();
+      isEdit ? updateExercise!() : addExercise!();
     }
 
     Widget buildAddImage() {
@@ -167,7 +134,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                 width: double.infinity,
                 height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                 child: TextFormField(
-                  initialValue: isEdit ? _exercise!.exerciseImageLink : '',
+                  initialValue: newExercise!.exerciseImageLink,
                   focusNode: _imageUrlFocusNode,
                   decoration: InputDecoration(
                     hintText: 'Image URL',
@@ -191,14 +158,14 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                     return null;
                   },
                   onSaved: (input) {
-                    exercise = Exercise(
-                      exerciseId: exercise!.exerciseId,
-                      name: exercise!.name,
-                      timeSeconds: exercise!.timeSeconds,
-                      restTime: exercise!.restTime,
+                    newExercise = Exercise(
+                      exerciseId: newExercise!.exerciseId,
+                      name: newExercise!.name,
+                      timeSeconds: newExercise!.timeSeconds,
+                      restTime: newExercise!.restTime,
                       exerciseImageLink: input.toString(),
-                      reps: exercise!.reps,
-                      sets: exercise!.sets,
+                      reps: newExercise!.reps,
+                      sets: newExercise!.sets,
                     );
                   },
                 ),
@@ -216,7 +183,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
-            initialValue: isEdit ? _exercise!.name : '',
+            initialValue: newExercise!.name,
             decoration: InputDecoration(
               hintText: 'Exercise Name',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
@@ -232,14 +199,14 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
               return null;
             },
             onSaved: (input) {
-              exercise = Exercise(
-                exerciseId: exercise!.exerciseId,
+              newExercise = Exercise(
+                exerciseId: newExercise!.exerciseId,
                 name: input.toString(),
-                timeSeconds: exercise!.timeSeconds,
-                restTime: exercise!.restTime,
-                sets: exercise!.sets,
-                reps: exercise!.reps,
-                exerciseImageLink: exercise!.exerciseImageLink,
+                timeSeconds: newExercise!.timeSeconds,
+                restTime: newExercise!.restTime,
+                sets: newExercise!.sets,
+                reps: newExercise!.reps,
+                exerciseImageLink: newExercise!.exerciseImageLink,
               );
             },
           ),
@@ -290,11 +257,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                       height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                       width: _mediaQuery.size.width,
                       child: TextFormField(
-                        initialValue: isEdit
-                            ? _exercise!.timeSeconds == null
-                                ? ''
-                                : _exercise!.timeSeconds.toString()
-                            : '',
+                        initialValue: newExercise!.timeSeconds.toString(),
                         decoration: InputDecoration(
                           hintText: 'Exercise Time (sec)',
                           hintStyle: TextStyle(
@@ -318,16 +281,16 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                           return null;
                         },
                         onSaved: (input) {
-                          exercise = Exercise(
-                            exerciseId: exercise!.exerciseId,
-                            name: exercise!.name,
+                          newExercise = Exercise(
+                            exerciseId: newExercise!.exerciseId,
+                            name: newExercise!.name,
                             timeSeconds: input.toString().isEmpty
                                 ? null
                                 : int.parse(input.toString()),
-                            restTime: exercise!.restTime,
-                            sets: exercise!.sets,
-                            reps: exercise!.reps,
-                            exerciseImageLink: exercise!.exerciseImageLink,
+                            restTime: newExercise!.restTime,
+                            sets: newExercise!.sets,
+                            reps: newExercise!.reps,
+                            exerciseImageLink: newExercise!.exerciseImageLink,
                           );
                         },
                       ),
@@ -339,11 +302,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                       height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                       width: _mediaQuery.size.width,
                       child: TextFormField(
-                        initialValue: isEdit
-                            ? _exercise!.restTime == null
-                                ? ''
-                                : _exercise!.restTime.toString()
-                            : '',
+                        initialValue: newExercise!.restTime.toString(),
                         decoration: InputDecoration(
                           hintText: 'Rest Time (sec)',
                           hintStyle: TextStyle(
@@ -367,16 +326,16 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                           return null;
                         },
                         onSaved: (input) {
-                          exercise = Exercise(
-                            exerciseId: exercise!.exerciseId,
-                            name: exercise!.name,
-                            timeSeconds: exercise!.timeSeconds,
+                          newExercise = Exercise(
+                            exerciseId: newExercise!.exerciseId,
+                            name: newExercise!.name,
+                            timeSeconds: newExercise!.timeSeconds,
                             restTime: input.toString().isEmpty
                                 ? null
                                 : int.parse(input.toString()),
-                            sets: exercise!.sets,
-                            reps: exercise!.reps,
-                            exerciseImageLink: exercise!.exerciseImageLink,
+                            sets: newExercise!.sets,
+                            reps: newExercise!.reps,
+                            exerciseImageLink: newExercise!.exerciseImageLink,
                           );
                         },
                       ),
@@ -397,11 +356,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                       height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                       width: _mediaQuery.size.width,
                       child: TextFormField(
-                        initialValue: isEdit
-                            ? _exercise!.sets == null
-                                ? ''
-                                : _exercise!.sets.toString()
-                            : '',
+                        initialValue: newExercise!.sets.toString(),
                         decoration: InputDecoration(
                           hintText: 'Sets',
                           hintStyle: TextStyle(
@@ -425,16 +380,16 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                           return null;
                         },
                         onSaved: (input) {
-                          exercise = Exercise(
-                            exerciseId: exercise!.exerciseId,
-                            name: exercise!.name,
-                            timeSeconds: exercise!.timeSeconds,
-                            restTime: exercise!.restTime,
+                          newExercise = Exercise(
+                            exerciseId: newExercise!.exerciseId,
+                            name: newExercise!.name,
+                            timeSeconds: newExercise!.timeSeconds,
+                            restTime: newExercise!.restTime,
                             sets: input.toString().isEmpty
                                 ? null
                                 : int.parse(input.toString()),
-                            reps: exercise!.reps,
-                            exerciseImageLink: exercise!.exerciseImageLink,
+                            reps: newExercise!.reps,
+                            exerciseImageLink: newExercise!.exerciseImageLink,
                           );
                         },
                       ),
@@ -446,11 +401,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                       height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                       width: _mediaQuery.size.width,
                       child: TextFormField(
-                        initialValue: isEdit
-                            ? _exercise!.reps == null
-                                ? ''
-                                : _exercise!.reps.toString()
-                            : '',
+                        initialValue: newExercise!.reps.toString(),
                         decoration: InputDecoration(
                           hintText: 'Reps',
                           hintStyle: TextStyle(
@@ -474,16 +425,16 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                           return null;
                         },
                         onSaved: (input) {
-                          exercise = Exercise(
-                            exerciseId: exercise!.exerciseId,
-                            name: exercise!.name,
-                            timeSeconds: exercise!.timeSeconds,
-                            restTime: exercise!.restTime,
-                            sets: exercise!.sets,
+                          newExercise = Exercise(
+                            exerciseId: newExercise!.exerciseId,
+                            name: newExercise!.name,
+                            timeSeconds: newExercise!.timeSeconds,
+                            restTime: newExercise!.restTime,
+                            sets: newExercise!.sets,
                             reps: input.toString().isEmpty
                                 ? null
                                 : int.parse(input.toString()),
-                            exerciseImageLink: exercise!.exerciseImageLink,
+                            exerciseImageLink: newExercise!.exerciseImageLink,
                           );
                         },
                       ),
