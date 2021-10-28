@@ -18,7 +18,7 @@ class ExerciseTiles extends StatelessWidget {
     this.isDeleteable,
     this.delete,
     this.addExercise,
-    this.updateExercise,
+    this.updateExercise
   );
 
   @override

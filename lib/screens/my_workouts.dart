@@ -68,6 +68,7 @@ class CreateWorkout extends StatelessWidget {
             return WorkoutTile(
               workout.findByCreatorId('uid')[index],
               true,
+              workout.findByCreatorId('uid')[index],
             );
           },
           itemCount: workout.findByCreatorId('uid').length,

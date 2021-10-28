@@ -30,7 +30,8 @@ class SearchResultWorkouts extends StatelessWidget {
                 top: fsb!.value.height + fsb.value.margins.vertical),
             itemBuilder: (ctx, index) {
               if (searchTerm == null) {
-                return WorkoutTile(workoutprovider.workouts[index], false);
+                return WorkoutTile(workoutprovider.workouts[index], false,
+                    workoutprovider.workouts[index]);
               } else if (workoutprovider
                   .findByName(searchTerm!)
                   .toList()
@@ -68,9 +69,11 @@ class SearchResultWorkouts extends StatelessWidget {
                 );
               } else {
                 return WorkoutTile(
-                  Provider.of<Workouts>(context, listen: false)
+                  workoutprovider
                       .findByName(searchTerm!)[index],
                   false,
+                   workoutprovider
+                      .findByName(searchTerm!)[index],
                 );
               }
             },

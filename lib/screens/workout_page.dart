@@ -251,7 +251,7 @@ class WorkoutPage extends StatelessWidget {
                       false,
                       () {},
                       () {},
-                      () {},
+                      (){},
                     ),
                     itemCount: workout.exercises.length,
                   ),

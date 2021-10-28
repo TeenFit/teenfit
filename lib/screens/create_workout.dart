@@ -25,6 +25,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   bool isEdit = false;
   var workoutProv;
 
+  List<Exercise>? exerciseEditList;
+
   @override
   void didChangeDependencies() {
     _imageUrlFocusNode.addListener(_updateImageUrl);
@@ -44,6 +46,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       bannerImage: _imageUrlController.text = workout!.bannerImage,
       exercises: workout!.exercises,
     );
+
+    exerciseEditList = [...newWorkout!.exercises];
 
     super.didChangeDependencies();
   }
@@ -70,9 +74,24 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
     void deleteExercise(String exerciseId) {
-      workout!.exercises
+      exerciseEditList!
           .removeWhere((exercise) => exercise.exerciseId == exerciseId);
       setState(() {});
+    }
+
+    void addExercise(Exercise exercise) {
+      exerciseEditList!.insert(0, exercise);
+      setState(() {});
+      Navigator.of(context).pop();
+    }
+
+    void updateExercise(Exercise exercise) {
+      int index = exerciseEditList!
+          .indexWhere((element) => element.exerciseId == exercise.exerciseId);
+      exerciseEditList!.removeAt(index);
+      exerciseEditList!.insert(index, exercise);
+      setState(() {});
+      Navigator.of(context).pop();
     }
 
     Future<void> _submit() async {
@@ -91,7 +110,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         facebook: newWorkout!.facebook,
         tumblrPageLink: newWorkout!.tumblrPageLink,
         bannerImage: newWorkout!.bannerImage,
-        exercises: newWorkout!.exercises,
+        exercises: exerciseEditList!,
       );
 
       isEdit
@@ -172,7 +191,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                       facebook: newWorkout!.facebook,
                       tumblrPageLink: newWorkout!.tumblrPageLink,
                       bannerImage: input.toString(),
-                      exercises: newWorkout!.exercises,
+                      exercises: exerciseEditList!,
                     );
                   },
                 ),
@@ -216,7 +235,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
-                exercises: newWorkout!.exercises,
+                exercises: exerciseEditList!,
               );
             },
           ),
@@ -257,7 +276,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
-                exercises: newWorkout!.exercises,
+                exercises: exerciseEditList!,
               );
             },
           ),
@@ -300,7 +319,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
-                exercises: newWorkout!.exercises,
+                exercises: exerciseEditList!,
               );
             },
           ),
@@ -341,7 +360,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: input.toString(),
                 bannerImage: newWorkout!.bannerImage,
-                exercises: newWorkout!.exercises,
+                exercises: exerciseEditList!,
               );
             },
           ),
@@ -382,27 +401,12 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: input.toString(),
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
-                exercises: newWorkout!.exercises,
+                exercises: exerciseEditList!,
               );
             },
           ),
         ),
       );
-    }
-
-    void addExercise(Exercise exercise) {
-      newWorkout!.exercises.insert(0, exercise);
-      setState(() {});
-      Navigator.of(context).pop();
-    }
-
-    void updateExercise(Exercise exercise) {
-      int index = newWorkout!.exercises
-          .indexWhere((element) => element.exerciseId == exercise.exerciseId);
-      newWorkout!.exercises.removeAt(index);
-      newWorkout!.exercises.insert(index, exercise);
-      setState(() {});
-      Navigator.of(context).pop();
     }
 
     Widget buildAddExercises() {
@@ -470,14 +474,14 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 ),
                 child: ListView.builder(
                   itemBuilder: (ctx, index) => ExerciseTiles(
-                    newWorkout!.exercises[index],
+                    exerciseEditList![index],
                     _mediaQuery.size.width * 0.9,
                     true,
                     deleteExercise,
                     addExercise,
                     updateExercise,
                   ),
-                  itemCount: newWorkout!.exercises.length,
+                  itemCount: exerciseEditList!.length,
                 ),
               ),
             ],
