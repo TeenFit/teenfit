@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
+import '/Custom/http_execption.dart';
 import './exercise.dart';
 import './workout.dart';
 
 class Workouts with ChangeNotifier {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   List<Workout> get workouts {
     return [..._workouts];
   }
@@ -137,15 +141,31 @@ class Workouts with ChangeNotifier {
   }
 
   Future<void> addWorkout(Workout workout) async {
-    _workouts.insert(0, workout);
+    CollectionReference workouts =
+        FirebaseFirestore.instance.collection('workouts');
+
+    try {
+      await workouts.doc().collection('${workout.workoutId}').add(workout as Map<String, dynamic>);
+      _workouts.insert(0, workout);
+    } catch (e) {
+      throw HttpException('');
+    }
     notifyListeners();
   }
 
   Future<void> updateWorkout(Workout workout) async {
-    int index = _workouts
-        .indexWhere((workouT) => workouT.workoutId == workout.workoutId);
-    _workouts.removeWhere((workouT) => workouT.workoutId == workout.workoutId);
-    _workouts.insert(index, workout);
+    
+
+    try {
+      int index = _workouts
+          .indexWhere((workouT) => workouT.workoutId == workout.workoutId);
+      _workouts
+          .removeWhere((workouT) => workouT.workoutId == workout.workoutId);
+      _workouts.insert(index, workout);
+    } catch (_) {
+      throw HttpException('');
+    }
+
     notifyListeners();
   }
 
