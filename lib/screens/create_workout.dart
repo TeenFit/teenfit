@@ -80,7 +80,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     }
 
     void addExercise(Exercise exercise) {
-      exerciseEditList!.insert(0, exercise);
+      exerciseEditList!.add(exercise);
       setState(() {});
       Navigator.of(context).pop();
     }
