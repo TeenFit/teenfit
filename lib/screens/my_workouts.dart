@@ -20,7 +20,7 @@ class CreateWorkout extends StatelessWidget {
 
     var uuid = Uuid();
 
-    String uid = Provider.of<Auth>(context).userId;
+    String uid = Provider.of<Auth>(context, listen: false).userId;
 
     final workout = Provider.of<Workouts>(context);
 
@@ -41,7 +41,7 @@ class CreateWorkout extends StatelessWidget {
                   arguments: {
                     'workout': Workout(
                       creatorName: '',
-                      creatorId: Provider.of<Auth>(context).userId,
+                      creatorId: uid,
                       workoutId: uuid.v4(),
                       workoutName: '',
                       instagram: '',
@@ -68,13 +68,47 @@ class CreateWorkout extends StatelessWidget {
         width: _mediaQuery.size.width,
         child: ListView.builder(
           itemBuilder: (ctx, index) {
-            return WorkoutTile(
-              workout.findByCreatorId(uid)[index],
-              true,
-              workout.findByCreatorId(uid)[index],
-            );
+            return workout.findByCreatorId(uid).length == 0
+                ? Container(
+                    height: (_mediaQuery.size.height - _appBarHeight),
+                    width: _mediaQuery.size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height:
+                              (_mediaQuery.size.height - _appBarHeight) * 0.05,
+                        ),
+                        Container(
+                          height:
+                              (_mediaQuery.size.height - _appBarHeight) * 0.05,
+                          width: _mediaQuery.size.width * 0.8,
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Text(
+                              'Create Your First Workout...',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: _mediaQuery.size.height * 0.025,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Roboto',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : WorkoutTile(
+                    workout.findByCreatorId(uid)[index],
+                    true,
+                    workout.findByCreatorId(uid)[index],
+                  );
           },
-          itemCount: workout.findByCreatorId(uid).length,
+          itemCount: workout.findByCreatorId(uid).length == 0
+              ? 1
+              : workout.findByCreatorId(uid).length,
         ),
       ),
     );

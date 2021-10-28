@@ -95,7 +95,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
               restTime: null,
             );
 
-      isEdit ? updateExercise!() : addExercise!();
+      isEdit ? updateExercise!(newExercise) : addExercise!(newExercise);
     }
 
     Widget buildAddImage() {
