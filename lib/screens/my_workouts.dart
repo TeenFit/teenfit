@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:teenfit/providers/auth.dart';
 import 'package:uuid/uuid.dart';
 
 import '/providers/workout.dart';
@@ -18,6 +19,8 @@ class CreateWorkout extends StatelessWidget {
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
     var uuid = Uuid();
+
+    String uid = Provider.of<Auth>(context).userId;
 
     final workout = Provider.of<Workouts>(context);
 
@@ -38,7 +41,7 @@ class CreateWorkout extends StatelessWidget {
                   arguments: {
                     'workout': Workout(
                       creatorName: '',
-                      creatorId: 'uid',
+                      creatorId: Provider.of<Auth>(context).userId,
                       workoutId: uuid.v4(),
                       workoutName: '',
                       instagram: '',
@@ -66,12 +69,12 @@ class CreateWorkout extends StatelessWidget {
         child: ListView.builder(
           itemBuilder: (ctx, index) {
             return WorkoutTile(
-              workout.findByCreatorId('uid')[index],
+              workout.findByCreatorId(uid)[index],
               true,
-              workout.findByCreatorId('uid')[index],
+              workout.findByCreatorId(uid)[index],
             );
           },
-          itemCount: workout.findByCreatorId('uid').length,
+          itemCount: workout.findByCreatorId(uid).length,
         ),
       ),
     );

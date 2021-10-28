@@ -32,6 +32,7 @@ class Auth with ChangeNotifier {
       );
 
       getCurrentUID();
+       print(userId);
     } on FirebaseAuthException catch (e) {
       print(e);
       throw HttpException(e.code.toString());
@@ -45,6 +46,7 @@ class Auth with ChangeNotifier {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       getCurrentUID();
+      print(userId);
     } on FirebaseAuthException catch (e) {
       throw HttpException(e.code.toString());
     } catch (_) {
