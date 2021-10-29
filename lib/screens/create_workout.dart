@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -24,6 +25,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   Workout? workout;
   bool isEdit = false;
   var workoutProv;
+  bool _isLoading = false;
 
   List<Exercise>? exerciseEditList;
 
@@ -94,6 +96,17 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       Navigator.of(context).pop();
     }
 
+    void _showToast(String msg) {
+      Fluttertoast.showToast(
+        msg: msg,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 10,
+        webShowClose: true,
+        textColor: Colors.white,
+        backgroundColor: Colors.yellow.shade900,
+      );
+    }
+
     Future<void> _submit() async {
       if (!_formKey3.currentState!.validate()) {
         return;
@@ -113,13 +126,25 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         exercises: exerciseEditList!,
       );
 
-      isEdit
-          ? await Provider.of<Workouts>(context, listen: false)
-              .updateWorkout(newWorkout!)
-              .then((_) => Navigator.of(context).pop())
-          : await Provider.of<Workouts>(context, listen: false)
-              .addWorkout(newWorkout!)
-              .then((_) => Navigator.of(context).pop());
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        isEdit
+            ? await Provider.of<Workouts>(context, listen: false)
+                .updateWorkout(newWorkout!)
+                .then((_) => Navigator.of(context).pop())
+            : await Provider.of<Workouts>(context, listen: false)
+                .addWorkout(newWorkout!)
+                .then((_) => Navigator.of(context).pop());
+      } catch (e) {
+        _showToast(e.toString());
+      }
+
+      setState(() {
+        _isLoading = false;
+      });
     }
 
     Widget buildAddImage() {
@@ -315,7 +340,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,
                 workoutName: newWorkout!.workoutName,
-                instagram: input.toString(),
+                instagram: input.toString().isEmpty ? ' ' : input.toString(),
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
@@ -358,7 +383,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 workoutName: newWorkout!.workoutName,
                 instagram: newWorkout!.instagram,
                 facebook: newWorkout!.facebook,
-                tumblrPageLink: input.toString(),
+                tumblrPageLink: input.toString().isEmpty ? ' ' : input.toString(),
                 bannerImage: newWorkout!.bannerImage,
                 exercises: exerciseEditList!,
               );
@@ -398,7 +423,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 workoutId: newWorkout!.workoutId,
                 workoutName: newWorkout!.workoutName,
                 instagram: newWorkout!.instagram,
-                facebook: input.toString(),
+                facebook: input.toString().isEmpty ? ' ' : input.toString(),
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
                 exercises: exerciseEditList!,
@@ -540,14 +565,20 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                       ),
-                      child: Text(
-                        'Submit',
-                        style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w900,
-                          fontSize: _mediaQuery.size.height * 0.03,
-                        ),
-                      ),
+                      child: _isLoading
+                          ? CircularProgressIndicator(
+                              strokeWidth: 4,
+                              backgroundColor: _theme.shadowColor,
+                              color: Colors.white,
+                            )
+                          : Text(
+                              'Submit',
+                              style: TextStyle(
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w900,
+                                fontSize: _mediaQuery.size.height * 0.03,
+                              ),
+                            ),
                       onPressed: () {
                         _submit();
                       },

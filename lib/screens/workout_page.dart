@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
 import 'package:teenfit/screens/exercise_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,6 +21,18 @@ class WorkoutPage extends StatelessWidget {
 
     final Workout workout =
         ModalRoute.of(context)!.settings.arguments as Workout;
+    
+    void _showToast(String msg) {
+      Fluttertoast.showToast(
+        msg: msg,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 10,
+        webShowClose: true,
+        textColor: Colors.white,
+        backgroundColor: Colors.yellow.shade900,
+      );
+    }
+
 
     return Scaffold(
       backgroundColor: _theme.highlightColor,
@@ -146,7 +159,7 @@ class WorkoutPage extends StatelessWidget {
                                                   try {
                                                     launch(workout.instagram);
                                                   } catch (e) {
-                                                    return null;
+                                                    return _showToast('Link Not Available');
                                                   }
                                                 },
                                                 icon: Icon(
@@ -164,7 +177,7 @@ class WorkoutPage extends StatelessWidget {
                                                   try {
                                                     launch(workout.facebook);
                                                   } catch (e) {
-                                                    return null;
+                                                    return _showToast('Link Not Available');
                                                   }
                                                 },
                                                 icon: Icon(
@@ -183,7 +196,7 @@ class WorkoutPage extends StatelessWidget {
                                                     launch(
                                                         workout.tumblrPageLink);
                                                   } catch (e) {
-                                                    return null;
+                                                    return _showToast('Link Not Available');
                                                   }
                                                 },
                                                 icon: Icon(
