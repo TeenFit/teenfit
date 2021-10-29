@@ -21,7 +21,7 @@ class WorkoutPage extends StatelessWidget {
 
     final Workout workout =
         ModalRoute.of(context)!.settings.arguments as Workout;
-    
+
     void _showToast(String msg) {
       Fluttertoast.showToast(
         msg: msg,
@@ -32,7 +32,6 @@ class WorkoutPage extends StatelessWidget {
         backgroundColor: Colors.yellow.shade900,
       );
     }
-
 
     return Scaffold(
       backgroundColor: _theme.highlightColor,
@@ -157,9 +156,14 @@ class WorkoutPage extends StatelessWidget {
                                             : IconButton(
                                                 onPressed: () {
                                                   try {
-                                                    launch(workout.instagram);
+                                                    launch(workout.instagram)
+                                                        .catchError((e) {
+                                                      _showToast(
+                                                          'Link Not Available');
+                                                    });
                                                   } catch (e) {
-                                                    return _showToast('Link Not Available');
+                                                    return _showToast(
+                                                        'Link Not Available');
                                                   }
                                                 },
                                                 icon: Icon(
@@ -175,9 +179,14 @@ class WorkoutPage extends StatelessWidget {
                                             : IconButton(
                                                 onPressed: () {
                                                   try {
-                                                    launch(workout.facebook);
+                                                    launch(workout.facebook)
+                                                        .catchError((e) {
+                                                      _showToast(
+                                                          'Link Not Available');
+                                                    });
                                                   } catch (e) {
-                                                    return _showToast('Link Not Available');
+                                                    return _showToast(
+                                                        'Link Not Available');
                                                   }
                                                 },
                                                 icon: Icon(
@@ -193,10 +202,15 @@ class WorkoutPage extends StatelessWidget {
                                             : IconButton(
                                                 onPressed: () {
                                                   try {
-                                                    launch(
-                                                        workout.tumblrPageLink);
+                                                    launch(workout
+                                                            .tumblrPageLink)
+                                                        .catchError((e) {
+                                                      _showToast(
+                                                          'Link Not Available');
+                                                    });
                                                   } catch (e) {
-                                                    return _showToast('Link Not Available');
+                                                    return _showToast(
+                                                        'Link Not Available');
                                                   }
                                                 },
                                                 icon: Icon(
@@ -264,7 +278,7 @@ class WorkoutPage extends StatelessWidget {
                       false,
                       () {},
                       () {},
-                      (){},
+                      () {},
                     ),
                     itemCount: workout.exercises.length,
                   ),
