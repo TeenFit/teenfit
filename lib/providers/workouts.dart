@@ -156,7 +156,15 @@ class Workouts with ChangeNotifier {
               'facebook': workout.facebook,
               'tumblrPageLink': workout.tumblrPageLink,
               'bannerImage': workout.bannerImage,
-              'exercises': workout.exercises.cast<List>()
+              'exercises': workout.exercises.map((e) => {
+                    'exerciseId': e.exerciseId,
+                    'exerciseImageLink': e.exerciseImageLink,
+                    'name': e.name,
+                    'reps': e.reps,
+                    'sets': e.sets,
+                    'restTime': e.restTime,
+                    'timeSeconds': e.timeSeconds
+                  }).toList()
             }),
           );
 

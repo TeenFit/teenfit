@@ -7,11 +7,11 @@ import '../providers/workout.dart';
 
 // ignore: must_be_immutable
 class WorkoutTile extends StatelessWidget {
-  final Workout editedWorkout;
+
   final Workout workout;
   bool isDeletable;
 
-  WorkoutTile(this.workout, this.isDeletable, this.editedWorkout);
+  WorkoutTile(this.workout, this.isDeletable);
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class WorkoutTile extends StatelessWidget {
                         child: Container(
                           width: _mediaQuery.size.width * 0.6,
                           child: Text(
-                            editedWorkout.workoutName,
+                            workout.workoutName,
                             maxLines: 2,
                             textAlign: TextAlign.left,
                             style: TextStyle(
@@ -98,7 +98,7 @@ class WorkoutTile extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).pushNamed(
                               AddWorkoutScreen.routeName,
-                              arguments: {'workout': editedWorkout, 'isEdit': true});
+                              arguments: {'workout': workout, 'isEdit': true});
                         },
                         icon: Icon(Icons.edit),
                         color: Colors.grey[100],

@@ -49,6 +49,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       exercises: workout!.exercises,
     );
 
+    // add a map function to remove the exercises class
+
     exerciseEditList = [...newWorkout!.exercises];
 
     super.didChangeDependencies();

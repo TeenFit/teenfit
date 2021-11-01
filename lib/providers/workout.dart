@@ -1,4 +1,4 @@
-import './exercise.dart';
+import 'package:teenfit/providers/exercise.dart';
 
 class Workout {
   final String creatorName;
