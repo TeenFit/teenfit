@@ -35,7 +35,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     isEdit = workoutProv['isEdit'];
 
     exerciseEditList =
-        [...workout!.exercises] == [] ? [] : [...workout!.exercises];
+        workout!.exercises == [] ? [] : workout!.exercises;
 
     newWorkout = Workout(
       date: workout!.date,
@@ -47,7 +47,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       facebook: workout!.facebook,
       tumblrPageLink: workout!.tumblrPageLink,
       bannerImage: workout!.bannerImage,
-      exercises: [...exerciseEditList!],
+      exercises: exerciseEditList!,
     );
 
     super.didChangeDependencies();
