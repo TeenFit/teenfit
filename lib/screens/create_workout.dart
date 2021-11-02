@@ -47,7 +47,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       facebook: workout!.facebook,
       tumblrPageLink: workout!.tumblrPageLink,
       bannerImage: workout!.bannerImage,
-      exercises: exerciseEditList!,
+      exercises: [...exerciseEditList!],
     );
 
     super.didChangeDependencies();
@@ -122,7 +122,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         facebook: newWorkout!.facebook,
         tumblrPageLink: newWorkout!.tumblrPageLink,
         bannerImage: newWorkout!.bannerImage,
-        exercises: exerciseEditList!,
+        exercises: newWorkout!.exercises,
       );
 
       setState(() {
@@ -197,7 +197,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                       facebook: newWorkout!.facebook,
                       tumblrPageLink: newWorkout!.tumblrPageLink,
                       bannerImage: input.toString(),
-                      exercises: exerciseEditList!,
+                      exercises: newWorkout!.exercises,
                     );
                   },
                 ),
@@ -244,7 +244,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
-                exercises: exerciseEditList!,
+                exercises: newWorkout!.exercises,
               );
             },
           ),
@@ -288,7 +288,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
-                exercises: exerciseEditList!,
+                exercises: newWorkout!.exercises,
               );
             },
           ),
@@ -332,7 +332,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
-                exercises: exerciseEditList!,
+                exercises: newWorkout!.exercises,
               );
             },
           ),
@@ -375,7 +375,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 tumblrPageLink:
                     input.toString().isEmpty ? '' : input.toString(),
                 bannerImage: newWorkout!.bannerImage,
-                exercises: exerciseEditList!,
+                exercises: newWorkout!.exercises,
               );
             },
           ),
@@ -417,7 +417,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: input.toString().isEmpty ? '' : input.toString(),
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
-                exercises: exerciseEditList!,
+                exercises: newWorkout!.exercises,
               );
             },
           ),
@@ -494,10 +494,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                     addExercise: addExercise,
                     updateExercise: updateExercise,
                     delete: deleteExercise,
-                    exercise: exerciseEditList![index],
+                    exercise: newWorkout!.exercises[index],
                     size: _mediaQuery.size.width * 0.9,
                   ),
-                  itemCount: exerciseEditList!.length,
+                  itemCount: newWorkout!.exercises.length,
                 ),
               ),
             ],
