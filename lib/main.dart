@@ -116,9 +116,96 @@ class _MyAppState extends State<MyApp> {
                             if (snapshot.connectionState ==
                                 ConnectionState.active) {
                               var isAuth = snapshot.data;
-                              return isAuth != null
-                                  ? HomeScreen()
-                                  : IntroPage();
+                              return Builder(
+                                builder: (context) {
+                                  return OfflineBuilder(
+                                    connectivityBuilder:
+                                        (context, connectivity, child) {
+                                      final bool connected = connectivity !=
+                                          ConnectivityResult.none;
+                                      return Scaffold(
+                                        body: Stack(
+                                          fit: StackFit.expand,
+                                          children: [
+                                            child,
+                                            Positioned(
+                                              left: 0.0,
+                                              right: 0.0,
+                                              height: MediaQuery.of(context)
+                                                      .padding
+                                                      .top *
+                                                  2.3,
+                                              child: AnimatedContainer(
+                                                decoration: BoxDecoration(
+                                                  color: connected
+                                                      ? null
+                                                      : Color(0xFFEE4400),
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    bottomRight:
+                                                        Radius.circular(25),
+                                                    bottomLeft:
+                                                        Radius.circular(25),
+                                                  ),
+                                                ),
+                                                duration: const Duration(
+                                                    milliseconds: 300),
+                                                child: connected
+                                                    ? null
+                                                    : Padding(
+                                                        padding:
+                                                            EdgeInsets.fromLTRB(
+                                                                0,
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .padding
+                                                                    .top,
+                                                                0,
+                                                                0),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              'OFFLINE',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 20),
+                                                            ),
+                                                            SizedBox(
+                                                              width: 8.0,
+                                                            ),
+                                                            SizedBox(
+                                                              width: 16.0,
+                                                              height: 16.0,
+                                                              child:
+                                                                  CircularProgressIndicator(
+                                                                strokeWidth:
+                                                                    2.0,
+                                                                valueColor:
+                                                                    AlwaysStoppedAnimation<
+                                                                            Color>(
+                                                                        Colors
+                                                                            .white),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    child: isAuth != null
+                                        ? HomeScreen()
+                                        : IntroPage(),
+                                  );
+                                },
+                              );
                             } else if (snapshot.hasError) {
                               return ErrorScreen();
                             } else {
@@ -132,58 +219,6 @@ class _MyAppState extends State<MyApp> {
                     },
                   ),
                 ),
-
-          // Builder(
-          //       builder: (context) {
-          //         return OfflineBuilder(
-          //           connectivityBuilder: (context, connectivity, child) {
-          //             final bool connected =
-          //                 connectivity != ConnectivityResult.none;
-          //             return Stack(
-          //               fit: StackFit.expand,
-          //               children: [
-          //                 child,
-          //                 Positioned(
-          //                   left: 0.0,
-          //                   right: 0.0,
-          //                   height: 12.0,
-          //                   child: AnimatedContainer(
-          //                     duration: const Duration(milliseconds: 300),
-          //                     color: connected ? null : Color(0xFFEE4400),
-          //                     child: connected
-          //                         ? null
-          //                         : Row(
-          //                             children: [
-          //                               Text(
-          //                                 'OFFLINE',
-          //                                 style:
-          //                                     TextStyle(color: Colors.white),
-          //                               ),
-          //                               SizedBox(
-          //                                 width: 8.0,
-          //                               ),
-          //                               SizedBox(
-          //                                 width: 12.0,
-          //                                 height: 12.0,
-          //                                 child: CircularProgressIndicator(
-          //                                   strokeWidth: 2.0,
-          //                                   valueColor:
-          //                                       AlwaysStoppedAnimation<Color>(
-          //                                           Colors.white),
-          //                                 ),
-          //                               )
-          //                             ],
-          //                           ),
-          //                   ),
-          //                 )
-          //               ],
-          //             );
-          //           },
-
-          //         );
-          //       },
-          //     ),
-
           routes: {
             IntroPage.routeName: (ctx) => IntroPage(),
             LoginScreen.routeName: (ctx) => LoginScreen(),
