@@ -50,7 +50,7 @@ class Workouts with ChangeNotifier {
                   ),
                 )
                 .toList(),
-          );
+          ).onError((error, stackTrace) => throw HttpException(''));
     } catch (e) {
       throw HttpException(e.toString());
     }
