@@ -86,7 +86,7 @@ class Workouts with ChangeNotifier {
         FirebaseFirestore.instance.collection('/workouts');
 
     try {
-      await workoutsCollection
+      workoutsCollection
           .doc('${workouT.workoutId}')
           .set(
             ({
@@ -129,7 +129,7 @@ class Workouts with ChangeNotifier {
         FirebaseFirestore.instance.collection('/workouts');
 
     try {
-      await workoutsCollection
+      workoutsCollection
           .doc('${workouT.workoutId}')
           .update(
             ({
@@ -177,9 +177,8 @@ class Workouts with ChangeNotifier {
         FirebaseFirestore.instance.collection('/workouts');
 
     try {
-      await workoutsCollection.doc(workoutId).delete().onError(
-          (error, stackTrace) =>
-              throw HttpException('Unable To Delete Exercise'));
+      workoutsCollection.doc(workoutId).delete().onError((error, stackTrace) =>
+          throw HttpException('Unable To Delete Exercise'));
       _workouts.removeWhere((workout) => workout.workoutId == workoutId);
       notifyListeners();
     } on FirebaseException catch (_) {

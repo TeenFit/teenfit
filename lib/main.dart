@@ -123,6 +123,7 @@ class _MyAppState extends State<MyApp> {
                                         (context, connectivity, child) {
                                       final bool connected = connectivity !=
                                           ConnectivityResult.none;
+
                                       return Scaffold(
                                         body: Stack(
                                           fit: StackFit.expand,
