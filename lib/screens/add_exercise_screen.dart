@@ -96,7 +96,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
             );
 
       isEdit ? updateExercise!(newExercise) : addExercise!(newExercise);
-      Navigator.of(context).pop();
     }
 
     Widget buildAddImage() {
@@ -258,9 +257,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                       height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                       width: _mediaQuery.size.width,
                       child: TextFormField(
-                        initialValue: newExercise!.timeSeconds == null
-                            ? ''
-                            : newExercise!.timeSeconds.toString(),
+                        initialValue: newExercise!.timeSeconds == null ? '' : newExercise!.timeSeconds.toString(),
                         decoration: InputDecoration(
                           hintText: 'Exercise Time (sec)',
                           hintStyle: TextStyle(
@@ -305,9 +302,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                       height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                       width: _mediaQuery.size.width,
                       child: TextFormField(
-                        initialValue: newExercise!.restTime == null
-                            ? ''
-                            : newExercise!.restTime.toString(),
+                        initialValue: newExercise!.restTime == null ? '' : newExercise!.restTime.toString(),
                         decoration: InputDecoration(
                           hintText: 'Rest Time (sec)',
                           hintStyle: TextStyle(
@@ -361,9 +356,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                       height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                       width: _mediaQuery.size.width,
                       child: TextFormField(
-                        initialValue: newExercise!.sets == null
-                            ? ''
-                            : newExercise!.sets.toString(),
+                        initialValue: newExercise!.sets == null ? '' : newExercise!.sets.toString(),
                         decoration: InputDecoration(
                           hintText: 'Sets',
                           hintStyle: TextStyle(
@@ -408,9 +401,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                       height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                       width: _mediaQuery.size.width,
                       child: TextFormField(
-                        initialValue: newExercise!.reps == null
-                            ? ''
-                            : newExercise!.reps.toString(),
+                        initialValue: newExercise!.reps == null ? '' : newExercise!.reps.toString(),
                         decoration: InputDecoration(
                           hintText: 'Reps',
                           hintStyle: TextStyle(

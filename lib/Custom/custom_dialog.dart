@@ -156,7 +156,6 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                 String id = widget.arguments['id'];
 
                                 delete(id);
-                                Navigator.of(context).pop();
                               } else if (widget.dialogOrganizerId ==
                                   'contact-us') {
                                 Navigator.of(context).pop();
