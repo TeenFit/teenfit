@@ -9,8 +9,22 @@ import 'create_workout.dart';
 import '/providers/workouts.dart';
 import '/widgets/workout_tile.dart';
 
-class CreateWorkout extends StatelessWidget {
+class CreateWorkout extends StatefulWidget {
   static const routeName = '/create-workout';
+  
+
+  @override
+  State<CreateWorkout> createState() => _CreateWorkoutState();
+}
+
+class _CreateWorkoutState extends State<CreateWorkout> {
+  bool isInit = false;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {

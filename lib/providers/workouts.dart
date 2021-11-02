@@ -21,7 +21,7 @@ class Workouts with ChangeNotifier {
 
     try {
       await workoutsCollection
-          .orderBy('date')
+          .orderBy('date', descending: false)
           .get()
           .then(
             (workouts) => _workouts = workouts.docs
