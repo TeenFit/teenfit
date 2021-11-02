@@ -29,7 +29,7 @@ class WorkoutPage extends StatelessWidget {
         timeInSecForIosWeb: 10,
         webShowClose: true,
         textColor: Colors.white,
-        backgroundColor: Colors.yellow.shade900,
+        backgroundColor: Colors.grey.shade700,
       );
     }
 
@@ -162,7 +162,7 @@ class WorkoutPage extends StatelessWidget {
                                                           'Link Not Available');
                                                     });
                                                   } catch (e) {
-                                                    return _showToast(
+                                                    _showToast(
                                                         'Link Not Available');
                                                   }
                                                 },
@@ -185,7 +185,7 @@ class WorkoutPage extends StatelessWidget {
                                                           'Link Not Available');
                                                     });
                                                   } catch (e) {
-                                                    return _showToast(
+                                                    _showToast(
                                                         'Link Not Available');
                                                   }
                                                 },
@@ -209,7 +209,7 @@ class WorkoutPage extends StatelessWidget {
                                                           'Link Not Available');
                                                     });
                                                   } catch (e) {
-                                                    return _showToast(
+                                                    _showToast(
                                                         'Link Not Available');
                                                   }
                                                 },

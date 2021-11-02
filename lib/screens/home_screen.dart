@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       timeInSecForIosWeb: 10,
       webShowClose: true,
       textColor: Colors.white,
-      backgroundColor: Colors.yellow.shade900,
+      backgroundColor: Colors.grey.shade700,
     );
   }
 

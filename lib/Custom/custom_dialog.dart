@@ -30,7 +30,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
       timeInSecForIosWeb: 10,
       webShowClose: true,
       textColor: Colors.white,
-      backgroundColor: Colors.yellow.shade900,
+      backgroundColor: Colors.grey.shade700,
     );
   }
 
