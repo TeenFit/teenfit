@@ -163,6 +163,8 @@ class Workouts with ChangeNotifier {
           .removeWhere((workoUT) => workoUT.workoutId == workouT.workoutId);
       _workouts.insert(index, workouT);
       notifyListeners();
+    } on FirebaseException catch (_) {
+      throw HttpException('Unable To Update Exercise, Try Again Later');
     } catch (_) {
       throw HttpException('Unable To Update Exercise, Try Again Later');
     }
@@ -179,6 +181,8 @@ class Workouts with ChangeNotifier {
               throw HttpException('Unable To Delete Exercise'));
       _workouts.removeWhere((workout) => workout.workoutId == workoutId);
       notifyListeners();
+    } on FirebaseException catch (_) {
+      throw HttpException('Unable To Delete Exercise');
     } catch (e) {
       throw HttpException('Unable To Delete Exercise');
     }

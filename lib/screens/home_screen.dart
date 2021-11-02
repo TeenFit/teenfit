@@ -86,7 +86,9 @@ class _HomeScreenState extends State<HomeScreen> {
         isLoading = true;
       });
       try {
-        await Provider.of<Workouts>(context).fetchAndSetWorkout();
+        await Provider.of<Workouts>(context).fetchAndSetWorkout().onError(
+            (error, stackTrace) =>
+                _showToast('Unable To Load New Workouts, Try Again Later'));
       } catch (e) {
         _showToast('Unable To Load New Workouts, Try Again Later');
       }
