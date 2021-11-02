@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,19 @@ class CustomDialogBox extends StatefulWidget {
 }
 
 class _CustomDialogBoxState extends State<CustomDialogBox> {
+  bool isLoading = false;
+
+  void _showToast(String msg) {
+    Fluttertoast.showToast(
+      msg: msg,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 10,
+      webShowClose: true,
+      textColor: Colors.white,
+      backgroundColor: Colors.yellow.shade900,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -33,6 +47,8 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
   }
 
   contentBox(context) {
+    final theme = Theme.of(context);
+
     return Stack(
       children: <Widget>[
         Container(
@@ -71,63 +87,90 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
               Align(
                 alignment: Alignment.bottomRight,
                 child: Row(
-                  children: [
-                    widget.dialogOrganizerId == 'contact-us'
-                        ? SizedBox()
-                        : TextButton(
-                            onPressed: () {
-                              if (widget.dialogOrganizerId ==
+                  children: isLoading
+                      ? [
+                          Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 4,
+                              backgroundColor: theme.shadowColor,
+                              color: Colors.white,
+                            ),
+                          )
+                        ]
+                      : [
+                          widget.dialogOrganizerId == 'contact-us'
+                              ? SizedBox()
+                              : TextButton(
+                                  onPressed: () {
+                                    if (widget.dialogOrganizerId ==
+                                        '/workout-page-first') {
+                                      Function goToFirst =
+                                          widget.arguments['page1'];
+                                      goToFirst();
+                                      Navigator.of(context).pop();
+                                    } else {
+                                      Navigator.of(context).pop();
+                                    }
+                                  },
+                                  child: Text(
+                                    'No',
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                ),
+                          TextButton(
+                            onPressed: () async {
+                              if (widget.dialogOrganizerId == '/workout-page') {
+                                Navigator.of(context).popUntil(
+                                    ModalRoute.withName(
+                                        widget.dialogOrganizerId));
+                              } else if (widget.dialogOrganizerId ==
                                   '/workout-page-first') {
-                                Function goToFirst = widget.arguments['page1'];
-                                goToFirst();
+                                Navigator.of(context).popUntil(
+                                    ModalRoute.withName(WorkoutPage.routeName));
+                              } else if (widget.dialogOrganizerId ==
+                                  '/exercise-screen') {
+                                Navigator.of(context).pushNamed(
+                                    widget.dialogOrganizerId,
+                                    arguments: widget.arguments);
+                              } else if (widget.dialogOrganizerId == 'pop') {
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                try {
+                                  await Provider.of<Workouts>(context,
+                                          listen: false)
+                                      .deleteWorkout(
+                                          widget.arguments.toString())
+                                      .then((_) => Navigator.of(context).pop());
+                                } catch (e) {
+                                  _showToast(
+                                      'Unable To Delete Workout Try Again Later');
+                                }
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              } else if (widget.dialogOrganizerId ==
+                                  'delete-exercise') {
+                                Function delete = widget.arguments['delete'];
+                                String id = widget.arguments['id'];
+
+                                delete(id);
                                 Navigator.of(context).pop();
-                              } else {
+                              } else if (widget.dialogOrganizerId ==
+                                  'contact-us') {
                                 Navigator.of(context).pop();
                               }
                             },
                             child: Text(
-                              'No',
+                              widget.dialogOrganizerId == 'contact-us'
+                                  ? 'Back'
+                                  : 'Yes',
                               style:
                                   TextStyle(fontSize: 18, color: Colors.black),
                             ),
                           ),
-                    TextButton(
-                      onPressed: () {
-                        if (widget.dialogOrganizerId == '/workout-page') {
-                          Navigator.of(context).popUntil(
-                              ModalRoute.withName(widget.dialogOrganizerId));
-                        } else if (widget.dialogOrganizerId ==
-                            '/workout-page-first') {
-                          Navigator.of(context).popUntil(
-                              ModalRoute.withName(WorkoutPage.routeName));
-                        } else if (widget.dialogOrganizerId ==
-                            '/exercise-screen') {
-                          Navigator.of(context).pushNamed(
-                              widget.dialogOrganizerId,
-                              arguments: widget.arguments);
-                        } else if (widget.dialogOrganizerId == 'pop') {
-                          Provider.of<Workouts>(context, listen: false)
-                              .deleteWorkout(widget.arguments.toString())
-                              .then((_) => Navigator.of(context).pop());
-                        } else if (widget.dialogOrganizerId ==
-                            'delete-exercise') {
-                          Function delete = widget.arguments['delete'];
-                          String id = widget.arguments['id'];
-
-                          delete(id);
-                          Navigator.of(context).pop();
-                        } else if (widget.dialogOrganizerId == 'contact-us') {
-                          Navigator.of(context).pop();
-                        }
-                      },
-                      child: Text(
-                        widget.dialogOrganizerId == 'contact-us'
-                            ? 'Back'
-                            : 'Yes',
-                        style: TextStyle(fontSize: 18, color: Colors.black),
-                      ),
-                    ),
-                  ],
+                        ],
                 ),
               ),
             ],

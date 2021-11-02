@@ -49,8 +49,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       exercises: exerciseEditList!,
     );
 
-    // add a map function to remove the exercises class
-
     super.didChangeDependencies();
   }
 
@@ -67,18 +65,18 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       setState(() {});
     }
 
-    void addExercise(Exercise exercise) {
-      exerciseEditList!.insert(0, exercise);
+    void addExercise(Exercise exercisE) {
+      exerciseEditList!.insert(0, exercisE);
 
       Navigator.of(context).pop();
       setState(() {});
     }
 
-    void updateExercise(Exercise exercise) {
+    void updateExercise(Exercise exercisE) {
       int index = exerciseEditList!
-          .indexWhere((element) => element.exerciseId == exercise.exerciseId);
+          .indexWhere((element) => element.exerciseId == exercisE.exerciseId);
       exerciseEditList!.removeAt(index);
-      exerciseEditList!.insert(index, exercise);
+      exerciseEditList!.insert(index, exercisE);
 
       Navigator.of(context).pop();
       setState(() {});
@@ -218,6 +216,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             validator: (value) {
               if (value.toString().isEmpty) {
                 return 'Name is Required';
+              } else if (value.toString().length > 10) {
+                return 'Stay Under 10 Characters Please';
               }
               return null;
             },

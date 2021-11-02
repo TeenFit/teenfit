@@ -39,7 +39,8 @@ class CreateWorkout extends StatelessWidget {
                   AddWorkoutScreen.routeName,
                   arguments: {
                     'workout': Workout(
-                      date: DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()),
+                      date: DateFormat("yyyy-MM-dd hh:mm:ss")
+                          .format(DateTime.now()),
                       creatorName: '',
                       creatorId: uid,
                       workoutId: uuid.v4(),
@@ -67,7 +68,7 @@ class CreateWorkout extends StatelessWidget {
         height: _mediaQuery.size.height,
         width: _mediaQuery.size.width,
         child: Consumer<Workouts>(
-          builder: (ctx, workout, _) =>  ListView.builder(
+          builder: (ctx, workout, _) => ListView.builder(
             itemBuilder: (ctx, index) {
               return workout.findByCreatorId(uid).length == 0
                   ? Container(
@@ -77,12 +78,12 @@ class CreateWorkout extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height:
-                                (_mediaQuery.size.height - _appBarHeight) * 0.05,
+                            height: (_mediaQuery.size.height - _appBarHeight) *
+                                0.05,
                           ),
                           Container(
-                            height:
-                                (_mediaQuery.size.height - _appBarHeight) * 0.05,
+                            height: (_mediaQuery.size.height - _appBarHeight) *
+                                0.05,
                             width: _mediaQuery.size.width * 0.8,
                             child: FittedBox(
                               fit: BoxFit.fitWidth,

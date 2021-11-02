@@ -13,118 +13,7 @@ class Workouts with ChangeNotifier {
     return [..._workouts];
   }
 
-  List<Workout> _workouts = [
-    // Workout(
-    //   creatorName: 'Muqeeth Khan',
-    //   workoutId: 'w1',
-    //   creatorId: 'FiGK0HauiQd1xv3FV3FXMF1uAw83',
-    //   workoutName: 'Body Weight Workout',
-    //   instagram: 'https://www.instagram.com/teenfittest/',
-    //   facebook: '',
-    //   tumblrPageLink: '',
-    //   bannerImage: '',
-    //   exercises: [
-    //     Exercise(
-    //       exerciseId: 'e1',
-    //       name: 'Pushups',
-    //       reps: 10,
-    //       sets: 3,
-    //       restTime: 15,
-    //       exerciseImageLink:
-    //           'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
-    //     ),
-    //     Exercise(
-    //       exerciseId: 'e2',
-    //       name: 'Wide Pushups',
-    //       reps: 10,
-    //       sets: 3,
-    //       restTime: 15,
-    //       exerciseImageLink:
-    //           'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
-    //     ),
-    //     Exercise(
-    //       exerciseId: 'e3',
-    //       name: 'Diamond Pushups',
-    //       reps: 10,
-    //       sets: 3,
-    //       restTime: 15,
-    //       exerciseImageLink:
-    //           'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
-    //     ),
-    //     Exercise(
-    //       exerciseId: 'e4',
-    //       name: 'Wide Pushups',
-    //       reps: 10,
-    //       sets: 3,
-    //       restTime: 15,
-    //       exerciseImageLink:
-    //           'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
-    //     ),
-    //     Exercise(
-    //       exerciseId: 'e5',
-    //       name: 'Wide Pushups',
-    //       reps: 10,
-    //       sets: 3,
-    //       restTime: 15,
-    //       exerciseImageLink:
-    //           'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
-    //     ),
-    //   ],
-    // ),
-    // Workout(
-    //   date: '',
-    //   creatorName: 'Muqeeth Khan',
-    //   workoutId: 'w2',
-    //   creatorId: 'D9AShHoi0RT19iDnxoN94K2BC1s1',
-    //   workoutName: 'Dumbell Workout',
-    //   instagram: '',
-    //   facebook: '',
-    //   tumblrPageLink: '',
-    //   bannerImage: '',
-    //   exercises: [
-    //     Exercise(
-    //       exerciseId: 'e1',
-    //       name: 'Wide Pushups',
-    //       timeSeconds: 30,
-    //       restTime: 15,
-    //       exerciseImageLink:
-    //           'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
-    //     ),
-    //     Exercise(
-    //       exerciseId: 'e2',
-    //       name: 'Wide Pushups',
-    //       timeSeconds: 30,
-    //       restTime: 15,
-    //       exerciseImageLink:
-    //           'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
-    //     ),
-    //     Exercise(
-    //       exerciseId: 'e3',
-    //       name: 'Wide Pushups',
-    //       timeSeconds: 30,
-    //       restTime: 15,
-    //       exerciseImageLink:
-    //           'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
-    //     ),
-    //     Exercise(
-    //       exerciseId: 'e4',
-    //       name: 'Wide Pushups',
-    //       timeSeconds: 30,
-    //       restTime: 15,
-    //       exerciseImageLink:
-    //           'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
-    //     ),
-    //     Exercise(
-    //       exerciseId: 'e5',
-    //       name: 'Wide Pushups',
-    //       timeSeconds: 30,
-    //       restTime: 15,
-    //       exerciseImageLink:
-    //           'https://drive.google.com/uc?export=view&id=1Lp2RRSHfDY6kTp__t6n6SBsuCGn6zR3l',
-    //     ),
-    //   ],
-    // ),
-  ];
+  List<Workout> _workouts = [];
 
   Future<void> fetchAndSetWorkout() async {
     CollectionReference workoutsCollection =
@@ -213,7 +102,8 @@ class Workouts with ChangeNotifier {
             }),
           );
 
-      workouts.add(workouT);
+      workouts.insert(0, workouT);
+      notifyListeners();
     } on FirebaseException catch (e) {
       throw HttpException(e.toString());
     } catch (e) {
@@ -223,20 +113,58 @@ class Workouts with ChangeNotifier {
   }
 
   Future<void> updateWorkout(Workout workouT) async {
+    CollectionReference workoutsCollection =
+        FirebaseFirestore.instance.collection('/workouts');
+
     try {
-      int index = _workouts
+      await workoutsCollection.doc('${workouT.workoutId}').update(
+            ({
+              'date': workouT.date,
+              'creatorName': workouT.bannerImage,
+              'creatorId': workouT.creatorId,
+              'workoutId': workouT.workoutId,
+              'workoutName': workouT.workoutName,
+              'instagram': workouT.instagram,
+              'facebook': workouT.facebook,
+              'tumblrPageLink': workouT.tumblrPageLink,
+              'bannerImage': workouT.bannerImage,
+              'exercises': workouT.exercises
+                  .map((e) => {
+                        'exerciseId': e.exerciseId,
+                        'exerciseImageLink': e.exerciseImageLink,
+                        'name': e.name,
+                        'reps': e.reps,
+                        'sets': e.sets,
+                        'restTime': e.restTime,
+                        'timeSeconds': e.timeSeconds
+                      })
+                  .toList()
+            }),
+          );
+
+      int index = workouts
           .indexWhere((workoUT) => workoUT.workoutId == workouT.workoutId);
-      _workouts
+      workouts
           .removeWhere((workoUT) => workoUT.workoutId == workouT.workoutId);
-      _workouts.insert(index, workouT);
+      workouts.insert(index, workouT);
+      notifyListeners();
     } catch (_) {
-      throw HttpException('');
+      throw HttpException('Unable To Update Exercise, Try Again Later');
     }
     notifyListeners();
   }
 
   Future<void> deleteWorkout(String workoutId) async {
-    _workouts.removeWhere((workout) => workout.workoutId == workoutId);
+    CollectionReference workoutsCollection =
+        FirebaseFirestore.instance.collection('/workouts');
+
+    try {
+      await workoutsCollection.doc(workoutId).delete();
+      workouts.removeWhere((workout) => workout.workoutId == workoutId);
+      notifyListeners();
+    } catch (e) {
+      throw HttpException('Unable To Delete Exercise');
+    }
     notifyListeners();
   }
 }
