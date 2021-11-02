@@ -92,101 +92,98 @@ class _MyAppState extends State<MyApp> {
           ),
           home: isLoading
               ? LoadingScreen()
-              : Builder(
-                  builder: (context) {
-                    return OfflineBuilder(
-                      connectivityBuilder: (context, connectivity, child) {
-                        final bool connected =
-                            connectivity != ConnectivityResult.none;
-                        return Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            child,
-                            Positioned(
-                              left: 0.0,
-                              right: 0.0,
-                              height: 12.0,
-                              child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 300),
-                                color: connected ? null : Color(0xFFEE4400),
-                                child: connected
-                                    ? null
-                                    : Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'OFFLINE',
-                                              style:
-                                                  TextStyle(color: Colors.white),
-                                            ),
-                                            SizedBox(
-                                              width: 8.0,
-                                            ),
-                                            SizedBox(
-                                              width: 12.0,
-                                              height: 12.0,
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 2.0,
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<Color>(
-                                                        Colors.white),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                    ),
-                              ),
-                            )
-                          ],
-                        );
+              : Consumer<Auth>(
+                  builder: (context, auth, _) => FutureBuilder(
+                    // Initialize FlutterFire:
+                    future: Future.delayed(
+                      const Duration(seconds: 1),
+                      () {
+                        return _initialization;
                       },
-                      child: Consumer<Auth>(
-                        builder: (context, auth, _) => FutureBuilder(
-                          // Initialize FlutterFire:
-                          future: Future.delayed(
-                            const Duration(seconds: 1),
-                            () {
-                              return _initialization;
-                            },
-                          ),
-                          builder: (context, snapshot) {
-                            // Check for errors
-                            if (snapshot.hasError) {
-                              return ErrorScreen();
-                            }
-                            // Once complete, show your application
+                    ),
+                    builder: (context, snapshot) {
+                      // Check for errors
+                      if (snapshot.hasError) {
+                        return ErrorScreen();
+                      }
+                      // Once complete, show your application
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return StreamBuilder<User>(
+                          initialData: FirebaseAuth.instance.currentUser,
+                          stream: auth.onAuthStateChanged,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<User> snapshot) {
                             if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              return StreamBuilder<User>(
-                                initialData: FirebaseAuth.instance.currentUser,
-                                stream: auth.onAuthStateChanged,
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<User> snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.active) {
-                                    var isAuth = snapshot.data;
-                                    return isAuth != null
-                                        ? HomeScreen()
-                                        : IntroPage();
-                                  } else if (snapshot.hasError) {
-                                    return ErrorScreen();
-                                  } else {
-                                    return LoadingScreen();
-                                  }
-                                },
-                              );
+                                ConnectionState.active) {
+                              var isAuth = snapshot.data;
+                              return isAuth != null
+                                  ? HomeScreen()
+                                  : IntroPage();
+                            } else if (snapshot.hasError) {
+                              return ErrorScreen();
+                            } else {
+                              return LoadingScreen();
                             }
-                            // Otherwise, show something whilst waiting for initialization to complete
-                            return LoadingScreen();
                           },
-                        ),
-                      ),
-                    );
-                  },
+                        );
+                      }
+                      // Otherwise, show something whilst waiting for initialization to complete
+                      return LoadingScreen();
+                    },
+                  ),
                 ),
+
+          // Builder(
+          //       builder: (context) {
+          //         return OfflineBuilder(
+          //           connectivityBuilder: (context, connectivity, child) {
+          //             final bool connected =
+          //                 connectivity != ConnectivityResult.none;
+          //             return Stack(
+          //               fit: StackFit.expand,
+          //               children: [
+          //                 child,
+          //                 Positioned(
+          //                   left: 0.0,
+          //                   right: 0.0,
+          //                   height: 12.0,
+          //                   child: AnimatedContainer(
+          //                     duration: const Duration(milliseconds: 300),
+          //                     color: connected ? null : Color(0xFFEE4400),
+          //                     child: connected
+          //                         ? null
+          //                         : Row(
+          //                             children: [
+          //                               Text(
+          //                                 'OFFLINE',
+          //                                 style:
+          //                                     TextStyle(color: Colors.white),
+          //                               ),
+          //                               SizedBox(
+          //                                 width: 8.0,
+          //                               ),
+          //                               SizedBox(
+          //                                 width: 12.0,
+          //                                 height: 12.0,
+          //                                 child: CircularProgressIndicator(
+          //                                   strokeWidth: 2.0,
+          //                                   valueColor:
+          //                                       AlwaysStoppedAnimation<Color>(
+          //                                           Colors.white),
+          //                                 ),
+          //                               )
+          //                             ],
+          //                           ),
+          //                   ),
+          //                 )
+          //               ],
+          //             );
+          //           },
+
+          //         );
+          //       },
+          //     ),
+
           routes: {
             IntroPage.routeName: (ctx) => IntroPage(),
             LoginScreen.routeName: (ctx) => LoginScreen(),
