@@ -102,7 +102,7 @@ class Workouts with ChangeNotifier {
             }),
           );
 
-      workouts.insert(0, workouT);
+      _workouts.insert(0, workouT);
       notifyListeners();
     } on FirebaseException catch (e) {
       throw HttpException(e.toString());
@@ -142,11 +142,11 @@ class Workouts with ChangeNotifier {
             }),
           );
 
-      int index = workouts
+      int index = _workouts
           .indexWhere((workoUT) => workoUT.workoutId == workouT.workoutId);
-      workouts
+      _workouts
           .removeWhere((workoUT) => workoUT.workoutId == workouT.workoutId);
-      workouts.insert(index, workouT);
+      _workouts.insert(index, workouT);
       notifyListeners();
     } catch (_) {
       throw HttpException('Unable To Update Exercise, Try Again Later');
@@ -160,7 +160,7 @@ class Workouts with ChangeNotifier {
 
     try {
       await workoutsCollection.doc(workoutId).delete();
-      workouts.removeWhere((workout) => workout.workoutId == workoutId);
+      _workouts.removeWhere((workout) => workout.workoutId == workoutId);
       notifyListeners();
     } catch (e) {
       throw HttpException('Unable To Delete Exercise');

@@ -34,7 +34,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     workout = workoutProv['workout'];
     isEdit = workoutProv['isEdit'];
 
-    exerciseEditList = workout!.exercises == [] ? [] :[...workout!.exercises];
+    exerciseEditList = [...workout!.exercises];
 
     newWorkout = Workout(
       date: workout!.date,
@@ -63,13 +63,23 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       exerciseEditList!
           .removeWhere((exercise) => exercise.exerciseId == exerciseId);
       setState(() {});
+      Navigator.of(context).pop();
     }
 
     void addExercise(Exercise exercisE) {
-      exerciseEditList!.insert(0, exercisE);
-
-      Navigator.of(context).pop();
+      exerciseEditList!.insert(
+        0,
+        Exercise(
+            exerciseId: exercisE.exerciseId,
+            name: exercisE.name,
+            exerciseImageLink: exercisE.exerciseImageLink,
+            reps: exercisE.reps,
+            sets: exercisE.sets,
+            restTime: exercisE.restTime,
+            timeSeconds: exercisE.timeSeconds),
+      );
       setState(() {});
+      Navigator.of(context).pop();
     }
 
     void updateExercise(Exercise exercisE) {
@@ -77,9 +87,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           .indexWhere((element) => element.exerciseId == exercisE.exerciseId);
       exerciseEditList!.removeAt(index);
       exerciseEditList!.insert(index, exercisE);
-
-      Navigator.of(context).pop();
       setState(() {});
+      Navigator.of(context).pop();
     }
 
     void _showToast(String msg) {
@@ -260,6 +269,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             validator: (value) {
               if (value.toString().isEmpty) {
                 return 'Name is Required';
+              } else if (value.toString().length > 25) {
+                return 'Stay Under 25 Characters Please';
               }
               return null;
             },
@@ -451,10 +462,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                           'exercise': Exercise(
                             exerciseId: uuid.v1(),
                             name: '',
-                            reps: 0,
-                            sets: 0,
-                            timeSeconds: 0,
-                            restTime: 0,
+                            reps: null,
+                            sets: null,
+                            timeSeconds: null,
+                            restTime: null,
                             exerciseImageLink: '',
                           ),
                         },
@@ -476,12 +487,12 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 ),
                 child: ListView.builder(
                   itemBuilder: (ctx, index) => ExerciseTiles(
-                    exerciseEditList![index],
-                    _mediaQuery.size.width * 0.9,
-                    true,
-                    deleteExercise,
-                    addExercise,
-                    updateExercise,
+                    isDeleteable: true,
+                    addExercise: addExercise,
+                    updateExercise: updateExercise,
+                    delete: deleteExercise,
+                    exercise: exerciseEditList![index],
+                    size: _mediaQuery.size.width * 0.9,
                   ),
                   itemCount: exerciseEditList!.length,
                 ),
