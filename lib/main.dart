@@ -78,6 +78,9 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<Workouts>(
             create: (ctx) => Workouts(),
           ),
+          ChangeNotifierProvider<Exercises>(
+            create: (ctx) => Exercises(),
+          )
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

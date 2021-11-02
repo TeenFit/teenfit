@@ -24,7 +24,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   bool isEdit = false;
   var workoutProv;
   bool _isLoading = false;
-
   List<Exercise>? exerciseEditList;
 
   @override
@@ -34,7 +33,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     workout = workoutProv['workout'];
     isEdit = workoutProv['isEdit'];
 
-    exerciseEditList = [...workout!.exercises];
+    Provider.of<Exercises>(context, listen: false)
+        .fetchAndSetExercises([...workout!.exercises]);
 
     newWorkout = Workout(
       date: workout!.date,
@@ -59,37 +59,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     final _appBarHeight =
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
-    void deleteExercise(String exerciseId) {
-      exerciseEditList!
-          .removeWhere((exercise) => exercise.exerciseId == exerciseId);
-      setState(() {});
-      Navigator.of(context).pop();
-    }
+    exerciseEditList = Provider.of<Exercises>(context).editExerciseList;
 
-    void addExercise(Exercise exercisE) {
-      exerciseEditList!.insert(
-        0,
-        Exercise(
-            exerciseId: exercisE.exerciseId,
-            name: exercisE.name,
-            exerciseImageLink: exercisE.exerciseImageLink,
-            reps: exercisE.reps,
-            sets: exercisE.sets,
-            restTime: exercisE.restTime,
-            timeSeconds: exercisE.timeSeconds),
-      );
-      setState(() {});
-      Navigator.of(context).pop();
-    }
-
-    void updateExercise(Exercise exercisE) {
-      int index = exerciseEditList!
-          .indexWhere((element) => element.exerciseId == exercisE.exerciseId);
-      exerciseEditList!.removeAt(index);
-      exerciseEditList!.insert(index, exercisE);
-      setState(() {});
-      Navigator.of(context).pop();
-    }
+    final exercisesProv = Provider.of<Exercises>(context, listen: false);
+    
 
     void _showToast(String msg) {
       Fluttertoast.showToast(
@@ -119,7 +92,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         facebook: newWorkout!.facebook,
         tumblrPageLink: newWorkout!.tumblrPageLink,
         bannerImage: newWorkout!.bannerImage,
-        exercises: exerciseEditList!,
+        exercises: newWorkout!.exercises,
       );
 
       setState(() {
@@ -194,7 +167,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                       facebook: newWorkout!.facebook,
                       tumblrPageLink: newWorkout!.tumblrPageLink,
                       bannerImage: input.toString(),
-                      exercises: exerciseEditList!,
+                      exercises: newWorkout!.exercises,
                     );
                   },
                 ),
@@ -241,7 +214,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
-                exercises: exerciseEditList!,
+                exercises: newWorkout!.exercises,
               );
             },
           ),
@@ -285,7 +258,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
-                exercises: exerciseEditList!,
+                exercises: newWorkout!.exercises,
               );
             },
           ),
@@ -329,7 +302,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
-                exercises: exerciseEditList!,
+                exercises: newWorkout!.exercises,
               );
             },
           ),
@@ -372,7 +345,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 tumblrPageLink:
                     input.toString().isEmpty ? '' : input.toString(),
                 bannerImage: newWorkout!.bannerImage,
-                exercises: exerciseEditList!,
+                exercises: newWorkout!.exercises,
               );
             },
           ),
@@ -414,7 +387,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: input.toString().isEmpty ? '' : input.toString(),
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
-                exercises: exerciseEditList!,
+                exercises: newWorkout!.exercises,
               );
             },
           ),
@@ -456,8 +429,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                       Navigator.of(context).pushNamed(
                         AddExerciseScreen.routeName,
                         arguments: {
-                          'addExercise': addExercise,
-                          'updateExercise': updateExercise,
+                          'addExercise': exercisesProv.addExercise,
+                          'updateExercise': exercisesProv.updateExercise,
                           'edit': false,
                           'exercise': Exercise(
                             exerciseId: uuid.v1(),
@@ -488,13 +461,13 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 child: ListView.builder(
                   itemBuilder: (ctx, index) => ExerciseTiles(
                     isDeleteable: true,
-                    addExercise: addExercise,
-                    updateExercise: updateExercise,
-                    delete: deleteExercise,
-                    exercise: exerciseEditList![index],
+                    addExercise: exercisesProv.addExercise,
+                    updateExercise: exercisesProv.updateExercise,
+                    delete: exercisesProv.deleteExercise,
+                    exercise: newWorkout!.exercises[index],
                     size: _mediaQuery.size.width * 0.9,
                   ),
-                  itemCount: exerciseEditList!.length,
+                  itemCount: newWorkout!.exercises.length,
                 ),
               ),
             ],
@@ -579,5 +552,46 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         ),
       ),
     );
+  }
+}
+
+class Exercises with ChangeNotifier {
+  void fetchAndSetExercises(List<Exercise> exercises) {
+    _editExerciseList = exercises;
+  }
+
+  List<Exercise> get editExerciseList {
+    return [..._editExerciseList];
+  }
+
+  List<Exercise> _editExerciseList = [];
+
+  void deleteExercise(String exerciseId) {
+    _editExerciseList
+        .removeWhere((exercise) => exercise.exerciseId == exerciseId);
+    notifyListeners();
+  }
+
+  void addExercise(Exercise exercisE) {
+    _editExerciseList.insert(
+      0,
+      Exercise(
+          exerciseId: exercisE.exerciseId,
+          name: exercisE.name,
+          exerciseImageLink: exercisE.exerciseImageLink,
+          reps: exercisE.reps,
+          sets: exercisE.sets,
+          restTime: exercisE.restTime,
+          timeSeconds: exercisE.timeSeconds),
+    );
+    notifyListeners();
+  }
+
+  void updateExercise(Exercise exercisE) {
+    int index = _editExerciseList
+        .indexWhere((element) => element.exerciseId == exercisE.exerciseId);
+    _editExerciseList.removeAt(index);
+    _editExerciseList.insert(index, exercisE);
+    notifyListeners();
   }
 }
