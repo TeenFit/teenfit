@@ -54,7 +54,11 @@ class Workouts with ChangeNotifier {
                 )
                 .toList(),
           )
-          .onError((error, stackTrace) => throw HttpException(''));
+          .onError(
+            (error, stackTrace) => throw HttpException(''),
+          );
+    } on FirebaseException catch (_) {
+      throw HttpException('');
     } catch (e) {
       throw HttpException(e.toString());
     }
