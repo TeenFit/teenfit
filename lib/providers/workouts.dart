@@ -74,7 +74,7 @@ class Workouts with ChangeNotifier {
     Workout(
       creatorName: 'Muqeeth Khan',
       workoutId: 'w2',
-      creatorId: 'uid',
+      creatorId: 'D9AShHoi0RT19iDnxoN94K2BC1s1',
       workoutName: 'Dumbell Workout',
       instagram: '',
       facebook: '',
@@ -141,34 +141,36 @@ class Workouts with ChangeNotifier {
     return workouts.where((workout) => workout.creatorId == creatorId).toList();
   }
 
-  Future<void> addWorkout(Workout workout) async {
-    CollectionReference workouts =
+  Future<void> addWorkout(Workout workouT) async {
+    CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
 
     try {
-      await workouts.doc('${workout.workoutId}').set(
+      await workoutsCollection.doc('${workouT.workoutId}').set(
             ({
-              'creatorName': workout.bannerImage,
-              'creatorId': workout.creatorId,
-              'workoutId': workout.workoutId,
-              'workoutName': workout.workoutName,
-              'instagram': workout.instagram,
-              'facebook': workout.facebook,
-              'tumblrPageLink': workout.tumblrPageLink,
-              'bannerImage': workout.bannerImage,
-              'exercises': workout.exercises.map((e) => {
-                    'exerciseId': e.exerciseId,
-                    'exerciseImageLink': e.exerciseImageLink,
-                    'name': e.name,
-                    'reps': e.reps,
-                    'sets': e.sets,
-                    'restTime': e.restTime,
-                    'timeSeconds': e.timeSeconds
-                  }).toList()
+              'creatorName': workouT.bannerImage,
+              'creatorId': workouT.creatorId,
+              'workoutId': workouT.workoutId,
+              'workoutName': workouT.workoutName,
+              'instagram': workouT.instagram,
+              'facebook': workouT.facebook,
+              'tumblrPageLink': workouT.tumblrPageLink,
+              'bannerImage': workouT.bannerImage,
+              'exercises': workouT.exercises
+                  .map((e) => {
+                        'exerciseId': e.exerciseId,
+                        'exerciseImageLink': e.exerciseImageLink,
+                        'name': e.name,
+                        'reps': e.reps,
+                        'sets': e.sets,
+                        'restTime': e.restTime,
+                        'timeSeconds': e.timeSeconds
+                      })
+                  .toList()
             }),
           );
 
-      _workouts.add(workout);
+      workouts.add(workouT);
     } on FirebaseException catch (e) {
       throw HttpException(e.toString());
     } catch (e) {
@@ -177,17 +179,16 @@ class Workouts with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateWorkout(Workout workout) async {
+  Future<void> updateWorkout(Workout workouT) async {
     try {
       int index = _workouts
-          .indexWhere((workouT) => workouT.workoutId == workout.workoutId);
+          .indexWhere((workoUT) => workoUT.workoutId == workouT.workoutId);
       _workouts
-          .removeWhere((workouT) => workouT.workoutId == workout.workoutId);
-      _workouts.insert(index, workout);
+          .removeWhere((workoUT) => workoUT.workoutId == workouT.workoutId);
+      _workouts.insert(index, workouT);
     } catch (_) {
       throw HttpException('');
     }
-
     notifyListeners();
   }
 

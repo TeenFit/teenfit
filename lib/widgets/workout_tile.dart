@@ -7,7 +7,6 @@ import '../providers/workout.dart';
 
 // ignore: must_be_immutable
 class WorkoutTile extends StatelessWidget {
-
   final Workout workout;
   bool isDeletable;
 
@@ -56,8 +55,20 @@ class WorkoutTile extends StatelessWidget {
             child: InkWell(
               borderRadius: BorderRadius.circular(25),
               onTap: () {
-                Navigator.of(context)
-                    .pushNamed(WorkoutPage.routeName, arguments: workout);
+                Navigator.of(context).pushNamed(
+                  WorkoutPage.routeName,
+                  arguments: Workout(
+                    creatorName: workout.creatorName,
+                    creatorId: workout.creatorId,
+                    workoutId: workout.workoutId,
+                    workoutName: workout.workoutName,
+                    instagram: workout.instagram,
+                    facebook: workout.facebook,
+                    tumblrPageLink: workout.tumblrPageLink,
+                    bannerImage: workout.bannerImage,
+                    exercises: workout.exercises,
+                  ),
+                );
               },
             ),
           ),

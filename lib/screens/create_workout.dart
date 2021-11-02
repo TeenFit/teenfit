@@ -18,8 +18,6 @@ class AddWorkoutScreen extends StatefulWidget {
 
 class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   final _formKey3 = GlobalKey<FormState>();
-  final _imageUrlController = TextEditingController();
-  final _imageUrlFocusNode = FocusNode();
   var uuid = Uuid();
   Workout? newWorkout;
   Workout? workout;
@@ -31,11 +29,12 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
   @override
   void didChangeDependencies() {
-    _imageUrlFocusNode.addListener(_updateImageUrl);
     workoutProv = ModalRoute.of(context)!.settings.arguments;
 
     workout = workoutProv['workout'];
     isEdit = workoutProv['isEdit'];
+
+    exerciseEditList = workout!.exercises == [] ? [] : workout!.exercises;
 
     newWorkout = Workout(
       creatorName: workout!.creatorName,
@@ -45,29 +44,13 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       instagram: workout!.instagram,
       facebook: workout!.facebook,
       tumblrPageLink: workout!.tumblrPageLink,
-      bannerImage: _imageUrlController.text = workout!.bannerImage,
-      exercises: workout!.exercises,
+      bannerImage: workout!.bannerImage,
+      exercises: exerciseEditList!,
     );
 
     // add a map function to remove the exercises class
 
-    exerciseEditList = [...newWorkout!.exercises];
-
     super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    _imageUrlFocusNode.removeListener(_updateImageUrl);
-    _imageUrlFocusNode.dispose();
-    _imageUrlController.dispose();
-    super.dispose();
-  }
-
-  void _updateImageUrl() {
-    if (!_imageUrlFocusNode.hasFocus) {
-      setState(() {});
-    }
   }
 
   @override
@@ -85,8 +68,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
     void addExercise(Exercise exercise) {
       exerciseEditList!.add(exercise);
-      setState(() {});
+
       Navigator.of(context).pop();
+      setState(() {});
     }
 
     void updateExercise(Exercise exercise) {
@@ -94,8 +78,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           .indexWhere((element) => element.exerciseId == exercise.exerciseId);
       exerciseEditList!.removeAt(index);
       exerciseEditList!.insert(index, exercise);
-      setState(() {});
+
       Navigator.of(context).pop();
+      setState(() {});
     }
 
     void _showToast(String msg) {
@@ -160,33 +145,14 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: _mediaQuery.size.height * 0.28,
-                width: _mediaQuery.size.width,
-                child: _imageUrlController.text.isEmpty
-                    ? Image.asset('assets/images/UploadImage.png')
-                    : FadeInImage(
-                        image: NetworkImage(_imageUrlController.text),
-                        placeholderErrorBuilder: (context, _, __) =>
-                            Image.asset(
-                          'assets/images/loading-gif.gif',
-                          fit: BoxFit.cover,
-                        ),
-                        imageErrorBuilder: (context, image, stackTrace) =>
-                            Image.asset(
-                          'assets/images/ImageUploadError.png',
-                          fit: BoxFit.cover,
-                        ),
-                        placeholder:
-                            AssetImage('assets/images/loading-gif.gif'),
-                        fit: BoxFit.contain,
-                      ),
-              ),
+                  height: _mediaQuery.size.height * 0.28,
+                  width: _mediaQuery.size.width,
+                  child: Image.asset('assets/images/UploadImage.png')),
               Container(
                 width: double.infinity,
                 height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                 child: TextFormField(
-                  initialValue: workout!.bannerImage,
-                  focusNode: _imageUrlFocusNode,
+                  initialValue: newWorkout!.bannerImage,
                   decoration: InputDecoration(
                     hintText: 'Image URL',
                     hintStyle:
@@ -342,7 +308,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,
                 workoutName: newWorkout!.workoutName,
-                instagram: input.toString().isEmpty ? ' ' : input.toString(),
+                instagram: input.toString().isEmpty ? '' : input.toString(),
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
@@ -385,7 +351,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 workoutName: newWorkout!.workoutName,
                 instagram: newWorkout!.instagram,
                 facebook: newWorkout!.facebook,
-                tumblrPageLink: input.toString().isEmpty ? ' ' : input.toString(),
+                tumblrPageLink:
+                    input.toString().isEmpty ? '' : input.toString(),
                 bannerImage: newWorkout!.bannerImage,
                 exercises: exerciseEditList!,
               );
@@ -425,7 +392,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 workoutId: newWorkout!.workoutId,
                 workoutName: newWorkout!.workoutName,
                 instagram: newWorkout!.instagram,
-                facebook: input.toString().isEmpty ? ' ' : input.toString(),
+                facebook: input.toString().isEmpty ? '' : input.toString(),
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
                 exercises: exerciseEditList!,

@@ -22,8 +22,6 @@ class CreateWorkout extends StatelessWidget {
 
     String uid = Provider.of<Auth>(context, listen: false).userId;
 
-    final workout = Provider.of<Workouts>(context);
-
     return Scaffold(
       backgroundColor: _theme.primaryColor,
       appBar: AppBar(
@@ -66,48 +64,50 @@ class CreateWorkout extends StatelessWidget {
       body: Container(
         height: _mediaQuery.size.height,
         width: _mediaQuery.size.width,
-        child: ListView.builder(
-          itemBuilder: (ctx, index) {
-            return workout.findByCreatorId(uid).length == 0
-                ? Container(
-                    height: (_mediaQuery.size.height - _appBarHeight),
-                    width: _mediaQuery.size.width,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height:
-                              (_mediaQuery.size.height - _appBarHeight) * 0.05,
-                        ),
-                        Container(
-                          height:
-                              (_mediaQuery.size.height - _appBarHeight) * 0.05,
-                          width: _mediaQuery.size.width * 0.8,
-                          child: FittedBox(
-                            fit: BoxFit.fitWidth,
-                            child: Text(
-                              'Create Your First Workout...',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: _mediaQuery.size.height * 0.025,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Roboto',
+        child: Consumer<Workouts>(
+          builder: (ctx, workout, _) =>  ListView.builder(
+            itemBuilder: (ctx, index) {
+              return workout.findByCreatorId(uid).length == 0
+                  ? Container(
+                      height: (_mediaQuery.size.height - _appBarHeight),
+                      width: _mediaQuery.size.width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height:
+                                (_mediaQuery.size.height - _appBarHeight) * 0.05,
+                          ),
+                          Container(
+                            height:
+                                (_mediaQuery.size.height - _appBarHeight) * 0.05,
+                            width: _mediaQuery.size.width * 0.8,
+                            child: FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                'Create Your First Workout...',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: _mediaQuery.size.height * 0.025,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Roboto',
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-                : WorkoutTile(
-                    workout.findByCreatorId(uid)[index],
-                    true,
-                  );
-          },
-          itemCount: workout.findByCreatorId(uid).length == 0
-              ? 1
-              : workout.findByCreatorId(uid).length,
+                        ],
+                      ),
+                    )
+                  : WorkoutTile(
+                      workout.findByCreatorId(uid)[index],
+                      true,
+                    );
+            },
+            itemCount: workout.findByCreatorId(uid).length == 0
+                ? 1
+                : workout.findByCreatorId(uid).length,
+          ),
         ),
       ),
     );
