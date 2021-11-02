@@ -20,7 +20,10 @@ class Workouts with ChangeNotifier {
         FirebaseFirestore.instance.collection('/workouts');
 
     try {
-      await workoutsCollection.orderBy('date').get().then(
+      await workoutsCollection
+          .orderBy('date')
+          .get()
+          .then(
             (workouts) => _workouts = workouts.docs
                 .map(
                   (e) => Workout(
@@ -50,7 +53,8 @@ class Workouts with ChangeNotifier {
                   ),
                 )
                 .toList(),
-          ).onError((error, stackTrace) => throw HttpException(''));
+          )
+          .onError((error, stackTrace) => throw HttpException(''));
     } catch (e) {
       throw HttpException(e.toString());
     }
@@ -77,7 +81,9 @@ class Workouts with ChangeNotifier {
         FirebaseFirestore.instance.collection('/workouts');
 
     try {
-      await workoutsCollection.doc('${workouT.workoutId}').set(
+      await workoutsCollection
+          .doc('${workouT.workoutId}')
+          .set(
             ({
               'date': workouT.date,
               'creatorName': workouT.bannerImage,
@@ -100,7 +106,8 @@ class Workouts with ChangeNotifier {
                       })
                   .toList()
             }),
-          );
+          )
+          .onError((error, stackTrace) => throw HttpException(''));
 
       _workouts.insert(0, workouT);
       notifyListeners();
@@ -117,7 +124,9 @@ class Workouts with ChangeNotifier {
         FirebaseFirestore.instance.collection('/workouts');
 
     try {
-      await workoutsCollection.doc('${workouT.workoutId}').update(
+      await workoutsCollection
+          .doc('${workouT.workoutId}')
+          .update(
             ({
               'date': workouT.date,
               'creatorName': workouT.bannerImage,
@@ -140,7 +149,9 @@ class Workouts with ChangeNotifier {
                       })
                   .toList()
             }),
-          );
+          )
+          .onError((error, stackTrace) => throw HttpException(
+              'Unable To Update Exercise, Try Again Later'));
 
       int index = _workouts
           .indexWhere((workoUT) => workoUT.workoutId == workouT.workoutId);
@@ -159,7 +170,9 @@ class Workouts with ChangeNotifier {
         FirebaseFirestore.instance.collection('/workouts');
 
     try {
-      await workoutsCollection.doc(workoutId).delete();
+      await workoutsCollection.doc(workoutId).delete().onError(
+          (error, stackTrace) =>
+              throw HttpException('Unable To Delete Exercise'));
       _workouts.removeWhere((workout) => workout.workoutId == workoutId);
       notifyListeners();
     } catch (e) {
