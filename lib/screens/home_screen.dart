@@ -77,19 +77,24 @@ class _HomeScreenState extends State<HomeScreen> {
     addSearchTerm(term);
   }
 
+  bool isInit = false;
+
   @override
   void didChangeDependencies() async {
-    setState(() {
-      isLoading = true;
-    });
-    try {
-      await Provider.of<Workouts>(context).fetchAndSetWorkout();
-    } catch (e) {
-      _showToast('Unable To Load New Workouts, Try Again Later');
+    if (isInit == false) {
+      setState(() {
+        isLoading = true;
+      });
+      try {
+        await Provider.of<Workouts>(context).fetchAndSetWorkout();
+      } catch (e) {
+        _showToast('Unable To Load New Workouts, Try Again Later');
+      }
+      setState(() {
+        isLoading = false;
+        isInit = true;
+      });
     }
-    setState(() {
-      isLoading = false;
-    });
     controller = FloatingSearchBarController();
     filteredSearchHistory = filterSearchTerms(null);
     super.didChangeDependencies();
