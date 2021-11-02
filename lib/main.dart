@@ -150,7 +150,7 @@ class _MyAppState extends State<MyApp> {
                                                   ),
                                                 ),
                                                 duration: const Duration(
-                                                    milliseconds: 300),
+                                                    milliseconds: 500),
                                                 child: connected
                                                     ? null
                                                     : Padding(
