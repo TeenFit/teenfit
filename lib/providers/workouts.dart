@@ -62,6 +62,7 @@ class Workouts with ChangeNotifier {
     } catch (e) {
       throw HttpException(e.toString());
     }
+    notifyListeners();
   }
 
   List<Workout> findByName(String name) {
