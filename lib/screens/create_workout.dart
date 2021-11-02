@@ -34,9 +34,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     workout = workoutProv['workout'];
     isEdit = workoutProv['isEdit'];
 
-    exerciseEditList = workout!.exercises == [] ? [] : workout!.exercises;
+    exerciseEditList = workout!.exercises == [] ? [] :[...workout!.exercises];
 
     newWorkout = Workout(
+      date: workout!.date,
       creatorName: workout!.creatorName,
       creatorId: workout!.creatorId,
       workoutId: workout!.workoutId,
@@ -102,6 +103,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       _formKey3.currentState!.save();
 
       newWorkout = Workout(
+        date: newWorkout!.date,
         creatorName: newWorkout!.creatorName,
         creatorId: newWorkout!.creatorId,
         workoutId: newWorkout!.workoutId,
@@ -176,6 +178,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                   },
                   onSaved: (input) {
                     newWorkout = Workout(
+                      date: newWorkout!.date,
                       creatorName: newWorkout!.creatorName,
                       creatorId: newWorkout!.creatorId,
                       workoutId: newWorkout!.workoutId,
@@ -220,6 +223,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                date: newWorkout!.date,
                 creatorName: input.toString(),
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,
@@ -261,6 +265,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                date: newWorkout!.date,
                 creatorName: newWorkout!.creatorName,
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,
@@ -304,6 +309,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                date: newWorkout!.date,
                 creatorName: newWorkout!.creatorName,
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,
@@ -345,6 +351,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                date: newWorkout!.date,
                 creatorName: newWorkout!.creatorName,
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,
@@ -387,6 +394,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                date: newWorkout!.date,
                 creatorName: newWorkout!.creatorName,
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,

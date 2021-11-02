@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/providers/auth.dart';
 import 'package:uuid/uuid.dart';
@@ -38,6 +39,7 @@ class CreateWorkout extends StatelessWidget {
                   AddWorkoutScreen.routeName,
                   arguments: {
                     'workout': Workout(
+                      date: DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()),
                       creatorName: '',
                       creatorId: uid,
                       workoutId: uuid.v4(),

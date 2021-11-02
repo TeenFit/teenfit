@@ -10,9 +10,11 @@ class Workout {
   final String tumblrPageLink;
   final String bannerImage;
   final List<Exercise> exercises;
+  final String date;
 
   Workout(
-      {required this.creatorName,
+      {required this.date,
+      required this.creatorName,
       required this.creatorId,
       required this.workoutId,
       required this.workoutName,
