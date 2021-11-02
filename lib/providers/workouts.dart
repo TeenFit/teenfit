@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:teenfit/providers/exercise.dart';
 
+import '/providers/exercise.dart';
 import '/Custom/http_execption.dart';
 import './workout.dart';
 
