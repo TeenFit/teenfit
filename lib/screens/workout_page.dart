@@ -46,7 +46,7 @@ class WorkoutPage extends StatelessWidget {
               width: double.infinity,
               child: Stack(
                 children: [
-                  workout.bannerImage.isEmpty
+                  workout.bannerImage == null
                       ? Image.asset(
                           'assets/images/BannerImageUnavailable.png',
                           fit: BoxFit.fill,
@@ -60,7 +60,7 @@ class WorkoutPage extends StatelessWidget {
                             fit: BoxFit.fill,
                           ),
                           fit: BoxFit.fill,
-                          image: NetworkImage(workout.bannerImage),
+                          image: FileImage(workout.bannerImage!),
                           imageErrorBuilder: (image, _, __) => Image.asset(
                             'assets/images/ImageUploadError.png',
                             fit: BoxFit.fill,

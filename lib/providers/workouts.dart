@@ -42,7 +42,7 @@ class Workouts with ChangeNotifier {
                           (e) => Exercise(
                             exerciseId: e['exerciseId'],
                             name: e['name'],
-                            exerciseImageLink: e['exerciseImageLink'],
+                            exerciseImage: e['exerciseImageLink'],
                             reps: e['reps'],
                             sets: e['sets'],
                             restTime: e['restTime'],
@@ -102,7 +102,7 @@ class Workouts with ChangeNotifier {
               'exercises': workouT.exercises
                   .map((e) => {
                         'exerciseId': e.exerciseId,
-                        'exerciseImageLink': e.exerciseImageLink,
+                        'exerciseImageLink': e.exerciseImage,
                         'name': e.name,
                         'reps': e.reps,
                         'sets': e.sets,
@@ -145,7 +145,7 @@ class Workouts with ChangeNotifier {
               'exercises': workouT.exercises
                   .map((e) => {
                         'exerciseId': e.exerciseId,
-                        'exerciseImageLink': e.exerciseImageLink,
+                        'exerciseImageLink': e.exerciseImage,
                         'name': e.name,
                         'reps': e.reps,
                         'sets': e.sets,

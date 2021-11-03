@@ -3,16 +3,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class WorkoutImagePicker extends StatefulWidget {
-  WorkoutImagePicker(this.imagePickFn);
+class ExerciseImagePicker extends StatefulWidget {
+  ExerciseImagePicker(this.imagePickFn);
 
   final void Function(File pickedImage) imagePickFn;
 
   @override
-  _WorkoutImagePickerState createState() => _WorkoutImagePickerState();
+  _ExerciseImagePickerState createState() => _ExerciseImagePickerState();
 }
 
-class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
+class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
   XFile? _pickedImage;
 
   void _pickImage() async {

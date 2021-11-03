@@ -40,7 +40,7 @@ class ExerciseTiles extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                   placeholder: AssetImage('assets/images/loading-gif.gif'),
-                  image: NetworkImage(exercise.exerciseImageLink),
+                  image: FileImage(exercise.exerciseImage!),
                   fit: BoxFit.contain,
                 ),
               ),
@@ -76,8 +76,8 @@ class ExerciseTiles extends StatelessWidget {
                                         'edit': true,
                                         'exercise': Exercise(
                                             exerciseId: exercise.exerciseId,
-                                            exerciseImageLink:
-                                                exercise.exerciseImageLink,
+                                            exerciseImage:
+                                                exercise.exerciseImage,
                                             name: exercise.name,
                                             reps: exercise.reps,
                                             sets: exercise.sets,

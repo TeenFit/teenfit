@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:teenfit/pickers/exercise_image_picker.dart';
 
 import '../providers/exercise.dart';
 import 'package:uuid/uuid.dart';
@@ -79,7 +82,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
           ? Exercise(
               exerciseId: newExercise!.exerciseId,
               name: newExercise!.name,
-              exerciseImageLink: newExercise!.exerciseImageLink,
+              exerciseImage: newExercise!.exerciseImage,
               sets: null,
               reps: null,
               timeSeconds: newExercise!.timeSeconds,
@@ -88,7 +91,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
           : Exercise(
               exerciseId: newExercise!.exerciseId,
               name: newExercise!.name,
-              exerciseImageLink: newExercise!.exerciseImageLink,
+              exerciseImage: newExercise!.exerciseImage,
               sets: newExercise!.sets,
               reps: newExercise!.reps,
               timeSeconds: null,
@@ -98,80 +101,20 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       isEdit ? updateExercise!(newExercise) : addExercise!(newExercise);
     }
 
-    Widget buildAddImage() {
-      return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Container(
-          height: (_mediaQuery.size.height - _appBarHeight) * 0.4,
-          width: _mediaQuery.size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: _mediaQuery.size.height * 0.28,
-                width: _mediaQuery.size.width,
-                child: isEdit == false
-                    ? Image.asset('assets/images/UploadImage.png')
-                    : FadeInImage(
-                        image: NetworkImage(_imageUrlController.text),
-                        placeholderErrorBuilder: (context, _, __) =>
-                            Image.asset(
-                          'assets/images/loading-gif.gif',
-                          fit: BoxFit.cover,
-                        ),
-                        imageErrorBuilder: (context, image, stackTrace) =>
-                            Image.asset(
-                          'assets/images/ImageUploadError.png',
-                          fit: BoxFit.cover,
-                        ),
-                        placeholder:
-                            AssetImage('assets/images/loading-gif.gif'),
-                        fit: BoxFit.contain,
-                      ),
-              ),
-              Container(
-                width: double.infinity,
-                height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
-                child: TextFormField(
-                  initialValue: newExercise!.exerciseImageLink,
-                  focusNode: _imageUrlFocusNode,
-                  decoration: InputDecoration(
-                    hintText: 'Image URL',
-                    hintStyle:
-                        TextStyle(fontSize: _mediaQuery.size.height * 0.02),
-                  ),
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                  keyboardType: TextInputType.url,
-                  textInputAction: TextInputAction.next,
-                  onEditingComplete: () {
-                    setState(() {});
-                  },
-                  validator: (value) {
-                    if (value.toString().isEmpty) {
-                      return 'URL is Required';
-                    } 
-                    return null;
-                  },
-                  onSaved: (input) {
-                    newExercise = Exercise(
-                      exerciseId: newExercise!.exerciseId,
-                      name: newExercise!.name,
-                      timeSeconds: newExercise!.timeSeconds,
-                      restTime: newExercise!.restTime,
-                      exerciseImageLink: input.toString().trim(),
-                      reps: newExercise!.reps,
-                      sets: newExercise!.sets,
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
+    void _pickImage(File image) {
+      newExercise = Exercise(
+        exerciseId: newExercise!.exerciseId,
+        name: newExercise!.name,
+        timeSeconds: newExercise!.timeSeconds,
+        restTime: newExercise!.restTime,
+        sets: newExercise!.sets,
+        reps: newExercise!.reps,
+        exerciseImage: image,
       );
+    }
+
+    Widget buildAddImage() {
+      return ExerciseImagePicker(_pickImage);
     }
 
     Widget buildExerciseName() {
@@ -204,7 +147,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                 restTime: newExercise!.restTime,
                 sets: newExercise!.sets,
                 reps: newExercise!.reps,
-                exerciseImageLink: newExercise!.exerciseImageLink,
+                exerciseImage: newExercise!.exerciseImage,
               );
             },
           ),
@@ -255,7 +198,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                       height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                       width: _mediaQuery.size.width,
                       child: TextFormField(
-                        initialValue: newExercise!.timeSeconds == null ? '' : newExercise!.timeSeconds.toString(),
+                        initialValue: newExercise!.timeSeconds == null
+                            ? ''
+                            : newExercise!.timeSeconds.toString(),
                         decoration: InputDecoration(
                           hintText: 'Exercise Time (sec)',
                           hintStyle: TextStyle(
@@ -288,7 +233,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                             restTime: newExercise!.restTime,
                             sets: newExercise!.sets,
                             reps: newExercise!.reps,
-                            exerciseImageLink: newExercise!.exerciseImageLink,
+                            exerciseImage: newExercise!.exerciseImage,
                           );
                         },
                       ),
@@ -300,7 +245,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                       height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                       width: _mediaQuery.size.width,
                       child: TextFormField(
-                        initialValue: newExercise!.restTime == null ? '' : newExercise!.restTime.toString(),
+                        initialValue: newExercise!.restTime == null
+                            ? ''
+                            : newExercise!.restTime.toString(),
                         decoration: InputDecoration(
                           hintText: 'Rest Time (sec)',
                           hintStyle: TextStyle(
@@ -333,7 +280,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                                 : int.parse(input.toString().trim()),
                             sets: newExercise!.sets,
                             reps: newExercise!.reps,
-                            exerciseImageLink: newExercise!.exerciseImageLink,
+                            exerciseImage: newExercise!.exerciseImage,
                           );
                         },
                       ),
@@ -354,7 +301,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                       height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                       width: _mediaQuery.size.width,
                       child: TextFormField(
-                        initialValue: newExercise!.sets == null ? '' : newExercise!.sets.toString(),
+                        initialValue: newExercise!.sets == null
+                            ? ''
+                            : newExercise!.sets.toString(),
                         decoration: InputDecoration(
                           hintText: 'Sets',
                           hintStyle: TextStyle(
@@ -387,7 +336,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                                 ? null
                                 : int.parse(input.toString().trim()),
                             reps: newExercise!.reps,
-                            exerciseImageLink: newExercise!.exerciseImageLink,
+                            exerciseImage: newExercise!.exerciseImage,
                           );
                         },
                       ),
@@ -399,7 +348,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                       height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                       width: _mediaQuery.size.width,
                       child: TextFormField(
-                        initialValue: newExercise!.reps == null ? '' : newExercise!.reps.toString(),
+                        initialValue: newExercise!.reps == null
+                            ? ''
+                            : newExercise!.reps.toString(),
                         decoration: InputDecoration(
                           hintText: 'Reps',
                           hintStyle: TextStyle(
@@ -432,7 +383,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                             reps: input.toString().isEmpty
                                 ? null
                                 : int.parse(input.toString().trim()),
-                            exerciseImageLink: newExercise!.exerciseImageLink,
+                            exerciseImage: newExercise!.exerciseImage,
                           );
                         },
                       ),

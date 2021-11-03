@@ -48,7 +48,7 @@ class CreateWorkout extends StatelessWidget {
                       instagram: '',
                       facebook: '',
                       tumblrPageLink: '',
-                      bannerImage: '',
+                      bannerImage: null,
                       exercises: [],
                     ),
                     'isEdit': false

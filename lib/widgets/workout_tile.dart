@@ -29,7 +29,7 @@ class WorkoutTile extends StatelessWidget {
           Container(
             height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
             width: double.infinity,
-            child: workout.bannerImage.isEmpty
+            child: workout.bannerImage == null
                 ? Image.asset(
                     'assets/images/BannerImageUnavailable.png',
                     fit: BoxFit.cover,
@@ -42,7 +42,7 @@ class WorkoutTile extends StatelessWidget {
                     ),
                     fit: BoxFit.cover,
                     //change
-                    image: NetworkImage(workout.bannerImage),
+                    image: FileImage(workout.bannerImage!),
                     imageErrorBuilder: (image, _, __) => Image.asset(
                       'assets/images/ImageUploadError.png',
                       fit: BoxFit.cover,

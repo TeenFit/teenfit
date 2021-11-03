@@ -64,7 +64,7 @@ class _ExercisePageState extends State<ExercisePage> {
                           placeholder:
                               AssetImage('assets/images/loading-gif.gif'),
                           image:
-                              NetworkImage(widget.exercise.exerciseImageLink),
+                              FileImage(widget.exercise.exerciseImage!),
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -178,7 +178,7 @@ class _ExercisePageState extends State<ExercisePage> {
                           placeholder:
                               AssetImage('assets/images/loading-gif.gif'),
                           image:
-                              NetworkImage(widget.exercise.exerciseImageLink),
+                              FileImage(widget.exercise.exerciseImage!),
                           fit: BoxFit.contain,
                         ),
                   ),

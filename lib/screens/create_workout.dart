@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -73,7 +75,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         Exercise(
             exerciseId: exercisE.exerciseId,
             name: exercisE.name,
-            exerciseImageLink: exercisE.exerciseImageLink,
+            exerciseImage: exercisE.exerciseImage,
             reps: exercisE.reps,
             sets: exercisE.sets,
             restTime: exercisE.restTime,
@@ -94,6 +96,21 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       setState(() {});
     }
 
+    void _pickImage(File image) {
+      newWorkout = Workout(
+        date: newWorkout!.date,
+        creatorName: newWorkout!.creatorName,
+        creatorId: newWorkout!.creatorId,
+        workoutId: newWorkout!.workoutId,
+        workoutName: newWorkout!.workoutName,
+        instagram: newWorkout!.instagram,
+        facebook: newWorkout!.facebook,
+        tumblrPageLink: newWorkout!.tumblrPageLink,
+        bannerImage: image,
+        exercises: newWorkout!.exercises,
+      );
+    }
+
     void _showToast(String msg) {
       Fluttertoast.showToast(
         msg: msg,
@@ -106,6 +123,11 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     }
 
     Future<void> _submit() async {
+      if (newWorkout!.bannerImage == null) {
+        _showToast('An Image is Required');
+        return;
+      }
+
       if (!_formKey3.currentState!.validate()) {
         return;
       }
@@ -147,7 +169,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     }
 
     Widget buildAddImage() {
-      return WorkoutImagePicker();
+      return WorkoutImagePicker(_pickImage);
     }
 
     Widget buildCreatorName() {
@@ -403,7 +425,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                             sets: null,
                             timeSeconds: null,
                             restTime: null,
-                            exerciseImageLink: '',
+                            exerciseImage: null,
                           ),
                         },
                       );
