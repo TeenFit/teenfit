@@ -20,7 +20,7 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
         await ImagePicker().pickImage(source: ImageSource.gallery);
 
     setState(() {
-      _pickedImage = File(pickedImageFile!.path);
+      _pickedImage = pickedImageFile == null ? null : File(pickedImageFile.path);
     });
   }
 

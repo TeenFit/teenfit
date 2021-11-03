@@ -96,21 +96,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       setState(() {});
     }
 
-    void _pickImage(File? image) {
-      newWorkout = Workout(
-        date: newWorkout!.date,
-        creatorName: newWorkout!.creatorName,
-        creatorId: newWorkout!.creatorId,
-        workoutId: newWorkout!.workoutId,
-        workoutName: newWorkout!.workoutName,
-        instagram: newWorkout!.instagram,
-        facebook: newWorkout!.facebook,
-        tumblrPageLink: newWorkout!.tumblrPageLink,
-        bannerImage: image,
-        exercises: newWorkout!.exercises,
-      );
-    }
-
     void _showToast(String msg) {
       Fluttertoast.showToast(
         msg: msg,
@@ -166,6 +151,21 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       setState(() {
         _isLoading = false;
       });
+    }
+
+     void _pickImage(File? image) {
+      newWorkout = Workout(
+        date: newWorkout!.date,
+        creatorName: newWorkout!.creatorName,
+        creatorId: newWorkout!.creatorId,
+        workoutId: newWorkout!.workoutId,
+        workoutName: newWorkout!.workoutName,
+        instagram: newWorkout!.instagram,
+        facebook: newWorkout!.facebook,
+        tumblrPageLink: newWorkout!.tumblrPageLink,
+        bannerImage: image,
+        exercises: newWorkout!.exercises,
+      );
     }
 
     Widget buildCreatorName() {
