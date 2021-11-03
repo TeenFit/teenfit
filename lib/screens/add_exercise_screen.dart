@@ -84,7 +84,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       );
     }
 
-    void _pickImage(XFile image) {
+    void _pickImage(XFile? image) {
       newExercise = Exercise(
         exerciseId: newExercise!.exerciseId,
         name: newExercise!.name,

@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 class ExerciseImagePicker extends StatefulWidget {
   ExerciseImagePicker(this.imagePickFn);
 
-  final Function(XFile pickedImage) imagePickFn;
+  final Function(XFile? pickedImage) imagePickFn;
 
   @override
   _ExerciseImagePickerState createState() => _ExerciseImagePickerState();
@@ -22,7 +22,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
     setState(() {
       _pickedImage = pickedImageFile;
     });
-    widget.imagePickFn(XFile(_pickedImage!.path));
+    widget.imagePickFn(_pickedImage!);
   }
 
   @override
