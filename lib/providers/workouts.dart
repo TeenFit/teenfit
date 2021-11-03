@@ -193,7 +193,7 @@ class Workouts with ChangeNotifier {
           .update(
             ({
               'date': workouT.date,
-              'creatorName': workouT.bannerImage,
+              'creatorName': workouT.creatorName,
               'creatorId': workouT.creatorId,
               'workoutId': workouT.workoutId,
               'workoutName': workouT.workoutName,
@@ -204,7 +204,7 @@ class Workouts with ChangeNotifier {
               'exercises': workouT.exercises
                   .map((e) => {
                         'exerciseId': e.exerciseId,
-                        'exerciseImage': exerciseImage(e.exerciseId),
+                        'exerciseImage': exerciseImage(e.exerciseId).toString(),
                         'name': e.name,
                         'reps': e.reps,
                         'sets': e.sets,
