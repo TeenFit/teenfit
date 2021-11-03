@@ -20,7 +20,8 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
         await ImagePicker().pickImage(source: ImageSource.gallery);
 
     setState(() {
-      _pickedImage = File(pickedImageFile!.path);
+      _pickedImage =
+          pickedImageFile == null ? null : File(pickedImageFile.path);
     });
   }
 
@@ -44,8 +45,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                   fit: BoxFit.contain,
                 ),
           onTap: () async {
-            await _pickImage();
-            widget.imagePickFn(_pickedImage!);
+            await _pickImage().then((_) => widget.imagePickFn(_pickedImage!));
           },
         ),
       ),

@@ -27,6 +27,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   bool isEdit = false;
   var workoutProv;
   bool _isLoading = false;
+  File? workoutImage;
 
   List<Exercise>? exerciseEditList;
 
@@ -48,7 +49,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       instagram: workout!.instagram,
       facebook: workout!.facebook,
       tumblrPageLink: workout!.tumblrPageLink,
-      bannerImage: workout!.bannerImage,
+      bannerImage: workoutImage,
       exercises: exerciseEditList!,
     );
 
@@ -108,7 +109,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     }
 
     Future<void> _submit() async {
-      if (newWorkout!.bannerImage == null || newWorkout!.bannerImage!.path.isEmpty) {
+      if (newWorkout!.bannerImage == null ||
+          newWorkout!.bannerImage!.path.isEmpty) {
         _showToast('An Image is Required');
         return;
       }
@@ -153,19 +155,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       });
     }
 
-     void _pickImage(File? image) {
-      newWorkout = Workout(
-        date: newWorkout!.date,
-        creatorName: newWorkout!.creatorName,
-        creatorId: newWorkout!.creatorId,
-        workoutId: newWorkout!.workoutId,
-        workoutName: newWorkout!.workoutName,
-        instagram: newWorkout!.instagram,
-        facebook: newWorkout!.facebook,
-        tumblrPageLink: newWorkout!.tumblrPageLink,
-        bannerImage: image,
-        exercises: newWorkout!.exercises,
-      );
+    void _pickImage(File? image) {
+      workoutImage = image;
     }
 
     Widget buildCreatorName() {

@@ -26,12 +26,23 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
   bool? switchOnOf;
   Function? addExercise;
   Function? updateExercise;
+  File? exerciseImagePhoto;
 
   @override
   void didChangeDependencies() {
     exerciseProv = ModalRoute.of(context)!.settings.arguments as Map;
 
     newExercise = exerciseProv!['exercise'];
+
+    newExercise = Exercise(
+      exerciseId: newExercise!.exerciseId,
+      name: newExercise!.name,
+      exerciseImage: exerciseImagePhoto,
+      reps: newExercise!.reps,
+      sets: newExercise!.sets,
+      restTime: newExercise!.restTime,
+      timeSeconds: newExercise!.timeSeconds,
+    );
 
     addExercise = exerciseProv!['addExercise'];
 
@@ -84,19 +95,12 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     }
 
     void _pickImage(File? image) {
-      newExercise = Exercise(
-        exerciseId: newExercise!.exerciseId,
-        name: newExercise!.name,
-        timeSeconds: newExercise!.timeSeconds,
-        restTime: newExercise!.restTime,
-        sets: newExercise!.sets,
-        reps: newExercise!.reps,
-        exerciseImage: image!,
-      );
+      exerciseImagePhoto = image;
     }
 
     Future<void> _submit() async {
-      if (newExercise!.exerciseImage == null || newExercise!.exerciseImage!.path.isEmpty) {
+      if (newExercise!.exerciseImage == null ||
+          newExercise!.exerciseImage!.path.isEmpty) {
         _showToast('Image Required');
         return;
       }
