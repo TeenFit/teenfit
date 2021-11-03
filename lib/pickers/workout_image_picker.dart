@@ -4,29 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class WorkoutImagePicker extends StatefulWidget {
-  const WorkoutImagePicker({Key? key}) : super(key: key);
 
   @override
   _WorkoutImagePickerState createState() => _WorkoutImagePickerState();
 }
 
 class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
-  File? _pickedImage;
+  XFile? _pickedImage;
 
   void _pickImage() async {
     final pickedImageFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     setState(() {
-      _pickedImage = pickedImageFile as File?;
+      _pickedImage = pickedImageFile;
     });
+    
   }
 
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
-    final _theme = Theme.of(context);
-    final _appBarHeight =
-        (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
     return Padding(
       padding: const EdgeInsets.all(15.0),
@@ -37,7 +34,7 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
           child: _pickedImage == null ? Image.asset(
             'assets/images/UploadImage.png',
             fit: BoxFit.contain,
-          ) : FileImage(_pickedImage!) as Widget,
+          ) : Image.file(File(_pickedImage!.path), fit: BoxFit.contain,),
           onTap: () {
             _pickImage();
           },

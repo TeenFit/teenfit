@@ -178,7 +178,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             onSaved: (input) {
               newWorkout = Workout(
                 date: newWorkout!.date,
-                creatorName: input.toString(),
+                creatorName: input.toString().trim(),
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,
                 workoutName: newWorkout!.workoutName,
@@ -225,7 +225,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 creatorName: newWorkout!.creatorName,
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,
-                workoutName: input.toString(),
+                workoutName: input.toString().trim(),
                 instagram: newWorkout!.instagram,
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
@@ -257,10 +257,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             keyboardType: TextInputType.url,
             textInputAction: TextInputAction.next,
             validator: (value) {
-              if (value.toString().contains(' ')) {
-                return 'Please Remove Spaces';
-              }
-
               return null;
             },
             onSaved: (input) {
@@ -270,7 +266,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,
                 workoutName: newWorkout!.workoutName,
-                instagram: input.toString().isEmpty ? '' : input.toString(),
+                instagram:
+                    input.toString().isEmpty ? '' : input.toString().trim(),
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
@@ -300,9 +297,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             keyboardType: TextInputType.url,
             textInputAction: TextInputAction.next,
             validator: (value) {
-              if (value.toString().contains(' ')) {
-                return 'Please Remove Spaces';
-              }
               return null;
             },
             onSaved: (input) {
@@ -315,7 +309,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 instagram: newWorkout!.instagram,
                 facebook: newWorkout!.facebook,
                 tumblrPageLink:
-                    input.toString().isEmpty ? '' : input.toString(),
+                    input.toString().isEmpty ? '' : input.toString().trim(),
                 bannerImage: newWorkout!.bannerImage,
                 exercises: newWorkout!.exercises,
               );
@@ -343,9 +337,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             keyboardType: TextInputType.url,
             textInputAction: TextInputAction.done,
             validator: (value) {
-              if (value.toString().contains(' ')) {
-                return 'Please Remove Spaces';
-              }
               return null;
             },
             onSaved: (input) {
@@ -356,7 +347,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 workoutId: newWorkout!.workoutId,
                 workoutName: newWorkout!.workoutName,
                 instagram: newWorkout!.instagram,
-                facebook: input.toString().isEmpty ? '' : input.toString(),
+                facebook:
+                    input.toString().isEmpty ? '' : input.toString().trim(),
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
                 exercises: newWorkout!.exercises,

@@ -136,13 +136,11 @@ class _SignupScreenState extends State<SignupScreen> {
                 return 'Email is Required';
               } else if (!value.toString().contains('@')) {
                 return 'Invalid Email';
-              } else if (value.toString().contains(' ')) {
-                return 'Please Remove Spaces';
               }
               return null;
             },
             onSaved: (value) {
-              _email = value.toString();
+              _email = value.toString().trim();
             },
           ),
         ),
@@ -195,13 +193,11 @@ class _SignupScreenState extends State<SignupScreen> {
             validator: (value) {
               if (value.toString().isEmpty) {
                 return 'Password is Required';
-              } else if (value.toString().contains(' ')) {
-                return 'Please Remove Spaces';
               }
               return null;
             },
             onSaved: (value) {
-              _password = value.toString();
+              _password = value.toString().trim();
             },
           ),
         ),
@@ -252,7 +248,7 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
             textInputAction: TextInputAction.done,
             validator: (value) {
-              if (value.toString() != textEditingController.text) {
+              if (value.toString().trim() != textEditingController.text.trim()) {
                 return 'Password do Not Match';
               }
               return null;

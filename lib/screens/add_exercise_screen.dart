@@ -152,9 +152,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                   validator: (value) {
                     if (value.toString().isEmpty) {
                       return 'URL is Required';
-                    } else if (value.toString().contains(' ')) {
-                      return 'Please Remove Spaces';
-                    }
+                    } 
                     return null;
                   },
                   onSaved: (input) {
@@ -163,7 +161,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                       name: newExercise!.name,
                       timeSeconds: newExercise!.timeSeconds,
                       restTime: newExercise!.restTime,
-                      exerciseImageLink: input.toString(),
+                      exerciseImageLink: input.toString().trim(),
                       reps: newExercise!.reps,
                       sets: newExercise!.sets,
                     );
@@ -201,7 +199,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
             onSaved: (input) {
               newExercise = Exercise(
                 exerciseId: newExercise!.exerciseId,
-                name: input.toString(),
+                name: input.toString().trim(),
                 timeSeconds: newExercise!.timeSeconds,
                 restTime: newExercise!.restTime,
                 sets: newExercise!.sets,
@@ -286,7 +284,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                             name: newExercise!.name,
                             timeSeconds: input.toString().isEmpty
                                 ? null
-                                : int.parse(input.toString()),
+                                : int.parse(input.toString().trim()),
                             restTime: newExercise!.restTime,
                             sets: newExercise!.sets,
                             reps: newExercise!.reps,
@@ -332,7 +330,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                             timeSeconds: newExercise!.timeSeconds,
                             restTime: input.toString().isEmpty
                                 ? null
-                                : int.parse(input.toString()),
+                                : int.parse(input.toString().trim()),
                             sets: newExercise!.sets,
                             reps: newExercise!.reps,
                             exerciseImageLink: newExercise!.exerciseImageLink,
@@ -372,9 +370,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                             return 'Needs A Value';
                           } else if (isNumeric(value.toString())) {
                             return 'Numbers Only';
-                          } else if (int.parse(value.toString()) == 0) {
+                          } else if (int.parse(value.toString().trim()) == 0) {
                             return 'Must be greater';
-                          } else if (int.parse(value.toString()) >= 11) {
+                          } else if (int.parse(value.toString().trim()) >= 11) {
                             return '10 sets is max';
                           }
                           return null;
@@ -387,7 +385,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                             restTime: newExercise!.restTime,
                             sets: input.toString().isEmpty
                                 ? null
-                                : int.parse(input.toString()),
+                                : int.parse(input.toString().trim()),
                             reps: newExercise!.reps,
                             exerciseImageLink: newExercise!.exerciseImageLink,
                           );
@@ -415,11 +413,11 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                         validator: (value) {
                           if (value.toString().isEmpty) {
                             return 'Needs A Value';
-                          } else if (isNumeric(value.toString())) {
+                          } else if (isNumeric(value.toString().trim())) {
                             return 'Numbers Only';
-                          } else if (int.parse(value.toString()) == 0) {
+                          } else if (int.parse(value.toString().trim()) == 0) {
                             return 'Must be greater';
-                          } else if (int.parse(value.toString()) >= 26) {
+                          } else if (int.parse(value.toString().trim()) >= 26) {
                             return '25 reps is max';
                           }
                           return null;
@@ -433,7 +431,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                             sets: newExercise!.sets,
                             reps: input.toString().isEmpty
                                 ? null
-                                : int.parse(input.toString()),
+                                : int.parse(input.toString().trim()),
                             exerciseImageLink: newExercise!.exerciseImageLink,
                           );
                         },

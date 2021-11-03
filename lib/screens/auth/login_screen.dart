@@ -124,13 +124,12 @@ class _LoginScreenState extends State<LoginScreen> {
             return 'Email is Required';
           } else if (!value.toString().contains('@')) {
             return 'Invalid Email';
-          } else if (value.toString().contains(' ')) {
-            return 'Please Remove Spaces';
           }
+
           return null;
         },
         onSaved: (input) {
-          _email = input.toString();
+          _email = input.toString().trim();
         },
       );
     }
@@ -179,13 +178,11 @@ class _LoginScreenState extends State<LoginScreen> {
         validator: (value) {
           if (value.toString().isEmpty) {
             return 'Password is Required';
-          } else if (value.toString().contains(' ')) {
-            return 'Please Remove Spaces';
           }
           return null;
         },
         onSaved: (input) {
-          _password = input.toString();
+          _password = input.toString().trim();
         },
       );
     }
