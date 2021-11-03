@@ -62,7 +62,7 @@ class WorkoutPage extends StatelessWidget {
                             fit: BoxFit.fill,
                           ),
                           fit: BoxFit.fill,
-                          image: FileImage(File(workout.bannerImage!.path)),
+                          image: FileImage(workout.bannerImage!),
                           imageErrorBuilder: (image, _, __) => Image.asset(
                             'assets/images/ImageUploadError.png',
                             fit: BoxFit.fill,

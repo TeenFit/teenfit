@@ -97,7 +97,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       setState(() {});
     }
 
-    void _pickImage(XFile image) {
+    void _pickImage(File? image) {
       newWorkout = Workout(
         date: newWorkout!.date,
         creatorName: newWorkout!.creatorName,
@@ -124,7 +124,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     }
 
     Future<void> _submit() async {
-      if (newWorkout!.bannerImage!.path.isEmpty || newWorkout!.bannerImage == null ) {
+      if (newWorkout!.bannerImage == null || newWorkout!.bannerImage!.path.isEmpty) {
         _showToast('An Image is Required');
         return;
       }

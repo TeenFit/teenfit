@@ -44,7 +44,7 @@ class WorkoutTile extends StatelessWidget {
                     ),
                     fit: BoxFit.cover,
                     //change
-                    image: FileImage(File(workout.bannerImage!.path)),
+                    image: FileImage(workout.bannerImage!),
                     imageErrorBuilder: (image, _, __) => Image.asset(
                       'assets/images/ImageUploadError.png',
                       fit: BoxFit.cover,
