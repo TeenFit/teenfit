@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late FloatingSearchBarController controller;
+   FloatingSearchBarController controller = FloatingSearchBarController();
   bool isLoading = false;
 
   static const historyLength = 3;
@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
         isInit = true;
       });
     }
-    controller = FloatingSearchBarController();
+    
     filteredSearchHistory = filterSearchTerms(null);
     super.didChangeDependencies();
   }
