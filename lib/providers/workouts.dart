@@ -87,16 +87,16 @@ class Workouts with ChangeNotifier {
         FirebaseFirestore.instance.collection('/workouts');
 
     try {
-      final ref = FirebaseStorage.instance
+      final ref =  FirebaseStorage.instance
           .ref()
           .child('banner_images')
           .child(workouT.workoutId + '.jpg');
 
-      ref.putFile(workouT.bannerImage!);
+      await ref.putFile(workouT.bannerImage!);
 
       final url = await ref.getDownloadURL();
 
-      workoutsCollection
+      await workoutsCollection
           .doc('${workouT.workoutId}')
           .set(
             ({
@@ -110,14 +110,14 @@ class Workouts with ChangeNotifier {
               'facebook': workouT.facebook,
               'tumblrPageLink': workouT.tumblrPageLink,
               'exercises': workouT.exercises.map((e) async {
-                final exerciseRef = FirebaseStorage.instance
+                var exerciseRef = FirebaseStorage.instance
                     .ref()
                     .child('exercise_images')
                     .child(e.exerciseId + workouT.workoutId + '.jpg');
 
-                exerciseRef.putFile(e.exerciseImage!);
+                await exerciseRef.putFile(e.exerciseImage!);
 
-                final exerciseUrl = await ref.getDownloadURL();
+                var exerciseUrl = await exerciseRef.getDownloadURL();
 
                 return {
                   'exerciseId': e.exerciseId,
@@ -148,7 +148,7 @@ class Workouts with ChangeNotifier {
         FirebaseFirestore.instance.collection('/workouts');
 
     try {
-      workoutsCollection
+      await workoutsCollection
           .doc('${workouT.workoutId}')
           .update(
             ({
@@ -196,7 +196,7 @@ class Workouts with ChangeNotifier {
         FirebaseFirestore.instance.collection('/workouts');
 
     try {
-      workoutsCollection.doc(workoutId).delete().onError((error, stackTrace) =>
+      await workoutsCollection.doc(workoutId).delete().onError((error, stackTrace) =>
           throw HttpException('Unable To Delete Exercise'));
       _workouts.removeWhere((workout) => workout.workoutId == workoutId);
       notifyListeners();
