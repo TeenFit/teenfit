@@ -115,7 +115,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
           ? Exercise(
               exerciseId: newExercise!.exerciseId,
               name: newExercise!.name,
-              exerciseImage: newExercise!.exerciseImage,
+              exerciseImage: exerciseImagePhoto,
               sets: null,
               reps: null,
               timeSeconds: newExercise!.timeSeconds,
@@ -124,7 +124,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
           : Exercise(
               exerciseId: newExercise!.exerciseId,
               name: newExercise!.name,
-              exerciseImage: newExercise!.exerciseImage,
+              exerciseImage: exerciseImagePhoto,
               sets: newExercise!.sets,
               reps: newExercise!.reps,
               timeSeconds: null,

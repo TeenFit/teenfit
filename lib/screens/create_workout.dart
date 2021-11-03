@@ -97,6 +97,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       setState(() {});
     }
 
+    void _pickImage(File? image) {
+      workoutImage = image;
+    }
+
     void _showToast(String msg) {
       Fluttertoast.showToast(
         msg: msg,
@@ -109,8 +113,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     }
 
     Future<void> _submit() async {
-      if (newWorkout!.bannerImage == null ||
-          newWorkout!.bannerImage!.path.isEmpty) {
+      if (newWorkout!.bannerImage == null) {
         _showToast('An Image is Required');
         return;
       }
@@ -155,9 +158,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       });
     }
 
-    void _pickImage(File? image) {
-      workoutImage = image;
-    }
+    
 
     Widget buildCreatorName() {
       return Padding(

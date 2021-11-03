@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import '/providers/exercise.dart';
 import '/Custom/http_execption.dart';
@@ -86,6 +87,13 @@ class Workouts with ChangeNotifier {
         FirebaseFirestore.instance.collection('/workouts');
 
     try {
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('banner_images')
+          .child(workouT.workoutId + '.jpg');
+
+      ref.putFile(workouT.bannerImage!);
+
       workoutsCollection
           .doc('${workouT.workoutId}')
           .set(
@@ -98,7 +106,6 @@ class Workouts with ChangeNotifier {
               'instagram': workouT.instagram,
               'facebook': workouT.facebook,
               'tumblrPageLink': workouT.tumblrPageLink,
-              'bannerImage': workouT.bannerImage,
               'exercises': workouT.exercises
                   .map((e) => {
                         'exerciseId': e.exerciseId,
