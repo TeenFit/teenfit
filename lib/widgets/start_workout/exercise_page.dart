@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 
@@ -59,14 +57,14 @@ class _ExercisePageState extends State<ExercisePage> {
                             'assets/images/ImageUploadError.png',
                             fit: BoxFit.cover,
                           ),
-                          placeholderErrorBuilder:  (context, image, _) => Image.asset(
+                          placeholderErrorBuilder: (context, image, _) =>
+                              Image.asset(
                             'assets/images/ImageUploadError.png',
                             fit: BoxFit.cover,
                           ),
                           placeholder:
                               AssetImage('assets/images/loading-gif.gif'),
-                          image:
-                              FileImage(widget.exercise.exerciseImage!),
+                          image: FileImage(widget.exercise.exerciseImage!),
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -169,20 +167,19 @@ class _ExercisePageState extends State<ExercisePage> {
                     height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
                     width: _mediaQuery.size.width,
                     child: FadeInImage(
-                          imageErrorBuilder: (context, image, _) => Image.asset(
-                            'assets/images/ImageUploadError.png',
-                            fit: BoxFit.cover,
-                          ),
-                          placeholderErrorBuilder:  (context, image, _) => Image.asset(
-                            'assets/images/ImageUploadError.png',
-                            fit: BoxFit.cover,
-                          ),
-                          placeholder:
-                              AssetImage('assets/images/loading-gif.gif'),
-                          image:
-                              FileImage(widget.exercise.exerciseImage!),
-                          fit: BoxFit.contain,
-                        ),
+                      imageErrorBuilder: (context, image, _) => Image.asset(
+                        'assets/images/ImageUploadError.png',
+                        fit: BoxFit.cover,
+                      ),
+                      placeholderErrorBuilder: (context, image, _) =>
+                          Image.asset(
+                        'assets/images/ImageUploadError.png',
+                        fit: BoxFit.cover,
+                      ),
+                      placeholder: AssetImage('assets/images/loading-gif.gif'),
+                      image: FileImage(widget.exercise.exerciseImage!),
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
                 Padding(

@@ -15,14 +15,14 @@ class ExerciseImagePicker extends StatefulWidget {
 class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
   File? _pickedImage;
 
-  void _pickImage() async {
+  Future<void> _pickImage() async {
     final pickedImageFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
 
     setState(() {
       _pickedImage = File(pickedImageFile!.path);
     });
-    widget.imagePickFn(_pickedImage!);
+    
   }
 
   @override
@@ -44,8 +44,9 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                   _pickedImage!,
                   fit: BoxFit.contain,
                 ),
-          onTap: () {
-            _pickImage();
+          onTap: () async{
+            await _pickImage();
+            widget.imagePickFn(_pickedImage!);
           },
         ),
       ),
