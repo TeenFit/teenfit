@@ -43,7 +43,7 @@ class Workouts with ChangeNotifier {
                           (e) => Exercise(
                             exerciseId: e['exerciseId'],
                             name: e['name'],
-                            exerciseImage: e['exerciseImageLink'],
+                            exerciseImage: e['exerciseImage'],
                             reps: e['reps'],
                             sets: e['sets'],
                             restTime: e['restTime'],
@@ -94,12 +94,27 @@ class Workouts with ChangeNotifier {
 
       ref.putFile(workouT.bannerImage!);
 
+      final url = await ref.getDownloadURL();
+
+      // workouT.exercises.map((e) async {
+      //   final exerciseRef = FirebaseStorage.instance
+      //       .ref()
+      //       .child('exercise_images')
+      //       .child(e.exerciseId + workouT.workoutId + '.jpg');
+
+      //   exerciseRef.putFile(e.exerciseImage!);
+
+      //   final exercisesUrl = await ref.getDownloadURL();
+
+      // }).toList();
+
       workoutsCollection
           .doc('${workouT.workoutId}')
           .set(
             ({
               'date': workouT.date,
-              'creatorName': workouT.bannerImage,
+              'bannerImage': url,
+              'creatorName': workouT.creatorName,
               'creatorId': workouT.creatorId,
               'workoutId': workouT.workoutId,
               'workoutName': workouT.workoutName,
@@ -109,7 +124,6 @@ class Workouts with ChangeNotifier {
               'exercises': workouT.exercises
                   .map((e) => {
                         'exerciseId': e.exerciseId,
-                        'exerciseImageLink': e.exerciseImage,
                         'name': e.name,
                         'reps': e.reps,
                         'sets': e.sets,
