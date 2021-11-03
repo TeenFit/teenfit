@@ -18,11 +18,11 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
   void _pickImage() async {
     final pickedImageFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-        widget.imagePickFn(File(pickedImageFile!.path));
+
     setState(() {
       _pickedImage = pickedImageFile;
     });
-    
+    widget.imagePickFn(File(pickedImageFile!.path));
   }
 
   @override
