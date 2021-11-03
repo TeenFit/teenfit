@@ -22,6 +22,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formkey = GlobalKey<FormState>();
 
   @override
+  void didChangeDependencies() {
+    Provider.of<Auth>(context, listen: false).updateToken();
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);

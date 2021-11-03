@@ -23,6 +23,12 @@ class _SignupScreenState extends State<SignupScreen> {
   final GlobalKey<FormState> _formkey1 = GlobalKey<FormState>();
 
   @override
+  void didChangeDependencies() {
+    Provider.of<Auth>(context).updateToken();
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
     textEditingController.dispose();
     super.dispose();
@@ -248,7 +254,8 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
             textInputAction: TextInputAction.done,
             validator: (value) {
-              if (value.toString().trim() != textEditingController.text.trim()) {
+              if (value.toString().trim() !=
+                  textEditingController.text.trim()) {
                 return 'Password do Not Match';
               }
               return null;

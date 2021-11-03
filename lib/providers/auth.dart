@@ -24,6 +24,12 @@ class Auth with ChangeNotifier {
     return FirebaseAuth.instance.currentUser!.uid;
   }
 
+  void updateToken() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      FirebaseAuth.instance.currentUser!.getIdToken(true);
+    }
+  }
+
   Future<void> signup(String email, String password) async {
     try {
       await auth.createUserWithEmailAndPassword(
@@ -32,7 +38,7 @@ class Auth with ChangeNotifier {
       );
 
       getCurrentUID();
-       print(userId);
+      print(userId);
     } on FirebaseAuthException catch (e) {
       print(e);
       throw HttpException(e.code.toString());

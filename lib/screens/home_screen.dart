@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:teenfit/providers/auth.dart';
 import 'package:teenfit/providers/workouts.dart';
 
 import '../widgets/main_drawer.dart';
@@ -15,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-   FloatingSearchBarController controller = FloatingSearchBarController();
+  FloatingSearchBarController controller = FloatingSearchBarController();
   bool isLoading = false;
 
   static const historyLength = 3;
@@ -85,6 +86,8 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         isLoading = true;
       });
+
+      Provider.of<Auth>(context, listen: false).updateToken();
       try {
         await Provider.of<Workouts>(context).fetchAndSetWorkout().onError(
             (error, stackTrace) =>
@@ -97,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
         isInit = true;
       });
     }
-    
+
     filteredSearchHistory = filterSearchTerms(null);
     super.didChangeDependencies();
   }
