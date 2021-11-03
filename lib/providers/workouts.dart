@@ -96,18 +96,6 @@ class Workouts with ChangeNotifier {
 
       final url = await ref.getDownloadURL();
 
-      // workouT.exercises.map((e) async {
-      //   final exerciseRef = FirebaseStorage.instance
-      //       .ref()
-      //       .child('exercise_images')
-      //       .child(e.exerciseId + workouT.workoutId + '.jpg');
-
-      //   exerciseRef.putFile(e.exerciseImage!);
-
-      //   final exercisesUrl = await ref.getDownloadURL();
-
-      // }).toList();
-
       workoutsCollection
           .doc('${workouT.workoutId}')
           .set(
@@ -121,16 +109,26 @@ class Workouts with ChangeNotifier {
               'instagram': workouT.instagram,
               'facebook': workouT.facebook,
               'tumblrPageLink': workouT.tumblrPageLink,
-              'exercises': workouT.exercises
-                  .map((e) => {
-                        'exerciseId': e.exerciseId,
-                        'name': e.name,
-                        'reps': e.reps,
-                        'sets': e.sets,
-                        'restTime': e.restTime,
-                        'timeSeconds': e.timeSeconds
-                      })
-                  .toList()
+              'exercises': workouT.exercises.map((e) async {
+                final exerciseRef = FirebaseStorage.instance
+                    .ref()
+                    .child('exercise_images')
+                    .child(e.exerciseId + workouT.workoutId + '.jpg');
+
+                exerciseRef.putFile(e.exerciseImage!);
+
+                final exerciseUrl = await ref.getDownloadURL();
+
+                return {
+                  'exerciseId': e.exerciseId,
+                  'name': e.name,
+                  'reps': e.reps,
+                  'sets': e.sets,
+                  'restTime': e.restTime,
+                  'timeSeconds': e.timeSeconds,
+                  'exerciseImage': exerciseUrl,
+                };
+              }).toList()
             }),
           )
           .onError((error, stackTrace) => throw HttpException(''));
