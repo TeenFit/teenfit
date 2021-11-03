@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:teenfit/pickers/exercise_image_picker.dart';
 
 import '../providers/exercise.dart';
@@ -71,7 +72,35 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
     bool isEdit = exerciseProv!['edit'];
 
+    void _showToast(String msg) {
+      Fluttertoast.showToast(
+        msg: msg,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 10,
+        webShowClose: true,
+        textColor: Colors.white,
+        backgroundColor: Colors.grey.shade700,
+      );
+    }
+
+    void _pickImage(File image) {
+      newExercise = Exercise(
+        exerciseId: newExercise!.exerciseId,
+        name: newExercise!.name,
+        timeSeconds: newExercise!.timeSeconds,
+        restTime: newExercise!.restTime,
+        sets: newExercise!.sets,
+        reps: newExercise!.reps,
+        exerciseImage: image,
+      );
+    }
+
     Future<void> _submit() async {
+      if (newExercise!.exerciseImage == null) {
+        _showToast('Image Required');
+        return;
+      }
+
       if (!_formKey4.currentState!.validate()) {
         return;
       }
@@ -99,18 +128,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
             );
 
       isEdit ? updateExercise!(newExercise) : addExercise!(newExercise);
-    }
-
-    void _pickImage(File image) {
-      newExercise = Exercise(
-        exerciseId: newExercise!.exerciseId,
-        name: newExercise!.name,
-        timeSeconds: newExercise!.timeSeconds,
-        restTime: newExercise!.restTime,
-        sets: newExercise!.sets,
-        reps: newExercise!.reps,
-        exerciseImage: image,
-      );
     }
 
     Widget buildAddImage() {
