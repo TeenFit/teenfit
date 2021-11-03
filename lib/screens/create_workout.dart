@@ -168,10 +168,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       });
     }
 
-    Widget buildAddImage() {
-      return WorkoutImagePicker(_pickImage);
-    }
-
     Widget buildCreatorName() {
       return Padding(
         padding: const EdgeInsets.all(15.0),
@@ -492,7 +488,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 SizedBox(
                   height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
                 ),
-                buildAddImage(),
+                WorkoutImagePicker(_pickImage),
                 buildCreatorName(),
                 buildWorkoutName(),
                 buildInstagramLink(),
