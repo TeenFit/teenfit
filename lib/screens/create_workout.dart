@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:teenfit/pickers/workout_image_picker.dart';
 import 'package:uuid/uuid.dart';
 
 import '../screens/add_exercise_screen.dart';
@@ -34,8 +35,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     workout = workoutProv['workout'];
     isEdit = workoutProv['isEdit'];
 
-    exerciseEditList =
-        workout!.exercises == [] ? [] : workout!.exercises;
+    exerciseEditList = workout!.exercises == [] ? [] : workout!.exercises;
 
     newWorkout = Workout(
       date: workout!.date,
@@ -147,65 +147,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     }
 
     Widget buildAddImage() {
-      return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Container(
-          height: (_mediaQuery.size.height - _appBarHeight) * 0.4,
-          width: _mediaQuery.size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                  height: _mediaQuery.size.height * 0.28,
-                  width: _mediaQuery.size.width,
-                  child: Image.asset('assets/images/UploadImage.png')),
-              Container(
-                width: double.infinity,
-                height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
-                child: TextFormField(
-                  initialValue: newWorkout!.bannerImage,
-                  decoration: InputDecoration(
-                    hintText: 'Image URL',
-                    hintStyle:
-                        TextStyle(fontSize: _mediaQuery.size.height * 0.02),
-                  ),
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                  keyboardType: TextInputType.url,
-                  textInputAction: TextInputAction.next,
-                  onEditingComplete: () {
-                    setState(() {});
-                  },
-                  validator: (value) {
-                    if (value.toString().isEmpty) {
-                      return 'URL is Required';
-                    } else if (value.toString().contains(' ')) {
-                      return 'Please Remove Spaces';
-                    }
-                    return null;
-                  },
-                  onSaved: (input) {
-                    newWorkout = Workout(
-                      date: newWorkout!.date,
-                      creatorName: newWorkout!.creatorName,
-                      creatorId: newWorkout!.creatorId,
-                      workoutId: newWorkout!.workoutId,
-                      workoutName: newWorkout!.workoutName,
-                      instagram: newWorkout!.instagram,
-                      facebook: newWorkout!.facebook,
-                      tumblrPageLink: newWorkout!.tumblrPageLink,
-                      bannerImage: input.toString(),
-                      exercises: newWorkout!.exercises,
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
+      return WorkoutImagePicker();
     }
 
     Widget buildCreatorName() {
