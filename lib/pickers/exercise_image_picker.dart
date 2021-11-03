@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ExerciseImagePicker extends StatefulWidget {
-  ExerciseImagePicker(this.imagePickFn);
+  ExerciseImagePicker(this.imagePickFn, this.pickedImageEdit);
 
   final void Function(File? pickedImage) imagePickFn;
+  final File? pickedImageEdit;
 
   @override
   _ExerciseImagePickerState createState() => _ExerciseImagePickerState();
@@ -16,7 +17,13 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
   File? _pickedImage;
 
   Future<void> _pickImage() async {
-    final pickedImageFile =
+    var pickedImageFile;
+
+    if (widget.pickedImageEdit == null) {
+      pickedImageFile = widget.pickedImageEdit;
+    }
+
+    pickedImageFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
 
     setState(() {
@@ -36,10 +43,15 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
         width: _mediaQuery.size.width,
         child: InkWell(
           child: _pickedImage == null
-              ? Image.asset(
-                  'assets/images/UploadImage.png',
-                  fit: BoxFit.contain,
-                )
+              ? widget.pickedImageEdit == null
+                  ? Image.asset(
+                      'assets/images/UploadImage.png',
+                      fit: BoxFit.contain,
+                    )
+                  : Image.file(
+                      widget.pickedImageEdit!,
+                      fit: BoxFit.contain,
+                    )
               : Image.file(
                   _pickedImage!,
                   fit: BoxFit.contain,
