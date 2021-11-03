@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:image_picker/image_picker.dart';
 import 'package:teenfit/providers/exercise.dart';
 
 class Workout {
@@ -10,7 +9,7 @@ class Workout {
   final String instagram;
   final String facebook;
   final String tumblrPageLink;
-  final File? bannerImage;
+  final XFile? bannerImage;
   final List<Exercise> exercises;
   final String date;
 

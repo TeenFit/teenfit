@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:teenfit/pickers/exercise_image_picker.dart';
 
 import '../providers/exercise.dart';
@@ -83,7 +84,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       );
     }
 
-    void _pickImage(File image) {
+    void _pickImage(XFile image) {
       newExercise = Exercise(
         exerciseId: newExercise!.exerciseId,
         name: newExercise!.name,
@@ -96,7 +97,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     }
 
     Future<void> _submit() async {
-      if (newExercise!.exerciseImage == null) {
+      if (newExercise!.exerciseImage == null || newExercise!.exerciseImage!.path.isEmpty) {
         _showToast('Image Required');
         return;
       }

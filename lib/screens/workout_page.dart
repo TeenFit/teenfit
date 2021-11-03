@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
@@ -60,7 +62,7 @@ class WorkoutPage extends StatelessWidget {
                             fit: BoxFit.fill,
                           ),
                           fit: BoxFit.fill,
-                          image: FileImage(workout.bannerImage!),
+                          image: FileImage(File(workout.bannerImage!.path)),
                           imageErrorBuilder: (image, _, __) => Image.asset(
                             'assets/images/ImageUploadError.png',
                             fit: BoxFit.fill,

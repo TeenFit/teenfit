@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../Custom/custom_dialog.dart';
@@ -42,7 +44,7 @@ class WorkoutTile extends StatelessWidget {
                     ),
                     fit: BoxFit.cover,
                     //change
-                    image: FileImage(workout.bannerImage!),
+                    image: FileImage(File(workout.bannerImage!.path)),
                     imageErrorBuilder: (image, _, __) => Image.asset(
                       'assets/images/ImageUploadError.png',
                       fit: BoxFit.cover,
@@ -66,7 +68,7 @@ class WorkoutTile extends StatelessWidget {
                     instagram: workout.instagram,
                     facebook: workout.facebook,
                     tumblrPageLink: workout.tumblrPageLink,
-                    bannerImage: workout.bannerImage,
+                    bannerImage: workout.bannerImage!,
                     exercises: workout.exercises,
                   ),
                 );

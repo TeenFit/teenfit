@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/pickers/workout_image_picker.dart';
 import 'package:uuid/uuid.dart';
@@ -96,7 +97,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       setState(() {});
     }
 
-    void _pickImage(File image) {
+    void _pickImage(XFile image) {
       newWorkout = Workout(
         date: newWorkout!.date,
         creatorName: newWorkout!.creatorName,
@@ -123,7 +124,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     }
 
     Future<void> _submit() async {
-      if (newWorkout!.bannerImage == null) {
+      if (newWorkout!.bannerImage!.path.isEmpty || newWorkout!.bannerImage == null ) {
         _showToast('An Image is Required');
         return;
       }

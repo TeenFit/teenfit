@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../Custom/custom_dialog.dart';
@@ -12,8 +14,13 @@ class ExerciseTiles extends StatelessWidget {
   final Function addExercise;
   final Function updateExercise;
 
-  ExerciseTiles({required this.exercise, required this.size, required this.isDeleteable, required this.delete,
-      required this.addExercise, required this.updateExercise});
+  ExerciseTiles(
+      {required this.exercise,
+      required this.size,
+      required this.isDeleteable,
+      required this.delete,
+      required this.addExercise,
+      required this.updateExercise});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +47,7 @@ class ExerciseTiles extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                   placeholder: AssetImage('assets/images/loading-gif.gif'),
-                  image: FileImage(exercise.exerciseImage!),
+                  image: FileImage(File(exercise.exerciseImage!.path)),
                   fit: BoxFit.contain,
                 ),
               ),

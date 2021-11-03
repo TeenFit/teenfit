@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class Exercise {
   final String name;
@@ -6,7 +6,7 @@ class Exercise {
   final int? restTime;
   final int? reps;
   final int? sets;
-  final File? exerciseImage;
+  final XFile? exerciseImage;
   final String exerciseId;
 
   Exercise({

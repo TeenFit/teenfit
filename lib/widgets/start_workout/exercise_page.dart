@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 
@@ -64,7 +66,7 @@ class _ExercisePageState extends State<ExercisePage> {
                           placeholder:
                               AssetImage('assets/images/loading-gif.gif'),
                           image:
-                              FileImage(widget.exercise.exerciseImage!),
+                              FileImage(File(widget.exercise.exerciseImage!.path)),
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -178,7 +180,7 @@ class _ExercisePageState extends State<ExercisePage> {
                           placeholder:
                               AssetImage('assets/images/loading-gif.gif'),
                           image:
-                              FileImage(widget.exercise.exerciseImage!),
+                              FileImage(File(widget.exercise.exerciseImage!.path)),
                           fit: BoxFit.contain,
                         ),
                   ),
