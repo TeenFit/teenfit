@@ -93,7 +93,7 @@ class Workouts with ChangeNotifier {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
 
-    Future<String> exerciseImage(Exercise e) async {
+    exerciseImage(Exercise e) async {
       final exerciseRef = FirebaseStorage.instance
           .ref()
           .child('${workouT.workoutName} ${workouT.workoutId}')
@@ -101,22 +101,8 @@ class Workouts with ChangeNotifier {
 
       await exerciseRef.putFile(e.exerciseImage!);
 
-      final exerciseImageUrl = await exerciseRef.getDownloadURL();
-
-      return exerciseImageUrl;
+      return await exerciseRef.getDownloadURL();
     }
-
-    final exercises = workouT.exercises.map((e) async {
-      return {
-        'exerciseId': e.exerciseId,
-        'name': e.name,
-        'reps': e.reps,
-        'sets': e.sets,
-        'restTime': e.restTime,
-        'timeSeconds': e.timeSeconds,
-        'exerciseImage': await exerciseImage(e),
-      };
-    }).toList() as List<Map>;
 
     try {
       final ref = FirebaseStorage.instance
@@ -128,7 +114,7 @@ class Workouts with ChangeNotifier {
 
       final url = await ref.getDownloadURL();
 
-      workoutsCollection
+      await workoutsCollection
           .doc('${workouT.workoutId}')
           .set(
             ({
@@ -141,7 +127,17 @@ class Workouts with ChangeNotifier {
               'instagram': workouT.instagram,
               'facebook': workouT.facebook,
               'tumblrPageLink': workouT.tumblrPageLink,
-              'exercises': exercises,
+              'exercises': workouT.exercises.map((e) {
+                return {
+                  'exerciseId': e.exerciseId,
+                  'name': e.name,
+                  'reps': e.reps,
+                  'sets': e.sets,
+                  'restTime': e.restTime,
+                  'timeSeconds': e.timeSeconds,
+                  'exerciseImage': exerciseImage(e)..whenComplete.toString(),
+                };
+              }).toList()
             }),
           )
           .onError((error, stackTrace) => throw HttpException(''));

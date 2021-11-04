@@ -50,7 +50,7 @@ class _ExercisePageState extends State<ExercisePage> {
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Container(
-                        height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
+                        height: (_mediaQuery.size.height - _appBarHeight) * 0.2,
                         width: _mediaQuery.size.width,
                         child: FadeInImage(
                           imageErrorBuilder: (context, image, _) => Image.asset(

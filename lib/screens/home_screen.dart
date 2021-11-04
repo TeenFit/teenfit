@@ -95,8 +95,6 @@ class _HomeScreenState extends State<HomeScreen> {
         _showToast('Unable To Load New Workouts, Try Again Later');
       }
 
-      dispose();
-
       setState(() {
         isLoading = false;
         isInit = true;
