@@ -135,7 +135,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     }
 
     Widget buildAddImage() {
-      return ExerciseImagePicker(_pickImage, newExercise!.exerciseImage);
+      return ExerciseImagePicker(_pickImage);
     }
 
     Widget buildExerciseName() {

@@ -93,12 +93,9 @@ class Workouts with ChangeNotifier {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
 
-    final firebaseStorage = FirebaseStorage.instance;
+    Future<String> exerciseImage(Exercise e) async {
 
-    Future<String> exerciseImage(String exerciseId) async {
-      Exercise e = findByExerciseId(exerciseId, workouT.exercises);
-
-      final exerciseRef = firebaseStorage
+      final exerciseRef = FirebaseStorage.instance
           .ref()
           .child('${workouT.workoutName} ${workouT.workoutId}')
           .child(e.exerciseId + workouT.workoutId + '.jpg');
@@ -141,7 +138,7 @@ class Workouts with ChangeNotifier {
                         'sets': e.sets,
                         'restTime': e.restTime,
                         'timeSeconds': e.timeSeconds,
-                        'exerciseImage': '${exerciseImage(e.exerciseId)}',
+                        'exerciseImage': '${exerciseImage(e).whenComplete}',
                       })
                   .toList()
             }),

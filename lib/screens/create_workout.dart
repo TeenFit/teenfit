@@ -480,7 +480,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 SizedBox(
                   height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
                 ),
-                WorkoutImagePicker(_pickImage, newWorkout!.bannerImage),
+                WorkoutImagePicker(_pickImage),
                 buildCreatorName(),
                 buildWorkoutName(),
                 buildInstagramLink(),
