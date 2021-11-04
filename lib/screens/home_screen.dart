@@ -95,11 +95,12 @@ class _HomeScreenState extends State<HomeScreen> {
         _showToast('Unable To Load New Workouts, Try Again Later');
       }
 
-      setState(() {
+      
+    }
+    setState(() {
         isLoading = false;
         isInit = true;
       });
-    }
 
     filteredSearchHistory = filterSearchTerms(null);
     super.didChangeDependencies();

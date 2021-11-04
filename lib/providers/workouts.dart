@@ -135,7 +135,7 @@ class Workouts with ChangeNotifier {
                   'sets': e.sets,
                   'restTime': e.restTime,
                   'timeSeconds': e.timeSeconds,
-                  'exerciseImage': exerciseImage(e)..whenComplete.toString(),
+                  'exerciseImage': exerciseImage(e) as String,
                 };
               }).toList()
             }),
