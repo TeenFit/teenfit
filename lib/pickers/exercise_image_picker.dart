@@ -45,7 +45,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                   fit: BoxFit.contain,
                 ),
           onTap: () async {
-            await _pickImage().then((_) => widget.imagePickFn(_pickedImage!));
+            await _pickImage().then((_) => widget.imagePickFn(_pickedImage));
           },
         ),
       ),

@@ -88,18 +88,21 @@ class _HomeScreenState extends State<HomeScreen> {
       });
 
       try {
-        await Provider.of<Auth>(context, listen: false).updateToken();
         await Provider.of<Workouts>(context).fetchAndSetWorkout().onError(
             (error, stackTrace) =>
                 _showToast('Unable To Load New Workouts, Try Again Later'));
       } catch (e) {
         _showToast('Unable To Load New Workouts, Try Again Later');
       }
+
+      dispose();
+
+      setState(() {
+        isLoading = false;
+        isInit = true;
+      });
     }
-    setState(() {
-      isLoading = false;
-      isInit = true;
-    });
+
     filteredSearchHistory = filterSearchTerms(null);
     super.didChangeDependencies();
   }
