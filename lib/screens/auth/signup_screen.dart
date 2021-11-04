@@ -51,7 +51,7 @@ class _SignupScreenState extends State<SignupScreen> {
         timeInSecForIosWeb: 10,
         webShowClose: true,
         textColor: Colors.white,
-        backgroundColor: Colors.yellow.shade900,
+        backgroundColor: Colors.grey.shade800,
       );
     }
 
@@ -92,6 +92,8 @@ class _SignupScreenState extends State<SignupScreen> {
           errorMessage = ('This Password Is To Weak');
         } else if (error.toString().contains('email-already-in-use')) {
           errorMessage = ('An Account Already Exists For That Email');
+        } else if (error.toString().contains('invalid-email')) {
+          errorMessage = 'This Email Address Does Not Exist';
         }
         _showToast(errorMessage);
       } catch (_) {

@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
         timeInSecForIosWeb: 10,
         webShowClose: true,
         textColor: Colors.white,
-        backgroundColor: Colors.yellow.shade900,
+        backgroundColor: Colors.grey.shade700,
       );
     }
 
@@ -87,15 +87,12 @@ class _LoginScreenState extends State<LoginScreen> {
           errorMessage = ('Wrong password or Email Provided');
         }
         _showToast(errorMessage);
-        setState(() {
-          _isLoading = false;
-        });
       } catch (_) {
         _showToast('Could Not Login, Try Again Later');
-        setState(() {
-          _isLoading = false;
-        });
       }
+      setState(() {
+        _isLoading = false;
+      });
     }
 
     Widget buildEmailField() {
