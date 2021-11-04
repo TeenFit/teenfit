@@ -22,8 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formkey = GlobalKey<FormState>();
 
   @override
-  void didChangeDependencies() {
-    Provider.of<Auth>(context, listen: false).updateToken();
+  void didChangeDependencies() async {
+    await Provider.of<Auth>(context, listen: false).updateToken();
     super.didChangeDependencies();
   }
 

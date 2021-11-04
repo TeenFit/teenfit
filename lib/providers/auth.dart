@@ -24,9 +24,9 @@ class Auth with ChangeNotifier {
     return FirebaseAuth.instance.currentUser!.uid;
   }
 
-  void updateToken() {
+  Future<void> updateToken() async {
     if (FirebaseAuth.instance.currentUser != null) {
-      FirebaseAuth.instance.currentUser!.getIdToken(true);
+      await FirebaseAuth.instance.currentUser!.getIdToken(true);
     }
   }
 
