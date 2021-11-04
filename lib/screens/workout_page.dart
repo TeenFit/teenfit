@@ -47,23 +47,31 @@ class WorkoutPage extends StatelessWidget {
               child: Stack(
                 children: [
                   workout.bannerImage == null
-                      ? Image.asset(
-                          'assets/images/BannerImageUnavailable.png',
-                          fit: BoxFit.cover,
-                        )
-                      : FadeInImage(
-                          placeholder:
-                              AssetImage('assets/images/loading-gif.gif'),
-                          placeholderErrorBuilder: (context, _, __) =>
-                              Image.asset(
-                            'assets/images/loading-gif.gif',
+                      ? Container(
+                          height: _mediaQuery.size.height * 0.35,
+                          width: _mediaQuery.size.width,
+                          child: Image.asset(
+                            'assets/images/BannerImageUnavailable.png',
                             fit: BoxFit.cover,
                           ),
-                          fit: BoxFit.cover,
-                          image: FileImage(workout.bannerImage!),
-                          imageErrorBuilder: (image, _, __) => Image.asset(
-                            'assets/images/ImageUploadError.png',
+                        )
+                      : Container(
+                          height: _mediaQuery.size.height * 0.35,
+                          width: _mediaQuery.size.width,
+                          child: FadeInImage(
+                            placeholder:
+                                AssetImage('assets/images/loading-gif.gif'),
+                            placeholderErrorBuilder: (context, _, __) =>
+                                Image.asset(
+                              'assets/images/loading-gif.gif',
+                              fit: BoxFit.cover,
+                            ),
                             fit: BoxFit.cover,
+                            image: FileImage(workout.bannerImage!),
+                            imageErrorBuilder: (image, _, __) => Image.asset(
+                              'assets/images/ImageUploadError.png',
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                   FittedBox(

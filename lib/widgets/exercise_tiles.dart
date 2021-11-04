@@ -46,7 +46,7 @@ class ExerciseTiles extends StatelessWidget {
                   ),
                   placeholder: AssetImage('assets/images/loading-gif.gif'),
                   image: FileImage(exercise.exerciseImage!),
-                  fit: BoxFit.contain,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
