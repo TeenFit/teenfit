@@ -43,13 +43,13 @@ class WorkoutPage extends StatelessWidget {
           children: [
             Container(
               height: _mediaQuery.size.height * 0.35,
-              width: double.infinity,
+              width: _mediaQuery.size.width,
               child: Stack(
                 children: [
                   workout.bannerImage == null
                       ? Image.asset(
                           'assets/images/BannerImageUnavailable.png',
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                         )
                       : FadeInImage(
                           placeholder:
@@ -57,13 +57,13 @@ class WorkoutPage extends StatelessWidget {
                           placeholderErrorBuilder: (context, _, __) =>
                               Image.asset(
                             'assets/images/loading-gif.gif',
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                           ),
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                           image: FileImage(workout.bannerImage!),
                           imageErrorBuilder: (image, _, __) => Image.asset(
                             'assets/images/ImageUploadError.png',
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                           ),
                         ),
                   FittedBox(
