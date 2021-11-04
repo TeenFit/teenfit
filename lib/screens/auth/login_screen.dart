@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
     void _showToast(String msg) {
       Fluttertoast.showToast(
         msg: msg,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 10,
         webShowClose: true,
         textColor: Colors.white,
