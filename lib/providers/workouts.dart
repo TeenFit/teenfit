@@ -135,9 +135,9 @@ class Workouts with ChangeNotifier {
                   'sets': e.sets,
                   'restTime': e.restTime,
                   'timeSeconds': e.timeSeconds,
-                  'exerciseImage': exerciseImage(e) as String,
+                  'exerciseImage': exerciseImage(e).toString(),
                 };
-              }).toList()
+              }).toList() as List<Exercise>
             }),
           )
           .onError((error, stackTrace) => throw HttpException(''));
