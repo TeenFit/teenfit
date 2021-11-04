@@ -127,17 +127,17 @@ class Workouts with ChangeNotifier {
               'instagram': workouT.instagram,
               'facebook': workouT.facebook,
               'tumblrPageLink': workouT.tumblrPageLink,
-              'exercises': workouT.exercises.map((e) {
-                return {
-                  'exerciseId': e.exerciseId,
-                  'name': e.name,
-                  'reps': e.reps,
-                  'sets': e.sets,
-                  'restTime': e.restTime,
-                  'timeSeconds': e.timeSeconds,
-                  'exerciseImage': exerciseImage(e).toString(),
-                };
-              }).toList() as List<Exercise>
+              'exercises': workouT.exercises
+                  .map((e) => {
+                        'exerciseId': e.exerciseId,
+                        'name': e.name,
+                        'reps': e.reps,
+                        'sets': e.sets,
+                        'restTime': e.restTime,
+                        'timeSeconds': e.timeSeconds,
+                        'exerciseImage': exerciseImage(e).toString(),
+                      })
+                  .toList()
             }),
           )
           .onError((error, stackTrace) => throw HttpException(''));
