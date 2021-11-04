@@ -105,7 +105,9 @@ class Workouts with ChangeNotifier {
 
       await exerciseRef.putFile(e.exerciseImage!);
 
-      return await exerciseRef.getDownloadURL();
+      final exerciseImageUrl = await exerciseRef.getDownloadURL();
+
+      return exerciseImageUrl;
     }
 
     try {
@@ -139,7 +141,7 @@ class Workouts with ChangeNotifier {
                         'sets': e.sets,
                         'restTime': e.restTime,
                         'timeSeconds': e.timeSeconds,
-                        'exerciseImage': exerciseImage(e.exerciseId).toString(),
+                        'exerciseImage': '${exerciseImage(e.exerciseId)}',
                       })
                   .toList()
             }),
@@ -200,11 +202,12 @@ class Workouts with ChangeNotifier {
               'instagram': workouT.instagram,
               'facebook': workouT.facebook,
               'tumblrPageLink': workouT.tumblrPageLink,
-              'bannerImage': url,
+              'bannerImage': url.toString(),
               'exercises': workouT.exercises
                   .map((e) => {
                         'exerciseId': e.exerciseId,
-                        'exerciseImage': exerciseImage(e.exerciseId).toString(),
+                        'exerciseImage':
+                            (exerciseImage(e.exerciseId)).toString(),
                         'name': e.name,
                         'reps': e.reps,
                         'sets': e.sets,
