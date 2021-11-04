@@ -94,7 +94,6 @@ class Workouts with ChangeNotifier {
         FirebaseFirestore.instance.collection('/workouts');
 
     Future<String> exerciseImage(Exercise e) async {
-
       final exerciseRef = FirebaseStorage.instance
           .ref()
           .child('${workouT.workoutName} ${workouT.workoutId}')
@@ -106,6 +105,18 @@ class Workouts with ChangeNotifier {
 
       return exerciseImageUrl;
     }
+
+    final exercises = workouT.exercises.map((e) async {
+      return {
+        'exerciseId': e.exerciseId,
+        'name': e.name,
+        'reps': e.reps,
+        'sets': e.sets,
+        'restTime': e.restTime,
+        'timeSeconds': e.timeSeconds,
+        'exerciseImage': await exerciseImage(e),
+      };
+    }).toList() as List<Map>;
 
     try {
       final ref = FirebaseStorage.instance
@@ -130,17 +141,7 @@ class Workouts with ChangeNotifier {
               'instagram': workouT.instagram,
               'facebook': workouT.facebook,
               'tumblrPageLink': workouT.tumblrPageLink,
-              'exercises': workouT.exercises
-                  .map((e) => {
-                        'exerciseId': e.exerciseId,
-                        'name': e.name,
-                        'reps': e.reps,
-                        'sets': e.sets,
-                        'restTime': e.restTime,
-                        'timeSeconds': e.timeSeconds,
-                        'exerciseImage': '${exerciseImage(e).whenComplete}',
-                      })
-                  .toList()
+              'exercises': exercises,
             }),
           )
           .onError((error, stackTrace) => throw HttpException(''));
