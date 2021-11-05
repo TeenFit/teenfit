@@ -188,17 +188,17 @@ class Workouts with ChangeNotifier {
               'facebook': workouT.facebook,
               'tumblrPageLink': workouT.tumblrPageLink,
               'bannerImage': url.toString(),
-              'exercises': workouT.exercises
-                  .map((e) => {
-                        'exerciseId': e.exerciseId,
-                        'exerciseImage': (exerciseImage(e))..whenComplete.toString(),
-                        'name': e.name,
-                        'reps': e.reps,
-                        'sets': e.sets,
-                        'restTime': e.restTime,
-                        'timeSeconds': e.timeSeconds
-                      })
-                  .toList()
+              'exercises': workouT.exercises.map((e) async {
+                return {
+                  'exerciseId': e.exerciseId,
+                  'exerciseImage': await exerciseImage(e),
+                  'name': e.name,
+                  'reps': e.reps,
+                  'sets': e.sets,
+                  'restTime': e.restTime,
+                  'timeSeconds': e.timeSeconds,
+                };
+              }).toList()
             }),
           )
           .onError((error, stackTrace) => throw HttpException(
