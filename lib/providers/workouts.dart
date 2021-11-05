@@ -82,13 +82,6 @@ class Workouts with ChangeNotifier {
     return workouts.where((workout) => workout.creatorId == creatorId).toList();
   }
 
-  Exercise findByExerciseId(
-    String exerciseId,
-    List<Exercise> exercises,
-  ) {
-    return exercises.firstWhere((element) => element.exerciseId == exerciseId);
-  }
-
   Future<void> addWorkout(Workout workouT) async {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
@@ -158,9 +151,7 @@ class Workouts with ChangeNotifier {
 
     final firebaseStorage = FirebaseStorage.instance;
 
-    Future<String> exerciseImage(String exerciseId) async {
-      Exercise e = findByExerciseId(exerciseId, workouT.exercises);
-
+    Future<String> exerciseImage(Exercise e) async {
       final exerciseRef = firebaseStorage
           .ref()
           .child('${workouT.workoutName} ${workouT.workoutId}')
@@ -200,8 +191,7 @@ class Workouts with ChangeNotifier {
               'exercises': workouT.exercises
                   .map((e) => {
                         'exerciseId': e.exerciseId,
-                        'exerciseImage':
-                            (exerciseImage(e.exerciseId)).toString(),
+                        'exerciseImage': (exerciseImage(e))..whenComplete.toString(),
                         'name': e.name,
                         'reps': e.reps,
                         'sets': e.sets,
