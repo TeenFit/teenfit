@@ -123,9 +123,9 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         textInputAction: TextInputAction.next,
         validator: (value) {
-          if (value.toString().isEmpty) {
+          if (value.toString().trim().isEmpty) {
             return 'Email is Required';
-          } else if (!value.toString().contains('@')) {
+          } else if (!value.toString().trim().contains('@')) {
             return 'Invalid Email';
           }
 
@@ -179,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         textInputAction: TextInputAction.done,
         validator: (value) {
-          if (value.toString().isEmpty) {
+          if (value.toString().trim().isEmpty) {
             return 'Password is Required';
           }
           return null;

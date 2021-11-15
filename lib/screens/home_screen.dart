@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:teenfit/providers/auth.dart';
 import 'package:teenfit/providers/workouts.dart';
 
 import '../widgets/main_drawer.dart';
@@ -94,13 +93,11 @@ class _HomeScreenState extends State<HomeScreen> {
       } catch (e) {
         _showToast('Unable To Load New Workouts, Try Again Later');
       }
-
-      
     }
     setState(() {
-        isLoading = false;
-        isInit = true;
-      });
+      isLoading = false;
+      isInit = true;
+    });
 
     filteredSearchHistory = filterSearchTerms(null);
     super.didChangeDependencies();

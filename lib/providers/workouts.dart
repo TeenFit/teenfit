@@ -107,7 +107,25 @@ class Workouts with ChangeNotifier {
 
       final url = await ref.getDownloadURL();
 
-      await workoutsCollection
+      Future<Map> getImages() async {
+        Map exerciseImages = {};
+
+        workouT.exercises.map(
+          (element) async {
+            exerciseImages.addEntries([
+              MapEntry('${element.exerciseId}', await exerciseImage(element))
+            ]);
+          },
+        );
+
+        print(exerciseImages);
+
+        return exerciseImages;
+      }
+
+      Map exerciseUrlImages = await getImages();
+
+      workoutsCollection
           .doc('${workouT.workoutId}')
           .set(
             ({
@@ -128,7 +146,7 @@ class Workouts with ChangeNotifier {
                         'sets': e.sets,
                         'restTime': e.restTime,
                         'timeSeconds': e.timeSeconds,
-                        'exerciseImage': exerciseImage(e).toString(),
+                        'exerciseImage': exerciseUrlImages[e.exerciseId],
                       })
                   .toList()
             }),
@@ -191,7 +209,8 @@ class Workouts with ChangeNotifier {
               'exercises': workouT.exercises
                   .map((e) => {
                         'exerciseId': e.exerciseId,
-                        'exerciseImage': (exerciseImage(e))..whenComplete.toString(),
+                        'exerciseImage': (exerciseImage(e))
+                          ..whenComplete.toString(),
                         'name': e.name,
                         'reps': e.reps,
                         'sets': e.sets,
