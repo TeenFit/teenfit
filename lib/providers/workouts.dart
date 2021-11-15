@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -86,15 +88,30 @@ class Workouts with ChangeNotifier {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
 
-    exerciseImage(Exercise e) async {
-      final exerciseRef = FirebaseStorage.instance
-          .ref()
-          .child('${workouT.workoutName} ${workouT.workoutId}')
-          .child(e.exerciseId + workouT.workoutId + '.jpg');
+    List<Map> exerciseImages = [];
 
-      await exerciseRef.putFile(e.exerciseImage!);
+    Future<void> addExerciseImageLink(List<Exercise> exerciseS) async {
+      int i = 0;
 
-      return await exerciseRef.getDownloadURL();
+      do {
+        print(exerciseS);
+
+        final exerciseRef = FirebaseStorage.instance
+            .ref()
+            .child('${workouT.workoutName} ${workouT.workoutId}')
+            .child(exerciseS[i].exerciseId + workouT.workoutId + '.jpg');
+
+        await exerciseRef.putFile(exerciseS[i].exerciseImage!);
+
+        final exerciseLink = await exerciseRef.getDownloadURL();
+
+        exerciseImages.add({
+          'image': exerciseLink,
+          'id': exerciseS[i].exerciseId + workouT.workoutId
+        });
+
+        i = i + 1;
+      } while (i < exerciseS.length);
     }
 
     try {
@@ -107,25 +124,9 @@ class Workouts with ChangeNotifier {
 
       final url = await ref.getDownloadURL();
 
-      Future<Map> getImages() async {
-        Map exerciseImages = {};
+      await addExerciseImageLink(workouT.exercises);
 
-        workouT.exercises.map(
-          (element) async {
-            exerciseImages.addEntries([
-              MapEntry('${element.exerciseId}', await exerciseImage(element))
-            ]);
-          },
-        );
-
-        print(exerciseImages);
-
-        return exerciseImages;
-      }
-
-      Map exerciseUrlImages = await getImages();
-
-      workoutsCollection
+      await workoutsCollection
           .doc('${workouT.workoutId}')
           .set(
             ({
@@ -138,20 +139,23 @@ class Workouts with ChangeNotifier {
               'instagram': workouT.instagram,
               'facebook': workouT.facebook,
               'tumblrPageLink': workouT.tumblrPageLink,
-              'exercises': workouT.exercises
-                  .map((e) => {
-                        'exerciseId': e.exerciseId,
-                        'name': e.name,
-                        'reps': e.reps,
-                        'sets': e.sets,
-                        'restTime': e.restTime,
-                        'timeSeconds': e.timeSeconds,
-                        'exerciseImage': exerciseUrlImages[e.exerciseId],
-                      })
-                  .toList()
+              'exercises': workouT.exercises.map((e) {
+                final exerciseIndex = exerciseImages.indexWhere((element) => element['id'] == e.exerciseId + workouT.workoutId);
+
+                return {
+                  'exerciseId': e.exerciseId,
+                  'name': e.name,
+                  'reps': e.reps,
+                  'sets': e.sets,
+                  'restTime': e.restTime,
+                  'timeSeconds': e.timeSeconds,
+                  'exerciseImage': exerciseImages[exerciseIndex]['image'].toString(),
+                };
+              })
             }),
           )
-          .onError((error, stackTrace) => throw HttpException(''));
+          .onError(
+              (error, stackTrace) => throw HttpException(error.toString()));
 
       _workouts.insert(0, workouT);
       notifyListeners();

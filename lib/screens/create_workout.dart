@@ -150,7 +150,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 .addWorkout(newWorkout!)
                 .then((_) => Navigator.of(context).pop());
       } catch (e) {
-        _showToast('Unable To Add Workout');
+        _showToast(e.toString());
       }
 
       setState(() {
