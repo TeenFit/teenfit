@@ -39,15 +39,27 @@ class ExerciseTiles extends StatelessWidget {
               child: Container(
                 height: _mediaQuery.size.height * 0.18,
                 width: size * 0.5,
-                child: FadeInImage(
-                  imageErrorBuilder: (context, image, _) => Image.asset(
-                    'assets/images/ImageUploadError.png',
-                    fit: BoxFit.cover,
-                  ),
-                  placeholder: AssetImage('assets/images/loading-gif.gif'),
-                  image: FileImage(exercise.exerciseImage!),
-                  fit: BoxFit.cover,
-                ),
+                child: exercise.exerciseImageLink == null
+                    ? FadeInImage(
+                        imageErrorBuilder: (context, image, _) => Image.asset(
+                          'assets/images/ImageUploadError.png',
+                          fit: BoxFit.cover,
+                        ),
+                        placeholder:
+                            AssetImage('assets/images/loading-gif.gif'),
+                        image: FileImage(exercise.exerciseImage!),
+                        fit: BoxFit.cover,
+                      )
+                    : FadeInImage(
+                        imageErrorBuilder: (context, image, _) => Image.asset(
+                          'assets/images/ImageUploadError.png',
+                          fit: BoxFit.cover,
+                        ),
+                        placeholder:
+                            AssetImage('assets/images/loading-gif.gif'),
+                        image: NetworkImage(exercise.exerciseImageLink!),
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
             Padding(

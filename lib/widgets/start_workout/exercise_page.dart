@@ -52,21 +52,41 @@ class _ExercisePageState extends State<ExercisePage> {
                       child: Container(
                         height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
                         width: _mediaQuery.size.width,
-                        child: FadeInImage(
-                          imageErrorBuilder: (context, image, _) => Image.asset(
-                            'assets/images/ImageUploadError.png',
-                            fit: BoxFit.cover,
-                          ),
-                          placeholderErrorBuilder: (context, image, _) =>
-                              Image.asset(
-                            'assets/images/ImageUploadError.png',
-                            fit: BoxFit.cover,
-                          ),
-                          placeholder:
-                              AssetImage('assets/images/loading-gif.gif'),
-                          image: FileImage(widget.exercise.exerciseImage!),
-                          fit: BoxFit.contain,
-                        ),
+                        child: widget.exercise.exerciseImageLink == null
+                            ? FadeInImage(
+                                imageErrorBuilder: (context, image, _) =>
+                                    Image.asset(
+                                  'assets/images/ImageUploadError.png',
+                                  fit: BoxFit.cover,
+                                ),
+                                placeholderErrorBuilder: (context, image, _) =>
+                                    Image.asset(
+                                  'assets/images/ImageUploadError.png',
+                                  fit: BoxFit.cover,
+                                ),
+                                placeholder:
+                                    AssetImage('assets/images/loading-gif.gif'),
+                                image:
+                                    FileImage(widget.exercise.exerciseImage!),
+                                fit: BoxFit.contain,
+                              )
+                            : FadeInImage(
+                                imageErrorBuilder: (context, image, _) =>
+                                    Image.asset(
+                                  'assets/images/ImageUploadError.png',
+                                  fit: BoxFit.cover,
+                                ),
+                                placeholderErrorBuilder: (context, image, _) =>
+                                    Image.asset(
+                                  'assets/images/ImageUploadError.png',
+                                  fit: BoxFit.cover,
+                                ),
+                                placeholder:
+                                    AssetImage('assets/images/loading-gif.gif'),
+                                image: NetworkImage(
+                                    widget.exercise.exerciseImageLink!),
+                                fit: BoxFit.contain,
+                              ),
                       ),
                     ),
                     Padding(
@@ -166,20 +186,40 @@ class _ExercisePageState extends State<ExercisePage> {
                   child: Container(
                     height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
                     width: _mediaQuery.size.width,
-                    child: FadeInImage(
-                      imageErrorBuilder: (context, image, _) => Image.asset(
-                        'assets/images/ImageUploadError.png',
-                        fit: BoxFit.cover,
-                      ),
-                      placeholderErrorBuilder: (context, image, _) =>
-                          Image.asset(
-                        'assets/images/ImageUploadError.png',
-                        fit: BoxFit.cover,
-                      ),
-                      placeholder: AssetImage('assets/images/loading-gif.gif'),
-                      image: FileImage(widget.exercise.exerciseImage!),
-                      fit: BoxFit.contain,
-                    ),
+                    child: widget.exercise.exerciseImageLink == null
+                        ? FadeInImage(
+                            imageErrorBuilder: (context, image, _) =>
+                                Image.asset(
+                              'assets/images/ImageUploadError.png',
+                              fit: BoxFit.cover,
+                            ),
+                            placeholderErrorBuilder: (context, image, _) =>
+                                Image.asset(
+                              'assets/images/ImageUploadError.png',
+                              fit: BoxFit.cover,
+                            ),
+                            placeholder:
+                                AssetImage('assets/images/loading-gif.gif'),
+                            image: FileImage(widget.exercise.exerciseImage!),
+                            fit: BoxFit.contain,
+                          )
+                        : FadeInImage(
+                            imageErrorBuilder: (context, image, _) =>
+                                Image.asset(
+                              'assets/images/ImageUploadError.png',
+                              fit: BoxFit.cover,
+                            ),
+                            placeholderErrorBuilder: (context, image, _) =>
+                                Image.asset(
+                              'assets/images/ImageUploadError.png',
+                              fit: BoxFit.cover,
+                            ),
+                            placeholder:
+                                AssetImage('assets/images/loading-gif.gif'),
+                            image: NetworkImage(
+                                widget.exercise.exerciseImageLink!),
+                            fit: BoxFit.contain,
+                          ),
                   ),
                 ),
                 Padding(

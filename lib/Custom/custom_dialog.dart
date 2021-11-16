@@ -141,7 +141,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                   await Provider.of<Workouts>(context,
                                           listen: false)
                                       .deleteWorkout(
-                                          widget.arguments.toString())
+                                          widget.arguments)
                                       .then((_) => Navigator.of(context).pop());
                                 } catch (e) {
                                   _showToast(

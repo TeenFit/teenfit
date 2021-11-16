@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ExerciseImagePicker extends StatefulWidget {
-  ExerciseImagePicker(this.imagePickFn);
+  final String? imageLink;
 
-  final void Function(File? pickedImage) imagePickFn;
+  ExerciseImagePicker(this.imagePickFn, this.imageLink);
+
+  final void Function(
+    File? pickedImage,
+  ) imagePickFn;
 
   @override
   _ExerciseImagePickerState createState() => _ExerciseImagePickerState();
@@ -40,13 +44,37 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
         width: _mediaQuery.size.width,
         child: InkWell(
           child: _pickedImage == null
-              ? Image.asset(
-                  'assets/images/UploadImage.png',
-                  fit: BoxFit.contain,
-                )
-              : Image.file(
-                  _pickedImage!,
-                  fit: BoxFit.contain,
+              ? widget.imageLink == null
+                  ? Image.asset(
+                      'assets/images/UploadImage.png',
+                      fit: BoxFit.contain,
+                    )
+                  : FadeInImage(
+                      placeholder: AssetImage('assets/images/loading-gif.gif'),
+                      placeholderErrorBuilder: (context, _, __) => Image.asset(
+                            'assets/images/loading-gif.gif',
+                            fit: BoxFit.contain,
+                          ),
+                      fit: BoxFit.contain,
+                      //change
+                      image: NetworkImage(widget.imageLink!),
+                      imageErrorBuilder: (image, _, __) => Image.asset(
+                            'assets/images/ImageUploadError.png',
+                            fit: BoxFit.contain,
+                          ))
+              : FadeInImage(
+                  placeholder: AssetImage('assets/images/loading-gif.gif'),
+                  placeholderErrorBuilder: (context, _, __) => Image.asset(
+                    'assets/images/loading-gif.gif',
+                    fit: BoxFit.contain,
+                  ),
+                  fit: BoxFit.cover,
+                  //change
+                  image: FileImage(_pickedImage!),
+                  imageErrorBuilder: (image, _, __) => Image.asset(
+                    'assets/images/ImageUploadError.png',
+                    fit: BoxFit.cover,
+                  ),
                 ),
           onTap: () async {
             await _pickImage().then((_) => widget.imagePickFn(_pickedImage));

@@ -10,6 +10,7 @@ class Workout {
   final String facebook;
   final String tumblrPageLink;
   final File? bannerImage;
+  final String? bannerImageLink;
   final List<Exercise> exercises;
   final String date;
 
@@ -22,6 +23,7 @@ class Workout {
       required this.instagram,
       required this.facebook,
       required this.tumblrPageLink,
-      required this.bannerImage,
+      this.bannerImage,
+      this.bannerImageLink,
       required this.exercises});
 }

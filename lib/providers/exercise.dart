@@ -7,6 +7,7 @@ class Exercise {
   final int? reps;
   final int? sets;
   final File? exerciseImage;
+  final String? exerciseImageLink;
   final String exerciseId;
 
   Exercise({
@@ -17,5 +18,6 @@ class Exercise {
     this.timeSeconds,
     this.restTime,
     this.exerciseImage,
+    this.exerciseImageLink,
   });
 }

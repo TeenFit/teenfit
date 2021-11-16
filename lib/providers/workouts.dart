@@ -38,14 +38,14 @@ class Workouts with ChangeNotifier {
                     instagram: e['instagram'],
                     facebook: e['facebook'],
                     tumblrPageLink: e['tumblrPageLink'],
-                    bannerImage: e['bannerImage'],
+                    bannerImageLink: e['bannerImage'],
                     exercises: (e['exercises'] as List)
                         .toList()
                         .map(
                           (e) => Exercise(
                             exerciseId: e['exerciseId'],
                             name: e['name'],
-                            exerciseImage: e['exerciseImage'],
+                            exerciseImageLink: e['exerciseImage'],
                             reps: e['reps'],
                             sets: e['sets'],
                             restTime: e['restTime'],
@@ -141,6 +141,22 @@ class Workouts with ChangeNotifier {
         };
       }).toList();
 
+      List<Exercise> exerciseSClassList = workouT.exercises.map((e) {
+        final exerciseIndex = exerciseImages.indexWhere(
+            (element) => element['id'] == e.exerciseId + workouT.workoutId);
+
+        return Exercise(
+            exerciseId: e.exerciseId,
+            name: e.name,
+            reps: e.reps,
+            sets: e.sets,
+            restTime: e.restTime,
+            timeSeconds: e.timeSeconds,
+            exerciseImageLink:
+                exerciseImages[exerciseIndex]['image'].toString(),
+            exerciseImage: e.exerciseImage);
+      }).toList();
+
       var workoutDocInfo = {
         'date': workouT.date,
         'bannerImage': url,
@@ -162,7 +178,19 @@ class Workouts with ChangeNotifier {
           .onError(
               (error, stackTrace) => throw HttpException(error.toString()));
 
-      _workouts.insert(0, workouT);
+      _workouts.insert(
+          0,
+          Workout(
+            date: workouT.date,
+            creatorName: workouT.creatorName,
+            creatorId: workouT.creatorId,
+            workoutId: workouT.workoutId,
+            workoutName: workouT.workoutName,
+            instagram: workouT.instagram,
+            facebook: workouT.facebook,
+            tumblrPageLink: workouT.tumblrPageLink,
+            exercises: exerciseSClassList,
+          ));
       notifyListeners();
     } on FirebaseException catch (e) {
       throw HttpException(e.toString());
@@ -176,10 +204,29 @@ class Workouts with ChangeNotifier {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
 
+    final deleteImageRef =
+        FirebaseStorage.instance.ref().child('${workouT.workoutId}');
+
+    final exerciseS = workouT.exercises;
+
     List<Map> exerciseImages = [];
 
-    final deleteExerciseRef =
-        FirebaseStorage.instance.ref().child('${workouT.workoutId}');
+    Future<void> deleteImages() async {
+      await deleteImageRef.child(workouT.workoutId + '.jpg').delete();
+
+      int i = 0;
+
+      do {
+        final exerciseRef = FirebaseStorage.instance
+            .ref()
+            .child('${workouT.workoutId}')
+            .child(exerciseS[i].exerciseId + workouT.workoutId + '.jpg');
+
+        await exerciseRef.delete();
+
+        i = i + 1;
+      } while (i < exerciseS.length);
+    }
 
     Future<void> addExerciseImageLink(List<Exercise> exerciseS) async {
       int i = 0;
@@ -206,8 +253,6 @@ class Workouts with ChangeNotifier {
     }
 
     try {
-      await deleteExerciseRef.delete();
-
       final ref = FirebaseStorage.instance
           .ref()
           .child('${workouT.workoutId}')
@@ -216,6 +261,8 @@ class Workouts with ChangeNotifier {
       await ref.putFile(workouT.bannerImage!);
 
       final url = await ref.getDownloadURL();
+
+      await deleteImages();
 
       await addExerciseImageLink(workouT.exercises);
 
@@ -232,6 +279,22 @@ class Workouts with ChangeNotifier {
           'timeSeconds': e.timeSeconds,
           'exerciseImage': exerciseImages[exerciseIndex]['image'].toString(),
         };
+      }).toList();
+
+      List<Exercise> exerciseSClassList = workouT.exercises.map((e) {
+        final exerciseIndex = exerciseImages.indexWhere(
+            (element) => element['id'] == e.exerciseId + workouT.workoutId);
+
+        return Exercise(
+            exerciseId: e.exerciseId,
+            name: e.name,
+            reps: e.reps,
+            sets: e.sets,
+            restTime: e.restTime,
+            timeSeconds: e.timeSeconds,
+            exerciseImageLink:
+                exerciseImages[exerciseIndex]['image'].toString(),
+            exerciseImage: e.exerciseImage);
       }).toList();
 
       var workoutDocInfo = {
@@ -255,7 +318,23 @@ class Workouts with ChangeNotifier {
           .onError(
               (error, stackTrace) => throw HttpException(error.toString()));
 
-      _workouts.insert(0, workouT);
+      int index = _workouts
+          .indexWhere((element) => element.workoutId == workouT.workoutId);
+      _workouts
+          .removeWhere((workoUT) => workoUT.workoutId == workouT.workoutId);
+      _workouts.insert(
+          index,
+          Workout(
+            date: workouT.date,
+            creatorName: workouT.creatorName,
+            creatorId: workouT.creatorId,
+            workoutId: workouT.workoutId,
+            workoutName: workouT.workoutName,
+            instagram: workouT.instagram,
+            facebook: workouT.facebook,
+            tumblrPageLink: workouT.tumblrPageLink,
+            exercises: exerciseSClassList,
+          ));
       notifyListeners();
     } on FirebaseException catch (e) {
       throw HttpException(e.toString());
@@ -265,17 +344,36 @@ class Workouts with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteWorkout(String workoutId) async {
+  Future<void> deleteWorkout(Workout workouT) async {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
 
-    final deleteImageRef = FirebaseStorage.instance.ref().child('${workoutId}');
+    final deleteImageRef =
+        FirebaseStorage.instance.ref().child('${workouT.workoutId}');
+
+    final exerciseS = workouT.exercises;
 
     try {
-      await deleteImageRef.delete();
-      await workoutsCollection.doc(workoutId).delete().onError((error, stackTrace) =>
-          throw HttpException('Unable To Delete Exercise'));
-      _workouts.removeWhere((workout) => workout.workoutId == workoutId);
+      await deleteImageRef.child(workouT.workoutId + '.jpg').delete();
+
+      int i = 0;
+
+      do {
+        final exerciseRef = FirebaseStorage.instance
+            .ref()
+            .child('${workouT.workoutId}')
+            .child(exerciseS[i].exerciseId + workouT.workoutId + '.jpg');
+
+        await exerciseRef.delete();
+
+        i = i + 1;
+      } while (i < exerciseS.length);
+
+      await workoutsCollection.doc(workouT.workoutId).delete().onError(
+          (error, stackTrace) =>
+              throw HttpException('Unable To Delete Exercise'));
+      _workouts
+          .removeWhere((workout) => workout.workoutId == workouT.workoutId);
       notifyListeners();
     } on FirebaseException catch (_) {
       throw HttpException('Unable To Delete Exercise');

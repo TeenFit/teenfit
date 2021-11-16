@@ -29,10 +29,10 @@ class WorkoutTile extends StatelessWidget {
           Container(
             height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
             width: double.infinity,
-            child: workout.bannerImage == null
+            child: workout.bannerImageLink == null ? workout.bannerImage == null
                 ? Image.asset(
                     'assets/images/BannerImageUnavailable.png',
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                   )
                 : FadeInImage(
                     placeholder: AssetImage('assets/images/loading-gif.gif'),
@@ -40,12 +40,25 @@ class WorkoutTile extends StatelessWidget {
                       'assets/images/loading-gif.gif',
                       fit: BoxFit.contain,
                     ),
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                     //change
                     image: FileImage(workout.bannerImage!),
                     imageErrorBuilder: (image, _, __) => Image.asset(
                       'assets/images/ImageUploadError.png',
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
+                    ),
+                  ) : FadeInImage(
+                    placeholder: AssetImage('assets/images/loading-gif.gif'),
+                    placeholderErrorBuilder: (context, _, __) => Image.asset(
+                      'assets/images/loading-gif.gif',
+                      fit: BoxFit.contain,
+                    ),
+                    fit: BoxFit.cover,
+                    //change
+                    image: NetworkImage(workout.bannerImageLink!),
+                    imageErrorBuilder: (image, _, __) => Image.asset(
+                      'assets/images/ImageUploadError.png',
+                      fit: BoxFit.cover,
                     ),
                   ),
           ),
@@ -125,7 +138,7 @@ class WorkoutTile extends StatelessWidget {
                                 'This action will delete the workout and it can never be recoverd',
                                 'assets/images/trash.png',
                                 'pop',
-                                workout.workoutId),
+                                workout),
                           );
                         },
                         icon: Icon(Icons.delete_outline),
