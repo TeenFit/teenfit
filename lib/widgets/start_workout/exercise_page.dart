@@ -68,7 +68,7 @@ class _ExercisePageState extends State<ExercisePage> {
                                     AssetImage('assets/images/loading-gif.gif'),
                                 image:
                                     FileImage(widget.exercise.exerciseImage!),
-                                fit: BoxFit.contain,
+                                fit: BoxFit.cover,
                               )
                             : FadeInImage(
                                 imageErrorBuilder: (context, image, _) =>
@@ -85,7 +85,7 @@ class _ExercisePageState extends State<ExercisePage> {
                                     AssetImage('assets/images/loading-gif.gif'),
                                 image: NetworkImage(
                                     widget.exercise.exerciseImageLink!),
-                                fit: BoxFit.contain,
+                                fit: BoxFit.cover,
                               ),
                       ),
                     ),
@@ -201,7 +201,7 @@ class _ExercisePageState extends State<ExercisePage> {
                             placeholder:
                                 AssetImage('assets/images/loading-gif.gif'),
                             image: FileImage(widget.exercise.exerciseImage!),
-                            fit: BoxFit.contain,
+                            fit: BoxFit.cover,
                           )
                         : FadeInImage(
                             imageErrorBuilder: (context, image, _) =>
@@ -218,17 +218,17 @@ class _ExercisePageState extends State<ExercisePage> {
                                 AssetImage('assets/images/loading-gif.gif'),
                             image: NetworkImage(
                                 widget.exercise.exerciseImageLink!),
-                            fit: BoxFit.contain,
+                            fit: BoxFit.cover,
                           ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Container(
-                    height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                    height: (_mediaQuery.size.height - _appBarHeight) * 0.12,
                     width: double.infinity,
                     child: FittedBox(
-                      fit: BoxFit.fitWidth,
+                      fit: BoxFit.fitHeight,
                       child: Text(
                         widget.exercise.name,
                         style: TextStyle(

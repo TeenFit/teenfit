@@ -217,18 +217,15 @@ class Workouts with ChangeNotifier {
     Future<void> deleteImages() async {
       await deleteImageRef.child(workouT.workoutId + '.jpg').delete();
 
-      int i = 0;
+      int index = 0;
 
       do {
-        final exerciseRef = FirebaseStorage.instance
-            .ref()
-            .child('${workouT.workoutId}')
-            .child(exerciseS[i].exerciseId + workouT.workoutId + '.jpg');
+        await deleteImageRef
+            .child(exerciseS[index].exerciseId + workouT.workoutId + '.jpg')
+            .delete();
 
-        await exerciseRef.delete();
-
-        i = i + 1;
-      } while (i < exerciseS.length);
+        index = index + 1;
+      } while (index < exerciseS.length);
     }
 
     Future<void> addExerciseImageLink(List<Exercise> exerciseS) async {
@@ -256,6 +253,8 @@ class Workouts with ChangeNotifier {
     }
 
     try {
+      await deleteImages();
+
       final ref = FirebaseStorage.instance
           .ref()
           .child('${workouT.workoutId}')
@@ -264,8 +263,6 @@ class Workouts with ChangeNotifier {
       await ref.putFile(workouT.bannerImage!);
 
       final url = await ref.getDownloadURL();
-
-      await deleteImages();
 
       await addExerciseImageLink(workouT.exercises);
 
@@ -358,21 +355,22 @@ class Workouts with ChangeNotifier {
 
     final exerciseS = workouT.exercises;
 
-    try {
+    Future<void> deleteImages() async {
       await deleteImageRef.child(workouT.workoutId + '.jpg').delete();
 
-      int i = 0;
+      int index = 0;
 
       do {
-        final exerciseRef = FirebaseStorage.instance
-            .ref()
-            .child('${workouT.workoutId}')
-            .child(exerciseS[i].exerciseId + workouT.workoutId + '.jpg');
+        await deleteImageRef
+            .child(exerciseS[index].exerciseId + workouT.workoutId + '.jpg')
+            .delete();
 
-        await exerciseRef.delete();
+        index = index + 1;
+      } while (index < exerciseS.length);
+    }
 
-        i = i + 1;
-      } while (i < exerciseS.length);
+    try {
+      await deleteImages().onError((error, stackTrace) => null);
 
       await workoutsCollection.doc(workouT.workoutId).delete().onError(
           (error, stackTrace) =>
