@@ -32,7 +32,7 @@ class WorkoutTile extends StatelessWidget {
             child: workout.bannerImage == null
                 ? Image.asset(
                     'assets/images/BannerImageUnavailable.png',
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   )
                 : FadeInImage(
                     placeholder: AssetImage('assets/images/loading-gif.gif'),
@@ -40,12 +40,12 @@ class WorkoutTile extends StatelessWidget {
                       'assets/images/loading-gif.gif',
                       fit: BoxFit.contain,
                     ),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                     //change
                     image: FileImage(workout.bannerImage!),
                     imageErrorBuilder: (image, _, __) => Image.asset(
                       'assets/images/ImageUploadError.png',
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                   ),
           ),

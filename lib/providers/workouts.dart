@@ -98,7 +98,7 @@ class Workouts with ChangeNotifier {
 
         final exerciseRef = FirebaseStorage.instance
             .ref()
-            .child('${workouT.workoutName} ${workouT.workoutId}')
+            .child('${workouT.workoutId}')
             .child(exerciseS[i].exerciseId + workouT.workoutId + '.jpg');
 
         await exerciseRef.putFile(exerciseS[i].exerciseImage!);
@@ -117,7 +117,7 @@ class Workouts with ChangeNotifier {
     try {
       final ref = FirebaseStorage.instance
           .ref()
-          .child('${workouT.workoutName} ${workouT.workoutId}')
+          .child('${workouT.workoutId}')
           .child(workouT.workoutId + '.jpg');
 
       await ref.putFile(workouT.bannerImage!);
@@ -126,33 +126,38 @@ class Workouts with ChangeNotifier {
 
       await addExerciseImageLink(workouT.exercises);
 
+      var exerciseS = workouT.exercises.map((e) {
+        final exerciseIndex = exerciseImages.indexWhere(
+            (element) => element['id'] == e.exerciseId + workouT.workoutId);
+
+        return {
+          'exerciseId': e.exerciseId,
+          'name': e.name,
+          'reps': e.reps,
+          'sets': e.sets,
+          'restTime': e.restTime,
+          'timeSeconds': e.timeSeconds,
+          'exerciseImage': exerciseImages[exerciseIndex]['image'].toString(),
+        };
+      }).toList();
+
+      var workoutDocInfo = {
+        'date': workouT.date,
+        'bannerImage': url,
+        'creatorName': workouT.creatorName,
+        'creatorId': workouT.creatorId,
+        'workoutId': workouT.workoutId,
+        'workoutName': workouT.workoutName,
+        'instagram': workouT.instagram,
+        'facebook': workouT.facebook,
+        'tumblrPageLink': workouT.tumblrPageLink,
+        'exercises': exerciseS,
+      };
+
       await workoutsCollection
           .doc('${workouT.workoutId}')
           .set(
-            ({
-              'date': workouT.date,
-              'bannerImage': url,
-              'creatorName': workouT.creatorName,
-              'creatorId': workouT.creatorId,
-              'workoutId': workouT.workoutId,
-              'workoutName': workouT.workoutName,
-              'instagram': workouT.instagram,
-              'facebook': workouT.facebook,
-              'tumblrPageLink': workouT.tumblrPageLink,
-              'exercises': workouT.exercises.map((e) {
-                final exerciseIndex = exerciseImages.indexWhere((element) => element['id'] == e.exerciseId + workouT.workoutId);
-
-                return {
-                  'exerciseId': e.exerciseId,
-                  'name': e.name,
-                  'reps': e.reps,
-                  'sets': e.sets,
-                  'restTime': e.restTime,
-                  'timeSeconds': e.timeSeconds,
-                  'exerciseImage': exerciseImages[exerciseIndex]['image'].toString(),
-                };
-              })
-            }),
+            (workoutDocInfo),
           )
           .onError(
               (error, stackTrace) => throw HttpException(error.toString()));
@@ -171,72 +176,91 @@ class Workouts with ChangeNotifier {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
 
-    final firebaseStorage = FirebaseStorage.instance;
+    List<Map> exerciseImages = [];
 
-    Future<String> exerciseImage(Exercise e) async {
-      final exerciseRef = firebaseStorage
-          .ref()
-          .child('${workouT.workoutName} ${workouT.workoutId}')
-          .child(e.exerciseId + workouT.workoutId + '.jpg');
+    final deleteExerciseRef =
+        FirebaseStorage.instance.ref().child('${workouT.workoutId}');
 
-      await exerciseRef.putFile(e.exerciseImage!);
+    Future<void> addExerciseImageLink(List<Exercise> exerciseS) async {
+      int i = 0;
 
-      return await exerciseRef.getDownloadURL();
+      do {
+        print(exerciseS);
+
+        final exerciseRef = FirebaseStorage.instance
+            .ref()
+            .child('${workouT.workoutId}')
+            .child(exerciseS[i].exerciseId + workouT.workoutId + '.jpg');
+
+        await exerciseRef.putFile(exerciseS[i].exerciseImage!);
+
+        final exerciseLink = await exerciseRef.getDownloadURL();
+
+        exerciseImages.add({
+          'image': exerciseLink,
+          'id': exerciseS[i].exerciseId + workouT.workoutId
+        });
+
+        i = i + 1;
+      } while (i < exerciseS.length);
     }
 
     try {
+      await deleteExerciseRef.delete();
+
       final ref = FirebaseStorage.instance
           .ref()
-          .child('${workouT.workoutName} ${workouT.workoutId}');
+          .child('${workouT.workoutId}')
+          .child(workouT.workoutId + '.jpg');
 
-      await ref.delete().then(
-            (_) => ref
-                .child(workouT.workoutId + '.jpg')
-                .putFile(workouT.bannerImage!),
-          );
+      await ref.putFile(workouT.bannerImage!);
 
       final url = await ref.getDownloadURL();
 
-      workoutsCollection
+      await addExerciseImageLink(workouT.exercises);
+
+      var exerciseS = workouT.exercises.map((e) {
+        final exerciseIndex = exerciseImages.indexWhere(
+            (element) => element['id'] == e.exerciseId + workouT.workoutId);
+
+        return {
+          'exerciseId': e.exerciseId,
+          'name': e.name,
+          'reps': e.reps,
+          'sets': e.sets,
+          'restTime': e.restTime,
+          'timeSeconds': e.timeSeconds,
+          'exerciseImage': exerciseImages[exerciseIndex]['image'].toString(),
+        };
+      }).toList();
+
+      var workoutDocInfo = {
+        'date': workouT.date,
+        'bannerImage': url,
+        'creatorName': workouT.creatorName,
+        'creatorId': workouT.creatorId,
+        'workoutId': workouT.workoutId,
+        'workoutName': workouT.workoutName,
+        'instagram': workouT.instagram,
+        'facebook': workouT.facebook,
+        'tumblrPageLink': workouT.tumblrPageLink,
+        'exercises': exerciseS,
+      };
+
+      await workoutsCollection
           .doc('${workouT.workoutId}')
           .update(
-            ({
-              'date': workouT.date,
-              'creatorName': workouT.creatorName,
-              'creatorId': workouT.creatorId,
-              'workoutId': workouT.workoutId,
-              'workoutName': workouT.workoutName,
-              'instagram': workouT.instagram,
-              'facebook': workouT.facebook,
-              'tumblrPageLink': workouT.tumblrPageLink,
-              'bannerImage': url.toString(),
-              'exercises': workouT.exercises
-                  .map((e) => {
-                        'exerciseId': e.exerciseId,
-                        'exerciseImage': (exerciseImage(e))
-                          ..whenComplete.toString(),
-                        'name': e.name,
-                        'reps': e.reps,
-                        'sets': e.sets,
-                        'restTime': e.restTime,
-                        'timeSeconds': e.timeSeconds
-                      })
-                  .toList()
-            }),
+            (workoutDocInfo),
           )
-          .onError((error, stackTrace) => throw HttpException(
-              'Unable To Update Exercise, Try Again Later'));
+          .onError(
+              (error, stackTrace) => throw HttpException(error.toString()));
 
-      int index = _workouts
-          .indexWhere((workoUT) => workoUT.workoutId == workouT.workoutId);
-      _workouts
-          .removeWhere((workoUT) => workoUT.workoutId == workouT.workoutId);
-      _workouts.insert(index, workouT);
+      _workouts.insert(0, workouT);
       notifyListeners();
-    } on FirebaseException catch (_) {
-      throw HttpException('Unable To Update Exercise, Try Again Later');
-    } catch (_) {
-      throw HttpException('Unable To Update Exercise, Try Again Later');
+    } on FirebaseException catch (e) {
+      throw HttpException(e.toString());
+    } catch (e) {
+      throw HttpException(e.toString());
     }
     notifyListeners();
   }
@@ -245,8 +269,11 @@ class Workouts with ChangeNotifier {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
 
+    final deleteImageRef = FirebaseStorage.instance.ref().child('${workoutId}');
+
     try {
-      workoutsCollection.doc(workoutId).delete().onError((error, stackTrace) =>
+      await deleteImageRef.delete();
+      await workoutsCollection.doc(workoutId).delete().onError((error, stackTrace) =>
           throw HttpException('Unable To Delete Exercise'));
       _workouts.removeWhere((workout) => workout.workoutId == workoutId);
       notifyListeners();

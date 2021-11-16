@@ -43,9 +43,5 @@
 	<false/>
 	<key>NSPhotoLibraryUsageDescription </key>
 	<string>We need access to let you pick an image.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>We need access to let you take a picture.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>We need access to let you use the microphone.</string>
 </dict>
 </plist>

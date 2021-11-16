@@ -16,8 +16,12 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
   File? _pickedImage;
 
   Future<void> _pickImage() async {
-    final pickedImageFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedImageFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 60,
+      maxHeight: 600,
+      maxWidth: 337.50,
+    );
 
     setState(() {
       _pickedImage =

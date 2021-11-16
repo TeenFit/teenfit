@@ -118,6 +118,11 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         return;
       }
 
+      if (exerciseEditList!.length < 3) {
+        _showToast('A Minnimum Of 3 Exercises Is Required');
+        return;
+      }
+
       if (!_formKey3.currentState!.validate()) {
         return;
       }
@@ -150,15 +155,13 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 .addWorkout(newWorkout!)
                 .then((_) => Navigator.of(context).pop());
       } catch (e) {
-        _showToast(e.toString());
+        _showToast('Unable To Add Workout Try Again Later');
       }
 
       setState(() {
         _isLoading = false;
       });
     }
-
-    
 
     Widget buildCreatorName() {
       return Padding(
