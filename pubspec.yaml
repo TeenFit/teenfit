@@ -48,7 +48,7 @@ dev_dependencies:
 
 dependency_overrides:
   flutter_offline: ^2.0.0
-  connectivity_plus: ^2.0.2
+  connectivity_plus: ^2.0.3
 
 
 # For information on the generic Dart part of this file, see the

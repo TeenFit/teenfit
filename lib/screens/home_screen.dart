@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
@@ -17,6 +19,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   FloatingSearchBarController controller = FloatingSearchBarController();
   bool isLoading = false;
+
+  bool connected = true;
 
   static const historyLength = 3;
 
@@ -115,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final _theme = Theme.of(context);
 
     return Scaffold(
-      drawer: MainDrawer(),
+      drawer: MainDrawer(connected),
       backgroundColor: _theme.primaryColor,
       body: isLoading
           ? Center(
