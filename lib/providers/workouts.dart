@@ -214,20 +214,6 @@ class Workouts with ChangeNotifier {
 
     List<Map> exerciseImages = [];
 
-    Future<void> deleteImages() async {
-      await deleteImageRef.child(workouT.workoutId + '.jpg').delete();
-
-      int index = 0;
-
-      do {
-        await deleteImageRef
-            .child(exerciseS[index].exerciseId + workouT.workoutId + '.jpg')
-            .delete();
-
-        index = index + 1;
-      } while (index < exerciseS.length);
-    }
-
     Future<void> addExerciseImageLink(List<Exercise> exerciseS) async {
       int i = 0;
 
@@ -239,7 +225,9 @@ class Workouts with ChangeNotifier {
             .child('${workouT.workoutId}')
             .child(exerciseS[i].exerciseId + workouT.workoutId + '.jpg');
 
-        await exerciseRef.putFile(exerciseS[i].exerciseImage!);
+        if (exerciseS[i].exerciseImage != null) {
+          await exerciseRef.putFile(exerciseS[i].exerciseImage!);
+        }
 
         final exerciseLink = await exerciseRef.getDownloadURL();
 
@@ -253,14 +241,14 @@ class Workouts with ChangeNotifier {
     }
 
     try {
-      await deleteImages();
-
       final ref = FirebaseStorage.instance
           .ref()
           .child('${workouT.workoutId}')
           .child(workouT.workoutId + '.jpg');
 
-      await ref.putFile(workouT.bannerImage!);
+      if (workouT.bannerImage != null) {
+        await ref.putFile(workouT.bannerImage!);
+      }
 
       final url = await ref.getDownloadURL();
 
@@ -361,7 +349,9 @@ class Workouts with ChangeNotifier {
       int index = 0;
 
       do {
-        await deleteImageRef
+        await FirebaseStorage.instance
+            .ref()
+            .child('${workouT.workoutId}')
             .child(exerciseS[index].exerciseId + workouT.workoutId + '.jpg')
             .delete();
 
@@ -370,7 +360,8 @@ class Workouts with ChangeNotifier {
     }
 
     try {
-      await deleteImages().onError((error, stackTrace) => null);
+      await deleteImages()
+          .onError((error, stackTrace) => throw HttpException('lol'));
 
       await workoutsCollection.doc(workouT.workoutId).delete().onError(
           (error, stackTrace) =>

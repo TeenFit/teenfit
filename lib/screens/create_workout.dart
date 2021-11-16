@@ -113,7 +113,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     }
 
     Future<void> _submit() async {
-      if (newWorkout!.bannerImage == null) {
+      if (newWorkout!.bannerImage == null && isEdit == false) {
         _showToast('An Image is Required');
         return;
       }

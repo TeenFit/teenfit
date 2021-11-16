@@ -36,7 +36,6 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
-    final _theme = Theme.of(context);
 
     return Padding(
       padding: const EdgeInsets.all(15.0),
