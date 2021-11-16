@@ -17,6 +17,7 @@ class EndWorkout extends StatelessWidget {
       height: (_mediaQuery.size.height - _appBarHieght) * 0.95,
       width: double.infinity,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
             padding: const EdgeInsets.all(15.0),

@@ -38,6 +38,7 @@ class Workouts with ChangeNotifier {
                     instagram: e['instagram'],
                     facebook: e['facebook'],
                     tumblrPageLink: e['tumblrPageLink'],
+                    bannerImage: null,
                     bannerImageLink: e['bannerImage'],
                     exercises: (e['exercises'] as List)
                         .toList()
@@ -181,6 +182,8 @@ class Workouts with ChangeNotifier {
       _workouts.insert(
           0,
           Workout(
+            bannerImage: workouT.bannerImage,
+            bannerImageLink: url,
             date: workouT.date,
             creatorName: workouT.creatorName,
             creatorId: workouT.creatorId,
@@ -325,6 +328,8 @@ class Workouts with ChangeNotifier {
       _workouts.insert(
           index,
           Workout(
+            bannerImage: workouT.bannerImage,
+            bannerImageLink: url,
             date: workouT.date,
             creatorName: workouT.creatorName,
             creatorId: workouT.creatorId,

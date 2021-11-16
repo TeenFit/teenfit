@@ -80,6 +80,7 @@ class WorkoutTile extends StatelessWidget {
                     facebook: workout.facebook,
                     tumblrPageLink: workout.tumblrPageLink,
                     bannerImage: workout.bannerImage,
+                    bannerImageLink: workout.bannerImageLink,
                     exercises: workout.exercises,
                   ),
                 );

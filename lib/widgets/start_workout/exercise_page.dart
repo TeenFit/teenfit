@@ -45,7 +45,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 width: _mediaQuery.size.width,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(15.0),
@@ -179,7 +179,7 @@ class _ExercisePageState extends State<ExercisePage> {
             width: _mediaQuery.size.width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(15.0),

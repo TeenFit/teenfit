@@ -45,6 +45,7 @@ class WorkoutPage extends StatelessWidget {
               height: _mediaQuery.size.height * 0.35,
               width: _mediaQuery.size.width,
               child: Stack(
+                fit: StackFit.expand,
                 children: [
                   workout.bannerImageLink == null
                       ? workout.bannerImage == null

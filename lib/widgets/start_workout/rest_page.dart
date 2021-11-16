@@ -24,7 +24,7 @@ class RestPage extends StatelessWidget {
         width: _mediaQuery.size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
               padding: const EdgeInsets.all(15.0),

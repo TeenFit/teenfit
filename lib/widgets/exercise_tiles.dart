@@ -48,7 +48,7 @@ class ExerciseTiles extends StatelessWidget {
                         placeholder:
                             AssetImage('assets/images/loading-gif.gif'),
                         image: FileImage(exercise.exerciseImage!),
-                        fit: BoxFit.cover,
+                        fit: BoxFit.contain,
                       )
                     : FadeInImage(
                         imageErrorBuilder: (context, image, _) => Image.asset(
