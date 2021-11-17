@@ -128,7 +128,12 @@ class WorkoutPage extends StatelessWidget {
                                 height: _statusBarHeight,
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(5, 0, 15, 5),
+                                padding: EdgeInsets.fromLTRB(
+                                  _mediaQuery.size.width * 0.02,
+                                  0,
+                                  _mediaQuery.size.width * 0.03,
+                                  _mediaQuery.size.width * 0.008,
+                                ),
                                 child: Text(
                                   workout.workoutName,
                                   maxLines: 2,
@@ -146,8 +151,12 @@ class WorkoutPage extends StatelessWidget {
                                 child: FittedBox(
                                   fit: BoxFit.fitWidth,
                                   child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(5, 5, 15, 5),
+                                    padding: EdgeInsets.fromLTRB(
+                                      _mediaQuery.size.width * 0.02,
+                                      0,
+                                      _mediaQuery.size.width * 0.03,
+                                      _mediaQuery.size.width * 0.008,
+                                    ),
                                     child: Text(
                                       'by: ${workout.creatorName}',
                                       style: TextStyle(
