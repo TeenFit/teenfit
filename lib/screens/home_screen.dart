@@ -86,6 +86,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void didChangeDependencies() async {
+    Connectivity().onConnectivityChanged.listen((event) {
+      setState(() {
+        connected = event == ConnectivityResult.none ? false : true;
+      });
+    });
+
     if (isInit == false) {
       setState(() {
         isLoading = true;
@@ -104,18 +110,18 @@ class _HomeScreenState extends State<HomeScreen> {
       isInit = true;
     });
 
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.none) {
-      setState(() {
-        connected = false;
-      });
-    } else if (connectivityResult == ConnectivityResult.wifi ||
-        connectivityResult == ConnectivityResult.ethernet ||
-        connectivityResult == ConnectivityResult.mobile) {
-      setState(() {
-        connected = true;
-      });
-    }
+    // var connectivityResult = await (Connectivity().checkConnectivity());
+    // if (connectivityResult == ConnectivityResult.none) {
+    //   setState(() {
+    //     connected = false;
+    //   });
+    // } else if (connectivityResult == ConnectivityResult.wifi ||
+    //     connectivityResult == ConnectivityResult.ethernet ||
+    //     connectivityResult == ConnectivityResult.mobile) {
+    //   setState(() {
+    //     connected = true;
+    //   });
+    // }
 
     filteredSearchHistory = filterSearchTerms(null);
     super.didChangeDependencies();
