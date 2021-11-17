@@ -121,8 +121,8 @@ class _MyAppState extends State<MyApp> {
                                   return OfflineBuilder(
                                     connectivityBuilder:
                                         (context, connectivity, child) {
-                                      final bool connected = connectivity !=
-                                          ConnectivityResult.none;
+                                      bool connected =
+                                          connectivity != ConnectivityResult.none;
 
                                       return Scaffold(
                                         body: Stack(

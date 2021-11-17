@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +35,61 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<String> filteredSearchHistory;
 
   String? selectedTerm;
+  bool isInit = false;
+
+  List<String> filterSearchTerms(
+    String? filter,
+  ) {
+    if (filter != null && filter.isNotEmpty) {
+      return _searchHistory.where((term) => term.startsWith(filter)).toList();
+    } else {
+      return _searchHistory.reversed.toList();
+    }
+  }
+
+  @override
+  void didChangeDependencies() async {
+    setState(() {
+      filteredSearchHistory = filterSearchTerms(null);
+    });
+
+    if (isInit == false) {
+      setState(() {
+        isLoading = true;
+      });
+
+      try {
+        await Provider.of<Workouts>(context).fetchAndSetWorkout().onError(
+            (error, stackTrace) =>
+                _showToast('Unable To Load New Workouts, Try Again Later'));
+      } catch (e) {
+        _showToast('Unable To Load New Workouts, Try Again Later');
+      }
+    }
+    setState(() {
+      isLoading = false;
+      isInit = true;
+    });
+
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        connected = false;
+      });
+    } else if (connectivityResult == ConnectivityResult.wifi ||
+        connectivityResult == ConnectivityResult.ethernet ||
+        connectivityResult == ConnectivityResult.mobile) {
+      setState(() {
+        connected = true;
+      });
+    }
+
+    Connectivity().onConnectivityChanged.listen((event) {
+      Phoenix.rebirth(context);
+    });
+
+    super.didChangeDependencies();
+  }
 
   void _showToast(String msg) {
     Fluttertoast.showToast(
@@ -44,16 +100,6 @@ class _HomeScreenState extends State<HomeScreen> {
       textColor: Colors.white,
       backgroundColor: Colors.grey.shade700,
     );
-  }
-
-  List<String> filterSearchTerms(
-    String? filter,
-  ) {
-    if (filter != null && filter.isNotEmpty) {
-      return _searchHistory.where((term) => term.startsWith(filter)).toList();
-    } else {
-      return _searchHistory.reversed.toList();
-    }
   }
 
   void addSearchTerm(String term) {
@@ -80,51 +126,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void putSearchTermFirst(String term) {
     deleteSearchTerm(term);
     addSearchTerm(term);
-  }
-
-  bool isInit = false;
-
-  @override
-  void didChangeDependencies() async {
-    Connectivity().onConnectivityChanged.listen((event) {
-      setState(() {
-        connected = event == ConnectivityResult.none ? false : true;
-      });
-    });
-
-    if (isInit == false) {
-      setState(() {
-        isLoading = true;
-      });
-
-      try {
-        await Provider.of<Workouts>(context).fetchAndSetWorkout().onError(
-            (error, stackTrace) =>
-                _showToast('Unable To Load New Workouts, Try Again Later'));
-      } catch (e) {
-        _showToast('Unable To Load New Workouts, Try Again Later');
-      }
-    }
-    setState(() {
-      isLoading = false;
-      isInit = true;
-    });
-
-    // var connectivityResult = await (Connectivity().checkConnectivity());
-    // if (connectivityResult == ConnectivityResult.none) {
-    //   setState(() {
-    //     connected = false;
-    //   });
-    // } else if (connectivityResult == ConnectivityResult.wifi ||
-    //     connectivityResult == ConnectivityResult.ethernet ||
-    //     connectivityResult == ConnectivityResult.mobile) {
-    //   setState(() {
-    //     connected = true;
-    //   });
-    // }
-
-    filteredSearchHistory = filterSearchTerms(null);
-    super.didChangeDependencies();
   }
 
   @override
