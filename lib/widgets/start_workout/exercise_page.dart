@@ -93,10 +93,10 @@ class _ExercisePageState extends State<ExercisePage> {
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: Container(
                         height:
-                            (_mediaQuery.size.height - _appBarHeight) * 0.05,
+                            (_mediaQuery.size.height - _appBarHeight) * 0.11,
                         width: double.infinity,
                         child: FittedBox(
-                          fit: BoxFit.fitWidth,
+                          fit: BoxFit.fitHeight,
                           child: Text(
                             widget.exercise.name,
                             style: TextStyle(

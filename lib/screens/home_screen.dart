@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:teenfit/providers/workouts.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
+import '/providers/workouts.dart';
 import '../widgets/main_drawer.dart';
 import '../widgets/search_result_workouts.dart';
 
@@ -102,6 +103,19 @@ class _HomeScreenState extends State<HomeScreen> {
       isLoading = false;
       isInit = true;
     });
+
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        connected = false;
+      });
+    } else if (connectivityResult == ConnectivityResult.wifi ||
+        connectivityResult == ConnectivityResult.ethernet ||
+        connectivityResult == ConnectivityResult.mobile) {
+      setState(() {
+        connected = true;
+      });
+    }
 
     filteredSearchHistory = filterSearchTerms(null);
     super.didChangeDependencies();

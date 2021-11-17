@@ -27,6 +27,17 @@ class _LoginScreenState extends State<LoginScreen> {
     super.didChangeDependencies();
   }
 
+  void _showToast(String msg) {
+    Fluttertoast.showToast(
+      msg: msg,
+      gravity: ToastGravity.TOP,
+      timeInSecForIosWeb: 10,
+      webShowClose: true,
+      textColor: Colors.white,
+      backgroundColor: Colors.grey.shade700,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
@@ -36,17 +47,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
     String _email = 'email';
     String _password = 'password';
-
-    void _showToast(String msg) {
-      Fluttertoast.showToast(
-        msg: msg,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 10,
-        webShowClose: true,
-        textColor: Colors.white,
-        backgroundColor: Colors.grey.shade700,
-      );
-    }
 
     void _submit() async {
       if (!_formkey.currentState!.validate()) {
