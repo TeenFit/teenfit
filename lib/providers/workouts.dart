@@ -240,18 +240,31 @@ class Workouts with ChangeNotifier {
         i = i + 1;
       } while (i < exerciseS.length);
 
-      ListResult firebaseExerciseFiles = await FirebaseStorage.instance
-          .ref()
-          .child('${workouT.workoutId}')
-          .listAll();
+      // ListResult firebaseExerciseFiles = await FirebaseStorage.instance
+      //     .ref()
+      //     .child('${workouT.workoutId}')
+      //     .listAll();
 
-      if (firebaseExerciseFiles.items.length > exerciseImages.length) {
-        //create a while loop that adds items to a list of exercises that need to be deleted
+      // List unavailableExercises = [];
 
-        // do {} while ()
+      // if (firebaseExerciseFiles.items.length > exerciseImages.length) {
+      //   //create a while loop that adds items to a list of exercises that need to be deleted
 
-      }
+      //   int index = 0;
+
+      //   if (firebaseExerciseFiles.items.length > exerciseS.length) {
+      //     unavailableExercises = firebaseExerciseFiles.items;
+
+      //     do {
+      //       {
+      //         unavailableExercises.remove(exerciseS[i].exerciseId);
+      //       }
+      //       index = index + 1;
+      //     } while (index < exerciseImages.length);
+      //   }
+      // }
     }
+    
 
     try {
       final ref = FirebaseStorage.instance
