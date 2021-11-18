@@ -207,9 +207,6 @@ class Workouts with ChangeNotifier {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
 
-    final deleteImageRef =
-        FirebaseStorage.instance.ref().child('${workouT.workoutId}');
-
     final exerciseS = workouT.exercises;
 
     List<Map> exerciseImages = [];
@@ -220,24 +217,40 @@ class Workouts with ChangeNotifier {
       do {
         print(exerciseS);
 
-        final exerciseRef = FirebaseStorage.instance
-            .ref()
-            .child('${workouT.workoutId}')
-            .child(exerciseS[i].exerciseId + workouT.workoutId + '.jpg');
+        try {
+          final exerciseRef = FirebaseStorage.instance
+              .ref()
+              .child('${workouT.workoutId}')
+              .child(exerciseS[i].exerciseId + workouT.workoutId + '.jpg');
 
-        if (exerciseS[i].exerciseImage != null) {
-          await exerciseRef.putFile(exerciseS[i].exerciseImage!);
+          if (exerciseS[i].exerciseImage != null) {
+            await exerciseRef.putFile(exerciseS[i].exerciseImage!);
+          }
+
+          final exerciseLink = await exerciseRef.getDownloadURL();
+
+          exerciseImages.add({
+            'image': exerciseLink,
+            'id': exerciseS[i].exerciseId + workouT.workoutId
+          });
+        } catch (e) {
+          throw e;
         }
-
-        final exerciseLink = await exerciseRef.getDownloadURL();
-
-        exerciseImages.add({
-          'image': exerciseLink,
-          'id': exerciseS[i].exerciseId + workouT.workoutId
-        });
 
         i = i + 1;
       } while (i < exerciseS.length);
+
+      ListResult firebaseExerciseFiles = await FirebaseStorage.instance
+          .ref()
+          .child('${workouT.workoutId}')
+          .listAll();
+
+      if (firebaseExerciseFiles.items.length > exerciseImages.length) {
+        //create a while loop that adds items to a list of exercises that need to be deleted
+
+        // do {} while ()
+
+      }
     }
 
     try {
