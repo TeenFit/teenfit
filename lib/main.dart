@@ -108,11 +108,11 @@ class _MyAppState extends State<MyApp> {
                       }
                       // Once complete, show your application
                       if (snapshot.connectionState == ConnectionState.done) {
-                        return StreamBuilder<User>(
+                        return StreamBuilder<User?>(
                           initialData: FirebaseAuth.instance.currentUser,
                           stream: auth.onAuthStateChanged,
                           builder: (BuildContext context,
-                              AsyncSnapshot<User> snapshot) {
+                              AsyncSnapshot<User?> snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.active) {
                               var isAuth = snapshot.data;
