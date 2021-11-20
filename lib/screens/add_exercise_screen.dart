@@ -17,8 +17,6 @@ class AddExerciseScreen extends StatefulWidget {
 
 class _AddExerciseScreenState extends State<AddExerciseScreen> {
   final _formKey4 = GlobalKey<FormState>();
-  final _imageUrlController = TextEditingController();
-  final _imageUrlFocusNode = FocusNode();
   var uuid = Uuid();
 
   Map? exerciseProv;
@@ -35,6 +33,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     newExercise = exerciseProv!['exercise'];
 
     newExercise = Exercise(
+      exerciseImageLink: newExercise!.exerciseImageLink,
       exerciseId: newExercise!.exerciseId,
       name: newExercise!.name,
       exerciseImage: exerciseImagePhoto,
@@ -51,20 +50,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     switchOnOf = newExercise!.timeSeconds == null ? false : true;
 
     super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    _imageUrlFocusNode.removeListener(_updateImageUrl);
-    _imageUrlFocusNode.dispose();
-    _imageUrlController.dispose();
-    super.dispose();
-  }
-
-  void _updateImageUrl() {
-    if (!_imageUrlFocusNode.hasFocus) {
-      setState(() {});
-    }
   }
 
   bool isNumeric(String? s) {
@@ -119,7 +104,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
               reps: null,
               timeSeconds: newExercise!.timeSeconds,
               restTime: newExercise!.restTime,
-            )
+              exerciseImageLink: newExercise!.exerciseImageLink)
           : Exercise(
               exerciseId: newExercise!.exerciseId,
               name: newExercise!.name,
@@ -128,7 +113,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
               reps: newExercise!.reps,
               timeSeconds: null,
               restTime: null,
-            );
+              exerciseImageLink: newExercise!.exerciseImageLink);
 
       isEdit ? updateExercise!(newExercise) : addExercise!(newExercise);
     }

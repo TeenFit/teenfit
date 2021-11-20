@@ -41,6 +41,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     exerciseEditList = workout!.exercises == [] ? [] : workout!.exercises;
 
     newWorkout = Workout(
+      bannerImageLink: workout!.bannerImageLink,
       date: workout!.date,
       creatorName: workout!.creatorName,
       creatorId: workout!.creatorId,
@@ -74,6 +75,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       exerciseEditList!.insert(
         0,
         Exercise(
+            exerciseImageLink: exercisE.exerciseImageLink,
             exerciseId: exercisE.exerciseId,
             name: exercisE.name,
             exerciseImage: exercisE.exerciseImage,
@@ -417,6 +419,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                             timeSeconds: null,
                             restTime: null,
                             exerciseImage: null,
+                            exerciseImageLink: null,
                           ),
                         },
                       );

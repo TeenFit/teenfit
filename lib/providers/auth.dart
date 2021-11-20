@@ -8,11 +8,11 @@ class Auth with ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
 
-  Stream<User>? get onAuthStateChanged {
+  Stream<User?>? get onAuthStateChanged {
     return isAuthChanged();
   }
 
-  Stream<User>? isAuthChanged() {
+  Stream<User?>? isAuthChanged() {
     return FirebaseAuth.instance.authStateChanges().asBroadcastStream().cast();
   }
 

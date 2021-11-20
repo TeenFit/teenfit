@@ -65,11 +65,11 @@ class _HomeScreenState extends State<HomeScreen> {
       } catch (e) {
         _showToast('Unable To Load New Workouts, Try Again Later');
       }
+      setState(() {
+        isLoading = false;
+        isInit = true;
+      });
     }
-    setState(() {
-      isLoading = false;
-      isInit = true;
-    });
 
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {

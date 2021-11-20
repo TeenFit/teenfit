@@ -247,9 +247,11 @@ class Workouts with ChangeNotifier {
           .child('${workouT.workoutId}')
           .listAll();
 
-      List<String> unavailableExercises = [
-        ...firebaseExerciseFiles.items as List<String>
-      ];
+      List<String> unavailableExercises = [];
+
+      firebaseExerciseFiles.items.forEach((element) {
+        unavailableExercises.add(element.name);
+      });
 
       unavailableExercises.forEach((element) {
         print(element);
