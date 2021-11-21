@@ -253,32 +253,22 @@ class Workouts with ChangeNotifier {
         unavailableExercises.add(element.name);
       });
 
-      unavailableExercises.forEach((element) {
-        print(element);
+      int index = 0;
+      do {
+        {
+          unavailableExercises
+              .remove(exerciseS[index].exerciseId + workouT.workoutId + '.jpg');
+        }
+        index = index + 1;
+      } while (index < exerciseS.length);
+
+      unavailableExercises.forEach((element) async {
+        await FirebaseStorage.instance
+            .ref()
+            .child(workouT.workoutId)
+            .child(element)
+            .delete();
       });
-
-      // int index = 0;
-
-      // if (unavailableExercises.length > exerciseS.length) {
-      //   do {
-      //     {
-      //       unavailableExercises.remove(exerciseS[i].exerciseId + '.jpg');
-      //     }
-      //     index = index + 1;
-      //   } while (index < exerciseS.length);
-      // }
-
-      // int ind = 0;
-
-      // do {
-      //   await FirebaseStorage.instance
-      //       .ref()
-      //       .child(workouT.workoutId)
-      //       .child(unavailableExercises[ind])
-      //       .delete();
-
-      //   ind++;
-      // } while (ind < unavailableExercises.length);
     }
 
     try {
