@@ -76,15 +76,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
-      setState(() {
-        connected = false;
-      });
+      if (this.mounted) {
+        setState(() {
+          connected = false;
+        });
+      }
     } else if (connectivityResult == ConnectivityResult.wifi ||
         connectivityResult == ConnectivityResult.ethernet ||
         connectivityResult == ConnectivityResult.mobile) {
-      setState(() {
-        connected = true;
-      });
+      if (this.mounted) {
+        setState(() {
+          connected = true;
+        });
+      }
     }
 
     Connectivity().onConnectivityChanged.listen((event) async {

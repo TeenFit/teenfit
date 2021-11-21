@@ -9,8 +9,9 @@ import '../providers/workout.dart';
 class WorkoutTile extends StatelessWidget {
   final Workout workout;
   bool isDeletable;
+  bool isAdmin;
 
-  WorkoutTile(this.workout, this.isDeletable);
+  WorkoutTile(this.workout, this.isDeletable, this.isAdmin);
 
   @override
   Widget build(BuildContext context) {
@@ -154,68 +155,133 @@ class WorkoutTile extends StatelessWidget {
                     ],
                   ),
                 )
-              : Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(15),
-                    child: Text(
-                      workout.workoutName,
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize:
-                            (_mediaQuery.size.height - _appBarHieght) * 0.06,
-                        shadows: <Shadow>[
-                          Shadow(
-                            offset: Offset(3.0, 3.0),
-                            blurRadius: 1.0,
-                            color: Color.fromARGB(255, 128, 128, 128),
+              : isAdmin
+                  ? Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialogBox(
+                                        'Accept Workout?',
+                                        'Does The Workout Meet Standards?',
+                                        'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
+                                        'accept-workout',
+                                        workout));
+                              },
+                              icon: Icon(
+                                Icons.check_box,
+                                color: Colors.green,
+                              ),
+                              iconSize: (_mediaQuery.size.height * 0.06)),
+                          Text(
+                            workout.workoutName,
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize:
+                                  (_mediaQuery.size.height - _appBarHieght) *
+                                      0.06,
+                              shadows: <Shadow>[
+                                Shadow(
+                                  offset: Offset(3.0, 3.0),
+                                  blurRadius: 1.0,
+                                  color: Color.fromARGB(255, 128, 128, 128),
+                                ),
+                              ],
+                            ),
                           ),
+                          IconButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => CustomDialogBox(
+                                        'Delete Workout?',
+                                        'Does The Workout Not Meet Standards?',
+                                        'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
+                                        'pop',
+                                        workout));
+                              },
+                              icon: Icon(
+                                Icons.delete,
+                                color: Colors.red[300],
+                              ),
+                              iconSize: (_mediaQuery.size.height * 0.06)),
                         ],
                       ),
-                    ),
-                  ),
-                ),
-          workout.pending
-              ? Stack(children: [
-                  Container(
-                    height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
-                    width: double.infinity,
-                    child: Image.asset(
-                      'assets/images/pending.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Container(
-                    height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
-                    width: double.infinity,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(25),
-                      onTap: () {
-                        Navigator.of(context).pushNamed(
-                          WorkoutPage.routeName,
-                          arguments: Workout(
-                            pending: workout.pending,
-                            date: workout.date,
-                            creatorName: workout.creatorName,
-                            creatorId: workout.creatorId,
-                            workoutId: workout.workoutId,
-                            workoutName: workout.workoutName,
-                            instagram: workout.instagram,
-                            facebook: workout.facebook,
-                            tumblrPageLink: workout.tumblrPageLink,
-                            bannerImage: workout.bannerImage,
-                            bannerImageLink: workout.bannerImageLink,
-                            exercises: workout.exercises,
+                    )
+                  : Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          workout.workoutName,
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize:
+                                (_mediaQuery.size.height - _appBarHieght) *
+                                    0.06,
+                            shadows: <Shadow>[
+                              Shadow(
+                                offset: Offset(3.0, 3.0),
+                                blurRadius: 1.0,
+                                color: Color.fromARGB(255, 128, 128, 128),
+                              ),
+                            ],
                           ),
-                        );
-                      },
+                        ),
+                      ),
                     ),
-                  ),
-                ])
-              : SizedBox(),
+          isAdmin
+              ? SizedBox()
+              : workout.pending
+                  ? Stack(children: [
+                      Container(
+                        height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
+                        width: double.infinity,
+                        child: Image.asset(
+                          'assets/images/pending.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Container(
+                        height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
+                        width: double.infinity,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(25),
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                              WorkoutPage.routeName,
+                              arguments: Workout(
+                                pending: workout.pending,
+                                date: workout.date,
+                                creatorName: workout.creatorName,
+                                creatorId: workout.creatorId,
+                                workoutId: workout.workoutId,
+                                workoutName: workout.workoutName,
+                                instagram: workout.instagram,
+                                facebook: workout.facebook,
+                                tumblrPageLink: workout.tumblrPageLink,
+                                bannerImage: workout.bannerImage,
+                                bannerImageLink: workout.bannerImageLink,
+                                exercises: workout.exercises,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ])
+                  : SizedBox(),
         ],
       ),
     );

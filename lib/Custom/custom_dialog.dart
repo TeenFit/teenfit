@@ -98,26 +98,6 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                           )
                         ]
                       : [
-                          widget.dialogOrganizerId == 'contact-us'
-                              ? SizedBox()
-                              : TextButton(
-                                  onPressed: () {
-                                    if (widget.dialogOrganizerId ==
-                                        '/workout-page-first') {
-                                      Function goToFirst =
-                                          widget.arguments['page1'];
-                                      goToFirst();
-                                      Navigator.of(context).pop();
-                                    } else {
-                                      Navigator.of(context).pop();
-                                    }
-                                  },
-                                  child: Text(
-                                    'No',
-                                    style: TextStyle(
-                                        fontSize: 18, color: Colors.black),
-                                  ),
-                                ),
                           TextButton(
                             onPressed: () async {
                               if (widget.dialogOrganizerId == '/workout-page') {
@@ -163,6 +143,12 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                 Function submit = widget.arguments;
                                 submit();
                                 Navigator.of(context).pop();
+                              } else if (widget.dialogOrganizerId ==
+                                  'accept-workout') {
+                                await Provider.of<Workouts>(context,
+                                        listen: false)
+                                    .acceptWorkout(widget.arguments);
+                                Navigator.of(context).pop();
                               }
                             },
                             child: Text(
@@ -173,6 +159,26 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                   TextStyle(fontSize: 18, color: Colors.black),
                             ),
                           ),
+                          widget.dialogOrganizerId == 'contact-us'
+                              ? SizedBox()
+                              : TextButton(
+                                  onPressed: () {
+                                    if (widget.dialogOrganizerId ==
+                                        '/workout-page-first') {
+                                      Function goToFirst =
+                                          widget.arguments['page1'];
+                                      goToFirst();
+                                      Navigator.of(context).pop();
+                                    } else {
+                                      Navigator.of(context).pop();
+                                    }
+                                  },
+                                  child: Text(
+                                    'No',
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                ),
                         ],
                 ),
               ),

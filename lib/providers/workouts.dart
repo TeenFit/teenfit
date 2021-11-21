@@ -62,12 +62,13 @@ class Workouts with ChangeNotifier {
           .onError(
             (error, stackTrace) => throw HttpException(''),
           );
+
+      notifyListeners();
     } on FirebaseException catch (_) {
       throw HttpException('');
     } catch (e) {
       throw HttpException(e.toString());
     }
-    notifyListeners();
   }
 
   Future<void> addWorkout(Workout workouT) async {
@@ -422,5 +423,32 @@ class Workouts with ChangeNotifier {
               workout.pending == false,
         )
         .toList();
+  }
+
+  Future<void> acceptWorkout(Workout workouT) async {
+    CollectionReference workoutsCollection =
+        FirebaseFirestore.instance.collection('/workouts');
+
+    await workoutsCollection.doc(workouT.workoutId).update({'pending': false});
+
+    int index = _workouts
+        .indexWhere((element) => element.workoutId == workouT.workoutId);
+    _workouts.removeWhere((element) => element.workoutId == workouT.workoutId);
+    _workouts.insert(
+        index,
+        Workout(
+            bannerImage: workouT.bannerImage,
+            bannerImageLink: workouT.bannerImageLink,
+            date: workouT.date,
+            creatorName: workouT.creatorName,
+            creatorId: workouT.creatorId,
+            workoutId: workouT.workoutId,
+            workoutName: workouT.workoutName,
+            instagram: workouT.instagram,
+            facebook: workouT.facebook,
+            tumblrPageLink: workouT.tumblrPageLink,
+            pending: false,
+            exercises: workouT.exercises));
+    notifyListeners();
   }
 }
