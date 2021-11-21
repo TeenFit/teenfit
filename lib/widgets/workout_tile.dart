@@ -29,25 +29,29 @@ class WorkoutTile extends StatelessWidget {
           Container(
             height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
             width: double.infinity,
-            child: workout.bannerImageLink == null ? workout.bannerImage == null
-                ? Image.asset(
-                    'assets/images/BannerImageUnavailable.png',
-                    fit: BoxFit.cover,
-                  )
+            child: workout.bannerImageLink == null
+                ? workout.bannerImage == null
+                    ? Image.asset(
+                        'assets/images/BannerImageUnavailable.png',
+                        fit: BoxFit.cover,
+                      )
+                    : FadeInImage(
+                        placeholder:
+                            AssetImage('assets/images/loading-gif.gif'),
+                        placeholderErrorBuilder: (context, _, __) =>
+                            Image.asset(
+                          'assets/images/loading-gif.gif',
+                          fit: BoxFit.contain,
+                        ),
+                        fit: BoxFit.cover,
+                        //change
+                        image: FileImage(workout.bannerImage!),
+                        imageErrorBuilder: (image, _, __) => Image.asset(
+                          'assets/images/ImageUploadError.png',
+                          fit: BoxFit.cover,
+                        ),
+                      )
                 : FadeInImage(
-                    placeholder: AssetImage('assets/images/loading-gif.gif'),
-                    placeholderErrorBuilder: (context, _, __) => Image.asset(
-                      'assets/images/loading-gif.gif',
-                      fit: BoxFit.contain,
-                    ),
-                    fit: BoxFit.cover,
-                    //change
-                    image: FileImage(workout.bannerImage!),
-                    imageErrorBuilder: (image, _, __) => Image.asset(
-                      'assets/images/ImageUploadError.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ) : FadeInImage(
                     placeholder: AssetImage('assets/images/loading-gif.gif'),
                     placeholderErrorBuilder: (context, _, __) => Image.asset(
                       'assets/images/loading-gif.gif',
@@ -174,6 +178,44 @@ class WorkoutTile extends StatelessWidget {
                     ),
                   ),
                 ),
+          workout.pending
+              ? Stack(children: [
+                  Container(
+                    height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
+                    width: double.infinity,
+                    child: Image.asset(
+                      'assets/images/pending.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Container(
+                    height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
+                    width: double.infinity,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(25),
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          WorkoutPage.routeName,
+                          arguments: Workout(
+                            pending: workout.pending,
+                            date: workout.date,
+                            creatorName: workout.creatorName,
+                            creatorId: workout.creatorId,
+                            workoutId: workout.workoutId,
+                            workoutName: workout.workoutName,
+                            instagram: workout.instagram,
+                            facebook: workout.facebook,
+                            tumblrPageLink: workout.tumblrPageLink,
+                            bannerImage: workout.bannerImage,
+                            bannerImageLink: workout.bannerImageLink,
+                            exercises: workout.exercises,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ])
+              : SizedBox(),
         ],
       ),
     );
