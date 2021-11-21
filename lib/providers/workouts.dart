@@ -70,29 +70,6 @@ class Workouts with ChangeNotifier {
     notifyListeners();
   }
 
-  List<Workout> isPendingWorkouts() {
-    return workouts.where((element) => element.pending == false).toList();
-  }
-
-  List<Workout> findByName(String name) {
-    return workouts
-        .where(
-          (workout) =>
-              (workout.workoutName.contains(name) ||
-                  workout.workoutName.toLowerCase().contains(name) ||
-                  workout.workoutName.toUpperCase().contains(name) ||
-                  workout.workoutName.characters.contains(name)) &&
-              workout.pending == false,
-        )
-        .toList();
-  }
-
-  List<Workout> findByCreatorId(String creatorId) {
-    return _workouts
-        .where((workout) => workout.creatorId == creatorId)
-        .toList();
-  }
-
   Future<void> addWorkout(Workout workouT) async {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
@@ -420,5 +397,30 @@ class Workouts with ChangeNotifier {
       throw HttpException('Unable To Delete Exercise');
     }
     notifyListeners();
+  }
+
+  List<Workout> findByCreatorId(String creatorId) {
+    return workouts.where((workout) => workout.creatorId == creatorId).toList();
+  }
+
+  List<Workout> isNotPendingWorkouts() {
+    return workouts.where((element) => element.pending == false).toList();
+  }
+
+  List<Workout> isPendingWorkouts() {
+    return workouts.where((element) => element.pending == true).toList();
+  }
+
+  List<Workout> findByName(String name) {
+    return workouts
+        .where(
+          (workout) =>
+              (workout.workoutName.contains(name) ||
+                  workout.workoutName.toLowerCase().contains(name) ||
+                  workout.workoutName.toUpperCase().contains(name) ||
+                  workout.workoutName.characters.contains(name)) &&
+              workout.pending == false,
+        )
+        .toList();
   }
 }

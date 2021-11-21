@@ -82,7 +82,7 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
                     itemBuilder: (ctx, index) {
                       if (widget.searchTerm == null) {
                         return WorkoutTile(
-                          workoutprovider.isPendingWorkouts()[index],
+                          workoutprovider.isNotPendingWorkouts()[index],
                           false,
                         );
                       } else if (workoutprovider
@@ -138,7 +138,7 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
                             : workoutprovider
                                 .findByName(widget.searchTerm!)
                                 .length
-                        : workoutprovider.isPendingWorkouts().length,
+                        : workoutprovider.isNotPendingWorkouts().length,
                   ),
                 ),
               ),
