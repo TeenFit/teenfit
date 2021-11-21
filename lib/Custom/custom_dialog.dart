@@ -140,8 +140,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                 try {
                                   await Provider.of<Workouts>(context,
                                           listen: false)
-                                      .deleteWorkout(
-                                          widget.arguments)
+                                      .deleteWorkout(widget.arguments)
                                       .then((_) => Navigator.of(context).pop());
                                 } catch (e) {
                                   _showToast(
@@ -158,6 +157,11 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                 delete(id);
                               } else if (widget.dialogOrganizerId ==
                                   'contact-us') {
+                                Navigator.of(context).pop();
+                              } else if (widget.dialogOrganizerId ==
+                                  'pending') {
+                                Function submit = widget.arguments;
+                                submit();
                                 Navigator.of(context).pop();
                               }
                             },

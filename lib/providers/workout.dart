@@ -13,6 +13,7 @@ class Workout {
   final String? bannerImageLink;
   final List<Exercise> exercises;
   final String date;
+  final bool pending;
 
   Workout(
       {required this.date,
@@ -25,5 +26,6 @@ class Workout {
       required this.tumblrPageLink,
       this.bannerImage,
       this.bannerImageLink,
+      required this.pending,
       required this.exercises});
 }

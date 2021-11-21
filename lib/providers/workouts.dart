@@ -24,12 +24,13 @@ class Workouts with ChangeNotifier {
 
     try {
       await workoutsCollection
-          .orderBy('date', descending: false)
+          .orderBy('date', descending: true)
           .get()
           .then(
             (workouts) => _workouts = workouts.docs
                 .map(
                   (e) => Workout(
+                    pending: e['pending'],
                     date: e['date'],
                     creatorName: e['creatorName'],
                     creatorId: e['creatorId'],
@@ -82,7 +83,9 @@ class Workouts with ChangeNotifier {
   }
 
   List<Workout> findByCreatorId(String creatorId) {
-    return workouts.where((workout) => workout.creatorId == creatorId).toList();
+    return _workouts
+        .where((workout) => workout.creatorId == creatorId)
+        .toList();
   }
 
   Future<void> addWorkout(Workout workouT) async {
@@ -159,6 +162,7 @@ class Workouts with ChangeNotifier {
       }).toList();
 
       var workoutDocInfo = {
+        'pending': workouT.pending,
         'date': workouT.date,
         'bannerImage': url,
         'creatorName': workouT.creatorName,
@@ -182,6 +186,7 @@ class Workouts with ChangeNotifier {
       _workouts.insert(
           0,
           Workout(
+            pending: workouT.pending,
             bannerImage: workouT.bannerImage,
             bannerImageLink: url,
             date: workouT.date,
@@ -263,11 +268,13 @@ class Workouts with ChangeNotifier {
       } while (index < exerciseS.length);
 
       unavailableExercises.forEach((element) async {
-        await FirebaseStorage.instance
-            .ref()
-            .child(workouT.workoutId)
-            .child(element)
-            .delete();
+        if (element != (workouT.workoutId + '.jpg')) {
+          await FirebaseStorage.instance
+              .ref()
+              .child(workouT.workoutId)
+              .child(element)
+              .delete();
+        }
       });
     }
 
@@ -317,6 +324,7 @@ class Workouts with ChangeNotifier {
       }).toList();
 
       var workoutDocInfo = {
+        'pending' : workouT.pending,
         'date': workouT.date,
         'bannerImage': url,
         'creatorName': workouT.creatorName,
@@ -344,6 +352,7 @@ class Workouts with ChangeNotifier {
       _workouts.insert(
           index,
           Workout(
+            pending: workouT.pending,
             bannerImage: workouT.bannerImage,
             bannerImageLink: url,
             date: workouT.date,

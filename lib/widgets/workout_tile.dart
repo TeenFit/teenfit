@@ -71,6 +71,7 @@ class WorkoutTile extends StatelessWidget {
                 Navigator.of(context).pushNamed(
                   WorkoutPage.routeName,
                   arguments: Workout(
+                    pending: workout.pending,
                     date: workout.date,
                     creatorName: workout.creatorName,
                     creatorId: workout.creatorId,

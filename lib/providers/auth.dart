@@ -30,6 +30,17 @@ class Auth with ChangeNotifier {
     }
   }
 
+  bool isAdmin() {
+    bool isAdminResult = false;
+
+    if (userId == "7fFAYf9jHDg7KtOcEiSfk4fBATv2") {
+      isAdminResult = true;
+    } else {
+      isAdminResult = false;
+    }
+    return isAdminResult;
+  }
+
   Future<void> signup(String email, String password) async {
     try {
       await auth.createUserWithEmailAndPassword(

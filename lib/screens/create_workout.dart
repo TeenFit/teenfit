@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:teenfit/Custom/custom_dialog.dart';
 import 'package:teenfit/pickers/workout_image_picker.dart';
 import 'package:uuid/uuid.dart';
 
@@ -41,6 +42,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     exerciseEditList = workout!.exercises == [] ? [] : workout!.exercises;
 
     newWorkout = Workout(
+      pending: true,
       bannerImageLink: workout!.bannerImageLink,
       date: workout!.date,
       creatorName: workout!.creatorName,
@@ -100,7 +102,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     }
 
     void _pickImage(File? image) {
-      workoutImage = image;
+      setState(() {
+        workoutImage = image;
+      });
     }
 
     void _showToast(String msg) {
@@ -132,6 +136,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       _formKey3.currentState!.save();
 
       newWorkout = Workout(
+        pending: newWorkout!.pending,
         date: newWorkout!.date,
         creatorName: newWorkout!.creatorName,
         creatorId: newWorkout!.creatorId,
@@ -140,7 +145,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         instagram: newWorkout!.instagram,
         facebook: newWorkout!.facebook,
         tumblrPageLink: newWorkout!.tumblrPageLink,
-        bannerImage: newWorkout!.bannerImage,
+        bannerImage: workoutImage,
+        bannerImageLink: newWorkout!.bannerImageLink,
         exercises: newWorkout!.exercises,
       );
 
@@ -192,6 +198,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                pending: newWorkout!.pending,
                 date: newWorkout!.date,
                 creatorName: input.toString().trim(),
                 creatorId: newWorkout!.creatorId,
@@ -236,6 +243,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                pending: newWorkout!.pending,
                 date: newWorkout!.date,
                 creatorName: newWorkout!.creatorName,
                 creatorId: newWorkout!.creatorId,
@@ -276,6 +284,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                pending: newWorkout!.pending,
                 date: newWorkout!.date,
                 creatorName: newWorkout!.creatorName,
                 creatorId: newWorkout!.creatorId,
@@ -316,6 +325,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                pending: newWorkout!.pending,
                 date: newWorkout!.date,
                 creatorName: newWorkout!.creatorName,
                 creatorId: newWorkout!.creatorId,
@@ -356,6 +366,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                pending: newWorkout!.pending,
                 date: newWorkout!.date,
                 creatorName: newWorkout!.creatorName,
                 creatorId: newWorkout!.creatorId,
@@ -521,7 +532,16 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                               ),
                             ),
                       onPressed: () {
-                        _submit();
+                        isEdit
+                            ? showDialog(
+                                context: context,
+                                builder: (context) => CustomDialogBox(
+                                    'Updating Workout...',
+                                    'When you update a workout it will be pending again are you okay with that?',
+                                    'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
+                                    'pending',
+                                    _submit))
+                            : _submit();
                       },
                     ),
                   ),
