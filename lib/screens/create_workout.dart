@@ -129,6 +129,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         return;
       }
 
+      if (exerciseEditList!.length > 15) {
+        _showToast('Maximum Of 15 Exercises');
+      }
+
       if (!_formKey3.currentState!.validate()) {
         return;
       }

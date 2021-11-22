@@ -415,12 +415,15 @@ class Workouts with ChangeNotifier {
   List<Workout> findByName(String name) {
     return workouts
         .where(
-          (workout) =>
-              (workout.workoutName.contains(name) ||
-                  workout.workoutName.toLowerCase().contains(name) ||
-                  workout.workoutName.toUpperCase().contains(name) ||
-                  workout.workoutName.characters.contains(name)) &&
-              workout.pending == false,
+          (workout) => (workout.workoutName.contains(name) ||
+              workout.workoutName.toLowerCase().contains(name) ||
+              workout.workoutName.toUpperCase().contains(name) ||
+              workout.workoutName.characters.contains(name) ||
+              workout.creatorName.contains(name) ||
+              workout.creatorName.toLowerCase().contains(name) ||
+              workout.creatorName.toUpperCase().contains(name) ||
+              workout.creatorName.characters.contains(name) &&
+                  workout.pending == false),
         )
         .toList();
   }

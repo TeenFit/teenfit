@@ -9,7 +9,7 @@ class ExerciseImagePicker extends StatefulWidget {
   ExerciseImagePicker(this.imagePickFn, this.imageLink);
 
   final void Function(
-    File? pickedImage, 
+    File? pickedImage,
   ) imagePickFn;
 
   @override
