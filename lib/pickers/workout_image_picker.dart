@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:teenfit/Custom/custom_dialog.dart';
 
 class WorkoutImagePicker extends StatefulWidget {
   final String? imageLink;
@@ -88,8 +90,23 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
                         ),
                       ),
                 onTap: () async {
-                  await _pickImage()
-                      .then((_) => widget.imagePickFn(_pickedImage));
+                  var status = await Permission.photos.status;
+
+                  if (status.isDenied) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => CustomDialogBox(
+                        'Denied Access',
+                        'Unable to access photo Library please Allow Access in Settings',
+                        'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
+                        'photo-access',
+                        {},
+                      ),
+                    );
+                  } else {
+                    await _pickImage()
+                        .then((_) => widget.imagePickFn(_pickedImage));
+                  }
                 },
               ),
             ),
@@ -97,8 +114,23 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
               height: _mediaQuery.size.height * 0.06,
               child: TextButton.icon(
                 onPressed: () async {
-                  await _pickImage()
-                      .then((_) => widget.imagePickFn(_pickedImage));
+                  var status = await Permission.photos.status;
+
+                  if (status.isDenied) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => CustomDialogBox(
+                        'Denied Access',
+                        'Unable to access photo Library please Allow Access in Settings',
+                        'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
+                        'photo-access',
+                        {},
+                      ),
+                    );
+                  } else {
+                    await _pickImage()
+                        .then((_) => widget.imagePickFn(_pickedImage));
+                  }
                 },
                 icon: Icon(
                   Icons.image,
