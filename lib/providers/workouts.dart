@@ -195,7 +195,6 @@ class Workouts with ChangeNotifier {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
 
-    final exerciseS = workouT.exercises;
 
     List<Map> exerciseImages = [];
 
