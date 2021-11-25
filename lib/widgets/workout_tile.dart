@@ -104,6 +104,9 @@ class WorkoutTile extends StatelessWidget {
                             EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                         child: Container(
                           width: _mediaQuery.size.width * 0.6,
+                          height:
+                              (_mediaQuery.size.height - _appBarHieght) * 0.25,
+                          alignment: Alignment.centerLeft,
                           child: Text(
                             workout.workoutName,
                             maxLines: 2,
@@ -114,7 +117,7 @@ class WorkoutTile extends StatelessWidget {
                               color: Colors.white,
                               fontSize:
                                   (_mediaQuery.size.height - _appBarHieght) *
-                                      0.055,
+                                      0.06,
                               shadows: <Shadow>[
                                 Shadow(
                                   offset: Offset(3.0, 3.0),
@@ -178,24 +181,30 @@ class WorkoutTile extends StatelessWidget {
                                 color: Colors.green,
                               ),
                               iconSize: (_mediaQuery.size.height * 0.06)),
-                          Text(
-                            workout.workoutName,
-                            maxLines: 2,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize:
-                                  (_mediaQuery.size.height - _appBarHieght) *
-                                      0.06,
-                              shadows: <Shadow>[
-                                Shadow(
-                                  offset: Offset(3.0, 3.0),
-                                  blurRadius: 1.0,
-                                  color: Color.fromARGB(255, 128, 128, 128),
-                                ),
-                              ],
+                          Container(
+                            width: _mediaQuery.size.width * 0.55,
+                            height: (_mediaQuery.size.height - _appBarHieght) *
+                                0.25,
+                            alignment: Alignment.center,
+                            child: Text(
+                              workout.workoutName,
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize:
+                                    (_mediaQuery.size.height - _appBarHieght) *
+                                        0.06,
+                                shadows: <Shadow>[
+                                  Shadow(
+                                    offset: Offset(3.0, 3.0),
+                                    blurRadius: 1.0,
+                                    color: Color.fromARGB(255, 128, 128, 128),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           IconButton(
@@ -220,24 +229,30 @@ class WorkoutTile extends StatelessWidget {
                   : Center(
                       child: Padding(
                         padding: const EdgeInsets.all(15),
-                        child: Text(
-                          workout.workoutName,
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize:
-                                (_mediaQuery.size.height - _appBarHieght) *
-                                    0.06,
-                            shadows: <Shadow>[
-                              Shadow(
-                                offset: Offset(3.0, 3.0),
-                                blurRadius: 1.0,
-                                color: Color.fromARGB(255, 128, 128, 128),
-                              ),
-                            ],
+                        child: Container(
+                          width: _mediaQuery.size.width * 0.8,
+                          height:
+                              (_mediaQuery.size.height - _appBarHieght) * 0.25,
+                          alignment: Alignment.center,
+                          child: Text(
+                            workout.workoutName,
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize:
+                                  (_mediaQuery.size.height - _appBarHieght) *
+                                      0.06,
+                              shadows: <Shadow>[
+                                Shadow(
+                                  offset: Offset(3.0, 3.0),
+                                  blurRadius: 1.0,
+                                  color: Color.fromARGB(255, 128, 128, 128),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

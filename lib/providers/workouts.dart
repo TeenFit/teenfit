@@ -62,13 +62,12 @@ class Workouts with ChangeNotifier {
           .onError(
             (error, stackTrace) => throw HttpException(''),
           );
-
-      notifyListeners();
     } on FirebaseException catch (_) {
       throw HttpException('');
     } catch (e) {
       throw HttpException(e.toString());
     }
+    notifyListeners();
   }
 
   Future<void> addWorkout(Workout workouT) async {
@@ -194,7 +193,6 @@ class Workouts with ChangeNotifier {
   Future<void> updateWorkout(Workout workouT) async {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
-
 
     List<Map> exerciseImages = [];
 
