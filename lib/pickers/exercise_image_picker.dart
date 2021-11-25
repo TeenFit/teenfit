@@ -7,12 +7,10 @@ import 'package:teenfit/Custom/custom_dialog.dart';
 
 class ExerciseImagePicker extends StatefulWidget {
   final String? imageLink;
+  final File? imageFile;
+  final Function imagePickFn;
 
-  ExerciseImagePicker(this.imagePickFn, this.imageLink);
-
-  final void Function(
-    File? pickedImage,
-  ) imagePickFn;
+  ExerciseImagePicker(this.imagePickFn, this.imageLink, this.imageFile);
 
   @override
   _ExerciseImagePickerState createState() => _ExerciseImagePickerState();
@@ -22,7 +20,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
   File? _pickedImage;
 
   Future<void> _pickImage() async {
-    final pickedImageFile = await ImagePicker().pickImage(
+    var pickedImageFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       imageQuality: 60,
       maxHeight: 600,
@@ -30,8 +28,11 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
     );
 
     setState(() {
-      _pickedImage =
-          pickedImageFile == null ? null : File(pickedImageFile.path);
+      if (pickedImageFile == null) {
+        _pickedImage = null;
+      } else {
+        _pickedImage = File(pickedImageFile.path);
+      }
     });
   }
 
@@ -54,10 +55,28 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
               child: InkWell(
                 child: _pickedImage == null
                     ? widget.imageLink == null
-                        ? Image.asset(
-                            'assets/images/UploadImage.png',
-                            fit: BoxFit.contain,
-                          )
+                        ? widget.imageFile == null
+                            ? Image.asset(
+                                'assets/images/UploadImage.png',
+                                fit: BoxFit.contain,
+                              )
+                            : FadeInImage(
+                                placeholder:
+                                    AssetImage('assets/images/loading-gif.gif'),
+                                placeholderErrorBuilder: (context, _, __) =>
+                                    Image.asset(
+                                  'assets/images/loading-gif.gif',
+                                  fit: BoxFit.contain,
+                                ),
+                                fit: BoxFit.cover,
+                                //change
+                                image: FileImage(widget.imageFile!),
+                                imageErrorBuilder: (image, _, __) =>
+                                    Image.asset(
+                                  'assets/images/ImageUploadError.png',
+                                  fit: BoxFit.cover,
+                                ),
+                              )
                         : FadeInImage(
                             placeholder:
                                 AssetImage('assets/images/loading-gif.gif'),
@@ -104,8 +123,8 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                       ),
                     );
                   } else {
-                    await _pickImage()
-                        .then((_) => widget.imagePickFn(_pickedImage));
+                    await _pickImage();
+                    widget.imagePickFn(_pickedImage);
                   }
                 },
               ),
@@ -128,8 +147,8 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                       ),
                     );
                   } else {
-                    await _pickImage()
-                        .then((_) => widget.imagePickFn(_pickedImage));
+                    await _pickImage();
+                    widget.imagePickFn(_pickedImage);
                   }
                 },
                 icon: Icon(

@@ -18,36 +18,42 @@ class AddExerciseScreen extends StatefulWidget {
 class _AddExerciseScreenState extends State<AddExerciseScreen> {
   final _formKey4 = GlobalKey<FormState>();
   var uuid = Uuid();
+  bool isInit = false;
 
   Map? exerciseProv;
   Exercise? newExercise;
   bool? switchOnOf;
   Function? addExercise;
   Function? updateExercise;
-  File? exerciseImagePhoto;
 
   @override
   void didChangeDependencies() {
     exerciseProv = ModalRoute.of(context)!.settings.arguments as Map;
 
-    newExercise = exerciseProv!['exercise'];
+    if (isInit == false) {
+      newExercise = exerciseProv!['exercise'];
 
-    newExercise = Exercise(
-      exerciseImageLink: newExercise!.exerciseImageLink,
-      exerciseId: newExercise!.exerciseId,
-      name: newExercise!.name,
-      exerciseImage: exerciseImagePhoto,
-      reps: newExercise!.reps,
-      sets: newExercise!.sets,
-      restTime: newExercise!.restTime,
-      timeSeconds: newExercise!.timeSeconds,
-    );
+      newExercise = Exercise(
+        exerciseImageLink: newExercise!.exerciseImageLink,
+        exerciseId: newExercise!.exerciseId,
+        name: newExercise!.name,
+        exerciseImage: newExercise!.exerciseImage,
+        reps: newExercise!.reps,
+        sets: newExercise!.sets,
+        restTime: newExercise!.restTime,
+        timeSeconds: newExercise!.timeSeconds,
+      );
+
+      switchOnOf = newExercise!.timeSeconds == null ? false : true;
+
+      setState(() {
+        isInit = true;
+      });
+    }
 
     addExercise = exerciseProv!['addExercise'];
 
     updateExercise = exerciseProv!['updateExercise'];
-
-    switchOnOf = newExercise!.timeSeconds == null ? false : true;
 
     super.didChangeDependencies();
   }
@@ -80,7 +86,17 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     }
 
     void _pickImage(File? image) {
-      exerciseImagePhoto = image;
+      setState(() {
+        newExercise = Exercise(
+            exerciseId: newExercise!.exerciseId,
+            name: newExercise!.name,
+            exerciseImage: image,
+            sets: null,
+            reps: null,
+            timeSeconds: newExercise!.timeSeconds,
+            restTime: newExercise!.restTime,
+            exerciseImageLink: newExercise!.exerciseImageLink);
+      });
     }
 
     Future<void> _submit() async {
@@ -99,7 +115,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
           ? Exercise(
               exerciseId: newExercise!.exerciseId,
               name: newExercise!.name,
-              exerciseImage: exerciseImagePhoto,
+              exerciseImage: newExercise!.exerciseImage,
               sets: null,
               reps: null,
               timeSeconds: newExercise!.timeSeconds,
@@ -108,7 +124,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
           : Exercise(
               exerciseId: newExercise!.exerciseId,
               name: newExercise!.name,
-              exerciseImage: exerciseImagePhoto,
+              exerciseImage: newExercise!.exerciseImage,
               sets: newExercise!.sets,
               reps: newExercise!.reps,
               timeSeconds: null,
@@ -118,8 +134,8 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       isEdit ? updateExercise!(newExercise) : addExercise!(newExercise);
     }
 
-    Widget buildAddImage() {
-      return ExerciseImagePicker(_pickImage, newExercise!.exerciseImageLink);
+    Widget buildAddImage(File? exerciseImage, String? exerciseImageLink) {
+      return ExerciseImagePicker(_pickImage, exerciseImageLink, exerciseImage);
     }
 
     Widget buildExerciseName() {
@@ -429,7 +445,8 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                 SizedBox(
                   height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
                 ),
-                buildAddImage(),
+                buildAddImage(
+                    newExercise!.exerciseImage, newExercise!.exerciseImageLink),
                 buildExerciseName(),
                 SizedBox(
                   height: _mediaQuery.size.height * 0.03,

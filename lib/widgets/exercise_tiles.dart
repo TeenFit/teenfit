@@ -39,7 +39,7 @@ class ExerciseTiles extends StatelessWidget {
               child: Container(
                 height: _mediaQuery.size.height * 0.18,
                 width: size * 0.5,
-                child: exercise.exerciseImageLink == null
+                child: exercise.exerciseImage == null
                     ? FadeInImage(
                         imageErrorBuilder: (context, image, _) => Image.asset(
                           'assets/images/ImageUploadError.png',
@@ -47,7 +47,7 @@ class ExerciseTiles extends StatelessWidget {
                         ),
                         placeholder:
                             AssetImage('assets/images/loading-gif.gif'),
-                        image: FileImage(exercise.exerciseImage!),
+                        image: NetworkImage(exercise.exerciseImageLink!),
                         fit: BoxFit.cover,
                       )
                     : FadeInImage(
@@ -57,7 +57,7 @@ class ExerciseTiles extends StatelessWidget {
                         ),
                         placeholder:
                             AssetImage('assets/images/loading-gif.gif'),
-                        image: NetworkImage(exercise.exerciseImageLink!),
+                        image: FileImage(exercise.exerciseImage!),
                         fit: BoxFit.cover,
                       ),
               ),
@@ -92,7 +92,8 @@ class ExerciseTiles extends StatelessWidget {
                                         'updateExercise': updateExercise,
                                         'edit': true,
                                         'exercise': Exercise(
-                                          exerciseImageLink: exercise.exerciseImageLink,
+                                            exerciseImageLink:
+                                                exercise.exerciseImageLink,
                                             exerciseId: exercise.exerciseId,
                                             exerciseImage:
                                                 exercise.exerciseImage,

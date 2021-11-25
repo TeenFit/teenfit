@@ -459,7 +459,17 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                     addExercise: addExercise,
                     updateExercise: updateExercise,
                     delete: deleteExercise,
-                    exercise: newWorkout!.exercises[index],
+                    exercise: Exercise(
+                      exerciseId: newWorkout!.exercises[index].exerciseId,
+                      name: newWorkout!.exercises[index].name,
+                      exerciseImage: newWorkout!.exercises[index].exerciseImage,
+                      exerciseImageLink:
+                          newWorkout!.exercises[index].exerciseImageLink,
+                      reps: newWorkout!.exercises[index].reps,
+                      sets: newWorkout!.exercises[index].sets,
+                      restTime: newWorkout!.exercises[index].restTime,
+                      timeSeconds: newWorkout!.exercises[index].timeSeconds,
+                    ),
                     size: _mediaQuery.size.width * 0.9,
                   ),
                   itemCount: newWorkout!.exercises.length,
@@ -501,7 +511,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 SizedBox(
                   height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
                 ),
-                WorkoutImagePicker(_pickImage, workout!.bannerImageLink),
+                WorkoutImagePicker(_pickImage, workout!.bannerImageLink, workout!.bannerImage),
                 buildCreatorName(),
                 buildWorkoutName(),
                 buildInstagramLink(),

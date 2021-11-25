@@ -7,12 +7,10 @@ import 'package:teenfit/Custom/custom_dialog.dart';
 
 class WorkoutImagePicker extends StatefulWidget {
   final String? imageLink;
+  final File? imageFile;
+  final Function imagePickFn;
 
-  WorkoutImagePicker(this.imagePickFn, this.imageLink);
-
-  final void Function(
-    File? pickedImage,
-  ) imagePickFn;
+  WorkoutImagePicker(this.imagePickFn, this.imageLink, this.imageFile);
 
   @override
   _WorkoutImagePickerState createState() => _WorkoutImagePickerState();
@@ -33,6 +31,17 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
       _pickedImage =
           pickedImageFile == null ? null : File(pickedImageFile.path);
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (widget.imageFile != null) {
+      setState(() {
+        _pickedImage = widget.imageFile;
+      });
+    }
   }
 
   @override

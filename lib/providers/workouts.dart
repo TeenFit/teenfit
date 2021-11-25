@@ -67,7 +67,6 @@ class Workouts with ChangeNotifier {
     } catch (e) {
       throw HttpException(e.toString());
     }
-    notifyListeners();
   }
 
   Future<void> addWorkout(Workout workouT) async {
