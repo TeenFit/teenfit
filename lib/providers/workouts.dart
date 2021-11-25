@@ -409,7 +409,11 @@ class Workouts with ChangeNotifier {
   }
 
   List<Workout> isPendingWorkouts() {
-    return workouts.where((element) => element.pending == true).toList();
+    return workouts
+        .where((element) => element.pending == true)
+        .toList()
+        .reversed
+        .toList();
   }
 
   List<Workout> findByName(String name) {
