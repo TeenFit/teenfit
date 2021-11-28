@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:teenfit/providers/workouts.dart';
 
 import '../Custom/custom_dialog.dart';
 import '../screens/create_workout.dart';
