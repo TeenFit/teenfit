@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:teenfit/providers/workouts.dart';
 
 import '../Custom/custom_dialog.dart';
 import '../screens/create_workout.dart';
@@ -6,7 +8,7 @@ import '../screens/workout_page.dart';
 import '../providers/workout.dart';
 
 // ignore: must_be_immutable
-class WorkoutTile extends StatelessWidget {
+class WorkoutTile extends StatefulWidget {
   final Workout workout;
   bool isDeletable;
   bool isAdmin;
@@ -14,15 +16,33 @@ class WorkoutTile extends StatelessWidget {
   WorkoutTile(this.workout, this.isDeletable, this.isAdmin);
 
   @override
+  State<WorkoutTile> createState() => _WorkoutTileState();
+}
+
+class _WorkoutTileState extends State<WorkoutTile> {
+  late int daysLeft;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final date = widget.workout.date;
+    final timeNow = DateTime.now();
+
+    int difference = timeNow.difference(date).inDays;
+
+    daysLeft = 15 - difference;
+
+    if (daysLeft == 0) {
+      Provider.of<Workouts>(context).deleteWorkout(widget.workout);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
     final _appBarHieght =
         AppBar().preferredSize.height + _mediaQuery.padding.top;
-
-    final date = workout.date;
-    final timeNow = workout.date.add(Duration(days: 15));
-
-    int difference = timeNow.difference(date).inDays;
 
     return Card(
       clipBehavior: Clip.hardEdge,
@@ -30,13 +50,13 @@ class WorkoutTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(25),
       ),
       child: Stack(
-        alignment: isDeletable ? Alignment.centerLeft : Alignment.center,
+        alignment: widget.isDeletable ? Alignment.centerLeft : Alignment.center,
         children: [
           Container(
             height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
             width: double.infinity,
-            child: workout.bannerImageLink == null
-                ? workout.bannerImage == null
+            child: widget.workout.bannerImageLink == null
+                ? widget.workout.bannerImage == null
                     ? Image.asset(
                         'assets/images/BannerImageUnavailable.png',
                         fit: BoxFit.cover,
@@ -51,7 +71,7 @@ class WorkoutTile extends StatelessWidget {
                         ),
                         fit: BoxFit.cover,
                         //change
-                        image: FileImage(workout.bannerImage!),
+                        image: FileImage(widget.workout.bannerImage!),
                         imageErrorBuilder: (image, _, __) => Image.asset(
                           'assets/images/ImageUploadError.png',
                           fit: BoxFit.cover,
@@ -65,7 +85,7 @@ class WorkoutTile extends StatelessWidget {
                     ),
                     fit: BoxFit.cover,
                     //change
-                    image: NetworkImage(workout.bannerImageLink!),
+                    image: NetworkImage(widget.workout.bannerImageLink!),
                     imageErrorBuilder: (image, _, __) => Image.asset(
                       'assets/images/ImageUploadError.png',
                       fit: BoxFit.cover,
@@ -82,24 +102,24 @@ class WorkoutTile extends StatelessWidget {
                   WorkoutPage.routeName,
                   arguments: Workout(
                     failed: false,
-                    pending: workout.pending,
-                    date: workout.date,
-                    creatorName: workout.creatorName,
-                    creatorId: workout.creatorId,
-                    workoutId: workout.workoutId,
-                    workoutName: workout.workoutName,
-                    instagram: workout.instagram,
-                    facebook: workout.facebook,
-                    tumblrPageLink: workout.tumblrPageLink,
-                    bannerImage: workout.bannerImage,
-                    bannerImageLink: workout.bannerImageLink,
-                    exercises: workout.exercises,
+                    pending: widget.workout.pending,
+                    date: widget.workout.date,
+                    creatorName: widget.workout.creatorName,
+                    creatorId: widget.workout.creatorId,
+                    workoutId: widget.workout.workoutId,
+                    workoutName: widget.workout.workoutName,
+                    instagram: widget.workout.instagram,
+                    facebook: widget.workout.facebook,
+                    tumblrPageLink: widget.workout.tumblrPageLink,
+                    bannerImage: widget.workout.bannerImage,
+                    bannerImageLink: widget.workout.bannerImageLink,
+                    exercises: widget.workout.exercises,
                   ),
                 );
               },
             ),
           ),
-          isDeletable
+          widget.isDeletable
               ? Container(
                   width: double.infinity,
                   height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
@@ -114,7 +134,7 @@ class WorkoutTile extends StatelessWidget {
                               (_mediaQuery.size.height - _appBarHieght) * 0.25,
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            workout.workoutName,
+                            widget.workout.workoutName,
                             maxLines: 2,
                             textAlign: TextAlign.left,
                             style: TextStyle(
@@ -139,7 +159,10 @@ class WorkoutTile extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).pushNamed(
                               AddWorkoutScreen.routeName,
-                              arguments: {'workout': workout, 'isEdit': true});
+                              arguments: {
+                                'workout': widget.workout,
+                                'isEdit': true
+                              });
                         },
                         icon: Icon(Icons.edit),
                         color: Colors.grey[100],
@@ -154,7 +177,7 @@ class WorkoutTile extends StatelessWidget {
                                 'This action will delete the workout and it can never be recoverd',
                                 'assets/images/trash.png',
                                 'pop',
-                                workout),
+                                widget.workout),
                           );
                         },
                         icon: Icon(Icons.delete_outline),
@@ -164,7 +187,7 @@ class WorkoutTile extends StatelessWidget {
                     ],
                   ),
                 )
-              : isAdmin
+              : widget.isAdmin
                   ? Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Row(
@@ -180,7 +203,7 @@ class WorkoutTile extends StatelessWidget {
                                         'Does The Workout Meet Standards?',
                                         'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
                                         'accept-workout',
-                                        workout));
+                                        widget.workout));
                               },
                               icon: Icon(
                                 Icons.check_box,
@@ -193,7 +216,7 @@ class WorkoutTile extends StatelessWidget {
                                 0.25,
                             alignment: Alignment.center,
                             child: Text(
-                              workout.workoutName,
+                              widget.workout.workoutName,
                               maxLines: 2,
                               textAlign: TextAlign.center,
                               style: TextStyle(
@@ -222,7 +245,7 @@ class WorkoutTile extends StatelessWidget {
                                         'Does The Workout Not Meet Standards?',
                                         'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
                                         'fail-workout',
-                                        workout));
+                                        widget.workout));
                               },
                               icon: Icon(
                                 Icons.delete,
@@ -241,7 +264,7 @@ class WorkoutTile extends StatelessWidget {
                               (_mediaQuery.size.height - _appBarHieght) * 0.25,
                           alignment: Alignment.center,
                           child: Text(
-                            workout.workoutName,
+                            widget.workout.workoutName,
                             maxLines: 2,
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -263,9 +286,9 @@ class WorkoutTile extends StatelessWidget {
                         ),
                       ),
                     ),
-          isAdmin
+          widget.isAdmin
               ? SizedBox()
-              : workout.pending
+              : widget.workout.pending
                   ? Stack(children: [
                       Container(
                         height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
@@ -285,18 +308,18 @@ class WorkoutTile extends StatelessWidget {
                               WorkoutPage.routeName,
                               arguments: Workout(
                                 failed: false,
-                                pending: workout.pending,
-                                date: workout.date,
-                                creatorName: workout.creatorName,
-                                creatorId: workout.creatorId,
-                                workoutId: workout.workoutId,
-                                workoutName: workout.workoutName,
-                                instagram: workout.instagram,
-                                facebook: workout.facebook,
-                                tumblrPageLink: workout.tumblrPageLink,
-                                bannerImage: workout.bannerImage,
-                                bannerImageLink: workout.bannerImageLink,
-                                exercises: workout.exercises,
+                                pending: widget.workout.pending,
+                                date: widget.workout.date,
+                                creatorName: widget.workout.creatorName,
+                                creatorId: widget.workout.creatorId,
+                                workoutId: widget.workout.workoutId,
+                                workoutName: widget.workout.workoutName,
+                                instagram: widget.workout.instagram,
+                                facebook: widget.workout.facebook,
+                                tumblrPageLink: widget.workout.tumblrPageLink,
+                                bannerImage: widget.workout.bannerImage,
+                                bannerImageLink: widget.workout.bannerImageLink,
+                                exercises: widget.workout.exercises,
                               ),
                             );
                           },
@@ -304,7 +327,7 @@ class WorkoutTile extends StatelessWidget {
                       ),
                     ])
                   : SizedBox(),
-          workout.failed
+          widget.workout.failed
               ? Container(
                   width: double.infinity,
                   height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
@@ -320,7 +343,7 @@ class WorkoutTile extends StatelessWidget {
                         child: FittedBox(
                           fit: BoxFit.contain,
                           child: Text(
-                            'Failed | ${difference.toString()} days left till removed',
+                            'Failed | ${daysLeft.toString()} days left till removed',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,
