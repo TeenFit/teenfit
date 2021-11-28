@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:teenfit/providers/workout.dart';
 
 import '/providers/workouts.dart';
 import '../widgets/main_drawer.dart';

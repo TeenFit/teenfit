@@ -18,6 +18,40 @@ class SearchResultWorkouts extends StatefulWidget {
 class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
   bool isLoading = false;
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    var workouts = Provider.of<Workouts>(context, listen: false).workouts;
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      workouts.forEach((element) {
+        final date = element.date;
+        final timeNow = DateTime.now();
+
+        int difference = timeNow.difference(date).inDays;
+
+        int daysLeft = 15 - difference;
+
+        if (daysLeft <= 0 && element.failed == true) {
+          Provider.of<Workouts>(context).deleteWorkout(element);
+          setState(() {});
+        }
+      });
+    } catch (e) {
+      _showToast('Time To Get Started');
+    }
+
+    if (this.mounted) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   void _showToast(String msg) {
     Fluttertoast.showToast(
       msg: msg,
@@ -43,9 +77,12 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
     } catch (e) {
       _showToast('Unable To Refresh Workouts');
     }
-    setState(() {
-      isLoading = false;
-    });
+
+    if (this.mounted) {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override

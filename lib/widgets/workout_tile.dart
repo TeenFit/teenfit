@@ -32,10 +32,6 @@ class _WorkoutTileState extends State<WorkoutTile> {
     int difference = timeNow.difference(date).inDays;
 
     daysLeft = 15 - difference;
-
-    if (daysLeft == 0) {
-      Provider.of<Workouts>(context).deleteWorkout(widget.workout);
-    }
   }
 
   @override
@@ -343,7 +339,7 @@ class _WorkoutTileState extends State<WorkoutTile> {
                         child: FittedBox(
                           fit: BoxFit.contain,
                           child: Text(
-                            'Failed | ${daysLeft.toString()} days left till removed',
+                            'Failed | ${daysLeft.toString()} ${daysLeft == 1 ? 'day' : 'days'} left untill deleted',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,
