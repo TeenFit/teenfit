@@ -42,6 +42,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     exerciseEditList = workout!.exercises == [] ? [] : workout!.exercises;
 
     newWorkout = Workout(
+      failed: false,
       pending: true,
       bannerImageLink: workout!.bannerImageLink,
       date: workout!.date,
@@ -87,8 +88,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             timeSeconds: exercisE.timeSeconds),
       );
 
-      Navigator.of(context).pop();
       setState(() {});
+      Navigator.of(context).pop();
     }
 
     void updateExercise(Exercise exercisE) {
@@ -97,8 +98,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       exerciseEditList!.removeAt(index);
       exerciseEditList!.insert(index, exercisE);
 
-      Navigator.of(context).pop();
       setState(() {});
+
+      Navigator.of(context).pop();
     }
 
     void _pickImage(File? image) {
@@ -140,6 +142,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       _formKey3.currentState!.save();
 
       newWorkout = Workout(
+        failed: false,
         pending: newWorkout!.pending,
         date: newWorkout!.date,
         creatorName: newWorkout!.creatorName,
@@ -154,11 +157,11 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         exercises: newWorkout!.exercises,
       );
 
-      setState(() {
-        _isLoading = true;
-      });
-
       try {
+        setState(() {
+          _isLoading = true;
+        });
+
         isEdit
             ? await Provider.of<Workouts>(context, listen: false)
                 .updateWorkout(newWorkout!)
@@ -166,13 +169,13 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             : await Provider.of<Workouts>(context, listen: false)
                 .addWorkout(newWorkout!)
                 .then((_) => Navigator.of(context).pop());
+
+        setState(() {
+          _isLoading = false;
+        });
       } catch (e) {
         _showToast('Unable To Add Workout Try Again Later');
       }
-
-      setState(() {
-        _isLoading = false;
-      });
     }
 
     Widget buildCreatorName() {
@@ -202,6 +205,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                failed: false,
                 pending: newWorkout!.pending,
                 date: newWorkout!.date,
                 creatorName: input.toString().trim(),
@@ -247,6 +251,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                failed: false,
                 pending: newWorkout!.pending,
                 date: newWorkout!.date,
                 creatorName: newWorkout!.creatorName,
@@ -288,6 +293,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                failed: false,
                 pending: newWorkout!.pending,
                 date: newWorkout!.date,
                 creatorName: newWorkout!.creatorName,
@@ -329,6 +335,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                failed: false,
                 pending: newWorkout!.pending,
                 date: newWorkout!.date,
                 creatorName: newWorkout!.creatorName,
@@ -370,6 +377,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                failed: false,
                 pending: newWorkout!.pending,
                 date: newWorkout!.date,
                 creatorName: newWorkout!.creatorName,
@@ -511,7 +519,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 SizedBox(
                   height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
                 ),
-                WorkoutImagePicker(_pickImage, workout!.bannerImageLink, workout!.bannerImage),
+                WorkoutImagePicker(
+                    _pickImage, workout!.bannerImageLink, workout!.bannerImage),
                 buildCreatorName(),
                 buildWorkoutName(),
                 buildInstagramLink(),

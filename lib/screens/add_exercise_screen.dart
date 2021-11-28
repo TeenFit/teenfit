@@ -169,6 +169,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                 sets: newExercise!.sets,
                 reps: newExercise!.reps,
                 exerciseImage: newExercise!.exerciseImage,
+                exerciseImageLink: newExercise!.exerciseImageLink
               );
             },
           ),
@@ -255,6 +256,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                             sets: newExercise!.sets,
                             reps: newExercise!.reps,
                             exerciseImage: newExercise!.exerciseImage,
+                            exerciseImageLink: newExercise!.exerciseImageLink
                           );
                         },
                       ),
@@ -302,6 +304,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                             sets: newExercise!.sets,
                             reps: newExercise!.reps,
                             exerciseImage: newExercise!.exerciseImage,
+                            exerciseImageLink: newExercise!.exerciseImageLink
                           );
                         },
                       ),
@@ -358,6 +361,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                                 : int.parse(input.toString().trim()),
                             reps: newExercise!.reps,
                             exerciseImage: newExercise!.exerciseImage,
+                            exerciseImageLink: newExercise!.exerciseImageLink
                           );
                         },
                       ),
@@ -405,6 +409,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                                 ? null
                                 : int.parse(input.toString().trim()),
                             exerciseImage: newExercise!.exerciseImage,
+                            exerciseImageLink: newExercise!.exerciseImageLink
                           );
                         },
                       ),

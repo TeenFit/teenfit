@@ -18,6 +18,7 @@ class ExerciseImagePicker extends StatefulWidget {
 
 class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
   File? _pickedImage;
+  bool isLoading = false;
 
   Future<void> _pickImage() async {
     var pickedImageFile = await ImagePicker().pickImage(
@@ -39,6 +40,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
+    final _theme = Theme.of(context);
 
     return Padding(
       padding: const EdgeInsets.all(15.0),
@@ -52,82 +54,97 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
             Container(
               height: _mediaQuery.size.height * 0.28,
               width: _mediaQuery.size.width,
-              child: InkWell(
-                child: _pickedImage == null
-                    ? widget.imageLink == null
-                        ? widget.imageFile == null
-                            ? Image.asset(
-                                'assets/images/UploadImage.png',
-                                fit: BoxFit.contain,
-                              )
-                            : FadeInImage(
-                                placeholder:
-                                    AssetImage('assets/images/loading-gif.gif'),
-                                placeholderErrorBuilder: (context, _, __) =>
-                                    Image.asset(
-                                  'assets/images/loading-gif.gif',
-                                  fit: BoxFit.contain,
-                                ),
-                                fit: BoxFit.cover,
-                                //change
-                                image: FileImage(widget.imageFile!),
-                                imageErrorBuilder: (image, _, __) =>
-                                    Image.asset(
-                                  'assets/images/ImageUploadError.png',
+              child: isLoading
+                  ? CircularProgressIndicator(
+                      strokeWidth: 4,
+                      backgroundColor: _theme.shadowColor,
+                      color: Colors.white,
+                    )
+                  : InkWell(
+                      child: _pickedImage == null
+                          ? widget.imageLink == null
+                              ? widget.imageFile == null
+                                  ? Image.asset(
+                                      'assets/images/UploadImage.png',
+                                      fit: BoxFit.contain,
+                                    )
+                                  : FadeInImage(
+                                      placeholder: AssetImage(
+                                          'assets/images/loading-gif.gif'),
+                                      placeholderErrorBuilder:
+                                          (context, _, __) => Image.asset(
+                                        'assets/images/loading-gif.gif',
+                                        fit: BoxFit.contain,
+                                      ),
+                                      fit: BoxFit.cover,
+                                      //change
+                                      image: FileImage(widget.imageFile!),
+                                      imageErrorBuilder: (image, _, __) =>
+                                          Image.asset(
+                                        'assets/images/ImageUploadError.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                              : FadeInImage(
+                                  placeholder: AssetImage(
+                                      'assets/images/loading-gif.gif'),
+                                  placeholderErrorBuilder: (context, _, __) =>
+                                      Image.asset(
+                                        'assets/images/loading-gif.gif',
+                                        fit: BoxFit.contain,
+                                      ),
                                   fit: BoxFit.cover,
-                                ),
-                              )
-                        : FadeInImage(
-                            placeholder:
-                                AssetImage('assets/images/loading-gif.gif'),
-                            placeholderErrorBuilder: (context, _, __) =>
-                                Image.asset(
-                                  'assets/images/loading-gif.gif',
-                                  fit: BoxFit.contain,
-                                ),
-                            fit: BoxFit.cover,
-                            //change
-                            image: NetworkImage(widget.imageLink!),
-                            imageErrorBuilder: (image, _, __) => Image.asset(
-                                  'assets/images/ImageUploadError.png',
-                                  fit: BoxFit.contain,
-                                ))
-                    : FadeInImage(
-                        placeholder:
-                            AssetImage('assets/images/loading-gif.gif'),
-                        placeholderErrorBuilder: (context, _, __) =>
-                            Image.asset(
-                          'assets/images/loading-gif.gif',
-                          fit: BoxFit.contain,
-                        ),
-                        fit: BoxFit.cover,
-                        //change
-                        image: FileImage(_pickedImage!),
-                        imageErrorBuilder: (image, _, __) => Image.asset(
-                          'assets/images/ImageUploadError.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                onTap: () async {
-                  var status = await Permission.photos.status;
+                                  //change
+                                  image: NetworkImage(widget.imageLink!),
+                                  imageErrorBuilder: (image, _, __) =>
+                                      Image.asset(
+                                        'assets/images/ImageUploadError.png',
+                                        fit: BoxFit.contain,
+                                      ))
+                          : FadeInImage(
+                              placeholder:
+                                  AssetImage('assets/images/loading-gif.gif'),
+                              placeholderErrorBuilder: (context, _, __) =>
+                                  Image.asset(
+                                'assets/images/loading-gif.gif',
+                                fit: BoxFit.contain,
+                              ),
+                              fit: BoxFit.cover,
+                              //change
+                              image: FileImage(_pickedImage!),
+                              imageErrorBuilder: (image, _, __) => Image.asset(
+                                'assets/images/ImageUploadError.png',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                      onTap: () async {
+                        var status = await Permission.photos.status;
 
-                  if (status.isDenied) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => CustomDialogBox(
-                        'Denied Access',
-                        'Unable to access photo Library please Allow Access in Settings',
-                        'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
-                        'photo-access',
-                        {},
-                      ),
-                    );
-                  } else {
-                    await _pickImage();
-                    widget.imagePickFn(_pickedImage);
-                  }
-                },
-              ),
+                        setState(() {
+                          isLoading = true;
+                        });
+
+                        if (status.isDenied) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => CustomDialogBox(
+                              'Denied Access',
+                              'Unable to access photo Library please Allow Access in Settings',
+                              'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
+                              'photo-access',
+                              {},
+                            ),
+                          );
+                        } else {
+                          await _pickImage();
+                          widget.imagePickFn(_pickedImage);
+                        }
+
+                        setState(() {
+                          isLoading = false;
+                        });
+                      },
+                    ),
             ),
             Container(
               height: _mediaQuery.size.height * 0.06,
@@ -135,6 +152,10 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                 onPressed: () async {
                   var status = await Permission.photos.status;
 
+                  setState(() {
+                    isLoading = true;
+                  });
+
                   if (status.isDenied) {
                     showDialog(
                       context: context,
@@ -150,6 +171,10 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                     await _pickImage();
                     widget.imagePickFn(_pickedImage);
                   }
+
+                  setState(() {
+                    isLoading = false;
+                  });
                 },
                 icon: Icon(
                   Icons.image,

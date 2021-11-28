@@ -156,6 +156,24 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                               listen: false)
                                           .acceptWorkout(widget.arguments);
                                       Navigator.of(context).pop();
+                                    } else if (widget.dialogOrganizerId ==
+                                        'fail-workout') {
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      try {
+                                        await Provider.of<Workouts>(context,
+                                                listen: false)
+                                            .failWorkout(widget.arguments)
+                                            .then((_) =>
+                                                Navigator.of(context).pop());
+                                      } catch (e) {
+                                        _showToast(
+                                            'Unable To Delete Workout Try Again Later');
+                                      }
+                                      setState(() {
+                                        isLoading = false;
+                                      });
                                     }
                                   },
                                   child: Text(
@@ -175,7 +193,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                       Function goToFirst =
                                           widget.arguments['page1'];
                                       goToFirst();
-                                      Navigator.of(context).pop();
+                                      Navigator.of(context).pop(); 
                                     } else {
                                       Navigator.of(context).pop();
                                     }

@@ -30,8 +30,9 @@ class Workouts with ChangeNotifier {
             (workouts) => _workouts = workouts.docs
                 .map(
                   (e) => Workout(
+                    failed: e['failed'],
                     pending: e['pending'],
-                    date: e['date'],
+                    date: DateTime.parse(e['date']),
                     creatorName: e['creatorName'],
                     creatorId: e['creatorId'],
                     workoutId: e['workoutId'],
@@ -143,8 +144,9 @@ class Workouts with ChangeNotifier {
       }).toList();
 
       var workoutDocInfo = {
+        'failed': workouT.failed,
         'pending': workouT.pending,
-        'date': workouT.date,
+        'date': workouT.date.toString(),
         'bannerImage': url,
         'creatorName': workouT.creatorName,
         'creatorId': workouT.creatorId,
@@ -167,6 +169,7 @@ class Workouts with ChangeNotifier {
       _workouts.insert(
           0,
           Workout(
+            failed: false,
             pending: workouT.pending,
             bannerImage: workouT.bannerImage,
             bannerImageLink: url,
@@ -303,8 +306,9 @@ class Workouts with ChangeNotifier {
       }).toList();
 
       var workoutDocInfo = {
+        'failed': workouT.failed,
         'pending': workouT.pending,
-        'date': workouT.date,
+        'date': workouT.date.toString(),
         'bannerImage': url,
         'creatorName': workouT.creatorName,
         'creatorId': workouT.creatorId,
@@ -331,6 +335,7 @@ class Workouts with ChangeNotifier {
       _workouts.insert(
           index,
           Workout(
+            failed: false,
             pending: workouT.pending,
             bannerImage: workouT.bannerImage,
             bannerImageLink: url,
@@ -401,7 +406,9 @@ class Workouts with ChangeNotifier {
   }
 
   List<Workout> isNotPendingWorkouts() {
-    return workouts.where((element) => element.pending == false).toList();
+    return workouts
+        .where((element) => element.pending == false && element.failed == false)
+        .toList();
   }
 
   List<Workout> isPendingWorkouts() {
@@ -415,15 +422,16 @@ class Workouts with ChangeNotifier {
   List<Workout> findByName(String name) {
     return workouts
         .where(
-          (workout) => (workout.workoutName.contains(name) ||
-              workout.workoutName.toLowerCase().contains(name) ||
-              workout.workoutName.toUpperCase().contains(name) ||
-              workout.workoutName.characters.contains(name) ||
-              workout.creatorName.contains(name) ||
-              workout.creatorName.toLowerCase().contains(name) ||
-              workout.creatorName.toUpperCase().contains(name) ||
-              workout.creatorName.characters.contains(name) &&
-                  workout.pending == false),
+          (workouT) => ((workouT.workoutName.contains(name) ||
+                  workouT.workoutName.toLowerCase().contains(name) ||
+                  workouT.workoutName.toUpperCase().contains(name) ||
+                  workouT.workoutName.characters.contains(name) ||
+                  workouT.creatorName.contains(name) ||
+                  workouT.creatorName.toLowerCase().contains(name) ||
+                  workouT.creatorName.toUpperCase().contains(name) ||
+                  workouT.creatorName.characters.contains(name)) &&
+              workouT.pending == false &&
+              workouT.failed == false),
         )
         .toList();
   }
@@ -432,7 +440,11 @@ class Workouts with ChangeNotifier {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
 
-    await workoutsCollection.doc(workouT.workoutId).update({'pending': false});
+    DateTime time = DateTime.now();
+
+    await workoutsCollection
+        .doc(workouT.workoutId)
+        .update({'pending': false, 'date': time.toString()});
 
     int index = _workouts
         .indexWhere((element) => element.workoutId == workouT.workoutId);
@@ -440,9 +452,42 @@ class Workouts with ChangeNotifier {
     _workouts.insert(
         index,
         Workout(
+            failed: false,
             bannerImage: workouT.bannerImage,
             bannerImageLink: workouT.bannerImageLink,
-            date: workouT.date,
+            date: time,
+            creatorName: workouT.creatorName,
+            creatorId: workouT.creatorId,
+            workoutId: workouT.workoutId,
+            workoutName: workouT.workoutName,
+            instagram: workouT.instagram,
+            facebook: workouT.facebook,
+            tumblrPageLink: workouT.tumblrPageLink,
+            pending: false,
+            exercises: workouT.exercises));
+    notifyListeners();
+  }
+
+  Future<void> failWorkout(Workout workouT) async {
+    CollectionReference workoutsCollection =
+        FirebaseFirestore.instance.collection('/workouts');
+
+    DateTime time = DateTime.now();
+
+    await workoutsCollection
+        .doc(workouT.workoutId)
+        .update({'failed': true, 'pending': false, 'date': time.toString()});
+
+    int index = _workouts
+        .indexWhere((element) => element.workoutId == workouT.workoutId);
+    _workouts.removeWhere((element) => element.workoutId == workouT.workoutId);
+    _workouts.insert(
+        index,
+        Workout(
+            failed: true,
+            bannerImage: workouT.bannerImage,
+            bannerImageLink: workouT.bannerImageLink,
+            date: time,
             creatorName: workouT.creatorName,
             creatorId: workouT.creatorId,
             workoutId: workouT.workoutId,

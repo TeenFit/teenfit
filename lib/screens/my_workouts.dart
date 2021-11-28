@@ -39,9 +39,9 @@ class CreateWorkout extends StatelessWidget {
                   AddWorkoutScreen.routeName,
                   arguments: {
                     'workout': Workout(
+                      failed: false,
                       pending: true,
-                      date: DateFormat("yyyy-MM-dd hh:mm:ss")
-                          .format(DateTime.now()),
+                      date: DateTime.now(),
                       creatorName: '',
                       creatorId: uid,
                       workoutId: uuid.v4(),

@@ -19,6 +19,11 @@ class WorkoutTile extends StatelessWidget {
     final _appBarHieght =
         AppBar().preferredSize.height + _mediaQuery.padding.top;
 
+    final date = workout.date;
+    final timeNow = workout.date.add(Duration(days: 15));
+
+    int difference = timeNow.difference(date).inDays;
+
     return Card(
       clipBehavior: Clip.hardEdge,
       shape: RoundedRectangleBorder(
@@ -76,6 +81,7 @@ class WorkoutTile extends StatelessWidget {
                 Navigator.of(context).pushNamed(
                   WorkoutPage.routeName,
                   arguments: Workout(
+                    failed: false,
                     pending: workout.pending,
                     date: workout.date,
                     creatorName: workout.creatorName,
@@ -215,7 +221,7 @@ class WorkoutTile extends StatelessWidget {
                                         'Delete Workout?',
                                         'Does The Workout Not Meet Standards?',
                                         'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
-                                        'pop',
+                                        'fail-workout',
                                         workout));
                               },
                               icon: Icon(
@@ -278,6 +284,7 @@ class WorkoutTile extends StatelessWidget {
                             Navigator.of(context).pushNamed(
                               WorkoutPage.routeName,
                               arguments: Workout(
+                                failed: false,
                                 pending: workout.pending,
                                 date: workout.date,
                                 creatorName: workout.creatorName,
@@ -297,6 +304,35 @@ class WorkoutTile extends StatelessWidget {
                       ),
                     ])
                   : SizedBox(),
+          workout.failed
+              ? Container(
+                  width: double.infinity,
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        height: _mediaQuery.size.height * 0.08,
+                        alignment: Alignment.center,
+                        width: double.infinity,
+                        decoration: BoxDecoration(color: Colors.red[400]),
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text(
+                            'Failed | ${difference.toString()} days left till removed',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: _mediaQuery.size.height * 0.03,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : SizedBox(),
         ],
       ),
     );

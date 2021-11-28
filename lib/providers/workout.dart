@@ -6,26 +6,29 @@ class Workout {
   final String creatorId;
   final String workoutId;
   final String workoutName;
-  final String instagram;
+  final String instagram; 
   final String facebook;
   final String tumblrPageLink;
   final File? bannerImage;
   final String? bannerImageLink;
   final List<Exercise> exercises;
-  final String date;
+  final DateTime date;
   final bool pending;
+  final bool failed;
 
-  Workout(
-      {required this.date,
-      required this.creatorName,
-      required this.creatorId,
-      required this.workoutId,
-      required this.workoutName,
-      required this.instagram,
-      required this.facebook,
-      required this.tumblrPageLink,
-      this.bannerImage,
-      this.bannerImageLink,
-      required this.pending,
-      required this.exercises});
+  Workout({
+    required this.date,
+    required this.creatorName,
+    required this.creatorId,
+    required this.workoutId,
+    required this.workoutName,
+    required this.instagram,
+    required this.facebook,
+    required this.tumblrPageLink,
+    this.bannerImage,
+    this.bannerImageLink,
+    required this.pending,
+    required this.exercises,
+    required this.failed,
+  });
 }
