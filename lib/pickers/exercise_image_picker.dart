@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:teenfit/Custom/custom_dialog.dart';
+
+import '../Custom/custom_dialog.dart';
 
 class ExerciseImagePicker extends StatefulWidget {
   final String? imageLink;
