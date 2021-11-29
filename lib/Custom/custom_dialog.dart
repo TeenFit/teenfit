@@ -98,84 +98,92 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                           )
                         ]
                       : [
-                          TextButton(
-                            onPressed: () async {
-                              if (widget.dialogOrganizerId == '/workout-page') {
-                                Navigator.of(context).popUntil(
-                                    ModalRoute.withName(
-                                        widget.dialogOrganizerId));
-                              } else if (widget.dialogOrganizerId ==
-                                  '/workout-page-first') {
-                                Navigator.of(context).popUntil(
-                                    ModalRoute.withName(WorkoutPage.routeName));
-                              } else if (widget.dialogOrganizerId ==
-                                  '/exercise-screen') {
-                                Navigator.of(context).pushNamed(
-                                    widget.dialogOrganizerId,
-                                    arguments: widget.arguments);
-                              } else if (widget.dialogOrganizerId == 'pop') {
-                                setState(() {
-                                  isLoading = true;
-                                });
-                                try {
-                                  await Provider.of<Workouts>(context,
-                                          listen: false)
-                                      .deleteWorkout(widget.arguments)
-                                      .then((_) => Navigator.of(context).pop());
-                                } catch (e) {
-                                  _showToast(
-                                      'Unable To Delete Workout Try Again Later');
-                                }
-                                setState(() {
-                                  isLoading = false;
-                                });
-                              } else if (widget.dialogOrganizerId ==
-                                  'delete-exercise') {
-                                Function delete = widget.arguments['delete'];
-                                String id = widget.arguments['id'];
+                          widget.dialogOrganizerId == 'photo-access'
+                              ? SizedBox()
+                              : TextButton(
+                                  onPressed: () async {
+                                    if (widget.dialogOrganizerId ==
+                                        '/workout-page') {
+                                      Navigator.of(context).popUntil(
+                                          ModalRoute.withName(
+                                              widget.dialogOrganizerId));
+                                    } else if (widget.dialogOrganizerId ==
+                                        '/workout-page-first') {
+                                      Navigator.of(context).popUntil(
+                                          ModalRoute.withName(
+                                              WorkoutPage.routeName));
+                                    } else if (widget.dialogOrganizerId ==
+                                        '/exercise-screen') {
+                                      Navigator.of(context).pushNamed(
+                                          widget.dialogOrganizerId,
+                                          arguments: widget.arguments);
+                                    } else if (widget.dialogOrganizerId ==
+                                        'pop') {
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      try {
+                                        await Provider.of<Workouts>(context,
+                                                listen: false)
+                                            .deleteWorkout(widget.arguments)
+                                            .then((_) =>
+                                                Navigator.of(context).pop());
+                                      } catch (e) {
+                                        _showToast(
+                                            'Unable To Delete Workout Try Again Later');
+                                      }
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                    } else if (widget.dialogOrganizerId ==
+                                        'delete-exercise') {
+                                      Function delete =
+                                          widget.arguments['delete'];
+                                      String id = widget.arguments['id'];
 
-                                delete(id);
-                              } else if (widget.dialogOrganizerId ==
-                                  'contact-us') {
-                                Navigator.of(context).pop();
-                              } else if (widget.dialogOrganizerId ==
-                                  'pending') {
-                                Function submit = widget.arguments;
-                                submit();
-                                Navigator.of(context).pop();
-                              } else if (widget.dialogOrganizerId ==
-                                  'accept-workout') {
-                                await Provider.of<Workouts>(context,
-                                        listen: false)
-                                    .acceptWorkout(widget.arguments);
-                                Navigator.of(context).pop();
-                              } else if (widget.dialogOrganizerId ==
-                                  'fail-workout') {
-                                setState(() {
-                                  isLoading = true;
-                                });
-                                try {
-                                  await Provider.of<Workouts>(context,
-                                          listen: false)
-                                      .failWorkout(widget.arguments)
-                                      .then((_) => Navigator.of(context).pop());
-                                } catch (e) {
-                                  _showToast(
-                                      'Unable To Delete Workout Try Again Later');
-                                }
-                                setState(() {
-                                  isLoading = false;
-                                });
-                              }
-                            },
-                            child: Text(
-                              widget.dialogOrganizerId == 'contact-us'
-                                  ? 'Back'
-                                  : 'Yes',
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.black),
-                            ),
-                          ),
+                                      delete(id);
+                                    } else if (widget.dialogOrganizerId ==
+                                        'contact-us') {
+                                      Navigator.of(context).pop();
+                                    } else if (widget.dialogOrganizerId ==
+                                        'pending') {
+                                      Function submit = widget.arguments;
+                                      submit();
+                                      Navigator.of(context).pop();
+                                    } else if (widget.dialogOrganizerId ==
+                                        'accept-workout') {
+                                      await Provider.of<Workouts>(context,
+                                              listen: false)
+                                          .acceptWorkout(widget.arguments);
+                                      Navigator.of(context).pop();
+                                    } else if (widget.dialogOrganizerId ==
+                                        'fail-workout') {
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      try {
+                                        await Provider.of<Workouts>(context,
+                                                listen: false)
+                                            .failWorkout(widget.arguments)
+                                            .then((_) =>
+                                                Navigator.of(context).pop());
+                                      } catch (e) {
+                                        _showToast(
+                                            'Unable To Delete Workout Try Again Later');
+                                      }
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                    }
+                                  },
+                                  child: Text(
+                                    widget.dialogOrganizerId == 'contact-us'
+                                        ? 'Back'
+                                        : 'Yes',
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                ),
                           widget.dialogOrganizerId == 'contact-us'
                               ? SizedBox()
                               : TextButton(
@@ -191,7 +199,9 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                     }
                                   },
                                   child: Text(
-                                    'No',
+                                    widget.dialogOrganizerId == 'photo-access'
+                                        ? 'Okay'
+                                        : 'No',
                                     style: TextStyle(
                                         fontSize: 18, color: Colors.black),
                                   ),

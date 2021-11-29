@@ -61,13 +61,15 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
       },
     );
 
-    setState(() {
-      if (pickedImageFile == null) {
-        _pickedImage = null;
-      } else {
-        _pickedImage = File(pickedImageFile.path);
-      }
-    });
+    if (this.mounted) {
+      setState(() {
+        if (pickedImageFile == null) {
+          _pickedImage = null;
+        } else {
+          _pickedImage = File(pickedImageFile.path);
+        }
+      });
+    }
   }
 
   @override

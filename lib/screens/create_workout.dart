@@ -28,7 +28,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   bool isEdit = false;
   var workoutProv;
   bool _isLoading = false;
-  File? workoutImage;
 
   List<Exercise>? exerciseEditList;
 
@@ -44,7 +43,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     newWorkout = Workout(
       failed: false,
       pending: true,
-      bannerImageLink: workout!.bannerImageLink,
       date: workout!.date,
       creatorName: workout!.creatorName,
       creatorId: workout!.creatorId,
@@ -53,7 +51,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       instagram: workout!.instagram,
       facebook: workout!.facebook,
       tumblrPageLink: workout!.tumblrPageLink,
-      bannerImage: workoutImage,
+      bannerImage: workout!.bannerImage,
+      bannerImageLink: workout!.bannerImageLink,
       exercises: exerciseEditList!,
     );
 
@@ -105,7 +104,21 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
     void _pickImage(File? image) {
       setState(() {
-        workoutImage = image;
+        newWorkout = Workout(
+          failed: false,
+          pending: true,
+          date: workout!.date,
+          creatorName: workout!.creatorName,
+          creatorId: workout!.creatorId,
+          workoutId: workout!.workoutId,
+          workoutName: workout!.workoutName,
+          instagram: workout!.instagram,
+          facebook: workout!.facebook,
+          tumblrPageLink: workout!.tumblrPageLink,
+          bannerImage: image,
+          bannerImageLink: workout!.bannerImageLink,
+          exercises: exerciseEditList!,
+        );
       });
     }
 
@@ -152,7 +165,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         instagram: newWorkout!.instagram,
         facebook: newWorkout!.facebook,
         tumblrPageLink: newWorkout!.tumblrPageLink,
-        bannerImage: workoutImage,
+        bannerImage: newWorkout!.bannerImage,
         bannerImageLink: newWorkout!.bannerImageLink,
         exercises: newWorkout!.exercises,
       );
@@ -216,6 +229,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
+                bannerImageLink: newWorkout!.bannerImageLink,
                 exercises: newWorkout!.exercises,
               );
             },
@@ -262,6 +276,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
+                bannerImageLink: newWorkout!.bannerImageLink,
                 exercises: newWorkout!.exercises,
               );
             },
@@ -305,6 +320,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
+                bannerImageLink: newWorkout!.bannerImageLink,
                 exercises: newWorkout!.exercises,
               );
             },
@@ -343,6 +359,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 workoutId: newWorkout!.workoutId,
                 workoutName: newWorkout!.workoutName,
                 instagram: newWorkout!.instagram,
+                bannerImageLink: newWorkout!.bannerImageLink,
                 facebook: newWorkout!.facebook,
                 tumblrPageLink:
                     input.toString().isEmpty ? '' : input.toString().trim(),
@@ -389,6 +406,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                     input.toString().isEmpty ? '' : input.toString().trim(),
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
+                bannerImageLink: newWorkout!.bannerImageLink,
                 exercises: newWorkout!.exercises,
               );
             },
