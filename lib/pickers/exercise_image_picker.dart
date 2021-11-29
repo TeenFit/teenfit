@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import '../Custom/custom_dialog.dart';
+import 'package:teenfit/Custom/custom_dialog.dart';
 
 class ExerciseImagePicker extends StatefulWidget {
   final String? imageLink;
@@ -21,12 +21,44 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
   File? _pickedImage;
   bool isLoading = false;
 
+  void _showToast(String msg) {
+    Fluttertoast.showToast(
+      msg: msg,
+      gravity: ToastGravity.TOP,
+      timeInSecForIosWeb: 10,
+      webShowClose: true,
+      textColor: Colors.white,
+      backgroundColor: Colors.grey.shade700,
+    );
+  }
+
   Future<void> _pickImage() async {
-    var pickedImageFile = await ImagePicker().pickImage(
+    var pickedImageFile = await ImagePicker()
+        .pickImage(
       source: ImageSource.gallery,
       imageQuality: 60,
       maxHeight: 600,
       maxWidth: 337.50,
+    )
+        .catchError(
+      (e) async {
+        var status = await Permission.photos.isDenied;
+
+        if (status) {
+          showDialog(
+            context: context,
+            builder: (context) => CustomDialogBox(
+              'Denied Access',
+              'Unable to access photo Library please Allow Access in Settings',
+              'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
+              'photo-access',
+              {},
+            ),
+          );
+        } else {
+          _showToast('Unable To Pick Image');
+        }
+      },
     );
 
     setState(() {
@@ -119,63 +151,16 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                               ),
                             ),
                       onTap: () async {
-                        var status = await Permission.photos.status;
-
-                        setState(() {
-                          isLoading = true;
-                        });
-
-                        if (status.isDenied) {
-                          showDialog(
-                            context: context,
-                            builder: (context) => CustomDialogBox(
-                              'Denied Access',
-                              'Unable to access photo Library please Allow Access in Settings',
-                              'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
-                              'photo-access',
-                              {},
-                            ),
-                          );
-                        } else {
-                          await _pickImage();
-                          widget.imagePickFn(_pickedImage);
-                        }
-
-                        setState(() {
-                          isLoading = false;
-                        });
-                      },
-                    ),
+                        await _pickImage();
+                        widget.imagePickFn(_pickedImage);
+                      }),
             ),
             Container(
               height: _mediaQuery.size.height * 0.06,
               child: TextButton.icon(
                 onPressed: () async {
-                  var status = await Permission.photos.status;
-
-                  setState(() {
-                    isLoading = true;
-                  });
-
-                  if (status.isDenied) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => CustomDialogBox(
-                        'Denied Access',
-                        'Unable to access photo Library please Allow Access in Settings',
-                        'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
-                        'photo-access',
-                        {},
-                      ),
-                    );
-                  } else {
-                    await _pickImage();
-                    widget.imagePickFn(_pickedImage);
-                  }
-
-                  setState(() {
-                    isLoading = false;
-                  });
+                  await _pickImage();
+                  widget.imagePickFn(_pickedImage);
                 },
                 icon: Icon(
                   Icons.image,
