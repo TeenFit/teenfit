@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>851298419338-6rham68f9sd8jldim9iv9tberepu8c9j.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.851298419338-6rham68f9sd8jldim9iv9tberepu8c9j</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>851298419338-ou09hs4672d1213vb7n48aqts78adc4v.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD0FplK63IzNMkcW02-sb8ax1pw3xmwnL0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>851298419338</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.muqeeth.teenfit</string>
+	<key>PROJECT_ID</key>
+	<string>teenfit-c80dd</string>
+	<key>STORAGE_BUCKET</key>
+	<string>teenfit-c80dd.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:851298419338:ios:12e545674c347b0310a373</string>
+</dict>
+</plist>
