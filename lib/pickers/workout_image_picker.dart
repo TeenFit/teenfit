@@ -64,18 +64,7 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
     if (this.mounted) {
       setState(() {
         _pickedImage =
-            pickedImageFile == null ? null : File(pickedImageFile.path);
-      });
-    }
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    if (widget.imageFile != null) {
-      setState(() {
-        _pickedImage = widget.imageFile;
+            pickedImageFile == null ? _pickedImage : File(pickedImageFile.path);
       });
     }
   }

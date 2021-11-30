@@ -19,6 +19,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
   final _formKey4 = GlobalKey<FormState>();
   var uuid = Uuid();
   bool isInit = false;
+  bool isLoading = false;
 
   Map? exerciseProv;
   Exercise? newExercise;
@@ -85,14 +86,14 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       );
     }
 
-    void _pickImage(File? image) {
+    Future<void> _pick(File? image, File? video) async {
       setState(() {
         newExercise = Exercise(
             exerciseId: newExercise!.exerciseId,
             name: newExercise!.name,
-            exerciseImage: image,
-            sets: null,
-            reps: null,
+            exerciseImage: video != null ? video : image,
+            sets: newExercise!.sets,
+            reps: newExercise!.reps,
             timeSeconds: newExercise!.timeSeconds,
             restTime: newExercise!.restTime,
             exerciseImageLink: newExercise!.exerciseImageLink);
@@ -101,13 +102,17 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
     Future<void> _submit() async {
       if (newExercise!.exerciseImage == null && isEdit == false) {
-        _showToast('Image Required');
+        _showToast('Image/Video Required');
         return;
       }
 
       if (!_formKey4.currentState!.validate()) {
         return;
       }
+
+      setState(() {
+        isLoading = true;
+      });
 
       _formKey4.currentState!.save();
 
@@ -131,11 +136,15 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
               restTime: null,
               exerciseImageLink: newExercise!.exerciseImageLink);
 
-      isEdit ? updateExercise!(newExercise) : addExercise!(newExercise);
-    }
+      isEdit
+          ? await updateExercise!(newExercise)
+          : await addExercise!(newExercise);
 
-    Widget buildAddImage(File? exerciseImage, String? exerciseImageLink) {
-      return ExerciseImagePicker(_pickImage, exerciseImageLink, exerciseImage);
+      if (this.mounted) {
+        setState(() {
+          isLoading = true;
+        });
+      }
     }
 
     Widget buildExerciseName() {
@@ -162,15 +171,14 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
             },
             onSaved: (input) {
               newExercise = Exercise(
-                exerciseId: newExercise!.exerciseId,
-                name: input.toString().trim(),
-                timeSeconds: newExercise!.timeSeconds,
-                restTime: newExercise!.restTime,
-                sets: newExercise!.sets,
-                reps: newExercise!.reps,
-                exerciseImage: newExercise!.exerciseImage,
-                exerciseImageLink: newExercise!.exerciseImageLink
-              );
+                  exerciseId: newExercise!.exerciseId,
+                  name: input.toString().trim(),
+                  timeSeconds: newExercise!.timeSeconds,
+                  restTime: newExercise!.restTime,
+                  sets: newExercise!.sets,
+                  reps: newExercise!.reps,
+                  exerciseImage: newExercise!.exerciseImage,
+                  exerciseImageLink: newExercise!.exerciseImageLink);
             },
           ),
         ),
@@ -247,17 +255,17 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                         },
                         onSaved: (input) {
                           newExercise = Exercise(
-                            exerciseId: newExercise!.exerciseId,
-                            name: newExercise!.name,
-                            timeSeconds: input.toString().isEmpty
-                                ? null
-                                : int.parse(input.toString().trim()),
-                            restTime: newExercise!.restTime,
-                            sets: newExercise!.sets,
-                            reps: newExercise!.reps,
-                            exerciseImage: newExercise!.exerciseImage,
-                            exerciseImageLink: newExercise!.exerciseImageLink
-                          );
+                              exerciseId: newExercise!.exerciseId,
+                              name: newExercise!.name,
+                              timeSeconds: input.toString().isEmpty
+                                  ? null
+                                  : int.parse(input.toString().trim()),
+                              restTime: newExercise!.restTime,
+                              sets: newExercise!.sets,
+                              reps: newExercise!.reps,
+                              exerciseImage: newExercise!.exerciseImage,
+                              exerciseImageLink:
+                                  newExercise!.exerciseImageLink);
                         },
                       ),
                     ),
@@ -295,17 +303,17 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                         },
                         onSaved: (input) {
                           newExercise = Exercise(
-                            exerciseId: newExercise!.exerciseId,
-                            name: newExercise!.name,
-                            timeSeconds: newExercise!.timeSeconds,
-                            restTime: input.toString().isEmpty
-                                ? null
-                                : int.parse(input.toString().trim()),
-                            sets: newExercise!.sets,
-                            reps: newExercise!.reps,
-                            exerciseImage: newExercise!.exerciseImage,
-                            exerciseImageLink: newExercise!.exerciseImageLink
-                          );
+                              exerciseId: newExercise!.exerciseId,
+                              name: newExercise!.name,
+                              timeSeconds: newExercise!.timeSeconds,
+                              restTime: input.toString().isEmpty
+                                  ? null
+                                  : int.parse(input.toString().trim()),
+                              sets: newExercise!.sets,
+                              reps: newExercise!.reps,
+                              exerciseImage: newExercise!.exerciseImage,
+                              exerciseImageLink:
+                                  newExercise!.exerciseImageLink);
                         },
                       ),
                     ),
@@ -352,17 +360,17 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                         },
                         onSaved: (input) {
                           newExercise = Exercise(
-                            exerciseId: newExercise!.exerciseId,
-                            name: newExercise!.name,
-                            timeSeconds: newExercise!.timeSeconds,
-                            restTime: newExercise!.restTime,
-                            sets: input.toString().isEmpty
-                                ? null
-                                : int.parse(input.toString().trim()),
-                            reps: newExercise!.reps,
-                            exerciseImage: newExercise!.exerciseImage,
-                            exerciseImageLink: newExercise!.exerciseImageLink
-                          );
+                              exerciseId: newExercise!.exerciseId,
+                              name: newExercise!.name,
+                              timeSeconds: newExercise!.timeSeconds,
+                              restTime: newExercise!.restTime,
+                              sets: input.toString().isEmpty
+                                  ? null
+                                  : int.parse(input.toString().trim()),
+                              reps: newExercise!.reps,
+                              exerciseImage: newExercise!.exerciseImage,
+                              exerciseImageLink:
+                                  newExercise!.exerciseImageLink);
                         },
                       ),
                     ),
@@ -400,17 +408,17 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                         },
                         onSaved: (input) {
                           newExercise = Exercise(
-                            exerciseId: newExercise!.exerciseId,
-                            name: newExercise!.name,
-                            timeSeconds: newExercise!.timeSeconds,
-                            restTime: newExercise!.restTime,
-                            sets: newExercise!.sets,
-                            reps: input.toString().isEmpty
-                                ? null
-                                : int.parse(input.toString().trim()),
-                            exerciseImage: newExercise!.exerciseImage,
-                            exerciseImageLink: newExercise!.exerciseImageLink
-                          );
+                              exerciseId: newExercise!.exerciseId,
+                              name: newExercise!.name,
+                              timeSeconds: newExercise!.timeSeconds,
+                              restTime: newExercise!.restTime,
+                              sets: newExercise!.sets,
+                              reps: input.toString().isEmpty
+                                  ? null
+                                  : int.parse(input.toString().trim()),
+                              exerciseImage: newExercise!.exerciseImage,
+                              exerciseImageLink:
+                                  newExercise!.exerciseImageLink);
                         },
                       ),
                     ),
@@ -450,8 +458,8 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                 SizedBox(
                   height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
                 ),
-                buildAddImage(
-                    newExercise!.exerciseImage, newExercise!.exerciseImageLink),
+                ExerciseImagePicker(_pick, newExercise!.exerciseImageLink,
+                    newExercise!.exerciseImage),
                 buildExerciseName(),
                 SizedBox(
                   height: _mediaQuery.size.height * 0.03,
@@ -463,26 +471,33 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                   child: Container(
                     width: _mediaQuery.size.width,
                     height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: _theme.primaryColor,
-                        onPrimary: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                      child: Text(
-                        'Submit',
-                        style: TextStyle(
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w900,
-                          fontSize: _mediaQuery.size.height * 0.03,
-                        ),
-                      ),
-                      onPressed: () {
-                        _submit();
-                      },
-                    ),
+                    child: isLoading
+                        ? CircularProgressIndicator(
+                            strokeWidth: 4,
+                            backgroundColor: _theme.shadowColor,
+                            color: Colors.white,
+                          )
+                        : ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: _theme.primaryColor,
+                              onPrimary: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                            ),
+                            child: Text(
+                              'Submit',
+                              style: TextStyle(
+                                fontFamily: 'Roboto',
+                                fontWeight: FontWeight.w900,
+                                fontSize: _mediaQuery.size.height * 0.03,
+                              ),
+                            ),
+                            onPressed: () async {
+                              await _submit();
+                              Navigator.of(context).pop();
+                            },
+                          ),
                   ),
                 )
               ],

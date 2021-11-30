@@ -15,6 +15,7 @@ class Workout {
   final DateTime date;
   final bool pending;
   final bool failed;
+  
 
   Workout({
     required this.date,

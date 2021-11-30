@@ -132,6 +132,7 @@ class Workouts with ChangeNotifier {
             (element) => element['id'] == e.exerciseId + workouT.workoutId);
 
         return Exercise(
+
             exerciseId: e.exerciseId,
             name: e.name,
             reps: e.reps,
@@ -294,6 +295,7 @@ class Workouts with ChangeNotifier {
             (element) => element['id'] == e.exerciseId + workouT.workoutId);
 
         return Exercise(
+
             exerciseId: e.exerciseId,
             name: e.name,
             reps: e.reps,

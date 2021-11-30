@@ -12,13 +12,14 @@ class ExerciseTiles extends StatelessWidget {
   final Function addExercise;
   final Function updateExercise;
 
-  ExerciseTiles(
-      {required this.exercise,
-      required this.size,
-      required this.isDeleteable,
-      required this.delete,
-      required this.addExercise,
-      required this.updateExercise});
+  ExerciseTiles({
+    required this.exercise,
+    required this.size,
+    required this.isDeleteable,
+    required this.delete,
+    required this.addExercise,
+    required this.updateExercise,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -70,7 +70,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       exerciseEditList!
           .removeWhere((exercise) => exercise.exerciseId == exerciseId);
       Navigator.of(context).pop();
-      setState(() {});
+
+      if (this.mounted) {
+        setState(() {});
+      }
     }
 
     void addExercise(Exercise exercisE) {
@@ -88,7 +91,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       );
 
       setState(() {});
-      Navigator.of(context).pop();
     }
 
     void updateExercise(Exercise exercisE) {
@@ -97,9 +99,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       exerciseEditList!.removeAt(index);
       exerciseEditList!.insert(index, exercisE);
 
-      setState(() {});
-
-      Navigator.of(context).pop();
+      if (this.mounted) {
+        setState(() {});
+      }
     }
 
     void _pickImage(File? image) {
