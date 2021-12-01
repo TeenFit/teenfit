@@ -206,7 +206,7 @@ class MainDrawer extends StatelessWidget {
                   child: Text(
                     'Questions?',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.blue,
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w900,
                       fontSize: _mediaQuery.size.height * 0.05,
