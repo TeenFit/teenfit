@@ -1,0 +1,202 @@
+PODS:
+  - cloud_firestore (3.1.0):
+    - Firebase/Firestore (= 8.9.0)
+    - firebase_core
+    - Flutter
+  - connectivity (0.0.1):
+    - Flutter
+    - Reachability
+  - connectivity_plus (0.0.1):
+    - Flutter
+    - ReachabilitySwift
+  - Firebase/Auth (8.9.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 8.9.0)
+  - Firebase/CoreOnly (8.9.0):
+    - FirebaseCore (= 8.9.0)
+  - Firebase/Firestore (8.9.0):
+    - Firebase/CoreOnly
+    - FirebaseFirestore (~> 8.9.0)
+  - Firebase/Storage (8.9.0):
+    - Firebase/CoreOnly
+    - FirebaseStorage (~> 8.9.0)
+  - firebase_auth (3.2.0):
+    - Firebase/Auth (= 8.9.0)
+    - firebase_core
+    - Flutter
+  - firebase_core (1.10.0):
+    - Firebase/CoreOnly (= 8.9.0)
+    - Flutter
+  - firebase_storage (10.1.0):
+    - Firebase/Storage (= 8.9.0)
+    - firebase_core
+    - Flutter
+  - FirebaseAuth (8.9.0):
+    - FirebaseCore (~> 8.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.6)
+    - GoogleUtilities/Environment (~> 7.6)
+    - GTMSessionFetcher/Core (~> 1.5)
+  - FirebaseCore (8.9.0):
+    - FirebaseCoreDiagnostics (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.6)
+    - GoogleUtilities/Logger (~> 7.6)
+  - FirebaseCoreDiagnostics (8.9.0):
+    - GoogleDataTransport (~> 9.1)
+    - GoogleUtilities/Environment (~> 7.6)
+    - GoogleUtilities/Logger (~> 7.6)
+    - nanopb (~> 2.30908.0)
+  - FirebaseFirestore (8.9.0):
+    - FirebaseFirestore/AutodetectLeveldb (= 8.9.0)
+  - FirebaseFirestore/AutodetectLeveldb (8.9.0):
+    - FirebaseFirestore/Base
+    - FirebaseFirestore/WithLeveldb
+  - FirebaseFirestore/Base (8.9.0)
+  - FirebaseFirestore/WithLeveldb (8.9.0):
+    - FirebaseFirestore/Base
+  - FirebaseStorage (8.9.0):
+    - FirebaseCore (~> 8.0)
+    - GTMSessionFetcher/Core (~> 1.5)
+  - Flutter (1.0.0)
+  - fluttertoast (0.0.2):
+    - Flutter
+    - Toast
+  - GoogleDataTransport (9.1.2):
+    - GoogleUtilities/Environment (~> 7.2)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/AppDelegateSwizzler (7.6.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (7.6.0):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.6.0):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/Network (7.6.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (7.6.0)"
+  - GoogleUtilities/Reachability (7.6.0):
+    - GoogleUtilities/Logger
+  - GTMSessionFetcher/Core (1.7.0)
+  - image_picker (0.0.1):
+    - Flutter
+  - nanopb (2.30908.0):
+    - nanopb/decode (= 2.30908.0)
+    - nanopb/encode (= 2.30908.0)
+  - nanopb/decode (2.30908.0)
+  - nanopb/encode (2.30908.0)
+  - "permission_handler (5.1.0+2)":
+    - Flutter
+  - PromisesObjC (2.0.0)
+  - Reachability (3.2)
+  - ReachabilitySwift (5.0.0)
+  - Toast (4.0.0)
+  - url_launcher_ios (0.0.1):
+    - Flutter
+  - video_player (0.0.1):
+    - Flutter
+  - wifi_info_flutter (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
+  - connectivity (from `.symlinks/plugins/connectivity/ios`)
+  - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
+  - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
+  - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
+  - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
+  - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `8.9.0`)
+  - Flutter (from `Flutter`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+  - video_player (from `.symlinks/plugins/video_player/ios`)
+  - wifi_info_flutter (from `.symlinks/plugins/wifi_info_flutter/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Firebase
+    - FirebaseAuth
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseStorage
+    - GoogleDataTransport
+    - GoogleUtilities
+    - GTMSessionFetcher
+    - nanopb
+    - PromisesObjC
+    - Reachability
+    - ReachabilitySwift
+    - Toast
+
+EXTERNAL SOURCES:
+  cloud_firestore:
+    :path: ".symlinks/plugins/cloud_firestore/ios"
+  connectivity:
+    :path: ".symlinks/plugins/connectivity/ios"
+  connectivity_plus:
+    :path: ".symlinks/plugins/connectivity_plus/ios"
+  firebase_auth:
+    :path: ".symlinks/plugins/firebase_auth/ios"
+  firebase_core:
+    :path: ".symlinks/plugins/firebase_core/ios"
+  firebase_storage:
+    :path: ".symlinks/plugins/firebase_storage/ios"
+  FirebaseFirestore:
+    :git: https://github.com/invertase/firestore-ios-sdk-frameworks.git
+    :tag: 8.9.0
+  Flutter:
+    :path: Flutter
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
+  image_picker:
+    :path: ".symlinks/plugins/image_picker/ios"
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
+  video_player:
+    :path: ".symlinks/plugins/video_player/ios"
+  wifi_info_flutter:
+    :path: ".symlinks/plugins/wifi_info_flutter/ios"
+
+CHECKOUT OPTIONS:
+  FirebaseFirestore:
+    :git: https://github.com/invertase/firestore-ios-sdk-frameworks.git
+    :tag: 8.9.0
+
+SPEC CHECKSUMS:
+  cloud_firestore: 2cff0618e560f435fc05da5c94c2d213eb7ba640
+  connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
+  connectivity_plus: 413a8857dd5d9f1c399a39130850d02fe0feaf7e
+  Firebase: 13d8d96499e2635428d5bf0ec675df21f95d9a95
+  firebase_auth: 0d56cc4d105ff70d1547a7fcb10ee574ad05adf5
+  firebase_core: f770e033e790657b3505f04be4cb24c482912f11
+  firebase_storage: a3bbe618ef41930ae31da8f4691d37e4ed84f14d
+  FirebaseAuth: 2b78b2a32c07b3ecfa4970bdf1d3632b8304099b
+  FirebaseCore: 599ee609343eaf4941bd188f85e3aa077ffe325b
+  FirebaseCoreDiagnostics: 5daa63f1c1409d981a2d5007daa100b36eac6a34
+  FirebaseFirestore: 7c22bff6c0e1f222920cd110e9da13a117b61fea
+  FirebaseStorage: 452c98c31ccb40b819764bf3039426c4388d9939
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
+  GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
+  GoogleUtilities: 684ee790a24f73ebb2d1d966e9711c203f2a4237
+  GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
+  image_picker: 9aa50e1d8cdacdbed739e925b7eea16d014367e6
+  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
+  PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
+  url_launcher_ios: 02f1989d4e14e998335b02b67a7590fa34f971af
+  video_player: ecd305f42e9044793efd34846e1ce64c31ea6fcb
+  wifi_info_flutter: 55d4c2469034f5b5c38063ccefa62f708a503a2b
+
+PODFILE CHECKSUM: a6ef1d7626516e6d43825130042f62ef98b10224
+
+COCOAPODS: 1.10.1
