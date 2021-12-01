@@ -86,23 +86,37 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       );
     }
 
-    Future<void> _pick(File? image, File? video) async {
-      setState(() {
-        newExercise = Exercise(
-            exerciseId: newExercise!.exerciseId,
-            name: newExercise!.name,
-            exerciseImage: video != null ? video : image,
-            sets: newExercise!.sets,
-            reps: newExercise!.reps,
-            timeSeconds: newExercise!.timeSeconds,
-            restTime: newExercise!.restTime,
-            exerciseImageLink: newExercise!.exerciseImageLink);
-      });
+    Future<void> _pick(File? image, /*File? video*/) async {
+      // if (image == null) {
+      //   setState(() {
+      //     newExercise = Exercise(
+      //         exerciseId: newExercise!.exerciseId,
+      //         name: newExercise!.name,
+      //         exerciseImage: video,
+      //         sets: newExercise!.sets,
+      //         reps: newExercise!.reps,
+      //         timeSeconds: newExercise!.timeSeconds,
+      //         restTime: newExercise!.restTime,
+      //         exerciseImageLink: newExercise!.exerciseImageLink);
+      //   });
+      // } else {
+        setState(() {
+          newExercise = Exercise(
+              exerciseId: newExercise!.exerciseId,
+              name: newExercise!.name,
+              exerciseImage: image,
+              sets: newExercise!.sets,
+              reps: newExercise!.reps,
+              timeSeconds: newExercise!.timeSeconds,
+              restTime: newExercise!.restTime,
+              exerciseImageLink: newExercise!.exerciseImageLink);
+        });
+      // }
     }
 
     Future<void> _submit() async {
       if (newExercise!.exerciseImage == null && isEdit == false) {
-        _showToast('Image/Video Required');
+        _showToast('Image Required');
         return;
       }
 
