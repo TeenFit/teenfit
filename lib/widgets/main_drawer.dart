@@ -277,7 +277,8 @@ class MainDrawer extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(15),
                 child: Container(
-                  height: (_mediaQuery.size.height - _appBarHieght) * 0.055,
+                  alignment: Alignment.centerLeft,
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.085,
                   width: double.infinity,
                   child: TextButton(
                     onPressed: () {
@@ -288,11 +289,12 @@ class MainDrawer extends StatelessWidget {
                     },
                     child: Text(
                       'Privacy Policy',
+                      textAlign: TextAlign.start,
                       style: TextStyle(
                         color: Colors.blue,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w900,
-                        fontSize: _mediaQuery.size.height * 0.05,
+                        fontSize: _mediaQuery.size.height * 0.04,
                       ),
                     ),
                   ),
