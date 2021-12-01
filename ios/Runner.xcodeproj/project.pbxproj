@@ -9,12 +9,6 @@
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
-		61A2EA122757D6AD00F1A19E /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A2EA112757D6AD00F1A19E /* Reachability.framework */; };
-		61A2EA132757D6AD00F1A19E /* Reachability.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 61A2EA112757D6AD00F1A19E /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		61A2EA152757D6BF00F1A19E /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A2EA142757D6BF00F1A19E /* Reachability.framework */; };
-		61A2EA162757D6BF00F1A19E /* Reachability.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 61A2EA142757D6BF00F1A19E /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		61A2EA182757D6C500F1A19E /* Reachability.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61A2EA172757D6C500F1A19E /* Reachability.framework */; };
-		61A2EA192757D6C500F1A19E /* Reachability.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 61A2EA172757D6C500F1A19E /* Reachability.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		61CE462027552F0D00909710 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61CE461F27552F0D00909710 /* GoogleService-Info.plist */; };
 		61E6DD1E27570C4C0018CC5E /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CD447F594B4BC94D195FD42 /* Pods_Runner.framework */; };
 		61E6DD1F27570C4C0018CC5E /* Pods_Runner.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8CD447F594B4BC94D195FD42 /* Pods_Runner.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -32,9 +26,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				61E6DD1F27570C4C0018CC5E /* Pods_Runner.framework in Embed Frameworks */,
-				61A2EA162757D6BF00F1A19E /* Reachability.framework in Embed Frameworks */,
-				61A2EA132757D6AD00F1A19E /* Reachability.framework in Embed Frameworks */,
-				61A2EA192757D6C500F1A19E /* Reachability.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,9 +62,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				61E6DD1E27570C4C0018CC5E /* Pods_Runner.framework in Frameworks */,
-				61A2EA152757D6BF00F1A19E /* Reachability.framework in Frameworks */,
-				61A2EA122757D6AD00F1A19E /* Reachability.framework in Frameworks */,
-				61A2EA182757D6C500F1A19E /* Reachability.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
