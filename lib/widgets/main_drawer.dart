@@ -227,7 +227,10 @@ class MainDrawer extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () {
-                            launch('https://www.instagram.com/teenfittest/');
+                            launch('https://www.instagram.com/teenfittest/')
+                                .catchError((_, stack) {
+                              _showToast('Unable To Open Link');
+                            });
                           },
                           icon: Icon(
                             MyFlutterApp.instagram,
@@ -240,7 +243,10 @@ class MainDrawer extends StatelessWidget {
                         ),
                         IconButton(
                           onPressed: () {
-                            launch('https://www.facebook.com/teenfittest/');
+                            launch('https://www.facebook.com/teenfittest/')
+                                .catchError((_, stack) {
+                              _showToast('Unable To Open Link');
+                            });
                           },
                           icon: Icon(
                             MyFlutterApp.facebook_squared,
@@ -253,7 +259,10 @@ class MainDrawer extends StatelessWidget {
                         ),
                         IconButton(
                           onPressed: () {
-                            launch('https://teenfittest.tumblr.com/');
+                            launch('https://teenfittest.tumblr.com/')
+                                .catchError((_, stack) {
+                              _showToast('Unable To Open Link');
+                            });
                           },
                           icon: Icon(
                             MyFlutterApp.tumblr_squared,
@@ -265,8 +274,32 @@ class MainDrawer extends StatelessWidget {
                   ),
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: Container(
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.055,
+                  width: double.infinity,
+                  child: TextButton(
+                    onPressed: () {
+                      launch('https://drive.google.com/file/d/1y9KmEaAy1kHHnhjAnQAnvTOaOX3SoW4q/view?usp=sharing')
+                          .catchError((_, stack) {
+                        _showToast('Unable To Open Link');
+                      });
+                    },
+                    child: Text(
+                      'Privacy Policy',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w900,
+                        fontSize: _mediaQuery.size.height * 0.05,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(
-                height: _mediaQuery.size.height * 0.25,
+                height: _mediaQuery.size.height * 0.15,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
