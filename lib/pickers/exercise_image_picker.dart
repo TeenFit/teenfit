@@ -5,8 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
-import 'package:teenfit/widgets/video_player.dart';
-import 'package:video_player/video_player.dart';
 
 class ExerciseImagePicker extends StatefulWidget {
   final String? imageLink;
