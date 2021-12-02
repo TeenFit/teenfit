@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '/providers/exercise.dart';
 
-class RestPage extends StatelessWidget {
+class RestPage extends StatelessWidget { 
   final Exercise exercise;
   final Function goToNext;
   final CountDownController _restCountDownController;
