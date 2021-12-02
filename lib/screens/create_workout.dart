@@ -28,6 +28,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   bool isEdit = false;
   var workoutProv;
   bool _isLoading = false;
+  bool isInit = false;
 
   List<Exercise>? exerciseEditList;
 
@@ -40,21 +41,26 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
     exerciseEditList = workout!.exercises == [] ? [] : workout!.exercises;
 
-    newWorkout = Workout(
-      failed: false,
-      pending: true,
-      date: workout!.date,
-      creatorName: workout!.creatorName,
-      creatorId: workout!.creatorId,
-      workoutId: workout!.workoutId,
-      workoutName: workout!.workoutName,
-      instagram: workout!.instagram,
-      facebook: workout!.facebook,
-      tumblrPageLink: workout!.tumblrPageLink,
-      bannerImage: workout!.bannerImage,
-      bannerImageLink: workout!.bannerImageLink,
-      exercises: exerciseEditList!,
-    );
+    if (isInit == false) {
+      newWorkout = Workout(
+        failed: false,
+        pending: true,
+        date: workout!.date,
+        creatorName: workout!.creatorName,
+        creatorId: workout!.creatorId,
+        workoutId: workout!.workoutId,
+        workoutName: workout!.workoutName,
+        instagram: workout!.instagram,
+        facebook: workout!.facebook,
+        tumblrPageLink: workout!.tumblrPageLink,
+        bannerImage: workout!.bannerImage,
+        bannerImageLink: workout!.bannerImageLink,
+        exercises: exerciseEditList!,
+      );
+      setState(() {
+        isInit = true;
+      });
+    }
 
     super.didChangeDependencies();
   }

@@ -20,6 +20,7 @@ class WorkoutImagePicker extends StatefulWidget {
 
 class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
   File? _pickedImage;
+  bool isLoading = false;
 
   void _showToast(String msg) {
     Fluttertoast.showToast(
@@ -33,6 +34,9 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
   }
 
   Future<void> _pickImage() async {
+    setState(() {
+      isLoading = true;
+    });
     final pickedImageFile = await ImagePicker()
         .pickImage(
       source: ImageSource.gallery,
@@ -63,8 +67,13 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
 
     if (this.mounted) {
       setState(() {
-        _pickedImage =
-            pickedImageFile == null ? _pickedImage : File(pickedImageFile.path);
+        if (pickedImageFile == null) {
+          _pickedImage = _pickedImage;
+        } else {
+          _pickedImage = File(pickedImageFile.path);
+          // _pickedVideo = null;
+        }
+        isLoading = false;
       });
     }
   }
@@ -72,6 +81,7 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
+    final _theme = Theme.of(context);
 
     return Padding(
       padding: const EdgeInsets.all(15.0),
@@ -85,56 +95,63 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
             Container(
               height: _mediaQuery.size.height * 0.28,
               width: _mediaQuery.size.width,
-              child: InkWell(
-                child: _pickedImage == null
-                    ? widget.imageLink == null
-                        ? Image.asset(
-                            'assets/images/UploadImage.png',
-                            fit: BoxFit.contain,
-                          )
-                        : FadeInImage(
-                            placeholder:
-                                AssetImage('assets/images/loading-gif.gif'),
-                            placeholderErrorBuilder: (context, _, __) =>
-                                Image.asset(
-                                  'assets/images/loading-gif.gif',
+              child: isLoading
+                  ? CircularProgressIndicator(
+                      strokeWidth: 4,
+                      backgroundColor: _theme.shadowColor,
+                      color: Colors.white,
+                    )
+                  : InkWell(
+                      child: _pickedImage == null
+                          ? widget.imageLink == null
+                              ? Image.asset(
+                                  'assets/images/UploadImage.png',
                                   fit: BoxFit.contain,
-                                ),
-                            fit: BoxFit.cover,
-                            //change
-                            image: NetworkImage(widget.imageLink!),
-                            imageErrorBuilder: (image, _, __) => Image.asset(
-                                  'assets/images/ImageUploadError.png',
-                                  fit: BoxFit.contain,
-                                ))
-                    : FadeInImage(
-                        placeholder:
-                            AssetImage('assets/images/loading-gif.gif'),
-                        placeholderErrorBuilder: (context, _, __) =>
-                            Image.asset(
-                          'assets/images/loading-gif.gif',
-                          fit: BoxFit.contain,
-                        ),
-                        fit: BoxFit.cover,
-                        //change
-                        image: FileImage(_pickedImage!),
-                        imageErrorBuilder: (image, _, __) => Image.asset(
-                          'assets/images/ImageUploadError.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                onTap: () async {
-                  await _pickImage()
-                      .then((_) => widget.imagePickFn(_pickedImage));
-                },
-              ),
+                                )
+                              : FadeInImage(
+                                  placeholder: AssetImage(
+                                      'assets/images/loading-gif.gif'),
+                                  placeholderErrorBuilder: (context, _, __) =>
+                                      Image.asset(
+                                        'assets/images/loading-gif.gif',
+                                        fit: BoxFit.contain,
+                                      ),
+                                  fit: BoxFit.cover,
+                                  //change
+                                  image: NetworkImage(widget.imageLink!),
+                                  imageErrorBuilder: (image, _, __) =>
+                                      Image.asset(
+                                        'assets/images/ImageUploadError.png',
+                                        fit: BoxFit.contain,
+                                      ))
+                          : FadeInImage(
+                              placeholder:
+                                  AssetImage('assets/images/loading-gif.gif'),
+                              placeholderErrorBuilder: (context, _, __) =>
+                                  Image.asset(
+                                'assets/images/loading-gif.gif',
+                                fit: BoxFit.contain,
+                              ),
+                              fit: BoxFit.cover,
+                              //change
+                              image: FileImage(_pickedImage!),
+                              imageErrorBuilder: (image, _, __) => Image.asset(
+                                'assets/images/ImageUploadError.png',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                      onTap: () async {
+                        await _pickImage();
+                        await widget.imagePickFn(_pickedImage);
+                      },
+                    ),
             ),
             Container(
               height: _mediaQuery.size.height * 0.06,
               child: TextButton.icon(
                 onPressed: () async {
-                  await _pickImage()
-                      .then((_) => widget.imagePickFn(_pickedImage));
+                  await _pickImage();
+                  await widget.imagePickFn(_pickedImage);
                 },
                 icon: Icon(
                   Icons.image,

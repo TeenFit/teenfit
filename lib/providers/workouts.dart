@@ -85,7 +85,7 @@ class Workouts with ChangeNotifier {
         final exerciseRef = FirebaseStorage.instance
             .ref()
             .child('${workouT.workoutId}')
-            .child(exerciseS[i].exerciseId + workouT.workoutId + '.jpg');
+            .child(exerciseS[i].exerciseId + workouT.workoutId);
 
         await exerciseRef.putFile(exerciseS[i].exerciseImage!);
 
@@ -104,7 +104,7 @@ class Workouts with ChangeNotifier {
       final ref = FirebaseStorage.instance
           .ref()
           .child('${workouT.workoutId}')
-          .child(workouT.workoutId + '.jpg');
+          .child(workouT.workoutId);
 
       await ref.putFile(workouT.bannerImage!);
 
@@ -209,7 +209,7 @@ class Workouts with ChangeNotifier {
           final exerciseRef = FirebaseStorage.instance
               .ref()
               .child('${workouT.workoutId}')
-              .child(exerciseS[i].exerciseId + workouT.workoutId + '.jpg');
+              .child(exerciseS[i].exerciseId + workouT.workoutId);
 
           if (exerciseS[i].exerciseImage != null) {
             await exerciseRef.putFile(exerciseS[i].exerciseImage!);
@@ -245,13 +245,13 @@ class Workouts with ChangeNotifier {
       do {
         {
           unavailableExercises
-              .remove(exerciseS[index].exerciseId + workouT.workoutId + '.jpg');
+              .remove(exerciseS[index].exerciseId + workouT.workoutId);
         }
         index = index + 1;
       } while (index < exerciseS.length);
 
       unavailableExercises.forEach((element) async {
-        if (element != (workouT.workoutId + '.jpg')) {
+        if (element != (workouT.workoutId)) {
           await FirebaseStorage.instance
               .ref()
               .child(workouT.workoutId)
@@ -265,7 +265,7 @@ class Workouts with ChangeNotifier {
       final ref = FirebaseStorage.instance
           .ref()
           .child('${workouT.workoutId}')
-          .child(workouT.workoutId + '.jpg');
+          .child(workouT.workoutId);
 
       if (workouT.bannerImage != null) {
         await ref.putFile(workouT.bannerImage!);
@@ -370,7 +370,7 @@ class Workouts with ChangeNotifier {
     final exerciseS = workouT.exercises;
 
     Future<void> deleteImages() async {
-      await deleteImageRef.child(workouT.workoutId + '.jpg').delete();
+      await deleteImageRef.child(workouT.workoutId).delete();
 
       int index = 0;
 
@@ -378,7 +378,7 @@ class Workouts with ChangeNotifier {
         await FirebaseStorage.instance
             .ref()
             .child('${workouT.workoutId}')
-            .child(exerciseS[index].exerciseId + workouT.workoutId + '.jpg')
+            .child(exerciseS[index].exerciseId + workouT.workoutId)
             .delete();
 
         index = index + 1;
