@@ -8,6 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:teenfit/screens/admin_screen.dart';
+import 'package:teenfit/screens/privacy_policy_screen.dart';
 
 import './screens/auth/reset_pass_screen.dart';
 import './providers/auth.dart';
@@ -122,8 +123,8 @@ class _MyAppState extends State<MyApp> {
                                   return OfflineBuilder(
                                     connectivityBuilder:
                                         (context, connectivity, child) {
-                                      bool connected =
-                                          connectivity != ConnectivityResult.none;
+                                      bool connected = connectivity !=
+                                          ConnectivityResult.none;
 
                                       return Scaffold(
                                         body: Stack(
@@ -232,7 +233,8 @@ class _MyAppState extends State<MyApp> {
             AddWorkoutScreen.routeName: (ctx) => AddWorkoutScreen(),
             AddExerciseScreen.routeName: (ctx) => AddExerciseScreen(),
             ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
-            AdminScreen.routeName: (ctx) => AdminScreen()
+            AdminScreen.routeName: (ctx) => AdminScreen(),
+            PrivacyPolicyScreen.routeName: (ctx) => PrivacyPolicyScreen(),
           },
         ),
       ),

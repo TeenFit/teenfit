@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/screens/admin_screen.dart';
+import 'package:teenfit/screens/privacy_policy_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '/providers/auth.dart';
@@ -206,7 +207,7 @@ class MainDrawer extends StatelessWidget {
                   child: Text(
                     'Questions?',
                     style: TextStyle(
-                      color: Colors.blue,
+                      color: Colors.white,
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w900,
                       fontSize: _mediaQuery.size.height * 0.05,
@@ -280,18 +281,21 @@ class MainDrawer extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   height: (_mediaQuery.size.height - _appBarHieght) * 0.085,
                   width: double.infinity,
-                  child: TextButton(
+                  child: TextButton.icon(
+                    icon: Icon(
+                      Icons.picture_as_pdf_rounded,
+                      size: _mediaQuery.size.height * 0.04,
+                      color: Colors.white,
+                    ),
                     onPressed: () {
-                      launch('https://drive.google.com/file/d/1y9KmEaAy1kHHnhjAnQAnvTOaOX3SoW4q/view?usp=sharing')
-                          .catchError((_, stack) {
-                        _showToast('Unable To Open Link');
-                      });
+                      Navigator.of(context)
+                          .pushNamed(PrivacyPolicyScreen.routeName);
                     },
-                    child: Text(
+                    label: Text(
                       'Privacy Policy',
                       textAlign: TextAlign.start,
                       style: TextStyle(
-                        color: Colors.blue,
+                        color: Colors.white,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w900,
                         fontSize: _mediaQuery.size.height * 0.04,
