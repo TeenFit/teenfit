@@ -5,6 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
+// import 'package:teenfit/widgets/video_player.dart';
+// import 'package:video_player/video_player.dart';
 
 class ExerciseImagePicker extends StatefulWidget {
   final String? imageLink;
@@ -203,7 +205,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                     //     size: _mediaQuery.size.height * 0.04,
                     //   ),
                     //   title: Text(
-                    //     'Pick A Video',
+                    //     'Pick A Video < 5 seconds',
                     //     textAlign: TextAlign.start,
                     //     style: TextStyle(
                     //         fontSize: _mediaQuery.size.height * 0.025,
@@ -253,30 +255,30 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                   : InkWell(
                       child: _pickedImage == null
                           // ? _pickedVideo == null
-                          ? widget.imageLink == null
-                              ? Image.asset(
-                                  'assets/images/UploadImage.png',
-                                  fit: BoxFit.contain,
-                                )
-                              : FadeInImage(
-                                  placeholder: AssetImage(
-                                      'assets/images/loading-gif.gif'),
-                                  placeholderErrorBuilder: (context, _, __) =>
-                                      Image.asset(
-                                        'assets/images/loading-gif.gif',
-                                        fit: BoxFit.contain,
-                                      ),
-                                  fit: BoxFit.cover,
-                                  //change
-                                  image: NetworkImage(widget.imageLink!),
-                                  imageErrorBuilder: (image, _, __) =>
-                                      Image.asset(
-                                        'assets/images/ImageUploadError.png',
-                                        fit: BoxFit.contain,
-                                      ))
-                          // : VideoPlayerWidget(
-                          //     controller: videoPlayerController,
-                          //   )
+                              ? widget.imageLink == null
+                                  ? Image.asset(
+                                      'assets/images/UploadImage.png',
+                                      fit: BoxFit.contain,
+                                    )
+                                  : FadeInImage(
+                                      placeholder: AssetImage(
+                                          'assets/images/loading-gif.gif'),
+                                      placeholderErrorBuilder:
+                                          (context, _, __) => Image.asset(
+                                                'assets/images/loading-gif.gif',
+                                                fit: BoxFit.contain,
+                                              ),
+                                      fit: BoxFit.cover,
+                                      //change
+                                      image: NetworkImage(widget.imageLink!),
+                                      imageErrorBuilder: (image, _, __) =>
+                                          Image.asset(
+                                            'assets/images/ImageUploadError.png',
+                                            fit: BoxFit.contain,
+                                          ))
+                              // : VideoPlayerWidget(
+                              //     controller: videoPlayerController,
+                              //   )
                           : FadeInImage(
                               placeholder:
                                   AssetImage('assets/images/loading-gif.gif'),
