@@ -86,7 +86,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       exerciseEditList!.insert(
         0,
         Exercise(
-          exerciseVideo: exercisE.exerciseVideo,
+            exerciseVideo: exercisE.exerciseVideo,
             exerciseImageLink: exercisE.exerciseImageLink,
             exerciseId: exercisE.exerciseId,
             name: exercisE.name,
@@ -148,10 +148,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         return;
       }
 
-      if (exerciseEditList!.length < 3) {
-        _showToast('A Minnimum Of 3 Exercises Is Required');
-        return;
-      }
+      // if (exerciseEditList!.length < 3) {
+      //   _showToast('A Minnimum Of 3 Exercises Is Required');
+      //   return;
+      // }
 
       if (exerciseEditList!.length > 15) {
         _showToast('Maximum Of 15 Exercises');
@@ -179,11 +179,11 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         exercises: newWorkout!.exercises,
       );
 
-      try {
-        setState(() {
-          _isLoading = true;
-        });
+      setState(() {
+        _isLoading = true;
+      });
 
+      try {
         isEdit
             ? await Provider.of<Workouts>(context, listen: false)
                 .updateWorkout(newWorkout!)
@@ -191,13 +191,13 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             : await Provider.of<Workouts>(context, listen: false)
                 .addWorkout(newWorkout!)
                 .then((_) => Navigator.of(context).pop());
-
-        setState(() {
-          _isLoading = false;
-        });
       } catch (e) {
         _showToast('Unable To Add Workout Try Again Later');
       }
+
+      setState(() {
+        _isLoading = false;
+      });
     }
 
     Widget buildCreatorName() {

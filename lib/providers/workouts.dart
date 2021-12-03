@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 
 import '/providers/exercise.dart';
 import '/Custom/http_execption.dart';
@@ -76,6 +77,8 @@ class Workouts with ChangeNotifier {
 
     List<Map> exerciseImages = [];
 
+    var _flutterFFmpeg = FlutterFFmpeg();
+
     Future<void> addExerciseImageLink(List<Exercise> exerciseS) async {
       int i = 0;
 
@@ -86,7 +89,10 @@ class Workouts with ChangeNotifier {
             .child(exerciseS[i].exerciseId + workouT.workoutId);
 
         if (exerciseS[i].exerciseVideo != null) {
-          //convert to gif
+         //convert to gif then upload (exerciseVideo is a File? type)
+
+
+          await exerciseRef.putFile(exerciseS[i].exerciseVideo!);
         } else if (exerciseS[i].exerciseImage != null) {
           await exerciseRef.putFile(exerciseS[i].exerciseImage!);
         }
@@ -188,10 +194,10 @@ class Workouts with ChangeNotifier {
           ));
       notifyListeners();
     } on FirebaseException catch (e) {
-      deleteWorkout(workouT);
+      await deleteWorkout(workouT);
       throw HttpException(e.toString());
     } catch (e) {
-      deleteWorkout(workouT);
+      await deleteWorkout(workouT);
       throw HttpException(e.toString());
     }
     notifyListeners();
@@ -362,10 +368,10 @@ class Workouts with ChangeNotifier {
           ));
       notifyListeners();
     } on FirebaseException catch (e) {
-      deleteWorkout(workouT);
+      await deleteWorkout(workouT);
       throw HttpException(e.toString());
     } catch (e) {
-      deleteWorkout(workouT);
+      await deleteWorkout(workouT);
       throw HttpException(e.toString());
     }
     notifyListeners();
