@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teenfit/widgets/video_player.dart';
 
 import '../Custom/custom_dialog.dart';
 import '../screens/add_exercise_screen.dart';
@@ -41,16 +42,19 @@ class ExerciseTiles extends StatelessWidget {
                 height: _mediaQuery.size.height * 0.18,
                 width: size * 0.5,
                 child: exercise.exerciseImage == null
-                    ? FadeInImage(
-                        imageErrorBuilder: (context, image, _) => Image.asset(
-                          'assets/images/ImageUploadError.png',
-                          fit: BoxFit.cover,
-                        ),
-                        placeholder:
-                            AssetImage('assets/images/loading-gif.gif'),
-                        image: NetworkImage(exercise.exerciseImageLink!),
-                        fit: BoxFit.cover,
-                      )
+                    ? exercise.exerciseVideo == null
+                        ? FadeInImage(
+                            imageErrorBuilder: (context, image, _) =>
+                                Image.asset(
+                              'assets/images/ImageUploadError.png',
+                              fit: BoxFit.cover,
+                            ),
+                            placeholder:
+                                AssetImage('assets/images/loading-gif.gif'),
+                            image: NetworkImage(exercise.exerciseImageLink!),
+                            fit: BoxFit.cover,
+                          )
+                        : VideoPlayerWidget(videofile: exercise.exerciseVideo!)
                     : FadeInImage(
                         imageErrorBuilder: (context, image, _) => Image.asset(
                           'assets/images/ImageUploadError.png',
@@ -93,6 +97,8 @@ class ExerciseTiles extends StatelessWidget {
                                         'updateExercise': updateExercise,
                                         'edit': true,
                                         'exercise': Exercise(
+                                            exerciseVideo:
+                                                exercise.exerciseVideo,
                                             exerciseImageLink:
                                                 exercise.exerciseImageLink,
                                             exerciseId: exercise.exerciseId,

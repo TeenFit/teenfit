@@ -86,6 +86,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       exerciseEditList!.insert(
         0,
         Exercise(
+          exerciseVideo: exercisE.exerciseVideo,
             exerciseImageLink: exercisE.exerciseImageLink,
             exerciseId: exercisE.exerciseId,
             name: exercisE.name,
@@ -461,6 +462,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                           'updateExercise': updateExercise,
                           'edit': false,
                           'exercise': Exercise(
+                            exerciseVideo: null,
                             exerciseId: uuid.v1(),
                             name: '',
                             reps: null,
@@ -494,6 +496,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                     updateExercise: updateExercise,
                     delete: deleteExercise,
                     exercise: Exercise(
+                      exerciseVideo: newWorkout!.exercises[index].exerciseVideo,
                       exerciseId: newWorkout!.exercises[index].exerciseId,
                       name: newWorkout!.exercises[index].name,
                       exerciseImage: newWorkout!.exercises[index].exerciseImage,

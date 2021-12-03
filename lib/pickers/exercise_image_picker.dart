@@ -6,14 +6,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
 import 'package:teenfit/widgets/video_player.dart';
-import 'package:video_player/video_player.dart';
 
 class ExerciseImagePicker extends StatefulWidget {
   final String? imageLink;
   final File? imageFile;
   final Function pickFn;
+  final File? videoFile;
 
-  ExerciseImagePicker(this.pickFn, this.imageLink, this.imageFile);
+  ExerciseImagePicker(
+      this.pickFn, this.imageLink, this.imageFile, this.videoFile);
 
   @override
   _ExerciseImagePickerState createState() => _ExerciseImagePickerState();
@@ -22,7 +23,6 @@ class ExerciseImagePicker extends StatefulWidget {
 class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
   File? _pickedImage;
   File? _pickedVideo;
-  VideoPlayerController? videoPlayerController;
   bool isLoading = false;
   bool isInit = false;
 
@@ -36,20 +36,17 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
           _pickedImage = widget.imageFile;
         });
       }
+      if (widget.videoFile != null) {
+        setState(() {
+          _pickedVideo = widget.videoFile;
+        });
+      }
       if (this.mounted) {
         setState(() {
           isInit = true;
         });
       }
     }
-  }
-
-  @override
-  void dispose() {
-    if (videoPlayerController != null) {
-      videoPlayerController!.dispose();
-    }
-    super.dispose();
   }
 
   void _showToast(String msg) {
@@ -140,13 +137,6 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
           _pickedImage = null;
         }
       });
-    }
-
-    if (_pickedVideo != null && _pickedVideo!.existsSync()) {
-      videoPlayerController = VideoPlayerController.file(_pickedVideo!)
-        ..addListener(() => setState(() {}))
-        ..setLooping(true)
-        ..initialize().then((_) => videoPlayerController!.play());
     }
   }
 
@@ -276,7 +266,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                                             fit: BoxFit.contain,
                                           ))
                               : VideoPlayerWidget(
-                                  controller: videoPlayerController,
+                                  videofile: _pickedVideo,
                                 )
                           : FadeInImage(
                               placeholder:

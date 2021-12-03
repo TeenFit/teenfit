@@ -80,16 +80,18 @@ class Workouts with ChangeNotifier {
       int i = 0;
 
       do {
-        print(exerciseS);
-
         final exerciseRef = FirebaseStorage.instance
             .ref()
             .child('${workouT.workoutId}')
             .child(exerciseS[i].exerciseId + workouT.workoutId);
 
-        await exerciseRef.putFile(exerciseS[i].exerciseImage!);
+        if (exerciseS[i].exerciseVideo != null) {
+          //convert to gif
+        } else if (exerciseS[i].exerciseImage != null) {
+          await exerciseRef.putFile(exerciseS[i].exerciseImage!);
+        }
 
-        final exerciseLink = await exerciseRef.getDownloadURL();
+        var exerciseLink = await exerciseRef.getDownloadURL();
 
         exerciseImages.add({
           'image': exerciseLink,
@@ -132,7 +134,7 @@ class Workouts with ChangeNotifier {
             (element) => element['id'] == e.exerciseId + workouT.workoutId);
 
         return Exercise(
-
+            exerciseVideo: null,
             exerciseId: e.exerciseId,
             name: e.name,
             reps: e.reps,
@@ -141,7 +143,7 @@ class Workouts with ChangeNotifier {
             timeSeconds: e.timeSeconds,
             exerciseImageLink:
                 exerciseImages[exerciseIndex]['image'].toString(),
-            exerciseImage: e.exerciseImage);
+            exerciseImage: null);
       }).toList();
 
       var workoutDocInfo = {
@@ -186,8 +188,10 @@ class Workouts with ChangeNotifier {
           ));
       notifyListeners();
     } on FirebaseException catch (e) {
+      deleteWorkout(workouT);
       throw HttpException(e.toString());
     } catch (e) {
+      deleteWorkout(workouT);
       throw HttpException(e.toString());
     }
     notifyListeners();
@@ -211,8 +215,13 @@ class Workouts with ChangeNotifier {
               .child('${workouT.workoutId}')
               .child(exerciseS[i].exerciseId + workouT.workoutId);
 
-          if (exerciseS[i].exerciseImage != null) {
-            await exerciseRef.putFile(exerciseS[i].exerciseImage!);
+          if (exerciseS[i].exerciseImage != null ||
+              exerciseS[i].exerciseVideo != null) {
+            if (exerciseS[i].exerciseVideo != null) {
+              //convert to gif
+            } else if (exerciseS[i].exerciseImage != null) {
+              await exerciseRef.putFile(exerciseS[i].exerciseImage!);
+            }
           }
 
           final exerciseLink = await exerciseRef.getDownloadURL();
@@ -295,7 +304,7 @@ class Workouts with ChangeNotifier {
             (element) => element['id'] == e.exerciseId + workouT.workoutId);
 
         return Exercise(
-
+            exerciseVideo: null,
             exerciseId: e.exerciseId,
             name: e.name,
             reps: e.reps,
@@ -304,7 +313,7 @@ class Workouts with ChangeNotifier {
             timeSeconds: e.timeSeconds,
             exerciseImageLink:
                 exerciseImages[exerciseIndex]['image'].toString(),
-            exerciseImage: e.exerciseImage);
+            exerciseImage: null);
       }).toList();
 
       var workoutDocInfo = {
@@ -353,8 +362,10 @@ class Workouts with ChangeNotifier {
           ));
       notifyListeners();
     } on FirebaseException catch (e) {
+      deleteWorkout(workouT);
       throw HttpException(e.toString());
     } catch (e) {
+      deleteWorkout(workouT);
       throw HttpException(e.toString());
     }
     notifyListeners();
@@ -396,9 +407,9 @@ class Workouts with ChangeNotifier {
           .removeWhere((workout) => workout.workoutId == workouT.workoutId);
       notifyListeners();
     } on FirebaseException catch (_) {
-      throw HttpException('Unable To Delete Exercise');
+      throw HttpException('Unable To Save Exercise');
     } catch (e) {
-      throw HttpException('Unable To Delete Exercise');
+      throw HttpException('Unable To Save Exercise');
     }
     notifyListeners();
   }

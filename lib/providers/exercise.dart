@@ -9,8 +9,10 @@ class Exercise {
   final File? exerciseImage;
   final String? exerciseImageLink;
   final String exerciseId;
+  final File? exerciseVideo;
 
   Exercise({
+    this.exerciseVideo,
     required this.exerciseId,
     required this.name,
     this.reps,
