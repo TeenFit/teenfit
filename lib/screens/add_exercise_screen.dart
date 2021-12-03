@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:teenfit/pickers/exercise_image_picker.dart';
-// import 'package:http/http.dart' as http;
 
 import '../providers/exercise.dart';
 import 'package:uuid/uuid.dart';
@@ -87,12 +86,12 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       );
     }
 
-    Future<void> _pick(File? image, /*File? video*/) async {
+    Future<void> _pick(File? image, File? video) async {
       setState(() {
         newExercise = Exercise(
             exerciseId: newExercise!.exerciseId,
             name: newExercise!.name,
-            exerciseImage: image,
+            exerciseImage: image == null ? video : image,
             sets: newExercise!.sets,
             reps: newExercise!.reps,
             timeSeconds: newExercise!.timeSeconds,

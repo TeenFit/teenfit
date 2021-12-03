@@ -5,8 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
-// import 'package:teenfit/widgets/video_player.dart';
-// import 'package:video_player/video_player.dart';
+import 'package:teenfit/widgets/video_player.dart';
+import 'package:video_player/video_player.dart';
 
 class ExerciseImagePicker extends StatefulWidget {
   final String? imageLink;
@@ -21,8 +21,8 @@ class ExerciseImagePicker extends StatefulWidget {
 
 class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
   File? _pickedImage;
-  // File? _pickedVideo;
-  // VideoPlayerController? videoPlayerController;
+  File? _pickedVideo;
+  VideoPlayerController? videoPlayerController;
   bool isLoading = false;
   bool isInit = false;
 
@@ -44,13 +44,13 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
     }
   }
 
-  // @override
-  // void dispose() {
-  //   if (videoPlayerController != null) {
-  //     videoPlayerController!.dispose();
-  //   }
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    if (videoPlayerController != null) {
+      videoPlayerController!.dispose();
+    }
+    super.dispose();
+  }
 
   void _showToast(String msg) {
     Fluttertoast.showToast(
@@ -98,57 +98,57 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
           _pickedImage = _pickedImage;
         } else {
           _pickedImage = File(pickedImageFile.path);
-          // _pickedVideo = null;
+          _pickedVideo = null;
         }
       });
     }
   }
 
-  // Future<void> _pickVideo() async {
-  //   var pickedVideoFile = await ImagePicker()
-  //       .pickVideo(
-  //     source: ImageSource.gallery,
-  //     maxDuration: Duration(seconds: 5),
-  //   )
-  //       .catchError(
-  //     (e) async {
-  //       var status = await Permission.photos.isDenied;
+  Future<void> _pickVideo() async {
+    var pickedVideoFile = await ImagePicker()
+        .pickVideo(
+      source: ImageSource.gallery,
+      maxDuration: Duration(seconds: 5),
+    )
+        .catchError(
+      (e) async {
+        var status = await Permission.photos.isDenied;
 
-  //       if (status) {
-  //         showDialog(
-  //           context: context,
-  //           builder: (context) => CustomDialogBox(
-  //             'Denied Access',
-  //             'Unable to access photo Library please Allow Access in Settings',
-  //             'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
-  //             'photo-access',
-  //             {},
-  //           ),
-  //         );
-  //       } else {
-  //         _showToast('Video Must Be Shorter Than 5 Seconds');
-  //       }
-  //     },
-  //   );
+        if (status) {
+          showDialog(
+            context: context,
+            builder: (context) => CustomDialogBox(
+              'Denied Access',
+              'Unable to access photo Library please Allow Access in Settings',
+              'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
+              'photo-access',
+              {},
+            ),
+          );
+        } else {
+          _showToast('Video Must Be Shorter Than 5 Seconds');
+        }
+      },
+    );
 
-  //   if (this.mounted) {
-  //     setState(() {
-  //       if (pickedVideoFile == null) {
-  //         _pickedVideo = _pickedVideo;
-  //       } else {
-  //         _pickedVideo = File(pickedVideoFile.path);
-  //         _pickedImage = null;
-  //       }
-  //     });
-  //   }
+    if (this.mounted) {
+      setState(() {
+        if (pickedVideoFile == null) {
+          _pickedVideo = _pickedVideo;
+        } else {
+          _pickedVideo = File(pickedVideoFile.path);
+          _pickedImage = null;
+        }
+      });
+    }
 
-  //   if (_pickedVideo != null && _pickedVideo!.existsSync()) {
-  //     videoPlayerController = VideoPlayerController.file(_pickedVideo!)
-  //       ..addListener(() => setState(() {}))
-  //       ..setLooping(true)
-  //       ..initialize().then((_) => videoPlayerController!.play());
-  //   }
-  // }
+    if (_pickedVideo != null && _pickedVideo!.existsSync()) {
+      videoPlayerController = VideoPlayerController.file(_pickedVideo!)
+        ..addListener(() => setState(() {}))
+        ..setLooping(true)
+        ..initialize().then((_) => videoPlayerController!.play());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +190,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                           isLoading = true;
                         });
                         await _pickImage();
-                        await widget.pickFn(_pickedImage);
+                        await widget.pickFn(_pickedImage, _pickedVideo);
                         if (this.mounted) {
                           setState(() {
                             isLoading = false;
@@ -199,34 +199,34 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                         Navigator.of(context).pop();
                       },
                     ),
-                    // ListTile(
-                    //   leading: Icon(
-                    //     Icons.play_arrow_rounded,
-                    //     size: _mediaQuery.size.height * 0.04,
-                    //   ),
-                    //   title: Text(
-                    //     'Pick A Video < 5 seconds',
-                    //     textAlign: TextAlign.start,
-                    //     style: TextStyle(
-                    //         fontSize: _mediaQuery.size.height * 0.025,
-                    //         fontWeight: FontWeight.w600),
-                    //   ),
-                    //   onTap: () async {
-                    //     setState(() {
-                    //       isLoading = true;
-                    //     });
-                    //     await _pickVideo();
-                    //     await widget.pickFn(_pickedImage, _pickedVideo);
+                    ListTile(
+                      leading: Icon(
+                        Icons.play_arrow_rounded,
+                        size: _mediaQuery.size.height * 0.04,
+                      ),
+                      title: Text(
+                        'Pick A Video < 5 seconds',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                            fontSize: _mediaQuery.size.height * 0.025,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      onTap: () async {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        await _pickVideo();
+                        await widget.pickFn(_pickedImage, _pickedVideo);
 
-                    //     if (this.mounted) {
-                    //       setState(() {
-                    //         isLoading = false;
-                    //       });
-                    //     }
+                        if (this.mounted) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
 
-                    //     Navigator.of(context).pop();
-                    //   },
-                    // ),
+                        Navigator.of(context).pop();
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -254,7 +254,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                     )
                   : InkWell(
                       child: _pickedImage == null
-                          // ? _pickedVideo == null
+                          ? _pickedVideo == null
                               ? widget.imageLink == null
                                   ? Image.asset(
                                       'assets/images/UploadImage.png',
@@ -269,16 +269,15 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                                                 fit: BoxFit.contain,
                                               ),
                                       fit: BoxFit.cover,
-                                      //change
                                       image: NetworkImage(widget.imageLink!),
                                       imageErrorBuilder: (image, _, __) =>
                                           Image.asset(
                                             'assets/images/ImageUploadError.png',
                                             fit: BoxFit.contain,
                                           ))
-                              // : VideoPlayerWidget(
-                              //     controller: videoPlayerController,
-                              //   )
+                              : VideoPlayerWidget(
+                                  controller: videoPlayerController,
+                                )
                           : FadeInImage(
                               placeholder:
                                   AssetImage('assets/images/loading-gif.gif'),
@@ -288,7 +287,6 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                                 fit: BoxFit.contain,
                               ),
                               fit: BoxFit.cover,
-                              //change
                               image: FileImage(_pickedImage!),
                               imageErrorBuilder: (image, _, __) => Image.asset(
                                 'assets/images/ImageUploadError.png',
