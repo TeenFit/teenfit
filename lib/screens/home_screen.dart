@@ -36,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   String? selectedTerm;
   bool isInit = false;
+  bool isStart = true;
 
   List<String> filterSearchTerms(
     String? filter,
@@ -94,9 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     Connectivity().onConnectivityChanged.listen((event) async {
-      if (this.mounted) {
-        await Phoenix.rebirth(context);
-      }
+      await Phoenix.rebirth(context);
     });
 
     super.didChangeDependencies();

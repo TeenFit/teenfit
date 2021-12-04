@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 
 import '/providers/exercise.dart';
 import '/Custom/http_execption.dart';
@@ -77,8 +76,6 @@ class Workouts with ChangeNotifier {
 
     List<Map> exerciseImages = [];
 
-    var _flutterFFmpeg = FlutterFFmpeg();
-
     Future<void> addExerciseImageLink(List<Exercise> exerciseS) async {
       int i = 0;
 
@@ -88,14 +85,9 @@ class Workouts with ChangeNotifier {
             .child('${workouT.workoutId}')
             .child(exerciseS[i].exerciseId + workouT.workoutId);
 
-        if (exerciseS[i].exerciseVideo != null) {
-         //convert to gif then upload (exerciseVideo is a File? type)
-
-
-          await exerciseRef.putFile(exerciseS[i].exerciseVideo!);
-        } else if (exerciseS[i].exerciseImage != null) {
+      
           await exerciseRef.putFile(exerciseS[i].exerciseImage!);
-        }
+        
 
         var exerciseLink = await exerciseRef.getDownloadURL();
 
@@ -140,7 +132,6 @@ class Workouts with ChangeNotifier {
             (element) => element['id'] == e.exerciseId + workouT.workoutId);
 
         return Exercise(
-            exerciseVideo: null,
             exerciseId: e.exerciseId,
             name: e.name,
             reps: e.reps,
@@ -194,11 +185,9 @@ class Workouts with ChangeNotifier {
           ));
       notifyListeners();
     } on FirebaseException catch (e) {
-      await deleteWorkout(workouT);
       throw HttpException(e.toString());
     } catch (e) {
       await deleteWorkout(workouT);
-      throw HttpException(e.toString());
     }
     notifyListeners();
   }
@@ -221,14 +210,10 @@ class Workouts with ChangeNotifier {
               .child('${workouT.workoutId}')
               .child(exerciseS[i].exerciseId + workouT.workoutId);
 
-          if (exerciseS[i].exerciseImage != null ||
-              exerciseS[i].exerciseVideo != null) {
-            if (exerciseS[i].exerciseVideo != null) {
-              //convert to gif
-            } else if (exerciseS[i].exerciseImage != null) {
+         if (exerciseS[i].exerciseImage != null) {
               await exerciseRef.putFile(exerciseS[i].exerciseImage!);
             }
-          }
+          
 
           final exerciseLink = await exerciseRef.getDownloadURL();
 
@@ -310,7 +295,6 @@ class Workouts with ChangeNotifier {
             (element) => element['id'] == e.exerciseId + workouT.workoutId);
 
         return Exercise(
-            exerciseVideo: null,
             exerciseId: e.exerciseId,
             name: e.name,
             reps: e.reps,
@@ -368,10 +352,8 @@ class Workouts with ChangeNotifier {
           ));
       notifyListeners();
     } on FirebaseException catch (e) {
-      await deleteWorkout(workouT);
       throw HttpException(e.toString());
     } catch (e) {
-      await deleteWorkout(workouT);
       throw HttpException(e.toString());
     }
     notifyListeners();

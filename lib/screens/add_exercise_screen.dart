@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:teenfit/pickers/exercise_image_picker.dart';
+import 'package:video_trimmer/video_trimmer.dart';
 
 import '../providers/exercise.dart';
 import 'package:uuid/uuid.dart';
@@ -38,7 +39,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
         exerciseImageLink: newExercise!.exerciseImageLink,
         exerciseId: newExercise!.exerciseId,
         name: newExercise!.name,
-        exerciseVideo: newExercise!.exerciseVideo,
         exerciseImage: newExercise!.exerciseImage,
         reps: newExercise!.reps,
         sets: newExercise!.sets,
@@ -88,22 +88,50 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     }
 
     Future<void> _pick(File? image, File? video) async {
-      setState(() {
-        newExercise = Exercise(
-            exerciseVideo: video,
-            exerciseId: newExercise!.exerciseId,
-            name: newExercise!.name,
-            exerciseImage: image,
-            sets: newExercise!.sets,
-            reps: newExercise!.reps,
-            timeSeconds: newExercise!.timeSeconds,
-            restTime: newExercise!.restTime,
-            exerciseImageLink: newExercise!.exerciseImageLink);
-      });
+      if (image != null) {
+        setState(() {
+          newExercise = Exercise(
+              exerciseId: newExercise!.exerciseId,
+              name: newExercise!.name,
+              exerciseImage: image,
+              sets: newExercise!.sets,
+              reps: newExercise!.reps,
+              timeSeconds: newExercise!.timeSeconds,
+              restTime: newExercise!.restTime,
+              exerciseImageLink: newExercise!.exerciseImageLink);
+        });
+      } else if (video != null) {
+        final Trimmer _trimmer = Trimmer();
+        await _trimmer.loadVideo(videoFile: video);
+
+        await _trimmer
+            .saveTrimmedVideo(
+          videoFileName: DateTime.now().toString(),
+          videoFolderName: 'Workout-Gifs',
+          storageDir: StorageDir.temporaryDirectory,
+          startValue: 0,
+          endValue: 500,
+          outputFormat: FileFormat.gif,
+        )
+            .then((value) async {
+          setState(() {
+            newExercise = Exercise(
+                exerciseId: newExercise!.exerciseId,
+                name: newExercise!.name,
+                exerciseImage: File(value),
+                sets: newExercise!.sets,
+                reps: newExercise!.reps,
+                timeSeconds: newExercise!.timeSeconds,
+                restTime: newExercise!.restTime,
+                exerciseImageLink: newExercise!.exerciseImageLink);
+          });
+        });
+        _trimmer.dispose();
+      }
     }
 
     Future<void> _submit() async {
-      if ((newExercise!.exerciseImage == null && newExercise!.exerciseVideo == null) && isEdit == false) {
+      if (newExercise!.exerciseImage == null && isEdit == false) {
         _showToast('Image Required');
         return;
       }
@@ -120,7 +148,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
       newExercise = switchOnOf!
           ? Exercise(
-              exerciseVideo: newExercise!.exerciseVideo,
               exerciseId: newExercise!.exerciseId,
               name: newExercise!.name,
               exerciseImage: newExercise!.exerciseImage,
@@ -130,7 +157,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
               restTime: newExercise!.restTime,
               exerciseImageLink: newExercise!.exerciseImageLink)
           : Exercise(
-              exerciseVideo: newExercise!.exerciseVideo,
               exerciseId: newExercise!.exerciseId,
               name: newExercise!.name,
               exerciseImage: newExercise!.exerciseImage,
@@ -175,7 +201,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
             },
             onSaved: (input) {
               newExercise = Exercise(
-                  exerciseVideo: newExercise!.exerciseVideo,
                   exerciseId: newExercise!.exerciseId,
                   name: input.toString().trim(),
                   timeSeconds: newExercise!.timeSeconds,
@@ -260,7 +285,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                         },
                         onSaved: (input) {
                           newExercise = Exercise(
-                              exerciseVideo: newExercise!.exerciseVideo,
                               exerciseId: newExercise!.exerciseId,
                               name: newExercise!.name,
                               timeSeconds: input.toString().isEmpty
@@ -309,7 +333,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                         },
                         onSaved: (input) {
                           newExercise = Exercise(
-                              exerciseVideo: newExercise!.exerciseVideo,
                               exerciseId: newExercise!.exerciseId,
                               name: newExercise!.name,
                               timeSeconds: newExercise!.timeSeconds,
@@ -367,7 +390,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                         },
                         onSaved: (input) {
                           newExercise = Exercise(
-                              exerciseVideo: newExercise!.exerciseVideo,
                               exerciseId: newExercise!.exerciseId,
                               name: newExercise!.name,
                               timeSeconds: newExercise!.timeSeconds,
@@ -416,7 +438,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                         },
                         onSaved: (input) {
                           newExercise = Exercise(
-                              exerciseVideo: newExercise!.exerciseVideo,
                               exerciseId: newExercise!.exerciseId,
                               name: newExercise!.name,
                               timeSeconds: newExercise!.timeSeconds,
@@ -468,7 +489,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                   height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
                 ),
                 ExerciseImagePicker(_pick, newExercise!.exerciseImageLink,
-                    newExercise!.exerciseImage, newExercise!.exerciseVideo),
+                    newExercise!.exerciseImage),
                 buildExerciseName(),
                 SizedBox(
                   height: _mediaQuery.size.height * 0.03,

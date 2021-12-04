@@ -11,10 +11,9 @@ class ExerciseImagePicker extends StatefulWidget {
   final String? imageLink;
   final File? imageFile;
   final Function pickFn;
-  final File? videoFile;
 
   ExerciseImagePicker(
-      this.pickFn, this.imageLink, this.imageFile, this.videoFile);
+      this.pickFn, this.imageLink, this.imageFile);
 
   @override
   _ExerciseImagePickerState createState() => _ExerciseImagePickerState();
@@ -36,11 +35,8 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
           _pickedImage = widget.imageFile;
         });
       }
-      if (widget.videoFile != null) {
-        setState(() {
-          _pickedVideo = widget.videoFile;
-        });
-      }
+    
+      
       if (this.mounted) {
         setState(() {
           isInit = true;
