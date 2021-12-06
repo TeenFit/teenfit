@@ -18,6 +18,14 @@ class _IntroPageState extends State<IntroPage> {
   int pageIndex = 0;
 
   @override
+  void didChangeDependencies() {
+    precacheImage(AssetImage('assets/images/IntroCarouselBG1.png'), context);
+    precacheImage(AssetImage('assets/images/IntroCarouselBG2.png'), context);
+    precacheImage(AssetImage('assets/images/IntroCarouselBG3.png'), context);
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);

@@ -141,31 +141,45 @@ class WorkoutPage extends StatelessWidget {
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'Roboto',
-                                    fontSize: _mediaQuery.size.height * 0.05,
+                                    fontSize: _mediaQuery.size.height * 0.055,
                                     letterSpacing: 1,
+                                    shadows: <Shadow>[
+                                      Shadow(
+                                        offset: Offset(2.5, 2.5),
+                                        blurRadius: 1.0,
+                                        color:
+                                            Color.fromARGB(255, 128, 128, 128),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
                               Container(
-                                width: _mediaQuery.size.width * 0.55,
-                                child: FittedBox(
-                                  fit: BoxFit.fitWidth,
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                      _mediaQuery.size.width * 0.02,
-                                      0,
-                                      _mediaQuery.size.width * 0.03,
-                                      _mediaQuery.size.width * 0.008,
-                                    ),
-                                    child: Text(
-                                      'by: ${workout.creatorName}',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'PTSans',
-                                        fontSize:
-                                            _mediaQuery.size.height * 0.035,
-                                        letterSpacing: 1,
-                                      ),
+                                alignment: Alignment.centerRight,
+                                width: _mediaQuery.size.width,
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                    _mediaQuery.size.width * 0.02,
+                                    0,
+                                    _mediaQuery.size.width * 0.03,
+                                    _mediaQuery.size.width * 0.008,
+                                  ),
+                                  child: Text(
+                                    'by: ${workout.creatorName}',
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'PTSans',
+                                      fontSize: _mediaQuery.size.height * 0.045,
+                                      letterSpacing: 1,
+                                      shadows: <Shadow>[
+                                        Shadow(
+                                          offset: Offset(2.5, 2.5),
+                                          blurRadius: 1.0,
+                                          color: Color.fromARGB(
+                                              255, 128, 128, 128),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),

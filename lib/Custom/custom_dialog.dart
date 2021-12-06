@@ -71,14 +71,14 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
             children: <Widget>[
               Text(
                 widget.title,
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
               ),
               SizedBox(
                 height: 15,
               ),
               Text(
                 widget.description,
-                style: TextStyle(fontSize: 14),
+                style: TextStyle(fontSize: 16),
                 textAlign: TextAlign.center,
               ),
               SizedBox(
@@ -87,6 +87,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
               Align(
                 alignment: Alignment.bottomRight,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: isLoading
                       ? [
                           Center(
@@ -181,7 +182,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                         ? 'Back'
                                         : 'Yes',
                                     style: TextStyle(
-                                        fontSize: 18, color: Colors.black),
+                                        fontSize: 23, color: Colors.black),
                                   ),
                                 ),
                           widget.dialogOrganizerId == 'contact-us'
@@ -203,7 +204,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                         ? 'Okay'
                                         : 'No',
                                     style: TextStyle(
-                                        fontSize: 18, color: Colors.black),
+                                        fontSize: 23, color: Colors.black),
                                   ),
                                 ),
                         ],
