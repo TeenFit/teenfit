@@ -115,6 +115,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
         });
       } else if (video != null) {
         final Trimmer _trimmer = Trimmer();
+
         await _trimmer.loadVideo(videoFile: video);
 
         await _trimmer

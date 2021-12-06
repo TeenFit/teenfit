@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
 import 'package:teenfit/pickers/workout_image_picker.dart';
 import 'package:uuid/uuid.dart';
+import 'package:video_trimmer/video_trimmer.dart';
 
 import '../screens/add_exercise_screen.dart';
 import '../providers/exercise.dart';
@@ -193,6 +194,17 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       } catch (e) {
         _showToast('Unable To Add Workout Try Again Later');
       }
+
+      List<Exercise> deleteFiles = newWorkout!.exercises
+          .where(
+            (element) => (element.exerciseImage != null &&
+                element.exerciseImage!.path.contains('Workout-Gifs')),
+          )
+          .toList();
+
+      deleteFiles.forEach((e) async {
+        await e.exerciseImage!.delete();
+      });
 
       setState(() {
         _isLoading = false;
