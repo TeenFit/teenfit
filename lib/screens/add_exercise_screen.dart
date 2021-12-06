@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:numberpicker/numberpicker.dart';
 import 'package:teenfit/pickers/exercise_image_picker.dart';
 import 'package:video_trimmer/video_trimmer.dart';
 
@@ -21,6 +22,10 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
   var uuid = Uuid();
   bool isInit = false;
   bool isLoading = false;
+  int reps = 5;
+  int sets = 5;
+  int time = 5;
+  int restTime = 5;
 
   Map? exerciseProv;
   Exercise? newExercise;
@@ -34,6 +39,11 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
     if (isInit == false) {
       newExercise = exerciseProv!['exercise'];
+
+      reps = newExercise!.reps != null ? newExercise!.reps! : 5;
+      sets = newExercise!.sets != null ? newExercise!.sets! : 5;
+      time = newExercise!.timeSeconds != null ? newExercise!.timeSeconds! : 5;
+      restTime = newExercise!.restTime != null ? newExercise!.restTime! : 5;
 
       newExercise = Exercise(
         exerciseImageLink: newExercise!.exerciseImageLink,
@@ -88,6 +98,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     }
 
     Future<void> _pick(File? image, File? video) async {
+      setState(() {
+        isLoading = true;
+      });
       if (image != null) {
         setState(() {
           newExercise = Exercise(
@@ -110,8 +123,10 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
           videoFolderName: 'Workout-Gifs',
           storageDir: StorageDir.temporaryDirectory,
           startValue: 0,
-          endValue: 500,
+          endValue: 5000,
           outputFormat: FileFormat.gif,
+          fpsGIF: 8,
+          scaleGIF: 380,
         )
             .then((value) async {
           setState(() {
@@ -127,6 +142,11 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
           });
         });
         _trimmer.dispose();
+      }
+      if (this.mounted) {
+        setState(() {
+          isLoading = false;
+        });
       }
     }
 
@@ -153,15 +173,15 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
               exerciseImage: newExercise!.exerciseImage,
               sets: null,
               reps: null,
-              timeSeconds: newExercise!.timeSeconds,
-              restTime: newExercise!.restTime,
+              timeSeconds: time,
+              restTime: restTime,
               exerciseImageLink: newExercise!.exerciseImageLink)
           : Exercise(
               exerciseId: newExercise!.exerciseId,
               name: newExercise!.name,
               exerciseImage: newExercise!.exerciseImage,
-              sets: newExercise!.sets,
-              reps: newExercise!.reps,
+              sets: sets,
+              reps: reps,
               timeSeconds: null,
               restTime: null,
               exerciseImageLink: newExercise!.exerciseImageLink);
@@ -194,7 +214,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
             ),
             textInputAction: TextInputAction.next,
             validator: (value) {
-              if (value.toString().isEmpty) {
+              if (value.toString().trim().isEmpty) {
                 return 'Name is Required';
               }
               return null;
@@ -247,7 +267,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     Widget buildRepsOrTime() {
       return switchOnOf!
           ? Container(
-              height: _mediaQuery.size.height * 0.25,
+              height: _mediaQuery.size.height * 0.65,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -255,96 +275,67 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Container(
-                      height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
                       width: _mediaQuery.size.width,
-                      child: TextFormField(
-                        initialValue: newExercise!.timeSeconds == null
-                            ? ''
-                            : newExercise!.timeSeconds.toString(),
-                        decoration: InputDecoration(
-                          hintText: 'Exercise Time (sec)',
-                          hintStyle: TextStyle(
-                              fontSize: _mediaQuery.size.height * 0.02),
-                        ),
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        validator: (value) {
-                          if (value.toString().isEmpty) {
-                            return 'Needs A Value';
-                          } else if (isNumeric(value.toString())) {
-                            return 'Numbers Only';
-                          } else if (int.parse(value.toString()) == 0) {
-                            return 'Must be greater';
-                          } else if (int.parse(value.toString()) >= 301) {
-                            return '300 seconds is max';
-                          }
-                          return null;
-                        },
-                        onSaved: (input) {
-                          newExercise = Exercise(
-                              exerciseId: newExercise!.exerciseId,
-                              name: newExercise!.name,
-                              timeSeconds: input.toString().isEmpty
-                                  ? null
-                                  : int.parse(input.toString().trim()),
-                              restTime: newExercise!.restTime,
-                              sets: newExercise!.sets,
-                              reps: newExercise!.reps,
-                              exerciseImage: newExercise!.exerciseImage,
-                              exerciseImageLink:
-                                  newExercise!.exerciseImageLink);
-                        },
+                      child: Column(
+                        children: [
+                          Text(
+                            'TIME',
+                            style: TextStyle(
+                              wordSpacing: 2,
+                              fontSize: 20,
+                            ),
+                          ),
+                          SizedBox(
+                            height: _mediaQuery.size.height * 0.02,
+                          ),
+                          NumberPicker(
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                              border: Border.all(),
+                            ),
+                            value: time,
+                            minValue: 5,
+                            maxValue: 300,
+                            step: 5,
+                            onChanged: (value) => setState(() => time = value),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Container(
-                      height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
                       width: _mediaQuery.size.width,
-                      child: TextFormField(
-                        initialValue: newExercise!.restTime == null
-                            ? ''
-                            : newExercise!.restTime.toString(),
-                        decoration: InputDecoration(
-                          hintText: 'Rest Time (sec)',
-                          hintStyle: TextStyle(
-                              fontSize: _mediaQuery.size.height * 0.02),
-                        ),
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        validator: (value) {
-                          if (value.toString().isEmpty) {
-                            return 'Needs A Value';
-                          } else if (isNumeric(value.toString())) {
-                            return 'Numbers Only';
-                          } else if (int.parse(value.toString()) == 0) {
-                            return 'Must be greater';
-                          } else if (int.parse(value.toString()) >= 151) {
-                            return '150 seconds is max';
-                          }
-                          return null;
-                        },
-                        onSaved: (input) {
-                          newExercise = Exercise(
-                              exerciseId: newExercise!.exerciseId,
-                              name: newExercise!.name,
-                              timeSeconds: newExercise!.timeSeconds,
-                              restTime: input.toString().isEmpty
-                                  ? null
-                                  : int.parse(input.toString().trim()),
-                              sets: newExercise!.sets,
-                              reps: newExercise!.reps,
-                              exerciseImage: newExercise!.exerciseImage,
-                              exerciseImageLink:
-                                  newExercise!.exerciseImageLink);
-                        },
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: _mediaQuery.size.height * 0.02,
+                          ),
+                          Text(
+                            'REST TIME',
+                            style: TextStyle(
+                              wordSpacing: 2,
+                              fontSize: 20,
+                            ),
+                          ),
+                          NumberPicker(
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                              border: Border.all(),
+                            ),
+                            value: restTime,
+                            minValue: 5,
+                            maxValue: 300,
+                            step: 5,
+                            onChanged: (value) =>
+                                setState(() => restTime = value),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -352,7 +343,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
               ),
             )
           : Container(
-              height: _mediaQuery.size.height * 0.25,
+              height: _mediaQuery.size.height * 0.65,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -360,96 +351,66 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Container(
-                      height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
                       width: _mediaQuery.size.width,
-                      child: TextFormField(
-                        initialValue: newExercise!.sets == null
-                            ? ''
-                            : newExercise!.sets.toString(),
-                        decoration: InputDecoration(
-                          hintText: 'Sets',
-                          hintStyle: TextStyle(
-                              fontSize: _mediaQuery.size.height * 0.02),
-                        ),
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        validator: (value) {
-                          if (value.toString().isEmpty) {
-                            return 'Needs A Value';
-                          } else if (isNumeric(value.toString())) {
-                            return 'Numbers Only';
-                          } else if (int.parse(value.toString().trim()) == 0) {
-                            return 'Must be greater';
-                          } else if (int.parse(value.toString().trim()) >= 11) {
-                            return '10 sets is max';
-                          }
-                          return null;
-                        },
-                        onSaved: (input) {
-                          newExercise = Exercise(
-                              exerciseId: newExercise!.exerciseId,
-                              name: newExercise!.name,
-                              timeSeconds: newExercise!.timeSeconds,
-                              restTime: newExercise!.restTime,
-                              sets: input.toString().isEmpty
-                                  ? null
-                                  : int.parse(input.toString().trim()),
-                              reps: newExercise!.reps,
-                              exerciseImage: newExercise!.exerciseImage,
-                              exerciseImageLink:
-                                  newExercise!.exerciseImageLink);
-                        },
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: _mediaQuery.size.height * 0.02,
+                          ),
+                          Text(
+                            'SETS',
+                            style: TextStyle(
+                              wordSpacing: 2,
+                              fontSize: 20,
+                            ),
+                          ),
+                          NumberPicker(
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                              border: Border.all(),
+                            ),
+                            value: sets,
+                            minValue: 5,
+                            maxValue: 300,
+                            step: 5,
+                            onChanged: (value) => setState(() => sets = value),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Container(
-                      height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
                       width: _mediaQuery.size.width,
-                      child: TextFormField(
-                        initialValue: newExercise!.reps == null
-                            ? ''
-                            : newExercise!.reps.toString(),
-                        decoration: InputDecoration(
-                          hintText: 'Reps',
-                          hintStyle: TextStyle(
-                              fontSize: _mediaQuery.size.height * 0.02),
-                        ),
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        validator: (value) {
-                          if (value.toString().isEmpty) {
-                            return 'Needs A Value';
-                          } else if (isNumeric(value.toString().trim())) {
-                            return 'Numbers Only';
-                          } else if (int.parse(value.toString().trim()) == 0) {
-                            return 'Must be greater';
-                          } else if (int.parse(value.toString().trim()) >= 26) {
-                            return '25 reps is max';
-                          }
-                          return null;
-                        },
-                        onSaved: (input) {
-                          newExercise = Exercise(
-                              exerciseId: newExercise!.exerciseId,
-                              name: newExercise!.name,
-                              timeSeconds: newExercise!.timeSeconds,
-                              restTime: newExercise!.restTime,
-                              sets: newExercise!.sets,
-                              reps: input.toString().isEmpty
-                                  ? null
-                                  : int.parse(input.toString().trim()),
-                              exerciseImage: newExercise!.exerciseImage,
-                              exerciseImageLink:
-                                  newExercise!.exerciseImageLink);
-                        },
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: _mediaQuery.size.height * 0.02,
+                          ),
+                          Text(
+                            'REPS',
+                            style: TextStyle(
+                              wordSpacing: 2,
+                              fontSize: 20,
+                            ),
+                          ),
+                          NumberPicker(
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                              border: Border.all(),
+                            ),
+                            value: reps,
+                            minValue: 5,
+                            maxValue: 300,
+                            step: 5,
+                            onChanged: (value) => setState(() => reps = value),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -501,21 +462,21 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                   child: Container(
                     width: _mediaQuery.size.width,
                     height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
-                    child: isLoading
-                        ? CircularProgressIndicator(
-                            strokeWidth: 4,
-                            backgroundColor: _theme.shadowColor,
-                            color: Colors.white,
-                          )
-                        : ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: _theme.primaryColor,
-                              onPrimary: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                            ),
-                            child: Text(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: _theme.primaryColor,
+                        onPrimary: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      child: isLoading
+                          ? CircularProgressIndicator(
+                              strokeWidth: 4,
+                              backgroundColor: _theme.shadowColor,
+                              color: Colors.white,
+                            )
+                          : Text(
                               'Submit',
                               style: TextStyle(
                                 fontFamily: 'Roboto',
@@ -523,11 +484,13 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                                 fontSize: _mediaQuery.size.height * 0.03,
                               ),
                             ),
-                            onPressed: () async {
+                      onPressed: isLoading
+                          ? () {}
+                          : () async {
                               await _submit();
                               Navigator.of(context).pop();
                             },
-                          ),
+                    ),
                   ),
                 )
               ],

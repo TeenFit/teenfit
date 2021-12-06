@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/screens/admin_screen.dart';
-import 'package:teenfit/screens/privacy_policy_screen.dart';
+import 'package:teenfit/screens/user_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '/providers/auth.dart';
@@ -45,15 +45,17 @@ class MainDrawer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: _mediaQuery.padding.top,
+                height: _mediaQuery.padding.top * 1.2,
               ),
-              Container(
-                width: double.infinity,
-                height: (_mediaQuery.size.height - _appBarHieght) * 0.15,
-                child: Image.asset(
-                  'assets/images/teen_fit_logo_withtext_white.png',
-                  fit: BoxFit.contain,
+              ListTile(
+                leading: Icon(
+                  Icons.person_rounded,
+                  color: _theme.highlightColor,
+                  size: _mediaQuery.size.height * 0.08,
                 ),
+                onTap: () {
+                  Navigator.of(context).pushNamed(UserScreen.routeName);
+                },
               ),
               SizedBox(
                 height: _mediaQuery.size.height * 0.02,
@@ -199,6 +201,9 @@ class MainDrawer extends StatelessWidget {
                   : SizedBox(
                       height: (_mediaQuery.size.height - _appBarHieght) * 0.15,
                     ),
+              SizedBox(
+                height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
+              ),
               Padding(
                 padding: EdgeInsets.all(15),
                 child: Container(
@@ -207,7 +212,7 @@ class MainDrawer extends StatelessWidget {
                   child: Text(
                     'Questions?',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: _theme.highlightColor,
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w900,
                       fontSize: _mediaQuery.size.height * 0.05,
@@ -272,64 +277,6 @@ class MainDrawer extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(15),
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  height: (_mediaQuery.size.height - _appBarHieght) * 0.085,
-                  width: double.infinity,
-                  child: TextButton.icon(
-                    icon: Icon(
-                      Icons.picture_as_pdf_rounded,
-                      size: _mediaQuery.size.height * 0.04,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushNamed(PrivacyPolicyScreen.routeName);
-                    },
-                    label: Text(
-                      'Privacy Policy',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w900,
-                        fontSize: _mediaQuery.size.height * 0.04,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: _mediaQuery.size.height * 0.15,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                child: Container(
-                  height: (_mediaQuery.size.height - _appBarHieght) * 0.09,
-                  width: double.infinity,
-                  child: TextButton(
-                    child: Text(
-                      'Log Out?',
-                      style: TextStyle(
-                        color: _theme.highlightColor,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w900,
-                        fontSize: _mediaQuery.size.height * 0.04,
-                      ),
-                      textAlign: TextAlign.right,
-                    ),
-                    onPressed: () async {
-                      try {
-                        await auth.logout(context);
-                      } catch (e) {
-                        _showToast('Unable To Logout Try Again Later');
-                      }
-                    },
                   ),
                 ),
               ),

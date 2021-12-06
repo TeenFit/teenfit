@@ -142,22 +142,22 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     }
 
     Future<void> _submit() async {
+      if (!_formKey3.currentState!.validate()) {
+        _showToast('Failed Fields');
+        return;
+      }
       if (newWorkout!.bannerImage == null && isEdit == false) {
         _showToast('An Image is Required');
         return;
       }
 
-      // if (exerciseEditList!.length < 3) {
-      //   _showToast('A Minnimum Of 3 Exercises Is Required');
-      //   return;
-      // }
-
-      if (exerciseEditList!.length > 15) {
-        _showToast('Maximum Of 15 Exercises');
+      if (exerciseEditList!.length < 3) {
+        _showToast('A Minnimum Of 3 Exercises Is Required');
+        return;
       }
 
-      if (!_formKey3.currentState!.validate()) {
-        return;
+      if (exerciseEditList!.length > 10) {
+        _showToast('Maximum Of 10 Exercises');
       }
 
       _formKey3.currentState!.save();
@@ -217,9 +217,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             keyboardType: TextInputType.url,
             textInputAction: TextInputAction.next,
             validator: (value) {
-              if (value.toString().isEmpty) {
+              if (value.toString().trim().isEmpty) {
                 return 'Name is Required';
-              } else if (value.toString().length > 10) {
+              } else if (value.toString().trim().length > 10) {
                 return 'Stay Under 10 Characters Please';
               }
               return null;
@@ -264,9 +264,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             keyboardType: TextInputType.url,
             textInputAction: TextInputAction.next,
             validator: (value) {
-              if (value.toString().isEmpty) {
+              if (value.toString().trim().isEmpty) {
                 return 'Name is Required';
-              } else if (value.toString().length > 25) {
+              } else if (value.toString().trim().length > 25) {
                 return 'Stay Under 25 Characters Please';
               }
               return null;
@@ -323,8 +323,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,
                 workoutName: newWorkout!.workoutName,
-                instagram:
-                    input.toString().isEmpty ? '' : input.toString().trim(),
+                instagram: input.toString().trim().isEmpty
+                    ? ''
+                    : input.toString().trim(),
                 facebook: newWorkout!.facebook,
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
@@ -369,8 +370,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 instagram: newWorkout!.instagram,
                 bannerImageLink: newWorkout!.bannerImageLink,
                 facebook: newWorkout!.facebook,
-                tumblrPageLink:
-                    input.toString().isEmpty ? '' : input.toString().trim(),
+                tumblrPageLink: input.toString().trim().isEmpty
+                    ? ''
+                    : input.toString().trim(),
                 bannerImage: newWorkout!.bannerImage,
                 exercises: newWorkout!.exercises,
               );
@@ -410,8 +412,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 workoutId: newWorkout!.workoutId,
                 workoutName: newWorkout!.workoutName,
                 instagram: newWorkout!.instagram,
-                facebook:
-                    input.toString().isEmpty ? '' : input.toString().trim(),
+                facebook: input.toString().trim().isEmpty
+                    ? ''
+                    : input.toString().trim(),
                 tumblrPageLink: newWorkout!.tumblrPageLink,
                 bannerImage: newWorkout!.bannerImage,
                 bannerImageLink: newWorkout!.bannerImageLink,
@@ -454,25 +457,28 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.of(context).pushNamed(
-                        AddExerciseScreen.routeName,
-                        arguments: {
-                          'addExercise': addExercise,
-                          'updateExercise': updateExercise,
-                          'edit': false,
-                          'exercise': Exercise(
-                        
-                            exerciseId: uuid.v1(),
-                            name: '',
-                            reps: null,
-                            sets: null,
-                            timeSeconds: null,
-                            restTime: null,
-                            exerciseImage: null,
-                            exerciseImageLink: null,
-                          ),
-                        },
-                      );
+                      if (exerciseEditList!.length < 10) {
+                        Navigator.of(context).pushNamed(
+                          AddExerciseScreen.routeName,
+                          arguments: {
+                            'addExercise': addExercise,
+                            'updateExercise': updateExercise,
+                            'edit': false,
+                            'exercise': Exercise(
+                              exerciseId: uuid.v1(),
+                              name: '',
+                              reps: null,
+                              sets: null,
+                              timeSeconds: null,
+                              restTime: null,
+                              exerciseImage: null,
+                              exerciseImageLink: null,
+                            ),
+                          },
+                        );
+                      } else {
+                        _showToast('Maximum 10 Exercises');
+                      }
                     },
                   ),
                 ),
@@ -495,7 +501,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                     updateExercise: updateExercise,
                     delete: deleteExercise,
                     exercise: Exercise(
-                
                       exerciseId: newWorkout!.exercises[index].exerciseId,
                       name: newWorkout!.exercises[index].name,
                       exerciseImage: newWorkout!.exercises[index].exerciseImage,

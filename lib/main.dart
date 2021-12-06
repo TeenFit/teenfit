@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:teenfit/screens/admin_screen.dart';
 import 'package:teenfit/screens/privacy_policy_screen.dart';
+import 'package:teenfit/screens/user_screen.dart';
 
 import './screens/auth/reset_pass_screen.dart';
 import './providers/auth.dart';
@@ -232,6 +233,7 @@ class _MyAppState extends State<MyApp> {
             CreateWorkout.routeName: (ctx) => CreateWorkout(),
             AddWorkoutScreen.routeName: (ctx) => AddWorkoutScreen(),
             AddExerciseScreen.routeName: (ctx) => AddExerciseScreen(),
+            UserScreen.routeName: (ctx) => UserScreen(),
             ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
             AdminScreen.routeName: (ctx) => AdminScreen(),
             PrivacyPolicyScreen.routeName: (ctx) => PrivacyPolicyScreen(),

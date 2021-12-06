@@ -12,8 +12,7 @@ class ExerciseImagePicker extends StatefulWidget {
   final File? imageFile;
   final Function pickFn;
 
-  ExerciseImagePicker(
-      this.pickFn, this.imageLink, this.imageFile);
+  ExerciseImagePicker(this.pickFn, this.imageLink, this.imageFile);
 
   @override
   _ExerciseImagePickerState createState() => _ExerciseImagePickerState();
@@ -35,8 +34,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
           _pickedImage = widget.imageFile;
         });
       }
-    
-      
+
       if (this.mounted) {
         setState(() {
           isInit = true;
@@ -176,13 +174,13 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                           isLoading = true;
                         });
                         await _pickImage();
+                        Navigator.of(context).pop();
                         await widget.pickFn(_pickedImage, _pickedVideo);
                         if (this.mounted) {
                           setState(() {
                             isLoading = false;
                           });
                         }
-                        Navigator.of(context).pop();
                       },
                     ),
                     ListTile(
@@ -202,6 +200,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                           isLoading = true;
                         });
                         await _pickVideo();
+                        Navigator.of(context).pop();
                         await widget.pickFn(_pickedImage, _pickedVideo);
 
                         if (this.mounted) {
@@ -209,8 +208,6 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                             isLoading = false;
                           });
                         }
-
-                        Navigator.of(context).pop();
                       },
                     ),
                   ],

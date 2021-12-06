@@ -12,9 +12,10 @@ class PrivacyPolicyScreen extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: _theme.highlightColor,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: _theme.cardColor,
+        foregroundColor: Colors.white,
+        backgroundColor: _theme.primaryColor,
         title: Text(
           'Privacy Policy',
           style: TextStyle(
@@ -54,7 +55,7 @@ The terms used in this Privacy Policy have the same meanings as in our Terms and
 ''',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.03,
-                      color: Colors.white),
+                      color: Colors.black),
                 ),
                 SizedBox(
                   height: _mediaQuery.size.height * 0.025,
@@ -64,7 +65,7 @@ The terms used in this Privacy Policy have the same meanings as in our Terms and
 and Use''',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.04,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -75,7 +76,7 @@ and Use''',
                   ''',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.03,
-                      color: Colors.white),
+                      color: Colors.black),
                 ),
                 SizedBox(
                   height: _mediaQuery.size.height * 0.025,
@@ -84,7 +85,7 @@ and Use''',
                   'Log Data',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.04,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -95,7 +96,7 @@ and Use''',
                 ''',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.03,
-                      color: Colors.white),
+                      color: Colors.black),
                 ),
                 SizedBox(
                   height: _mediaQuery.size.height * 0.025,
@@ -104,7 +105,7 @@ and Use''',
                   'Cookies',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.04,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -116,7 +117,7 @@ This Service does not use these "cookies" explicitly. However, the app may use t
   ''',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.03,
-                      color: Colors.white),
+                      color: Colors.black),
                 ),
                 SizedBox(
                   height: _mediaQuery.size.height * 0.025,
@@ -125,7 +126,7 @@ This Service does not use these "cookies" explicitly. However, the app may use t
                   'Service Providers',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.04,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -147,7 +148,7 @@ We want to inform users of this Service that these third parties have access to 
 ''',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.03,
-                      color: Colors.white),
+                      color: Colors.black),
                 ),
                 SizedBox(
                   height: _mediaQuery.size.height * 0.025,
@@ -156,7 +157,7 @@ We want to inform users of this Service that these third parties have access to 
                   'Security',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.04,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -167,7 +168,7 @@ We want to inform users of this Service that these third parties have access to 
   ''',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.03,
-                      color: Colors.white),
+                      color: Colors.black),
                 ),
                 SizedBox(
                   height: _mediaQuery.size.height * 0.025,
@@ -176,7 +177,7 @@ We want to inform users of this Service that these third parties have access to 
                   'Links to Other Sites',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.04,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -187,7 +188,7 @@ We want to inform users of this Service that these third parties have access to 
 ''',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.03,
-                      color: Colors.white),
+                      color: Colors.black),
                 ),
                 SizedBox(
                   height: _mediaQuery.size.height * 0.025,
@@ -196,7 +197,7 @@ We want to inform users of this Service that these third parties have access to 
                   'Children\'s Privacy',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.04,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -207,7 +208,7 @@ We want to inform users of this Service that these third parties have access to 
  ''',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.03,
-                      color: Colors.white),
+                      color: Colors.black),
                 ),
                 SizedBox(
                   height: _mediaQuery.size.height * 0.025,
@@ -216,7 +217,7 @@ We want to inform users of this Service that these third parties have access to 
                   'Changes to This Privacy Policy',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.04,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -228,7 +229,7 @@ This Policy is effective as of 2021-12-01
 ''',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.03,
-                      color: Colors.white),
+                      color: Colors.black),
                 ),
                 SizedBox(
                   height: _mediaQuery.size.height * 0.025,
@@ -237,7 +238,7 @@ This Policy is effective as of 2021-12-01
                   'Contact Us',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.04,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -248,7 +249,7 @@ This Policy is effective as of 2021-12-01
  ''',
                   style: TextStyle(
                       fontSize: _mediaQuery.size.height * 0.03,
-                      color: Colors.white),
+                      color: Colors.black),
                 ),
                 SizedBox(
                   height: _mediaQuery.size.height * 0.025,
