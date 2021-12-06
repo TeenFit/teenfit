@@ -40,8 +40,8 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     if (isInit == false) {
       newExercise = exerciseProv!['exercise'];
 
-      reps = newExercise!.reps != null ? newExercise!.reps! : 5;
-      sets = newExercise!.sets != null ? newExercise!.sets! : 5;
+      reps = newExercise!.reps != null ? newExercise!.reps! : 2;
+      sets = newExercise!.sets != null ? newExercise!.sets! : 1;
       time = newExercise!.timeSeconds != null ? newExercise!.timeSeconds! : 5;
       restTime = newExercise!.restTime != null ? newExercise!.restTime! : 5;
 
@@ -298,13 +298,19 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                             ),
                             value: time,
                             minValue: 5,
-                            maxValue: 300,
+                            maxValue: 240,
                             step: 5,
                             onChanged: (value) => setState(() => time = value),
                           ),
                         ],
                       ),
                     ),
+                  ),
+                  Divider(
+                    thickness: 1.5,
+                    color: Colors.black,
+                    indent: 20,
+                    endIndent: 20,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
@@ -331,7 +337,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                             ),
                             value: restTime,
                             minValue: 5,
-                            maxValue: 300,
+                            maxValue: 60,
                             step: 5,
                             onChanged: (value) =>
                                 setState(() => restTime = value),
@@ -373,14 +379,20 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                               border: Border.all(),
                             ),
                             value: sets,
-                            minValue: 5,
-                            maxValue: 300,
-                            step: 5,
+                            minValue: 1,
+                            maxValue: 10,
+                            step: 1,
                             onChanged: (value) => setState(() => sets = value),
                           ),
                         ],
                       ),
                     ),
+                  ),
+                  Divider(
+                    thickness: 1.5,
+                    color: Colors.black,
+                    indent: 20,
+                    endIndent: 20,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
@@ -406,9 +418,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                               border: Border.all(),
                             ),
                             value: reps,
-                            minValue: 5,
-                            maxValue: 300,
-                            step: 5,
+                            minValue: 2,
+                            maxValue: 30,
+                            step: 1,
                             onChanged: (value) => setState(() => reps = value),
                           ),
                         ],

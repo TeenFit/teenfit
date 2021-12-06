@@ -95,11 +95,12 @@ class _ExercisePageState extends State<ExercisePage> {
                       child: Container(
                         height:
                             (_mediaQuery.size.height - _appBarHeight) * 0.11,
-                        width: double.infinity,
+                        width: _mediaQuery.size.width,
                         child: FittedBox(
-                          fit: BoxFit.fitHeight,
+                          fit: BoxFit.contain,
                           child: Text(
                             widget.exercise.name,
+                            maxLines: 2,
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'Roboto',
@@ -227,15 +228,16 @@ class _ExercisePageState extends State<ExercisePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Container(
                     height: (_mediaQuery.size.height - _appBarHeight) * 0.12,
-                    width: double.infinity,
+                    width: _mediaQuery.size.width,
                     child: FittedBox(
-                      fit: BoxFit.fitHeight,
+                      fit: BoxFit.contain,
                       child: Text(
                         widget.exercise.name,
+                        maxLines: 2,
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Roboto',
-                          fontSize: _mediaQuery.size.height * 0.05,
+                          fontSize: _mediaQuery.size.height * 0.045,
                           letterSpacing: 1,
                         ),
                       ),
