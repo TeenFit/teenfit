@@ -18,10 +18,12 @@ class _IntroPageState extends State<IntroPage> {
   int pageIndex = 0;
 
   @override
-  void didChangeDependencies() {
-    precacheImage(AssetImage('assets/images/IntroCarouselBG1.png'), context);
-    precacheImage(AssetImage('assets/images/IntroCarouselBG2.png'), context);
-    precacheImage(AssetImage('assets/images/IntroCarouselBG3.png'), context);
+  void didChangeDependencies() async {
+    try {
+      precacheImage(AssetImage('assets/images/IntroCarouselBG1.png'), context);
+      precacheImage(AssetImage('assets/images/IntroCarouselBG2.png'), context);
+      precacheImage(AssetImage('assets/images/IntroCarouselBG3.png'), context);
+    } catch (e) {}
     super.didChangeDependencies();
   }
 

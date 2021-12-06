@@ -94,9 +94,8 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
 
-    Connectivity().onConnectivityChanged.listen((event) async {
-          await Phoenix.rebirth(context);
-      
+    Connectivity().onConnectivityChanged.listen((event) {}).onDone(() async {
+      await Phoenix.rebirth(context);
     });
 
     super.didChangeDependencies();
