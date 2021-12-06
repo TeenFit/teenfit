@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../Custom/custom_dialog.dart';
@@ -41,19 +42,17 @@ class ExerciseTiles extends StatelessWidget {
                 height: _mediaQuery.size.height * 0.18,
                 width: size * 0.5,
                 child: exercise.exerciseImage == null
-                
-                        ? FadeInImage(
-                            imageErrorBuilder: (context, image, _) =>
-                                Image.asset(
-                              'assets/images/ImageUploadError.png',
-                              fit: BoxFit.cover,
-                            ),
-                            placeholder:
-                                AssetImage('assets/images/loading-gif.gif'),
-                            image: NetworkImage(exercise.exerciseImageLink!),
-                            fit: BoxFit.cover,
-                          )
-                       
+                    ? FadeInImage(
+                        imageErrorBuilder: (context, image, _) => Image.asset(
+                          'assets/images/ImageUploadError.png',
+                          fit: BoxFit.cover,
+                        ),
+                        placeholder:
+                            AssetImage('assets/images/loading-gif.gif'),
+                        image: CachedNetworkImageProvider(
+                            exercise.exerciseImageLink!),
+                        fit: BoxFit.cover,
+                      )
                     : FadeInImage(
                         imageErrorBuilder: (context, image, _) => Image.asset(
                           'assets/images/ImageUploadError.png',
@@ -96,7 +95,6 @@ class ExerciseTiles extends StatelessWidget {
                                         'updateExercise': updateExercise,
                                         'edit': true,
                                         'exercise': Exercise(
-                                          
                                             exerciseImageLink:
                                                 exercise.exerciseImageLink,
                                             exerciseId: exercise.exerciseId,

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../Custom/custom_dialog.dart';
@@ -79,7 +80,8 @@ class _WorkoutTileState extends State<WorkoutTile> {
                     ),
                     fit: BoxFit.cover,
                     //change
-                    image: NetworkImage(widget.workout.bannerImageLink!),
+                    image: CachedNetworkImageProvider(
+                        widget.workout.bannerImageLink!),
                     imageErrorBuilder: (image, _, __) => Image.asset(
                       'assets/images/ImageUploadError.png',
                       fit: BoxFit.cover,

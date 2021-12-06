@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 
@@ -83,7 +84,7 @@ class _ExercisePageState extends State<ExercisePage> {
                                 ),
                                 placeholder:
                                     AssetImage('assets/images/loading-gif.gif'),
-                                image: NetworkImage(
+                                image: CachedNetworkImageProvider(
                                     widget.exercise.exerciseImageLink!),
                                 fit: BoxFit.cover,
                               ),
@@ -216,7 +217,7 @@ class _ExercisePageState extends State<ExercisePage> {
                             ),
                             placeholder:
                                 AssetImage('assets/images/loading-gif.gif'),
-                            image: NetworkImage(
+                            image: CachedNetworkImageProvider(
                                 widget.exercise.exerciseImageLink!),
                             fit: BoxFit.cover,
                           ),

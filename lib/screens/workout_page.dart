@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
@@ -86,7 +87,8 @@ class WorkoutPage extends StatelessWidget {
                             fit: BoxFit.cover,
                           ),
                           fit: BoxFit.cover,
-                          image: NetworkImage(workout.bannerImageLink!),
+                          image: CachedNetworkImageProvider(
+                              workout.bannerImageLink!),
                           imageErrorBuilder: (image, _, __) => Image.asset(
                             'assets/images/ImageUploadError.png',
                             fit: BoxFit.cover,
