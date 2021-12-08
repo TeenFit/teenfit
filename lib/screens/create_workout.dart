@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
 import 'package:teenfit/pickers/workout_image_picker.dart';
 import 'package:uuid/uuid.dart';
-import 'package:video_trimmer/video_trimmer.dart';
 
 import '../screens/add_exercise_screen.dart';
 import '../providers/exercise.dart';
