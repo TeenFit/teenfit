@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:teenfit/screens/auth/intro_page.dart';
 
 import '../Custom/http_execption.dart';
 
@@ -74,6 +76,11 @@ class Auth with ChangeNotifier {
   Future<void> logout(BuildContext context) async {
     try {
       await auth.signOut();
+
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (BuildContext context) => IntroPage()),
+        ModalRoute.withName('/'),
+      );
     } catch (e) {
       throw e;
     }
