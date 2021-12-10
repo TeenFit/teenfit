@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -85,9 +84,7 @@ class Workouts with ChangeNotifier {
             .child('${workouT.workoutId}')
             .child(exerciseS[i].exerciseId + workouT.workoutId);
 
-      
-          await exerciseRef.putFile(exerciseS[i].exerciseImage!);
-        
+        await exerciseRef.putFile(exerciseS[i].exerciseImage!);
 
         var exerciseLink = await exerciseRef.getDownloadURL();
 
@@ -210,10 +207,9 @@ class Workouts with ChangeNotifier {
               .child('${workouT.workoutId}')
               .child(exerciseS[i].exerciseId + workouT.workoutId);
 
-         if (exerciseS[i].exerciseImage != null) {
-              await exerciseRef.putFile(exerciseS[i].exerciseImage!);
-            }
-          
+          if (exerciseS[i].exerciseImage != null) {
+            await exerciseRef.putFile(exerciseS[i].exerciseImage!);
+          }
 
           final exerciseLink = await exerciseRef.getDownloadURL();
 
