@@ -28,6 +28,8 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To Upload Photo's For Workouts</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string> To Pick Photo's For Workouts</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
