@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
@@ -94,9 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
 
-    Connectivity().onConnectivityChanged.listen((event) {}).onDone(() async {
-      await Phoenix.rebirth(context);
-    });
+    Connectivity()
+        .onConnectivityChanged
+        .listen((event) {})
+        .onDone(() => setState(() {}));
 
     super.didChangeDependencies();
   }

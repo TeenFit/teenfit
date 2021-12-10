@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,9 +33,7 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
   runApp(
-    Phoenix(
-      child: MyApp(),
-    ),
+    MyApp(),
   );
 }
 
