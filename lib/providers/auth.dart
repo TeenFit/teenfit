@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import '../Custom/http_execption.dart';
 
@@ -78,7 +77,6 @@ class Auth with ChangeNotifier {
     } catch (e) {
       throw e;
     }
-    Phoenix.rebirth(context);
   }
 
   Future<void> passwordReset(String _email) async {
