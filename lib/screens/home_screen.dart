@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:teenfit/screens/auth/intro_page.dart';
 
 import '/providers/workouts.dart';
 import '../widgets/main_drawer.dart';
@@ -93,10 +94,13 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
 
-    Connectivity()
-        .onConnectivityChanged
-        .listen((event) {})
-        .onDone(() => setState(() {}));
+    Connectivity().onConnectivityChanged.listen((event) {}).onDone(() {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (BuildContext context) => IntroPage()),
+        ModalRoute.withName('/'),
+      );
+      setState(() {});
+    });
 
     super.didChangeDependencies();
   }
