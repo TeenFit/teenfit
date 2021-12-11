@@ -45,6 +45,8 @@ dependencies:
   video_trimmer: ^1.0.0
   numberpicker: ^2.1.1
   cached_network_image: ^3.2.0
+  flutter_offline: ^2.0.0
+  connectivity_plus: ^2.0.3
 
 dev_dependencies:
   flutter_launcher_icons: ^0.9.2
@@ -56,9 +58,9 @@ flutter_icons:
   image_path_ios: "assets/images/icon.png"
   adaptive_icon_background: "assets/icon/icon-background.png"
 
-dependency_overrides:
-  flutter_offline: ^2.0.0
-  connectivity_plus: ^2.0.3
+
+  
+  
 
 
 
