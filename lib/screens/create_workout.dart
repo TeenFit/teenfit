@@ -467,30 +467,32 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                         fontSize: _mediaQuery.size.height * 0.03,
                       ),
                     ),
-                    onPressed: () {
-                      if (exerciseEditList!.length < 10) {
-                        Navigator.of(context).pushNamed(
-                          AddExerciseScreen.routeName,
-                          arguments: {
-                            'addExercise': addExercise,
-                            'updateExercise': updateExercise,
-                            'edit': false,
-                            'exercise': Exercise(
-                              exerciseId: uuid.v1(),
-                              name: '',
-                              reps: null,
-                              sets: null,
-                              timeSeconds: null,
-                              restTime: null,
-                              exerciseImage: null,
-                              exerciseImageLink: null,
-                            ),
+                    onPressed: _isLoading == true
+                        ? () {}
+                        : () {
+                            if (exerciseEditList!.length < 10) {
+                              Navigator.of(context).pushNamed(
+                                AddExerciseScreen.routeName,
+                                arguments: {
+                                  'addExercise': addExercise,
+                                  'updateExercise': updateExercise,
+                                  'edit': false,
+                                  'exercise': Exercise(
+                                    exerciseId: uuid.v1(),
+                                    name: '',
+                                    reps: null,
+                                    sets: null,
+                                    timeSeconds: null,
+                                    restTime: null,
+                                    exerciseImage: null,
+                                    exerciseImageLink: null,
+                                  ),
+                                },
+                              );
+                            } else {
+                              _showToast('Maximum 10 Exercises');
+                            }
                           },
-                        );
-                      } else {
-                        _showToast('Maximum 10 Exercises');
-                      }
-                    },
                   ),
                 ),
               ),
@@ -508,9 +510,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 child: ListView.builder(
                   itemBuilder: (ctx, index) => ExerciseTiles(
                     isDeleteable: true,
-                    addExercise: addExercise,
-                    updateExercise: updateExercise,
-                    delete: deleteExercise,
+                    addExercise: _isLoading == true ? () {} : addExercise,
+                    updateExercise: _isLoading == true ? () {} : updateExercise,
+                    delete: _isLoading == true ? () {} : deleteExercise,
                     exercise: Exercise(
                       exerciseId: newWorkout!.exercises[index].exerciseId,
                       name: newWorkout!.exercises[index].name,
