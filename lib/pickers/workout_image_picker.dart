@@ -151,10 +151,12 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
             Container(
               height: _mediaQuery.size.height * 0.06,
               child: TextButton.icon(
-                onPressed: () async {
-                  await _pickImage();
-                  await widget.imagePickFn(_pickedImage);
-                },
+                onPressed: isLoading == true
+                    ? () {}
+                    : () async {
+                        await _pickImage();
+                        await widget.imagePickFn(_pickedImage);
+                      },
                 icon: Icon(
                   Icons.image,
                   color: Colors.white,

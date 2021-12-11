@@ -598,18 +598,20 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                                 fontSize: _mediaQuery.size.height * 0.03,
                               ),
                             ),
-                      onPressed: () {
-                        isEdit
-                            ? showDialog(
-                                context: context,
-                                builder: (context) => CustomDialogBox(
-                                    'Updating Workout...',
-                                    'When you update a workout it will be pending again are you okay with that?',
-                                    'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
-                                    'pending',
-                                    _submit))
-                            : _submit();
-                      },
+                      onPressed: _isLoading == true
+                          ? () {}
+                          : () {
+                              isEdit
+                                  ? showDialog(
+                                      context: context,
+                                      builder: (context) => CustomDialogBox(
+                                          'Updating Workout...',
+                                          'When you update a workout it will be pending again are you okay with that?',
+                                          'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
+                                          'pending',
+                                          _submit))
+                                  : _submit();
+                            },
                     ),
                   ),
                 )

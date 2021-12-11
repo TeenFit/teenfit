@@ -170,19 +170,21 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                             fontSize: _mediaQuery.size.height * 0.025,
                             fontWeight: FontWeight.w600),
                       ),
-                      onTap: () async {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        await _pickImage();
-                        Navigator.of(context).pop();
-                        await widget.pickFn(_pickedImage, _pickedVideo);
-                        if (this.mounted) {
-                          setState(() {
-                            isLoading = false;
-                          });
-                        }
-                      },
+                      onTap: isLoading == true
+                          ? () {}
+                          : () async {
+                              setState(() {
+                                isLoading = true;
+                              });
+                              await _pickImage();
+                              Navigator.of(context).pop();
+                              await widget.pickFn(_pickedImage, _pickedVideo);
+                              if (this.mounted) {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              }
+                            },
                     ),
                     ListTile(
                       leading: Icon(
@@ -196,20 +198,22 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                             fontSize: _mediaQuery.size.height * 0.025,
                             fontWeight: FontWeight.w600),
                       ),
-                      onTap: () async {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        await _pickVideo();
-                        Navigator.of(context).pop();
-                        await widget.pickFn(_pickedImage, _pickedVideo);
+                      onTap: isLoading == true
+                          ? () {}
+                          : () async {
+                              setState(() {
+                                isLoading = true;
+                              });
+                              await _pickVideo();
+                              Navigator.of(context).pop();
+                              await widget.pickFn(_pickedImage, _pickedVideo);
 
-                        if (this.mounted) {
-                          setState(() {
-                            isLoading = false;
-                          });
-                        }
-                      },
+                              if (this.mounted) {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                              }
+                            },
                     ),
                   ],
                 ),
@@ -253,7 +257,8 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                                                 fit: BoxFit.contain,
                                               ),
                                       fit: BoxFit.cover,
-                                      image: CachedNetworkImageProvider(widget.imageLink!),
+                                      image: CachedNetworkImageProvider(
+                                          widget.imageLink!),
                                       imageErrorBuilder: (image, _, __) =>
                                           Image.asset(
                                             'assets/images/ImageUploadError.png',
