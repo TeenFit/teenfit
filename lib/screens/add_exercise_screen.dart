@@ -267,15 +267,15 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     Widget buildRepsOrTime() {
       return switchOnOf!
           ? Container(
-              height: _mediaQuery.size.height * 0.65,
+              height: _mediaQuery.size.height * 0.7,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Container(
-                      height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.32,
                       width: _mediaQuery.size.width,
                       child: Column(
                         children: [
@@ -306,9 +306,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Container(
-                      height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.32,
                       width: _mediaQuery.size.width,
                       child: Column(
                         children: [
@@ -343,15 +343,15 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
               ),
             )
           : Container(
-              height: _mediaQuery.size.height * 0.65,
+              height: _mediaQuery.size.height * 0.7,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Container(
-                      height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.32,
                       width: _mediaQuery.size.width,
                       child: Column(
                         children: [
@@ -382,9 +382,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Container(
-                      height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.32,
                       width: _mediaQuery.size.width,
                       child: Column(
                         children: [
