@@ -208,9 +208,11 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         ModalRoute.withName(CreateWorkout.routeName),
       );
 
-      setState(() {
-        _isLoading = false;
-      });
+      if (this.mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
 
     Widget buildCreatorName() {
