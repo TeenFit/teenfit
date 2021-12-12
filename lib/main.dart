@@ -96,12 +96,8 @@ class _MyAppState extends State<MyApp> {
               : Consumer<Auth>(
                   builder: (context, auth, _) => FutureBuilder(
                     // Initialize FlutterFire:
-                    future: Future.delayed(
-                      const Duration(seconds: 1),
-                      () {
-                        return _initialization;
-                      },
-                    ),
+                    future: _initialization,
+
                     builder: (context, snapshot) {
                       // Check for errors
                       if (snapshot.hasError) {

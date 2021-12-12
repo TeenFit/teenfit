@@ -95,7 +95,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     Connectivity().onConnectivityChanged.listen((event) {
-      Phoenix.rebirth(context);
+      if (this.mounted) {
+        Phoenix.rebirth(context);
+      }
     });
 
     super.didChangeDependencies();
