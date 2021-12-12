@@ -123,7 +123,7 @@ class _WorkoutTileState extends State<WorkoutTile> {
                     children: [
                       Padding(
                         padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                         child: Container(
                           width: _mediaQuery.size.width * 0.6,
                           height:
@@ -185,7 +185,7 @@ class _WorkoutTileState extends State<WorkoutTile> {
                 )
               : widget.isAdmin
                   ? Padding(
-                      padding: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -253,7 +253,7 @@ class _WorkoutTileState extends State<WorkoutTile> {
                     )
                   : Center(
                       child: Padding(
-                        padding: const EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(10),
                         child: Container(
                           width: _mediaQuery.size.width * 0.8,
                           height:
