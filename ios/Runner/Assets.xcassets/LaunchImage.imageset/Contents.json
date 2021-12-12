@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "LaunchScreen.png",
+      "filename" : "teen_fit_logo_white_withpeople 1@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "LaunchScreen-1.png",
+      "filename" : "teen_fit_logo_white_withpeople 1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "LaunchScreen-2.png",
+      "filename" : "teen_fit_logo_white_withpeople 1@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
