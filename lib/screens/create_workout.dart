@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
 import 'package:teenfit/pickers/workout_image_picker.dart';
+import 'package:teenfit/screens/my_workouts.dart';
 import 'package:uuid/uuid.dart';
 
 import '../screens/add_exercise_screen.dart';
@@ -186,10 +187,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         isEdit
             ? await Provider.of<Workouts>(context, listen: false)
                 .updateWorkout(newWorkout!)
-                .then((_) => Navigator.of(context).pop())
             : await Provider.of<Workouts>(context, listen: false)
-                .addWorkout(newWorkout!)
-                .then((_) => Navigator.of(context).pop());
+                .addWorkout(newWorkout!);
       } catch (e) {
         _showToast('Unable To Add Workout Try Again Later');
       }
@@ -204,6 +203,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       deleteFiles.forEach((e) async {
         await e.exerciseImage!.delete();
       });
+
+      Navigator.of(context).popUntil(
+        ModalRoute.withName(CreateWorkout.routeName),
+      );
 
       setState(() {
         _isLoading = false;
