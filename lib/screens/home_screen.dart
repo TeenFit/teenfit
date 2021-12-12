@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
-// import 'package:connectivity_plus/connectivity_plus.dart';
-// import 'package:teenfit/screens/auth/intro_page.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:teenfit/screens/auth/intro_page.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import '/providers/workouts.dart';
 import '../widgets/main_drawer.dart';
@@ -77,30 +78,26 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
 
-    // var connectivityResult = await (Connectivity().checkConnectivity());
-    // if (connectivityResult == ConnectivityResult.none) {
-    //   if (this.mounted) {
-    //     setState(() {
-    //       connected = false;
-    //     });
-    //   }
-    // } else if (connectivityResult == ConnectivityResult.wifi ||
-    //     connectivityResult == ConnectivityResult.ethernet ||
-    //     connectivityResult == ConnectivityResult.mobile) {
-    //   if (this.mounted) {
-    //     setState(() {
-    //       connected = true;
-    //     });
-    //   }
-    // }
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      if (this.mounted) {
+        setState(() {
+          connected = false;
+        });
+      }
+    } else if (connectivityResult == ConnectivityResult.wifi ||
+        connectivityResult == ConnectivityResult.ethernet ||
+        connectivityResult == ConnectivityResult.mobile) {
+      if (this.mounted) {
+        setState(() {
+          connected = true;
+        });
+      }
+    }
 
-    // Connectivity().onConnectivityChanged.listen((event) {}).onDone(() {
-    //   Navigator.of(context).pushAndRemoveUntil(
-    //     MaterialPageRoute(builder: (BuildContext context) => IntroPage()),
-    //     ModalRoute.withName('/'),
-    //   );
-    //   setState(() {});
-    // });
+    Connectivity().onConnectivityChanged.listen((event) {}).onDone(() {
+      Phoenix.rebirth(context);
+    });
 
     super.didChangeDependencies();
   }
