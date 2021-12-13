@@ -61,7 +61,7 @@ class _AdScreenState extends State<AdScreen> {
         height: (_mediaQuery.size.height - _appBarHeight) * 0.9,
         width: _mediaQuery.size.width,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
@@ -78,7 +78,7 @@ class _AdScreenState extends State<AdScreen> {
               ),
             ),
             Container(
-              height: (_mediaQuery.size.height - _appBarHeight) * 0.5,
+              height: (_mediaQuery.size.height - _appBarHeight) * 0.65,
               width: double.infinity,
             ),
           ],
