@@ -9,26 +9,14 @@ class LoadingScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: _theme.primaryColor,
       resizeToAvoidBottomInset: false,
-      body: Container(
-        height: _mediaQuery.size.height,
-        width: _mediaQuery.size.width,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              height: _mediaQuery.size.height,
-              width: _mediaQuery.size.width,
-              child: Image.asset(
-                'assets/images/LoadingBackground.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-            CircularProgressIndicator(
-              strokeWidth: 4,
-              backgroundColor: _theme.shadowColor,
-              color: Colors.white,
-            )
-          ],
+      body: Center(
+        child: Container(
+          height: _mediaQuery.size.height * 0.5,
+          width: _mediaQuery.size.width * 0.5,
+          child: Image.asset(
+            'assets/images/teen_fit_logo_white_withpeople 1@3x.png',
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
