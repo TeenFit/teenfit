@@ -47,6 +47,7 @@ dependencies:
   video_trimmer: ^1.0.0
   google_mobile_ads: ^1.0.1
   flutter_phoenix: ^1.0.0
+  firebase_analytics: ^9.0.3
 
 dev_dependencies:
   flutter_launcher_icons: ^0.9.2

@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:teenfit/screens/auth/intro_page.dart';
@@ -50,6 +51,7 @@ class Auth with ChangeNotifier {
 
       getCurrentUID();
       print(userId);
+      await FirebaseAnalytics.instance.logSignUp(signUpMethod: 'Email');
     } on FirebaseAuthException catch (e) {
       print(e);
       throw HttpException(e.code.toString());
@@ -64,6 +66,7 @@ class Auth with ChangeNotifier {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       getCurrentUID();
       print(userId);
+      await FirebaseAnalytics.instance.logLogin();
     } on FirebaseAuthException catch (e) {
       throw HttpException(e.code.toString());
     } catch (_) {

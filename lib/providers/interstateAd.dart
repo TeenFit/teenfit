@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:teenfit/screens/exercise_screen.dart';
@@ -52,6 +53,8 @@ class AdmobHelper {
     // });
 
     // await _interstitialAd!.show();
+
+    await FirebaseAnalytics.instance.logAdImpression();
 
     // _interstitialAd = null;
   }
