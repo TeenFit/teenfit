@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:teenfit/screens/workout_page.dart';
+import 'package:teenfit/screens/exercise_screen.dart';
 
 class AdScreen extends StatelessWidget {
   static const routeName = '/ad-screen';
@@ -23,8 +23,8 @@ class AdScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context)
-                  .popAndPushNamed(WorkoutPage.routeName, arguments: arguments);
+              Navigator.of(context).popAndPushNamed(ExerciseScreen.routeName,
+                  arguments: arguments);
             },
             icon: Icon(
               Icons.close,
@@ -45,20 +45,20 @@ class AdScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: _mediaQuery.size.width * 0.5,
+                width: _mediaQuery.size.width * 0.6,
                 height: (_mediaQuery.size.height - _appBarHeight) * 0.2,
                 child: Text(
                   'Help Us To Help You For Free',
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: _mediaQuery.size.height * 0.06,
+                    fontSize: _mediaQuery.size.height * 0.04,
                   ),
                   maxLines: 2,
                   textAlign: TextAlign.center,
                 ),
               ),
               Container(
-                height: _mediaQuery.size.height - _appBarHeight * 0.7,
+                height: _mediaQuery.size.height - _appBarHeight * 0.6,
               ),
             ],
           ),
