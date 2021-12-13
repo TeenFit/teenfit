@@ -27,7 +27,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string> To Pick Photo&apos;s For Workouts</string>
+	<string> To Pick Photo's and Videos For Workouts</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-3605247207313682~3540930858</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:teenfit/screens/ad.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
 
@@ -116,7 +117,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                     } else if (widget.dialogOrganizerId ==
                                         '/exercise-screen') {
                                       Navigator.of(context).pushNamed(
-                                          widget.dialogOrganizerId,
+                                          AdScreen.routeName,
                                           arguments: widget.arguments);
                                     } else if (widget.dialogOrganizerId ==
                                         'pop') {
