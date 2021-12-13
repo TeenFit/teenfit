@@ -14,9 +14,9 @@ class _AdScreenState extends State<AdScreen> {
   bool isInit = false;
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     if (isInit == false) {
-      Future.delayed(Duration(milliseconds: 1500));
+      await Future.delayed(Duration(milliseconds: 1500));
       if (this.mounted) {
         setState(() {
           isInit = true;
@@ -51,42 +51,37 @@ class _AdScreenState extends State<AdScreen> {
                 icon: Icon(
                   Icons.close,
                   color: _theme.highlightColor,
-                  size: _appBarHeight * 0.5,
+                  size: _appBarHeight * 0.45,
                 ),
               ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: Container(
-        height: _mediaQuery.size.height - _appBarHeight * 0.9,
+        height: _mediaQuery.size.height - _appBarHeight * 0.8,
         width: _mediaQuery.size.width,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              vertical: (_mediaQuery.size.height - _appBarHeight) * 0.025,
-              horizontal: (_mediaQuery.size.width) * 0.05),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: _mediaQuery.size.width * 0.6,
-                height: (_mediaQuery.size.height - _appBarHeight) * 0.25,
-                child: Text(
-                  'This ad helps keep workouts free',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: _mediaQuery.size.height * 0.03,
-                  ),
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: _mediaQuery.size.width * 0.6,
+              height: (_mediaQuery.size.height - _appBarHeight) * 0.25,
+              child: Text(
+                'This Ad helps keep workouts free',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: _mediaQuery.size.height * 0.028,
                 ),
+                maxLines: 2,
+                textAlign: TextAlign.center,
               ),
-              Container(
-                height: _mediaQuery.size.height - _appBarHeight * 0.5,
-                width: double.infinity,
-              ),
-            ],
-          ),
+            ),
+            Container(
+              height: _mediaQuery.size.height - _appBarHeight * 0.5,
+              width: double.infinity,
+            ),
+          ],
         ),
       ),
     );

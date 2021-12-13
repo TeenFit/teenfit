@@ -7,6 +7,7 @@ class LoadingScreen extends StatelessWidget {
     final _theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: _theme.primaryColor,
       resizeToAvoidBottomInset: false,
       body: Container(
         height: _mediaQuery.size.height,
