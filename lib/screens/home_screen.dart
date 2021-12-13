@@ -78,18 +78,16 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.none) {
-      if (this.mounted) {
-        setState(() {
-          connected = false;
-        });
-      }
-    } else if (connectivityResult == ConnectivityResult.wifi ||
-        connectivityResult == ConnectivityResult.ethernet ||
-        connectivityResult == ConnectivityResult.mobile) {
+
+    if (connectivityResult == ConnectivityResult.wifi ||
+        connectivityResult == ConnectivityResult.ethernet) {
       if (this.mounted) {
         setState(() {
           connected = true;
+        });
+      } else {
+        setState(() {
+          connected = false;
         });
       }
     }
