@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:teenfit/screens/ad.dart';
+import 'package:teenfit/providers/interstateAd.dart';
+import 'package:teenfit/screens/exercise_screen.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
 
@@ -116,9 +117,20 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                               WorkoutPage.routeName));
                                     } else if (widget.dialogOrganizerId ==
                                         '/exercise-screen') {
-                                      Navigator.of(context).pushNamed(
-                                          AdScreen.routeName,
-                                          arguments: widget.arguments);
+                                      var interad = Provider.of<AdmobHelper>(
+                                          context,
+                                          listen: false);
+                                      try {
+                                        await interad.createInterad();
+                                        await interad.showInterad();
+                                        Navigator.of(context).pushNamed(
+                                            ExerciseScreen.routeName,
+                                            arguments: widget.arguments);
+                                      } catch (e) {
+                                        Navigator.of(context).pushNamed(
+                                            ExerciseScreen.routeName,
+                                            arguments: widget.arguments);
+                                      }
                                     } else if (widget.dialogOrganizerId ==
                                         'pop') {
                                       setState(() {
