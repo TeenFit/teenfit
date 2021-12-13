@@ -40,6 +40,8 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     if (isInit == false) {
       newExercise = exerciseProv!['exercise'];
 
+      switchOnOf = newExercise!.timeSeconds == null ? false : true;
+
       reps = newExercise!.reps != null ? newExercise!.reps! : 5;
       sets = newExercise!.sets != null ? newExercise!.sets! : 5;
       time = newExercise!.timeSeconds != null ? newExercise!.timeSeconds! : 5;
@@ -55,8 +57,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
         restTime: newExercise!.restTime,
         timeSeconds: newExercise!.timeSeconds,
       );
-
-      switchOnOf = newExercise!.timeSeconds == null ? false : true;
 
       setState(() {
         isInit = true;
@@ -117,8 +117,20 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
         final Trimmer _trimmer = Trimmer();
         await _trimmer.loadVideo(videoFile: video);
 
-        await _trimmer
-            .saveTrimmedVideo(
+        await _trimmer.saveTrimmedVideo(
+          onSave: (value) async {
+            setState(() {
+              newExercise = Exercise(
+                  exerciseId: newExercise!.exerciseId,
+                  name: newExercise!.name,
+                  exerciseImage: File(value.toString()),
+                  sets: newExercise!.sets,
+                  reps: newExercise!.reps,
+                  timeSeconds: newExercise!.timeSeconds,
+                  restTime: newExercise!.restTime,
+                  exerciseImageLink: newExercise!.exerciseImageLink);
+            });
+          },
           videoFileName: DateTime.now().toString(),
           videoFolderName: 'Workout-Gifs',
           storageDir: StorageDir.temporaryDirectory,
@@ -127,21 +139,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
           outputFormat: FileFormat.gif,
           fpsGIF: 8,
           scaleGIF: 380,
-        )
-            .then(
-          (value) async {
-            setState(() {
-              newExercise = Exercise(
-                  exerciseId: newExercise!.exerciseId,
-                  name: newExercise!.name,
-                  exerciseImage: File(value),
-                  sets: newExercise!.sets,
-                  reps: newExercise!.reps,
-                  timeSeconds: newExercise!.timeSeconds,
-                  restTime: newExercise!.restTime,
-                  exerciseImageLink: newExercise!.exerciseImageLink);
-            });
-          },
         );
 
         _trimmer.dispose();
@@ -193,6 +190,8 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
           ? await updateExercise!(newExercise)
           : await addExercise!(newExercise);
 
+      Navigator.of(context).pop();
+
       if (this.mounted) {
         setState(() {
           isLoading = true;
@@ -218,6 +217,8 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
             textInputAction: TextInputAction.next,
             validator: (value) {
               if (value.toString().trim().isEmpty) {
+                return 'Name is Required';
+              } else if (value == null) {
                 return 'Name is Required';
               }
               return null;
@@ -491,7 +492,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                           ? () {}
                           : () async {
                               await _submit();
-                              Navigator.of(context).pop();
                             },
                     ),
                   ),

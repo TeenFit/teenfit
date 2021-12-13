@@ -204,6 +204,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.2"
+  ffmpeg_kit_flutter:
+    dependency: transitive
+    description:
+      name: ffmpeg_kit_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.5.0-LTS"
+  ffmpeg_kit_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: ffmpeg_kit_flutter_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   file:
     dependency: transitive
     description:
@@ -293,13 +307,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
-  flutter_ffmpeg:
-    dependency: transitive
-    description:
-      name: flutter_ffmpeg
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.2"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -622,7 +629,7 @@ packages:
       name: sqflite_common
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1+1"
+    version: "2.1.0"
   stack_trace:
     dependency: transitive
     description:
@@ -776,7 +783,7 @@ packages:
       name: video_trimmer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.0"
+    version: "1.0.0"
   win32:
     dependency: transitive
     description:
@@ -806,5 +813,5 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.14.0 <3.0.0"
+  dart: ">=2.15.0 <3.0.0"
   flutter: ">=2.5.0"
