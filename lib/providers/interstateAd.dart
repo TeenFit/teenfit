@@ -30,6 +30,8 @@ class AdmobHelper {
 // show interstitial ads to user
   Future<void> showInterad(BuildContext context, arguments) async {
     if (_interstitialAd == null) {
+      Navigator.of(context)
+          .pushNamed(ExerciseScreen.routeName, arguments: arguments);
       return;
     }
 
