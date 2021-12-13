@@ -11,11 +11,16 @@ class AdScreen extends StatefulWidget {
 }
 
 class _AdScreenState extends State<AdScreen> {
+  bool isLoading = true;
   bool isInit = false;
 
   @override
   void didChangeDependencies() async {
-    if (isInit == false) {
+    var arguments = ModalRoute.of(context)!.settings.arguments;
+
+    if (isLoading = true) {}
+
+    if (isInit == false && isLoading == false) {
       await Future.delayed(Duration(milliseconds: 1500));
       if (this.mounted) {
         setState(() {
@@ -24,6 +29,11 @@ class _AdScreenState extends State<AdScreen> {
       }
     }
     super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -78,9 +88,15 @@ class _AdScreenState extends State<AdScreen> {
               ),
             ),
             Container(
-              height: (_mediaQuery.size.height - _appBarHeight) * 0.65,
-              width: double.infinity,
-            ),
+                height: (_mediaQuery.size.height - _appBarHeight) * 0.65,
+                width: double.infinity,
+                child: isLoading
+                    ? CircularProgressIndicator(
+                        strokeWidth: 4,
+                        backgroundColor: _theme.shadowColor,
+                        color: Colors.white,
+                      )
+                    : Center()),
           ],
         ),
       ),
