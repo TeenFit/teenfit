@@ -51,13 +51,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void didChangeDependencies() async {
-    setState(() {
-      filteredSearchHistory = filterSearchTerms(null);
-    });
+    if (this.mounted) {
+      setState(() {
+        filteredSearchHistory = filterSearchTerms(null);
+      });
+    }
 
-    await FirebaseAnalytics.instance.logAppOpen();
-
-    if (isInit == false) {
+    if (isInit == false && this.mounted) {
       setState(() {
         isLoading = true;
       });
@@ -88,7 +88,9 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           connected = true;
         });
-      } else {
+      }
+    } else {
+      if (this.mounted) {
         setState(() {
           connected = false;
         });

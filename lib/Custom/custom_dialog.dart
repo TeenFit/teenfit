@@ -145,9 +145,11 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                         _showToast(
                                             'Unable To Delete Workout Try Again Later');
                                       }
-                                      setState(() {
-                                        isLoading = false;
-                                      });
+                                      if (this.mounted) {
+                                        setState(() {
+                                          isLoading = false;
+                                        });
+                                      }
                                     } else if (widget.dialogOrganizerId ==
                                         'delete-exercise') {
                                       Function delete =
@@ -184,9 +186,11 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                         _showToast(
                                             'Unable To Delete Workout Try Again Later');
                                       }
-                                      setState(() {
-                                        isLoading = false;
-                                      });
+                                      if (this.mounted) {
+                                        setState(() {
+                                          isLoading = false;
+                                        });
+                                      }
                                     }
                                   },
                                   child: Text(

@@ -56,10 +56,12 @@ class _MyAppState extends State<MyApp> {
       await Firebase.initializeApp();
       await MobileAds.instance.initialize();
     }
-    setState(() {
-      isInit = true;
-      isLoading = false;
-    });
+    if (this.mounted) {
+      setState(() {
+        isInit = true;
+        isLoading = false;
+      });
+    }
   }
 
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
