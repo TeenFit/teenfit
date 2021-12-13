@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:teenfit/screens/ad.dart';
 // import 'package:flutter_offline/flutter_offline.dart';
 import 'package:teenfit/screens/admin_screen.dart';
 import 'package:teenfit/screens/privacy_policy_screen.dart';
@@ -29,6 +31,7 @@ import './screens/auth/intro_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await MobileAds.instance.initialize();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -53,6 +56,7 @@ class _MyAppState extends State<MyApp> {
 
     if (isInit == false) {
       await Firebase.initializeApp();
+      await MobileAds.instance.initialize();
     }
     setState(() {
       isInit = true;
@@ -231,6 +235,7 @@ class _MyAppState extends State<MyApp> {
             ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
             AdminScreen.routeName: (ctx) => AdminScreen(),
             PrivacyPolicyScreen.routeName: (ctx) => PrivacyPolicyScreen(),
+            AdScreen.routeName: (ctx) => AdScreen(),
           },
         ),
       ),
