@@ -73,7 +73,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             child: CarouselSlider(
               options: CarouselOptions(
                 viewportFraction: 1,
-                height: (_mediaQuery.size.height - _appBarHeight) * 0.95,
+                height: (_mediaQuery.size.height - _appBarHeight) * 0.9,
                 initialPage: 0,
                 enableInfiniteScroll: false,
                 autoPlay: false,
