@@ -117,19 +117,18 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                               WorkoutPage.routeName));
                                     } else if (widget.dialogOrganizerId ==
                                         '/exercise-screen') {
-                                      var interad = Provider.of<AdmobHelper>(
-                                          context,
-                                          listen: false);
-                                      try {
-                                        await interad.createInterad();
-                                        await interad.showInterad();
-                                        Navigator.of(context).pushNamed(
-                                            ExerciseScreen.routeName,
-                                            arguments: widget.arguments);
-                                      } catch (e) {
-                                        Navigator.of(context).pushNamed(
-                                            ExerciseScreen.routeName,
-                                            arguments: widget.arguments);
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+
+                                      await AdmobHelper().createInterad();
+                                      await AdmobHelper().showInterad(
+                                          context, widget.arguments);
+
+                                      if (this.mounted) {
+                                        setState(() {
+                                          isLoading = false;
+                                        });
                                       }
                                     } else if (widget.dialogOrganizerId ==
                                         'pop') {
