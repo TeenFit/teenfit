@@ -6,6 +6,13 @@ PODS:
   - connectivity_plus (0.0.1):
     - Flutter
     - ReachabilitySwift
+  - ffmpeg-kit-ios-https (4.5.LTS)
+  - ffmpeg_kit_flutter (4.5.0):
+    - ffmpeg_kit_flutter/https-lts (= 4.5.0)
+    - Flutter
+  - ffmpeg_kit_flutter/https-lts (4.5.0):
+    - ffmpeg-kit-ios-https (= 4.5.LTS)
+    - Flutter
   - Firebase/Auth (8.9.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 8.9.0)
@@ -54,12 +61,6 @@ PODS:
     - FirebaseCore (~> 8.0)
     - GTMSessionFetcher/Core (~> 1.5)
   - Flutter (1.0.0)
-  - flutter_ffmpeg (0.4.2):
-    - Flutter
-    - flutter_ffmpeg/https (= 0.4.2)
-  - flutter_ffmpeg/https (0.4.2):
-    - Flutter
-    - mobile-ffmpeg-https (= 4.4)
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
@@ -126,7 +127,6 @@ PODS:
   - libwebp/mux (1.2.1):
     - libwebp/demux
   - libwebp/webp (1.2.1)
-  - mobile-ffmpeg-https (4.4)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
@@ -153,12 +153,12 @@ PODS:
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
+  - ffmpeg_kit_flutter (from `.symlinks/plugins/ffmpeg_kit_flutter/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `8.9.0`)
   - Flutter (from `Flutter`)
-  - flutter_ffmpeg (from `.symlinks/plugins/flutter_ffmpeg/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - google_mobile_ads (from `.symlinks/plugins/google_mobile_ads/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
@@ -171,6 +171,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - ffmpeg-kit-ios-https
     - Firebase
     - FirebaseAuth
     - FirebaseCore
@@ -184,7 +185,6 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMSessionFetcher
     - libwebp
-    - mobile-ffmpeg-https
     - nanopb
     - PromisesObjC
     - ReachabilitySwift
@@ -195,6 +195,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/cloud_firestore/ios"
   connectivity_plus:
     :path: ".symlinks/plugins/connectivity_plus/ios"
+  ffmpeg_kit_flutter:
+    :path: ".symlinks/plugins/ffmpeg_kit_flutter/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -206,8 +208,6 @@ EXTERNAL SOURCES:
     :tag: 8.9.0
   Flutter:
     :path: Flutter
-  flutter_ffmpeg:
-    :path: ".symlinks/plugins/flutter_ffmpeg/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
   google_mobile_ads:
@@ -235,6 +235,8 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   cloud_firestore: c978a55e0bfc675cdc2291ef7670a69695cc663a
   connectivity_plus: 413a8857dd5d9f1c399a39130850d02fe0feaf7e
+  ffmpeg-kit-ios-https: 420b7d6e105f4b872d048a84f4f713479bea8b2b
+  ffmpeg_kit_flutter: 4475e259bfc0e495d1db6559d0ecf0ebfa1215c7
   Firebase: 13d8d96499e2635428d5bf0ec675df21f95d9a95
   firebase_auth: fe3a1deb12ebd850295344234abc15588d086baf
   firebase_core: dfcae4c150a5e24436a0b7677c470478a234d5bf
@@ -245,7 +247,6 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 7c22bff6c0e1f222920cd110e9da13a117b61fea
   FirebaseStorage: 452c98c31ccb40b819764bf3039426c4388d9939
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  flutter_ffmpeg: 3ec3912c74649851e6c3b1885511eef78142ac4f
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   Google-Mobile-Ads-SDK: be2192b51b74d74a6ed70590c2e8275412f1b71e
@@ -257,7 +258,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   image_picker: 9aa50e1d8cdacdbed739e925b7eea16d014367e6
   libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
-  mobile-ffmpeg-https: 311fc4a8f671cf36d1d6b8f421e8246b790978d9
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   path_provider_ios: 7d7ce634493af4477d156294792024ec3485acd5
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
