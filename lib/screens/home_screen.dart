@@ -155,11 +155,11 @@ class _HomeScreenState extends State<HomeScreen> {
       body: isLoading
           ? Center(
               child: Container(
-                height: _mediaQuery.size.height * 0.5,
+                height: _mediaQuery.size.width * 0.5,
                 width: _mediaQuery.size.width * 0.5,
                 child: Image.asset(
                   'assets/images/teen_fit_logo_white_withpeople 1@3x.png',
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
               ),
             )
