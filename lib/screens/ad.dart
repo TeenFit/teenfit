@@ -3,8 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:teenfit/screens/exercise_screen.dart';
 
-class AdScreen extends StatelessWidget {
+class AdScreen extends StatefulWidget {
   static const routeName = '/ad-screen';
+
+  @override
+  State<AdScreen> createState() => _AdScreenState();
+}
+
+class _AdScreenState extends State<AdScreen> {
+  bool isInit = false;
+
+  @override
+  void didChangeDependencies() {
+    if (isInit == false) {
+      Future.delayed(Duration(milliseconds: 1500));
+      if (this.mounted) {
+        setState(() {
+          isInit = true;
+        });
+      }
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,23 +40,25 @@ class AdScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).popAndPushNamed(ExerciseScreen.routeName,
-                  arguments: arguments);
-            },
-            icon: Icon(
-              Icons.close,
-              color: _theme.highlightColor,
-            ),
-          )
-        ],
+        leading: isInit == false
+            ? SizedBox()
+            : IconButton(
+                onPressed: () {
+                  Navigator.of(context).popAndPushNamed(
+                      ExerciseScreen.routeName,
+                      arguments: arguments);
+                },
+                icon: Icon(
+                  Icons.close,
+                  color: _theme.highlightColor,
+                  size: _appBarHeight * 0.5,
+                ),
+              ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: Container(
-        height: _mediaQuery.size.height - _appBarHeight,
+        height: _mediaQuery.size.height - _appBarHeight * 0.9,
         width: _mediaQuery.size.width,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -46,19 +68,19 @@ class AdScreen extends StatelessWidget {
             children: [
               Container(
                 width: _mediaQuery.size.width * 0.6,
-                height: (_mediaQuery.size.height - _appBarHeight) * 0.2,
+                height: (_mediaQuery.size.height - _appBarHeight) * 0.25,
                 child: Text(
-                  'Help Us To Help You For Free',
+                  'This ad helps keep workouts free',
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: _mediaQuery.size.height * 0.04,
+                    fontSize: _mediaQuery.size.height * 0.03,
                   ),
                   maxLines: 2,
                   textAlign: TextAlign.center,
                 ),
               ),
               Container(
-                height: _mediaQuery.size.height - _appBarHeight * 0.6,
+                height: _mediaQuery.size.height - _appBarHeight * 0.5,
               ),
             ],
           ),
