@@ -49,10 +49,17 @@ class AdScreen extends StatelessWidget {
                 height: (_mediaQuery.size.height - _appBarHeight) * 0.2,
                 child: Text(
                   'Help Us To Help You For Free',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: _mediaQuery.size.height * 0.06,
+                  ),
                   maxLines: 2,
                   textAlign: TextAlign.center,
                 ),
-              )
+              ),
+              Container(
+                height: _mediaQuery.size.height - _appBarHeight * 0.7,
+              ),
             ],
           ),
         ),
