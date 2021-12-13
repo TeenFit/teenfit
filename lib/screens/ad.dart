@@ -66,7 +66,7 @@ class _AdScreenState extends State<AdScreen> {
           children: [
             Container(
               width: _mediaQuery.size.width * 0.6,
-              height: (_mediaQuery.size.height - _appBarHeight) * 0.25,
+              height: (_mediaQuery.size.height - _appBarHeight) * 0.15,
               child: Text(
                 'This Ad helps keep workouts free',
                 style: TextStyle(
