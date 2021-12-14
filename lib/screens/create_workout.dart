@@ -458,7 +458,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                   height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: _theme.cardColor,
+                      primary: _theme.primaryColor,
                       onPrimary: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -508,7 +508,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(
-                    color: _theme.cardColor,
+                    color: _theme.highlightColor,
                     width: 10,
                   ),
                 ),
@@ -542,7 +542,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: _theme.highlightColor,
+      backgroundColor: _theme.cardColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

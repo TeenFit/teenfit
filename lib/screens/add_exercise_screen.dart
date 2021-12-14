@@ -248,7 +248,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
             valueFontSize: _mediaQuery.size.height * 0.03,
             toggleSize: _mediaQuery.size.height * 0.04,
             activeColor: _theme.primaryColor,
-            inactiveColor: _theme.shadowColor,
+            inactiveColor: _theme.highlightColor,
             activeTextColor: Colors.white,
             inactiveTextColor: Colors.white,
             value: switchOnOf!,
@@ -425,7 +425,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: _theme.highlightColor,
+      backgroundColor: _theme.cardColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
