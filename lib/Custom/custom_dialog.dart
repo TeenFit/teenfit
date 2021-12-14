@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:teenfit/providers/interstateAd.dart';
-import 'package:teenfit/screens/exercise_screen.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
 
