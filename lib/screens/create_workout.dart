@@ -157,8 +157,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         return;
       }
 
-      if (exerciseEditList!.length > 10) {
-        _showToast('Maximum Of 10 Exercises');
+      if (exerciseEditList!.length > 12) {
+        _showToast('Maximum Of 12 Exercises');
       }
 
       _formKey3.currentState!.save();
@@ -475,7 +475,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                     onPressed: _isLoading == true
                         ? () {}
                         : () {
-                            if (exerciseEditList!.length < 10) {
+                            if (exerciseEditList!.length < 12) {
                               Navigator.of(context).pushNamed(
                                 AddExerciseScreen.routeName,
                                 arguments: {
@@ -495,7 +495,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                                 },
                               );
                             } else {
-                              _showToast('Maximum 10 Exercises');
+                              _showToast('Maximum 12 Exercises');
                             }
                           },
                   ),
