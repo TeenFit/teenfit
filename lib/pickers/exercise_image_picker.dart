@@ -164,7 +164,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                         size: _mediaQuery.size.height * 0.04,
                       ),
                       title: Text(
-                        'Video < 5 seconds',
+                        'Pick a Photo',
                         textAlign: TextAlign.start,
                         style: TextStyle(
                             fontSize: _mediaQuery.size.height * 0.025,
