@@ -11,7 +11,7 @@ class AdmobHelper {
   // create interstitial ads
   Future<void> createInterad() async {
     // await InterstitialAd.load(
-    //   adUnitId: 'ca-app-pub-3605247207313682/6330514219',
+    //   adUnitId: 'ca-app-pub-3605247207313682/6959471110',
     //   request: AdRequest(),
     //   adLoadCallback:
     //       InterstitialAdLoadCallback(onAdLoaded: (InterstitialAd ad) {
@@ -39,6 +39,8 @@ class AdmobHelper {
     // _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
     //     onAdShowedFullScreenContent: (InterstitialAd ad) {
     //   print("ad onAdshowedFullscreen");
+
+    FirebaseAnalytics.instance.logAdImpression();
     // }, onAdDismissedFullScreenContent: (InterstitialAd ad) {
     //   print("ad Disposed");
     //   ad.dispose();
