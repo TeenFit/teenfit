@@ -10,23 +10,22 @@ class AdmobHelper {
 
   // create interstitial ads
   Future<void> createInterad() async {
-    await InterstitialAd.load(
-      // adUnitId: 'ca-app-pub-3605247207313682/6330514219',
-      adUnitId: 'ca-app-pub-3940256099942544/5135589807',
-      request: AdRequest(),
-      adLoadCallback:
-          InterstitialAdLoadCallback(onAdLoaded: (InterstitialAd ad) {
-        _interstitialAd = ad;
-        numofattemptload = 0;
-      }, onAdFailedToLoad: (LoadAdError error) {
-        numofattemptload++;
-        _interstitialAd = null;
+    // await InterstitialAd.load(
+    //   adUnitId: 'ca-app-pub-3605247207313682/6330514219',
+    //   request: AdRequest(),
+    //   adLoadCallback:
+    //       InterstitialAdLoadCallback(onAdLoaded: (InterstitialAd ad) {
+    //     _interstitialAd = ad;
+    //     numofattemptload = 0;
+    //   }, onAdFailedToLoad: (LoadAdError error) {
+    //     numofattemptload++;
+    //     _interstitialAd = null;
 
-        if (numofattemptload <= 2) {
-          createInterad();
-        }
-      }),
-    );
+    //     if (numofattemptload <= 2) {
+    //       createInterad();
+    //     }
+    //   }),
+    // );
   }
 
 // show interstitial ads to user
@@ -37,26 +36,24 @@ class AdmobHelper {
       return;
     }
 
-    _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-        onAdShowedFullScreenContent: (InterstitialAd ad) {
-      print("ad onAdshowedFullscreen");
-    }, onAdDismissedFullScreenContent: (InterstitialAd ad) {
-      print("ad Disposed");
-      ad.dispose();
+    // _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+    //     onAdShowedFullScreenContent: (InterstitialAd ad) {
+    //   print("ad onAdshowedFullscreen");
+    // }, onAdDismissedFullScreenContent: (InterstitialAd ad) {
+    //   print("ad Disposed");
+    //   ad.dispose();
 
-      Navigator.of(context)
-          .pushNamed(ExerciseScreen.routeName, arguments: arguments);
-    }, onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError aderror) {
-      print('$ad OnAdFailed $aderror');
-      ad.dispose();
-      Navigator.of(context)
-          .pushNamed(ExerciseScreen.routeName, arguments: arguments);
-    });
+    //   Navigator.of(context)
+    //       .pushNamed(ExerciseScreen.routeName, arguments: arguments);
+    // }, onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError aderror) {
+    //   print('$ad OnAdFailed $aderror');
+    //   ad.dispose();
+    //   Navigator.of(context)
+    //       .pushNamed(ExerciseScreen.routeName, arguments: arguments);
+    // });
 
-    await _interstitialAd!.show();
+    // await _interstitialAd!.show();
 
-    await FirebaseAnalytics.instance.logAdImpression();
-
-    _interstitialAd = null;
+    // _interstitialAd = null;
   }
 }
