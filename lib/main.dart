@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -56,8 +55,6 @@ class _MyAppState extends State<MyApp> {
     if (isInit == false) {
       await Firebase.initializeApp();
       await MobileAds.instance.initialize();
-
-      await FirebaseAnalytics.instance.logAppOpen();
     }
     if (this.mounted) {
       setState(() {
