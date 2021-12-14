@@ -6,7 +6,6 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '/providers/workouts.dart';
 import '../widgets/main_drawer.dart';
