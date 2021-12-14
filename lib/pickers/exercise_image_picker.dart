@@ -100,7 +100,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
     var pickedVideoFile = await ImagePicker()
         .pickVideo(
       source: ImageSource.gallery,
-      maxDuration: Duration(seconds: 5),
+      maxDuration: Duration(milliseconds: 5000),
     )
         .catchError(
       (e) async {
