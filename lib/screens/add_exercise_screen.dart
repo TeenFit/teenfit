@@ -88,6 +88,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
     void _showToast(String msg) {
       Fluttertoast.showToast(
+        toastLength: Toast.LENGTH_SHORT,
         msg: msg,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 10,
@@ -157,6 +158,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       }
 
       if (!_formKey4.currentState!.validate()) {
+        _showToast('Failed Fields');
         return;
       }
 

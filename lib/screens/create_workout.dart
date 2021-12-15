@@ -133,6 +133,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
     void _showToast(String msg) {
       Fluttertoast.showToast(
+        toastLength: Toast.LENGTH_SHORT,
         msg: msg,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 10,
