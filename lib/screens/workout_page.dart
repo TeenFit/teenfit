@@ -265,7 +265,7 @@ class WorkoutPage extends StatelessWidget {
                                                 },
                                                 icon: Icon(
                                                   MyFlutterApp.unknown,
-                                                  color: Colors.white,
+                                                  color: Colors.black,
                                                   size:
                                                       _mediaQuery.size.height *
                                                           0.045,
