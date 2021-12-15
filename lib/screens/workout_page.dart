@@ -248,13 +248,12 @@ class WorkoutPage extends StatelessWidget {
                                                   color: Colors.blue,
                                                 ),
                                               ),
-                                        workout.tumblrPageLink.isEmpty
+                                        workout.tiktokLink.isEmpty
                                             ? SizedBox()
                                             : IconButton(
                                                 onPressed: () {
                                                   try {
-                                                    launch(workout
-                                                            .tumblrPageLink)
+                                                    launch(workout.tiktokLink)
                                                         .catchError((e) {
                                                       _showToast(
                                                           'Link Not Available');
@@ -265,7 +264,7 @@ class WorkoutPage extends StatelessWidget {
                                                   }
                                                 },
                                                 icon: Icon(
-                                                  MyFlutterApp.tumblr_squared,
+                                                  MyFlutterApp.tiktok,
                                                   size:
                                                       _mediaQuery.size.height *
                                                           0.045,

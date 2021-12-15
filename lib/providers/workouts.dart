@@ -38,7 +38,7 @@ class Workouts with ChangeNotifier {
                     workoutName: e['workoutName'],
                     instagram: e['instagram'],
                     facebook: e['facebook'],
-                    tumblrPageLink: e['tumblrPageLink'],
+                    tiktokLink: e['tiktokLink'],
                     bannerImage: null,
                     bannerImageLink: e['bannerImage'],
                     exercises: (e['exercises'] as List)
@@ -151,7 +151,7 @@ class Workouts with ChangeNotifier {
         'workoutName': workouT.workoutName,
         'instagram': workouT.instagram,
         'facebook': workouT.facebook,
-        'tumblrPageLink': workouT.tumblrPageLink,
+        'tumblrPageLink': workouT.tiktokLink,
         'exercises': exerciseS,
       };
 
@@ -177,7 +177,7 @@ class Workouts with ChangeNotifier {
             workoutName: workouT.workoutName,
             instagram: workouT.instagram,
             facebook: workouT.facebook,
-            tumblrPageLink: workouT.tumblrPageLink,
+            tiktokLink: workouT.tiktokLink,
             exercises: exerciseSClassList,
           ));
       notifyListeners();
@@ -313,7 +313,7 @@ class Workouts with ChangeNotifier {
         'workoutName': workouT.workoutName,
         'instagram': workouT.instagram,
         'facebook': workouT.facebook,
-        'tumblrPageLink': workouT.tumblrPageLink,
+        'tumblrPageLink': workouT.tiktokLink,
         'exercises': exerciseS,
       };
 
@@ -343,7 +343,7 @@ class Workouts with ChangeNotifier {
             workoutName: workouT.workoutName,
             instagram: workouT.instagram,
             facebook: workouT.facebook,
-            tumblrPageLink: workouT.tumblrPageLink,
+            tiktokLink: workouT.tiktokLink,
             exercises: exerciseSClassList,
           ));
       notifyListeners();
@@ -459,7 +459,7 @@ class Workouts with ChangeNotifier {
             workoutName: workouT.workoutName,
             instagram: workouT.instagram,
             facebook: workouT.facebook,
-            tumblrPageLink: workouT.tumblrPageLink,
+            tiktokLink: workouT.tiktokLink,
             pending: false,
             exercises: workouT.exercises));
     notifyListeners();
@@ -491,7 +491,7 @@ class Workouts with ChangeNotifier {
             workoutName: workouT.workoutName,
             instagram: workouT.instagram,
             facebook: workouT.facebook,
-            tumblrPageLink: workouT.tumblrPageLink,
+            tiktokLink: workouT.tiktokLink,
             pending: false,
             exercises: workouT.exercises));
     notifyListeners();

@@ -53,7 +53,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         workoutName: workout!.workoutName,
         instagram: workout!.instagram,
         facebook: workout!.facebook,
-        tumblrPageLink: workout!.tumblrPageLink,
+        tiktokLink: workout!.tiktokLink,
         bannerImage: workout!.bannerImage,
         bannerImageLink: workout!.bannerImageLink,
         exercises: exerciseEditList!,
@@ -123,7 +123,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           workoutName: workout!.workoutName,
           instagram: workout!.instagram,
           facebook: workout!.facebook,
-          tumblrPageLink: workout!.tumblrPageLink,
+          tiktokLink: workout!.tiktokLink,
           bannerImage: image,
           bannerImageLink: workout!.bannerImageLink,
           exercises: exerciseEditList!,
@@ -173,7 +173,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         workoutName: newWorkout!.workoutName,
         instagram: newWorkout!.instagram,
         facebook: newWorkout!.facebook,
-        tumblrPageLink: newWorkout!.tumblrPageLink,
+        tiktokLink: newWorkout!.tiktokLink,
         bannerImage: newWorkout!.bannerImage,
         bannerImageLink: newWorkout!.bannerImageLink,
         exercises: newWorkout!.exercises,
@@ -251,7 +251,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 workoutName: newWorkout!.workoutName,
                 instagram: newWorkout!.instagram,
                 facebook: newWorkout!.facebook,
-                tumblrPageLink: newWorkout!.tumblrPageLink,
+                tiktokLink: newWorkout!.tiktokLink,
                 bannerImage: newWorkout!.bannerImage,
                 bannerImageLink: newWorkout!.bannerImageLink,
                 exercises: newWorkout!.exercises,
@@ -298,7 +298,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 workoutName: input.toString().trim(),
                 instagram: newWorkout!.instagram,
                 facebook: newWorkout!.facebook,
-                tumblrPageLink: newWorkout!.tumblrPageLink,
+                tiktokLink: newWorkout!.tiktokLink,
                 bannerImage: newWorkout!.bannerImage,
                 bannerImageLink: newWorkout!.bannerImageLink,
                 exercises: newWorkout!.exercises,
@@ -343,7 +343,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                     ? ''
                     : input.toString().trim(),
                 facebook: newWorkout!.facebook,
-                tumblrPageLink: newWorkout!.tumblrPageLink,
+                tiktokLink: newWorkout!.tiktokLink,
                 bannerImage: newWorkout!.bannerImage,
                 bannerImageLink: newWorkout!.bannerImageLink,
                 exercises: newWorkout!.exercises,
@@ -361,9 +361,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
-            initialValue: workout!.tumblrPageLink,
+            initialValue: workout!.tiktokLink,
             decoration: InputDecoration(
-              hintText: 'Tumblr Link (optional)',
+              hintText: 'Tiktok Link (optional)',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
             ),
             style: TextStyle(
@@ -386,7 +386,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 instagram: newWorkout!.instagram,
                 bannerImageLink: newWorkout!.bannerImageLink,
                 facebook: newWorkout!.facebook,
-                tumblrPageLink: input.toString().trim().isEmpty
+                tiktokLink: input.toString().trim().isEmpty
                     ? ''
                     : input.toString().trim(),
                 bannerImage: newWorkout!.bannerImage,
@@ -431,7 +431,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 facebook: input.toString().trim().isEmpty
                     ? ''
                     : input.toString().trim(),
-                tumblrPageLink: newWorkout!.tumblrPageLink,
+                tiktokLink: newWorkout!.tiktokLink,
                 bannerImage: newWorkout!.bannerImage,
                 bannerImageLink: newWorkout!.bannerImageLink,
                 exercises: newWorkout!.exercises,

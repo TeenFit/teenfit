@@ -6,16 +6,15 @@ class Workout {
   final String creatorId;
   final String workoutId;
   final String workoutName;
-  final String instagram; 
+  final String instagram;
   final String facebook;
-  final String tumblrPageLink;
+  final String tiktokLink;
   final File? bannerImage;
   final String? bannerImageLink;
   final List<Exercise> exercises;
   final DateTime date;
   final bool pending;
   final bool failed;
-  
 
   Workout({
     required this.date,
@@ -25,7 +24,7 @@ class Workout {
     required this.workoutName,
     required this.instagram,
     required this.facebook,
-    required this.tumblrPageLink,
+    required this.tiktokLink,
     this.bannerImage,
     this.bannerImageLink,
     required this.pending,
