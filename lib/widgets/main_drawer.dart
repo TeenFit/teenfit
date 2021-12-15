@@ -239,7 +239,7 @@ class MainDrawer extends StatelessWidget {
                             });
                           },
                           icon: Icon(
-                            MyFlutterApp.instagram,
+                            MyFlutterApp.instagram_1,
                             size: _mediaQuery.size.height * 0.05,
                             color: Colors.red,
                           ),

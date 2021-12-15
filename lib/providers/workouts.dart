@@ -151,7 +151,7 @@ class Workouts with ChangeNotifier {
         'workoutName': workouT.workoutName,
         'instagram': workouT.instagram,
         'facebook': workouT.facebook,
-        'tumblrPageLink': workouT.tiktokLink,
+        'tiktokLink': workouT.tiktokLink,
         'exercises': exerciseS,
       };
 
@@ -313,7 +313,7 @@ class Workouts with ChangeNotifier {
         'workoutName': workouT.workoutName,
         'instagram': workouT.instagram,
         'facebook': workouT.facebook,
-        'tumblrPageLink': workouT.tiktokLink,
+        'tiktokLink': workouT.tiktokLink,
         'exercises': exerciseS,
       };
 

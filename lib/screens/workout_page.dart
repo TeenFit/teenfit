@@ -218,7 +218,7 @@ class WorkoutPage extends StatelessWidget {
                                                   }
                                                 },
                                                 icon: Icon(
-                                                  MyFlutterApp.instagram,
+                                                  MyFlutterApp.instagram_1,
                                                   size:
                                                       _mediaQuery.size.height *
                                                           0.045,
@@ -264,7 +264,7 @@ class WorkoutPage extends StatelessWidget {
                                                   }
                                                 },
                                                 icon: Icon(
-                                                  MyFlutterApp.music,
+                                                  MyFlutterApp.unknown,
                                                   color: Colors.white,
                                                   size:
                                                       _mediaQuery.size.height *
