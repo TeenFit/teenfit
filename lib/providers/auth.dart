@@ -34,7 +34,8 @@ class Auth with ChangeNotifier {
   bool isAdmin() {
     bool isAdminResult = false;
 
-    if (userId == "7fFAYf9jHDg7KtOcEiSfk4fBATv2") {
+    if (userId == "7fFAYf9jHDg7KtOcEiSfk4fBATv2" ||
+        userId == '54D7zfq5I1eEfbeuUXaiaT8rtMH3') {
       isAdminResult = true;
     } else {
       isAdminResult = false;
