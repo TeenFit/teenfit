@@ -39,6 +39,6 @@ class MyFlutterApp {
       IconData(0xf174, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData facebook_squared =
       IconData(0xf30e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData tiktok =
-      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData music =
+      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

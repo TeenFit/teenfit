@@ -264,7 +264,8 @@ class WorkoutPage extends StatelessWidget {
                                                   }
                                                 },
                                                 icon: Icon(
-                                                  MyFlutterApp.tiktok,
+                                                  MyFlutterApp.music,
+                                                  color: Colors.white,
                                                   size:
                                                       _mediaQuery.size.height *
                                                           0.045,
