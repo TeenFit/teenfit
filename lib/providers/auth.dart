@@ -35,8 +35,8 @@ class Auth with ChangeNotifier {
   bool isAdmin() {
     bool isAdminResult = false;
 
-    if (userId == "7fFAYf9jHDg7KtOcEiSfk4fBATv2" ||
-        userId == '54D7zfq5I1eEfbeuUXaiaT8rtMH3') {
+    if (userId == "fu9uLdEgQCX3jsVrOMcU4KFmNCr1" ||
+        userId == '68SoGmjDUaXpEPP4VfbCB2j9lr32') {
       isAdminResult = true;
     } else {
       isAdminResult = false;
@@ -53,7 +53,7 @@ class Auth with ChangeNotifier {
       );
 
       getCurrentUID();
-      print(userId);
+
       await FirebaseAnalytics.instance.logSignUp(signUpMethod: 'Email');
       Navigator.of(context).push(PageRouteBuilder(
           transitionDuration: Duration(seconds: 1),
@@ -80,7 +80,7 @@ class Auth with ChangeNotifier {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       getCurrentUID();
-      print(userId);
+
       Navigator.of(context).push(PageRouteBuilder(
           transitionDuration: Duration(seconds: 1),
           transitionsBuilder: (ctx, animation, animationTime, child) {
