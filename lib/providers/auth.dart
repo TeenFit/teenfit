@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:teenfit/providers/person.dart';
 import 'package:teenfit/screens/auth/intro_page.dart';
+import 'package:teenfit/screens/home_screen.dart';
 
 import '../Custom/http_execption.dart';
 
@@ -51,7 +52,8 @@ class Auth with ChangeNotifier {
     return isAdminResult;
   }
 
-  Future<void> signup(String email, String password, String name) async {
+  Future<void> signup(
+      String email, String password, String name, BuildContext context) async {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/users');
 
@@ -72,6 +74,18 @@ class Auth with ChangeNotifier {
 
       print(userId);
       await FirebaseAnalytics.instance.logSignUp(signUpMethod: 'Email');
+
+      Navigator.of(context).push(PageRouteBuilder(
+          transitionDuration: Duration(seconds: 1),
+          transitionsBuilder: (ctx, animation, animationTime, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+          pageBuilder: (ctx, animation, animationTime) {
+            return HomeScreen();
+          }));
     } on FirebaseAuthException catch (e) {
       print(e);
       throw HttpException(e.code.toString());
@@ -81,7 +95,8 @@ class Auth with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> login(
+      String email, String password, BuildContext context) async {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/users');
 
@@ -97,6 +112,18 @@ class Auth with ChangeNotifier {
 
       print(userId);
       await FirebaseAnalytics.instance.logLogin();
+
+      Navigator.of(context).push(PageRouteBuilder(
+          transitionDuration: Duration(seconds: 1),
+          transitionsBuilder: (ctx, animation, animationTime, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+          pageBuilder: (ctx, animation, animationTime) {
+            return HomeScreen();
+          }));
     } on FirebaseAuthException catch (e) {
       throw HttpException(e.code.toString());
     } catch (_) {

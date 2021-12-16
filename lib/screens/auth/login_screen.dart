@@ -64,21 +64,11 @@ class _LoginScreenState extends State<LoginScreen> {
             .login(
               _email,
               _password,
+              context,
             )
             .then((_) => setState(() {
                   _isLoading = false;
-                }))
-            .then((_) => Navigator.of(context).push(PageRouteBuilder(
-                transitionDuration: Duration(seconds: 1),
-                transitionsBuilder: (ctx, animation, animationTime, child) {
-                  return FadeTransition(
-                    opacity: animation,
-                    child: child,
-                  );
-                },
-                pageBuilder: (ctx, animation, animationTime) {
-                  return HomeScreen();
-                })));
+                }));
       } on HttpException catch (error) {
         var errorMessage = 'Could Not Login, Try Again Later';
         if (error.toString().contains('user-not-found')) {

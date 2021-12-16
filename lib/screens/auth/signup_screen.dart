@@ -69,23 +69,12 @@ class _SignupScreenState extends State<SignupScreen> {
 
       //signup logic:
       try {
-        await Provider.of<Auth>(context, listen: false)
-            .signup(
-              _email,
-              _password,
-              _name,
-            )
-            .then((value) => Navigator.of(context).push(PageRouteBuilder(
-                transitionDuration: Duration(seconds: 1),
-                transitionsBuilder: (ctx, animation, animationTime, child) {
-                  return FadeTransition(
-                    opacity: animation,
-                    child: child,
-                  );
-                },
-                pageBuilder: (ctx, animation, animationTime) {
-                  return HomeScreen();
-                })));
+        await Provider.of<Auth>(context, listen: false).signup(
+          _email,
+          _password,
+          _name,
+          context,
+        );
       } on HttpException catch (error) {
         var errorMessage = 'Could Not Create Account, Try Again Later';
         if (error.toString().contains('weak-password')) {
@@ -344,6 +333,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     },
                     iconSize: _appBarHieght * 0.4,
                   ),
+                ),
+                SizedBox(
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.07,
                 ),
                 buildNameField(),
                 SizedBox(
