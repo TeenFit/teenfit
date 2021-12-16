@@ -163,7 +163,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         _showToast('Maximum Of 12 Exercises');
       }
 
-      var auth = Provider.of<Auth>(context).person;
+      var auth = Provider.of<Auth>(context, listen: false).person;
 
       _formKey3.currentState!.save();
 
