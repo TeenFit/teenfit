@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
 import 'package:teenfit/pickers/workout_image_picker.dart';
+import 'package:teenfit/providers/auth.dart';
 import 'package:teenfit/screens/my_workouts.dart';
 import 'package:uuid/uuid.dart';
 
@@ -162,13 +163,15 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         _showToast('Maximum Of 12 Exercises');
       }
 
+      var auth = Provider.of<Auth>(context).person;
+
       _formKey3.currentState!.save();
 
       newWorkout = Workout(
         failed: false,
         pending: newWorkout!.pending,
         date: newWorkout!.date,
-        creatorName: newWorkout!.creatorName,
+        creatorName: auth.name,
         creatorId: newWorkout!.creatorId,
         workoutId: newWorkout!.workoutId,
         workoutName: newWorkout!.workoutName,
@@ -216,52 +219,52 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       }
     }
 
-    Widget buildCreatorName() {
-      return Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Container(
-          height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
-          width: _mediaQuery.size.width,
-          child: TextFormField(
-            initialValue: workout!.creatorName,
-            decoration: InputDecoration(
-              hintText: 'Creator Name',
-              hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
-            ),
-            style: TextStyle(
-              fontSize: 20,
-            ),
-            keyboardType: TextInputType.url,
-            textInputAction: TextInputAction.next,
-            validator: (value) {
-              if (value.toString().trim().isEmpty) {
-                return 'Name is Required';
-              } else if (value.toString().trim().length > 10) {
-                return 'Stay Under 10 Characters Please';
-              }
-              return null;
-            },
-            onSaved: (input) {
-              newWorkout = Workout(
-                failed: false,
-                pending: newWorkout!.pending,
-                date: newWorkout!.date,
-                creatorName: input.toString().trim(),
-                creatorId: newWorkout!.creatorId,
-                workoutId: newWorkout!.workoutId,
-                workoutName: newWorkout!.workoutName,
-                instagram: newWorkout!.instagram,
-                facebook: newWorkout!.facebook,
-                tiktokLink: newWorkout!.tiktokLink,
-                bannerImage: newWorkout!.bannerImage,
-                bannerImageLink: newWorkout!.bannerImageLink,
-                exercises: newWorkout!.exercises,
-              );
-            },
-          ),
-        ),
-      );
-    }
+    // Widget buildCreatorName() {
+    //   return Padding(
+    //     padding: const EdgeInsets.all(15.0),
+    //     child: Container(
+    //       height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+    //       width: _mediaQuery.size.width,
+    //       child: TextFormField(
+    //         initialValue: workout!.creatorName,
+    //         decoration: InputDecoration(
+    //           hintText: 'Creator Name',
+    //           hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
+    //         ),
+    //         style: TextStyle(
+    //           fontSize: 20,
+    //         ),
+    //         keyboardType: TextInputType.url,
+    //         textInputAction: TextInputAction.next,
+    //         validator: (value) {
+    //           if (value.toString().trim().isEmpty) {
+    //             return 'Name is Required';
+    //           } else if (value.toString().trim().length > 10) {
+    //             return 'Stay Under 10 Characters Please';
+    //           }
+    //           return null;
+    //         },
+    //         onSaved: (input) {
+    //           newWorkout = Workout(
+    //             failed: false,
+    //             pending: newWorkout!.pending,
+    //             date: newWorkout!.date,
+    //             creatorName: input.toString().trim(),
+    //             creatorId: newWorkout!.creatorId,
+    //             workoutId: newWorkout!.workoutId,
+    //             workoutName: newWorkout!.workoutName,
+    //             instagram: newWorkout!.instagram,
+    //             facebook: newWorkout!.facebook,
+    //             tiktokLink: newWorkout!.tiktokLink,
+    //             bannerImage: newWorkout!.bannerImage,
+    //             bannerImageLink: newWorkout!.bannerImageLink,
+    //             exercises: newWorkout!.exercises,
+    //           );
+    //         },
+    //       ),
+    //     ),
+    //   );
+    // }
 
     Widget buildWorkoutName() {
       return Padding(
@@ -573,7 +576,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 ),
                 WorkoutImagePicker(
                     _pickImage, workout!.bannerImageLink, workout!.bannerImage),
-                buildCreatorName(),
+                // buildCreatorName(),
                 buildWorkoutName(),
                 buildInstagramLink(),
                 buildTumblrLink(),
