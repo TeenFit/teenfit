@@ -347,7 +347,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 buildNameField(),
                 SizedBox(
-                  height: (_mediaQuery.size.height - _appBarHieght) * 0.2,
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.02,
                 ),
                 buildEmailField(),
                 SizedBox(
