@@ -43,6 +43,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
     String _email = 'email';
     String _password = 'password';
+    String _name = 'name';
 
     void _showToast(String msg) {
       Fluttertoast.showToast(
@@ -61,8 +62,6 @@ class _SignupScreenState extends State<SignupScreen> {
       }
 
       _formkey1.currentState!.save();
-      print(_email);
-      print(_password);
 
       setState(() {
         _isLoading = true;
@@ -74,6 +73,7 @@ class _SignupScreenState extends State<SignupScreen> {
             .signup(
               _email,
               _password,
+              _name,
             )
             .then((value) => Navigator.of(context).push(PageRouteBuilder(
                 transitionDuration: Duration(seconds: 1),
@@ -103,6 +103,54 @@ class _SignupScreenState extends State<SignupScreen> {
       setState(() {
         _isLoading = false;
       });
+    }
+
+    Widget buildNameField() {
+      return Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: (_mediaQuery.size.width * 0.09),
+        ),
+        child: Container(
+          height: (_mediaQuery.size.height - _appBarHieght) * 0.1,
+          width: _mediaQuery.size.width,
+          child: TextFormField(
+            decoration: InputDecoration(
+              helperText: ' ',
+              contentPadding: EdgeInsets.symmetric(
+                vertical: _mediaQuery.size.height * 0.05,
+                horizontal: _mediaQuery.size.height * 0.015,
+              ),
+              fillColor: Colors.white,
+              filled: true,
+              errorMaxLines: 1,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+              labelText: ' Name',
+              labelStyle: TextStyle(
+                fontSize: _mediaQuery.size.height * 0.023,
+                fontWeight: FontWeight.w800,
+              ),
+              errorStyle: TextStyle(
+                  fontSize: _mediaQuery.size.height * 0.016,
+                  fontWeight: FontWeight.w800),
+            ),
+            style: TextStyle(
+              fontSize: _mediaQuery.size.height * 0.023,
+            ),
+            textInputAction: TextInputAction.next,
+            validator: (value) {
+              if (value.toString().trim().isEmpty) {
+                return 'Name is Required';
+              }
+              return null;
+            },
+            onSaved: (value) {
+              _name = value.toString().trim();
+            },
+          ),
+        ),
+      );
     }
 
     Widget buildEmailField() {
@@ -281,143 +329,143 @@ class _SignupScreenState extends State<SignupScreen> {
           ),
           Form(
             key: _formkey1,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: _mediaQuery.size.width,
-                    height: _appBarHieght,
-                    alignment: Alignment.centerLeft,
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_back),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      iconSize: _appBarHieght * 0.4,
-                    ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: _mediaQuery.size.width,
+                  height: _appBarHieght,
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    iconSize: _appBarHieght * 0.4,
                   ),
-                  SizedBox(
-                    height: (_mediaQuery.size.height - _appBarHieght) * 0.25,
-                  ),
-                  buildEmailField(),
-                  SizedBox(
-                    height: (_mediaQuery.size.height - _appBarHieght) * 0.025,
-                  ),
-                  buildPasswordField(),
-                  SizedBox(
-                    height: (_mediaQuery.size.height - _appBarHieght) * 0.025,
-                  ),
-                  buildConfirmPasswordField(),
-                  SizedBox(
-                    height: (_mediaQuery.size.height - _appBarHieght) * 0.025,
-                  ),
-                  //SignUp Btn
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: _mediaQuery.size.width * 0.09),
-                    child: Container(
-                      height: (_mediaQuery.size.height - _appBarHieght) * 0.08,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(_theme.primaryColor),
-                          elevation: MaterialStateProperty.all(5),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
+                ),
+                buildNameField(),
+                SizedBox(
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.2,
+                ),
+                buildEmailField(),
+                SizedBox(
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.02,
+                ),
+                buildPasswordField(),
+                SizedBox(
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.02,
+                ),
+                buildConfirmPasswordField(),
+                SizedBox(
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.02,
+                ),
+
+                //SignUp Btn
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: _mediaQuery.size.width * 0.09),
+                  child: Container(
+                    height: (_mediaQuery.size.height - _appBarHieght) * 0.08,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(_theme.primaryColor),
+                        elevation: MaterialStateProperty.all(5),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
                           ),
                         ),
-                        child: _isLoading
-                            ? CircularProgressIndicator(
-                                strokeWidth: 4,
-                                backgroundColor: _theme.shadowColor,
-                                color: Colors.white,
-                              )
-                            : Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'SIGN UP',
-                                    style: TextStyle(
-                                        fontFamily: 'Roboto',
-                                        fontSize: (_mediaQuery.size.height -
-                                                _appBarHieght) *
-                                            0.03,
-                                        letterSpacing: 1,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(
-                                    width: _mediaQuery.size.width * 0.02,
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward,
-                                    color: Colors.white,
-                                    size: (_mediaQuery.size.height -
-                                            _appBarHieght) *
-                                        0.04,
-                                  ),
-                                ],
-                              ),
+                      ),
+                      child: _isLoading
+                          ? CircularProgressIndicator(
+                              strokeWidth: 4,
+                              backgroundColor: _theme.shadowColor,
+                              color: Colors.white,
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'SIGN UP',
+                                  style: TextStyle(
+                                      fontFamily: 'Roboto',
+                                      fontSize: (_mediaQuery.size.height -
+                                              _appBarHieght) *
+                                          0.03,
+                                      letterSpacing: 1,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  width: _mediaQuery.size.width * 0.02,
+                                ),
+                                Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.white,
+                                  size: (_mediaQuery.size.height -
+                                          _appBarHieght) *
+                                      0.04,
+                                ),
+                              ],
+                            ),
+                      onPressed: () {
+                        _submit();
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.19,
+                ),
+                //switch screens
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: _mediaQuery.size.width * 0.09),
+                  child: Container(
+                    height: (_mediaQuery.size.height - _appBarHieght) * 0.08,
+                    width: double.infinity,
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: TextButton(
+                        child: Row(
+                          children: [
+                            Text(
+                              'Already Have An Account? | ',
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontFamily: 'Roboto',
+                                  fontSize: (_mediaQuery.size.height -
+                                          _appBarHieght) *
+                                      0.015,
+                                  letterSpacing: 1,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              'Login',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'Roboto',
+                                  fontSize: (_mediaQuery.size.height -
+                                          _appBarHieght) *
+                                      0.015,
+                                  letterSpacing: 1,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                         onPressed: () {
-                          _submit();
+                          Navigator.of(context)
+                              .pushReplacementNamed(LoginScreen.routeName);
                         },
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: (_mediaQuery.size.height - _appBarHieght) * 0.19,
-                  ),
-                  //switch screens
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: _mediaQuery.size.width * 0.09),
-                    child: Container(
-                      height: (_mediaQuery.size.height - _appBarHieght) * 0.08,
-                      width: double.infinity,
-                      child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: TextButton(
-                          child: Row(
-                            children: [
-                              Text(
-                                'Already Have An Account? | ',
-                                style: TextStyle(
-                                    color: Colors.black54,
-                                    fontFamily: 'Roboto',
-                                    fontSize: (_mediaQuery.size.height -
-                                            _appBarHieght) *
-                                        0.015,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                'Login',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Roboto',
-                                    fontSize: (_mediaQuery.size.height -
-                                            _appBarHieght) *
-                                        0.015,
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushReplacementNamed(LoginScreen.routeName);
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

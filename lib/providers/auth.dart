@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:teenfit/providers/person.dart';
 import 'package:teenfit/screens/auth/intro_page.dart';
 
 import '../Custom/http_execption.dart';
@@ -8,6 +10,12 @@ import '../Custom/http_execption.dart';
 class Auth with ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user = FirebaseAuth.instance.currentUser;
+
+  Person? _person;
+
+  Person get person {
+    return _person!;
+  }
 
   Stream<User?>? get onAuthStateChanged {
     return isAuthChanged();
@@ -43,14 +51,25 @@ class Auth with ChangeNotifier {
     return isAdminResult;
   }
 
-  Future<void> signup(String email, String password) async {
+  Future<void> signup(String email, String password, String name) async {
+    CollectionReference workoutsCollection =
+        FirebaseFirestore.instance.collection('/users');
+
     try {
       await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-
       getCurrentUID();
+
+      print(userId);
+
+      await workoutsCollection
+          .doc(userId)
+          .set({'email': email, 'name': name, 'savedWorkouts': []});
+
+      _person = Person(name: name, email: email, savedWorkouts: []);
+
       print(userId);
       await FirebaseAnalytics.instance.logSignUp(signUpMethod: 'Email');
     } on FirebaseAuthException catch (e) {
@@ -63,9 +82,19 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> login(String email, String password) async {
+    CollectionReference workoutsCollection =
+        FirebaseFirestore.instance.collection('/users');
+
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       getCurrentUID();
+
+      await workoutsCollection.doc(userId).get().then((value) => _person =
+          Person(
+              name: value['name'],
+              email: value['email'],
+              savedWorkouts: value['savedWorkouts']));
+
       print(userId);
       await FirebaseAnalytics.instance.logLogin();
     } on FirebaseAuthException catch (e) {
