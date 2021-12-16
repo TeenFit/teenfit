@@ -32,6 +32,10 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string> To Pick Photo's and Videos For Workouts</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<true/> 
+	<key>ITSEncryptionExportComplianceCode</key>
+	<string>1aa92c4d-6194-4d7d-b70a-16b48256b87e</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>
