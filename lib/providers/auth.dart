@@ -64,11 +64,10 @@ class Auth with ChangeNotifier {
       );
       getCurrentUID();
 
-      print(userId);
-
       await workoutsCollection
-          .doc(userId)
+          .doc(email)
           .set({'email': email, 'name': name, 'savedWorkouts': []});
+      print(userId);
 
       _person = Person(name: name, email: email, savedWorkouts: []);
 
@@ -87,9 +86,11 @@ class Auth with ChangeNotifier {
             return HomeScreen();
           }));
     } on FirebaseAuthException catch (e) {
+      await auth.signOut();
       print(e);
       throw HttpException(e.code.toString());
     } catch (e) {
+      await auth.signOut();
       throw HttpException('Unable To Signup, Connect To Servers');
     }
     notifyListeners();
@@ -104,7 +105,7 @@ class Auth with ChangeNotifier {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       getCurrentUID();
 
-      await workoutsCollection.doc(userId).get().then((value) => _person =
+      await workoutsCollection.doc(email).get().then((value) => _person =
           Person(
               name: value['name'],
               email: value['email'],
@@ -125,8 +126,10 @@ class Auth with ChangeNotifier {
             return HomeScreen();
           }));
     } on FirebaseAuthException catch (e) {
+      await auth.signOut();
       throw HttpException(e.code.toString());
     } catch (_) {
+      await auth.signOut();
       throw HttpException('Unable To Login, Connect To Servers');
     }
     notifyListeners();
