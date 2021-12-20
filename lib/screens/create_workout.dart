@@ -231,7 +231,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             style: TextStyle(
               fontSize: 20,
             ),
-            keyboardType: TextInputType.url,
             textInputAction: TextInputAction.next,
             validator: (value) {
               if (value.toString().trim().isEmpty) {
@@ -278,7 +277,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             style: TextStyle(
               fontSize: 20,
             ),
-            keyboardType: TextInputType.url,
             textInputAction: TextInputAction.next,
             validator: (value) {
               if (value.toString().trim().isEmpty) {
