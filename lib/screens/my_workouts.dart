@@ -73,7 +73,7 @@ class CreateWorkout extends StatelessWidget {
                 );
               },
               icon: Icon(
-                Icons.add_box_outlined,
+                Icons.person_rounded,
                 color: Colors.white,
                 size: _appBarHeight * 0.45,
               ),
