@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/providers/auth.dart';
+import 'package:teenfit/screens/user_screen.dart';
 import 'package:uuid/uuid.dart';
 
 import '/providers/workout.dart';
@@ -31,7 +32,7 @@ class CreateWorkout extends StatelessWidget {
             IconThemeData(color: Colors.white, size: _appBarHeight * 0.5),
         actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: IconButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(
@@ -54,6 +55,21 @@ class CreateWorkout extends StatelessWidget {
                     ),
                     'isEdit': false
                   },
+                );
+              },
+              icon: Icon(
+                Icons.add_box_outlined,
+                color: Colors.white,
+                size: _appBarHeight * 0.45,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(5, 0, 15, 0),
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  UserScreen.routeName,
                 );
               },
               icon: Icon(
