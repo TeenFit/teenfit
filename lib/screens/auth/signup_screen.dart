@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '/Custom/http_execption.dart';
 import '/providers/auth.dart';
 import './login_screen.dart';
-import '../home_screen.dart';
+// import '../home_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   static const routeName = '/signup-screen';

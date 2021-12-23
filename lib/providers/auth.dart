@@ -80,7 +80,7 @@ class Auth with ChangeNotifier {
       getCurrentUID();
 
       await FirebaseAnalytics.instance.logSignUp(signUpMethod: 'Email');
-      Navigator.of(context).pushNamed(CreateWorkout.routeName);
+      Navigator.of(context).pushReplacementNamed(CreateWorkout.routeName);
     } on FirebaseAuthException catch (e) {
       print(e);
       throw HttpException(e.code.toString());
@@ -96,7 +96,7 @@ class Auth with ChangeNotifier {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       getCurrentUID();
 
-      Navigator.of(context).pushNamed(WorkoutPage.routeName);
+      Navigator.of(context).pushReplacementNamed(WorkoutPage.routeName);
       await FirebaseAnalytics.instance.logLogin();
     } on FirebaseAuthException catch (e) {
       throw HttpException(e.code.toString());

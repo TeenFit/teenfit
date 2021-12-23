@@ -6,7 +6,7 @@ import '/screens/auth/reset_pass_screen.dart';
 import '/Custom/http_execption.dart';
 import '/providers/auth.dart';
 import '../auth/signup_screen.dart';
-import '/screens/home_screen.dart';
+// import '/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login-screen';

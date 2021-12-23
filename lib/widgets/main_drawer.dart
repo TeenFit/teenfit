@@ -1,13 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:teenfit/screens/auth/error_screen.dart';
-import 'package:teenfit/screens/auth/loading.dart';
+// import 'package:teenfit/screens/auth/error_screen.dart';
+// import 'package:teenfit/screens/auth/loading.dart';
 // import 'package:teenfit/screens/admin_screen.dart';
 // import 'package:teenfit/screens/auth/login_screen.dart';
-import 'package:teenfit/screens/auth/signup_screen.dart';
-import 'package:teenfit/screens/my_workouts.dart';
+// import 'package:teenfit/screens/auth/signup_screen.dart';
+// import 'package:teenfit/screens/my_workouts.dart';
 import 'package:teenfit/screens/user_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
