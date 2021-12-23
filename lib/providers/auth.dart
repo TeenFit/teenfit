@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:teenfit/screens/home_screen.dart';
 import 'package:teenfit/screens/my_workouts.dart';
-import 'package:teenfit/screens/workout_page.dart';
 
 import '../Custom/http_execption.dart';
 
@@ -82,7 +81,7 @@ class Auth with ChangeNotifier {
       await FirebaseAnalytics.instance.logLogin();
       notifyListeners();
 
-      Navigator.of(context).pushReplacementNamed(WorkoutPage.routeName);
+      Navigator.of(context).pushReplacementNamed(CreateWorkout.routeName);
     } on FirebaseAuthException catch (e) {
       throw HttpException(e.code.toString());
     } catch (_) {
