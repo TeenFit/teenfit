@@ -22,33 +22,16 @@ class Auth with ChangeNotifier {
     return FirebaseAuth.instance.authStateChanges().asBroadcastStream().cast();
   }
 
-  String get userId {
+  String? get userId {
     return getCurrentUID();
   }
 
-  StreamBuilder isAuth() {
-    return StreamBuilder<User?>(
-      initialData: FirebaseAuth.instance.currentUser,
-      stream: onAuthStateChanged,
-      builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
-        if (snapshot.connectionState == ConnectionState.active) {
-          var isAuth = snapshot.data;
-          return Builder(
-            builder: (context) {
-              return isAuth != null ? CreateWorkout() : SignupScreen();
-            },
-          );
-        } else if (snapshot.hasError) {
-          return ErrorScreen();
-        } else {
-          return LoadingScreen();
-        }
-      },
-    );
+  bool isAuth() {
+    return userId != null;
   }
 
-  String getCurrentUID() {
-    return FirebaseAuth.instance.currentUser!.uid;
+  String? getCurrentUID() {
+    return FirebaseAuth.instance.currentUser?.uid;
   }
 
   Future<void> updateToken() async {

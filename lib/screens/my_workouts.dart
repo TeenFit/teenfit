@@ -21,7 +21,7 @@ class CreateWorkout extends StatelessWidget {
 
     var uuid = Uuid();
 
-    String uid = Provider.of<Auth>(context, listen: false).userId;
+    String uid = Provider.of<Auth>(context, listen: false).userId!;
 
     return Scaffold(
       backgroundColor: _theme.primaryColor,

@@ -1,19 +1,11 @@
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:teenfit/providers/auth.dart';
+import 'package:teenfit/screens/auth/signup_screen.dart';
+import 'package:teenfit/screens/my_workouts.dart';
 import 'package:teenfit/screens/privacy_policy_screen.dart';
-// import 'package:teenfit/screens/auth/error_screen.dart';
-// import 'package:teenfit/screens/auth/loading.dart';
-// import 'package:teenfit/screens/admin_screen.dart';
-// import 'package:teenfit/screens/auth/login_screen.dart';
-// import 'package:teenfit/screens/auth/signup_screen.dart';
-// import 'package:teenfit/screens/my_workouts.dart';
-// import 'package:teenfit/screens/user_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '/providers/auth.dart';
-// import '../screens/my_workouts.dart';
 import '../Custom/my_flutter_app_icons.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -24,7 +16,7 @@ class MainDrawer extends StatelessWidget {
     final _appBarHieght =
         AppBar().preferredSize.height + _mediaQuery.padding.top;
 
-    // final auth = Provider.of<Auth>(context);
+    final auth = Provider.of<Auth>(context);
 
     void _showToast(String msg) {
       Fluttertoast.showToast(
@@ -87,7 +79,11 @@ class MainDrawer extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Provider.of<Auth>(context, listen: true).isAuth();
+                      auth.isAuth()
+                          ? Navigator.of(context)
+                              .pushNamed(CreateWorkout.routeName)
+                          : Navigator.of(context)
+                              .pushNamed(SignupScreen.routeName);
                     },
                   ),
                 ),
