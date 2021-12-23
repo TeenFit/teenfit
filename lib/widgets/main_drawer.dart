@@ -1,12 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:teenfit/screens/admin_screen.dart';
+import 'package:teenfit/screens/auth/error_screen.dart';
+import 'package:teenfit/screens/auth/loading.dart';
+// import 'package:teenfit/screens/admin_screen.dart';
+// import 'package:teenfit/screens/auth/login_screen.dart';
+import 'package:teenfit/screens/auth/signup_screen.dart';
+import 'package:teenfit/screens/my_workouts.dart';
 import 'package:teenfit/screens/user_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '/providers/auth.dart';
-import '../screens/my_workouts.dart';
+// import '../screens/my_workouts.dart';
 import '../Custom/my_flutter_app_icons.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -21,7 +27,7 @@ class MainDrawer extends StatelessWidget {
     final _appBarHieght =
         AppBar().preferredSize.height + _mediaQuery.padding.top;
 
-    final auth = Provider.of<Auth>(context);
+    // final auth = Provider.of<Auth>(context);
 
     void _showToast(String msg) {
       Fluttertoast.showToast(
@@ -84,8 +90,7 @@ class MainDrawer extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed(CreateWorkout.routeName);
+                            Provider.of<Auth>(context, listen: false).isAuth();
                           },
                         ),
                       )
@@ -126,81 +131,81 @@ class MainDrawer extends StatelessWidget {
                         ),
                       ),
               ),
-              auth.isAdmin()
-                  ? Padding(
-                      padding: EdgeInsets.all(15),
-                      child: connected
-                          ? Container(
-                              width: double.infinity,
-                              height:
-                                  (_mediaQuery.size.height - _appBarHieght) *
-                                      0.075,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: _theme.highlightColor,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10))),
-                                child: FittedBox(
-                                  fit: BoxFit.fitWidth,
-                                  child: Text(
-                                    'Admin',
-                                    style: TextStyle(
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: _mediaQuery.size.height * 0.03,
-                                    ),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context)
-                                      .pushNamed(AdminScreen.routeName);
-                                },
-                              ),
-                            )
-                          : Container(
-                              width: double.infinity,
-                              height:
-                                  (_mediaQuery.size.height - _appBarHieght) *
-                                      0.075,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: _theme.highlightColor,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10))),
-                                child: FittedBox(
-                                  fit: BoxFit.fitWidth,
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.wifi_off,
-                                        color: Colors.red[300],
-                                        size: _mediaQuery.size.height * 0.03,
-                                      ),
-                                      SizedBox(
-                                        width: _mediaQuery.size.width * 0.02,
-                                      ),
-                                      Text(
-                                        'Admin',
-                                        style: TextStyle(
-                                          fontFamily: 'Roboto',
-                                          fontWeight: FontWeight.w900,
-                                          color: Colors.red[300],
-                                          fontSize:
-                                              _mediaQuery.size.height * 0.03,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                onPressed: () {},
-                              ),
-                            ),
-                    )
-                  : SizedBox(
-                      height: (_mediaQuery.size.height - _appBarHieght) * 0.15,
-                    ),
+
+              // Padding(
+              //       padding: EdgeInsets.all(15),
+              //       child: connected
+              //           ? Container(
+              //               width: double.infinity,
+              //               height:
+              //                   (_mediaQuery.size.height - _appBarHieght) *
+              //                       0.075,
+              //               child: ElevatedButton(
+              //                 style: ElevatedButton.styleFrom(
+              //                     primary: _theme.highlightColor,
+              //                     shape: RoundedRectangleBorder(
+              //                         borderRadius:
+              //                             BorderRadius.circular(10))),
+              //                 child: FittedBox(
+              //                   fit: BoxFit.fitWidth,
+              //                   child: Text(
+              //                     'Admin',
+              //                     style: TextStyle(
+              //                       fontFamily: 'Roboto',
+              //                       fontWeight: FontWeight.w900,
+              //                       fontSize: _mediaQuery.size.height * 0.03,
+              //                     ),
+              //                   ),
+              //                 ),
+              //                 onPressed: () {
+              //                   Navigator.of(context)
+              //                       .pushNamed(AdminScreen.routeName);
+              //                 },
+              //               ),
+              //             )
+              //           : Container(
+              //               width: double.infinity,
+              //               height:
+              //                   (_mediaQuery.size.height - _appBarHieght) *
+              //                       0.075,
+              //               child: ElevatedButton(
+              //                 style: ElevatedButton.styleFrom(
+              //                     primary: _theme.highlightColor,
+              //                     shape: RoundedRectangleBorder(
+              //                         borderRadius:
+              //                             BorderRadius.circular(10))),
+              //                 child: FittedBox(
+              //                   fit: BoxFit.fitWidth,
+              //                   child: Row(
+              //                     children: [
+              //                       Icon(
+              //                         Icons.wifi_off,
+              //                         color: Colors.red[300],
+              //                         size: _mediaQuery.size.height * 0.03,
+              //                       ),
+              //                       SizedBox(
+              //                         width: _mediaQuery.size.width * 0.02,
+              //                       ),
+              //                       Text(
+              //                         'Admin',
+              //                         style: TextStyle(
+              //                           fontFamily: 'Roboto',
+              //                           fontWeight: FontWeight.w900,
+              //                           color: Colors.red[300],
+              //                           fontSize:
+              //                               _mediaQuery.size.height * 0.03,
+              //                         ),
+              //                       ),
+              //                     ],
+              //                   ),
+              //                 ),
+              //                 onPressed: () {},
+              //               ),
+              //             ),
+              //     )
+              SizedBox(
+                height: (_mediaQuery.size.height - _appBarHieght) * 0.15,
+              ),
               SizedBox(
                 height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
               ),

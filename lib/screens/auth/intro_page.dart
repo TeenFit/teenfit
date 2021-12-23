@@ -1,9 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:teenfit/screens/home_screen.dart';
 
-import '../auth/login_screen.dart';
-import '../auth/signup_screen.dart';
+// import '../auth/login_screen.dart';
+// import '../auth/signup_screen.dart';
 
 class IntroPage extends StatefulWidget {
   static const routeName = '/intro-page';
@@ -93,9 +94,9 @@ class _IntroPageState extends State<IntroPage> {
                           ),
                         ),
                       ),
-                      child: Text('SIGN UP'),
+                      child: Text('Get Started'),
                       onPressed: () {
-                        Navigator.of(context).pushNamed(SignupScreen.routeName);
+                        Navigator.of(context).pushNamed(HomeScreen.routeName);
                       },
                     ),
                   ),
@@ -103,26 +104,26 @@ class _IntroPageState extends State<IntroPage> {
                   Container(
                     width: double.infinity,
                     height: _mediaQuery.size.height * 0.07,
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: _mediaQuery.size.height * 0.028,
-                          letterSpacing: 1,
-                          fontFamily: 'Poppins',
-                        ),
-                        primary: Colors.white,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                        ),
-                      ),
-                      child: Text('LOGIN'),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(LoginScreen.routeName);
-                      },
-                    ),
+                    // child: TextButton(
+                    //   style: TextButton.styleFrom(
+                    //     textStyle: TextStyle(
+                    //       fontWeight: FontWeight.bold,
+                    //       fontSize: _mediaQuery.size.height * 0.028,
+                    //       letterSpacing: 1,
+                    //       fontFamily: 'Poppins',
+                    //     ),
+                    //     primary: Colors.white,
+                    //     shape: const RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.all(
+                    //         Radius.circular(15),
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   child: Text('LOGIN'),
+                    //   onPressed: () {
+                    //     Navigator.of(context).pushNamed(LoginScreen.routeName);
+                    //   },
+                    // ),
                   ),
                   SizedBox(
                     height: _mediaQuery.size.height * 0.08,

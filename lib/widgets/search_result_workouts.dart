@@ -21,29 +21,29 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    var workouts = Provider.of<Workouts>(context, listen: false).workouts;
+    // var workouts = Provider.of<Workouts>(context, listen: false).workouts;
 
     setState(() {
       isLoading = true;
     });
 
-    try {
-      workouts.forEach((element) {
-        final date = element.date;
-        final timeNow = DateTime.now();
+    // try {
+    //   workouts.forEach((element) {
+    //     final date = element.date;
+    //     final timeNow = DateTime.now();
 
-        int difference = timeNow.difference(date).inDays;
+    //     int difference = timeNow.difference(date).inDays;
 
-        int daysLeft = 15 - difference;
+    //     int daysLeft = 15 - difference;
 
-        if (daysLeft <= 0 && element.failed == true) {
-          Provider.of<Workouts>(context).deleteWorkout(element);
-          setState(() {});
-        }
-      });
-    } catch (e) {
-      _showToast('Time To Get Started');
-    }
+    //     if (daysLeft <= 0 && element.failed == true) {
+    //       Provider.of<Workouts>(context).deleteWorkout(element);
+    //       setState(() {});
+    //     }
+    //   });
+    // } catch (e) {
+    //   _showToast('Time To Get Started');
+    // }
 
     if (this.mounted) {
       setState(() {

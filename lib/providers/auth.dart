@@ -1,8 +1,12 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:teenfit/screens/auth/error_screen.dart';
 import 'package:teenfit/screens/auth/intro_page.dart';
-import 'package:teenfit/screens/home_screen.dart';
+import 'package:teenfit/screens/auth/loading.dart';
+import 'package:teenfit/screens/auth/signup_screen.dart';
+import 'package:teenfit/screens/my_workouts.dart';
+import 'package:teenfit/screens/workout_page.dart';
 
 import '../Custom/http_execption.dart';
 
@@ -20,6 +24,27 @@ class Auth with ChangeNotifier {
 
   String get userId {
     return getCurrentUID();
+  }
+
+  StreamBuilder isAuth() {
+    return StreamBuilder<User?>(
+      initialData: FirebaseAuth.instance.currentUser,
+      stream: onAuthStateChanged,
+      builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          var isAuth = snapshot.data;
+          return Builder(
+            builder: (context) {
+              return isAuth != null ? CreateWorkout() : SignupScreen();
+            },
+          );
+        } else if (snapshot.hasError) {
+          return ErrorScreen();
+        } else {
+          return LoadingScreen();
+        }
+      },
+    );
   }
 
   String getCurrentUID() {
@@ -55,17 +80,7 @@ class Auth with ChangeNotifier {
       getCurrentUID();
 
       await FirebaseAnalytics.instance.logSignUp(signUpMethod: 'Email');
-      Navigator.of(context).push(PageRouteBuilder(
-          transitionDuration: Duration(seconds: 1),
-          transitionsBuilder: (ctx, animation, animationTime, child) {
-            return FadeTransition(
-              opacity: animation,
-              child: child,
-            );
-          },
-          pageBuilder: (ctx, animation, animationTime) {
-            return HomeScreen();
-          }));
+      Navigator.of(context).pushNamed(CreateWorkout.routeName);
     } on FirebaseAuthException catch (e) {
       print(e);
       throw HttpException(e.code.toString());
@@ -81,17 +96,7 @@ class Auth with ChangeNotifier {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       getCurrentUID();
 
-      Navigator.of(context).push(PageRouteBuilder(
-          transitionDuration: Duration(seconds: 1),
-          transitionsBuilder: (ctx, animation, animationTime, child) {
-            return FadeTransition(
-              opacity: animation,
-              child: child,
-            );
-          },
-          pageBuilder: (ctx, animation, animationTime) {
-            return HomeScreen();
-          }));
+      Navigator.of(context).pushNamed(WorkoutPage.routeName);
       await FirebaseAnalytics.instance.logLogin();
     } on FirebaseAuthException catch (e) {
       throw HttpException(e.code.toString());
