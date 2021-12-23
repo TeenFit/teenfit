@@ -120,7 +120,7 @@ class _MyAppState extends State<MyApp> {
                               return Builder(
                                 builder: (context) {
                                   return isAuth != null
-                                      ? IntroPage()
+                                      ? HomeScreen()
                                       : IntroPage();
                                 },
                               );
