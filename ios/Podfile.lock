@@ -1,5 +1,5 @@
 PODS:
-  - cloud_firestore (3.1.4):
+  - cloud_firestore (3.1.5):
     - Firebase/Firestore (= 8.9.0)
     - firebase_core
     - Flutter
@@ -26,18 +26,18 @@ PODS:
   - Firebase/Storage (8.9.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 8.9.0)
-  - firebase_analytics (9.0.3):
+  - firebase_analytics (9.0.4):
     - Firebase/Analytics (= 8.9.0)
     - firebase_core
     - Flutter
-  - firebase_auth (3.3.3):
+  - firebase_auth (3.3.4):
     - Firebase/Auth (= 8.9.0)
     - firebase_core
     - Flutter
-  - firebase_core (1.10.5):
+  - firebase_core (1.10.6):
     - Firebase/CoreOnly (= 8.9.0)
     - Flutter
-  - firebase_storage (10.2.3):
+  - firebase_storage (10.2.4):
     - Firebase/Storage (= 8.9.0)
     - firebase_core
     - Flutter
@@ -264,14 +264,14 @@ CHECKOUT OPTIONS:
     :tag: 8.9.0
 
 SPEC CHECKSUMS:
-  cloud_firestore: c978a55e0bfc675cdc2291ef7670a69695cc663a
+  cloud_firestore: 338122a6149c14ca376ad363626b5bf3037a5056
   ffmpeg-kit-ios-https: 420b7d6e105f4b872d048a84f4f713479bea8b2b
   ffmpeg_kit_flutter: 4475e259bfc0e495d1db6559d0ecf0ebfa1215c7
   Firebase: 13d8d96499e2635428d5bf0ec675df21f95d9a95
-  firebase_analytics: 022be8bd68c73ddaa23b77895e9098afa7069cfb
-  firebase_auth: fe3a1deb12ebd850295344234abc15588d086baf
-  firebase_core: dfcae4c150a5e24436a0b7677c470478a234d5bf
-  firebase_storage: 41d59adeff37c548e167ecbfa834d2d038e6ad87
+  firebase_analytics: cc1ab30e479b7089c0a952c0cae7ba286d464c68
+  firebase_auth: e875a50b81aefb20f305dfede425647e9675c19e
+  firebase_core: c263d7daf1dc92fcd9895e6abdc04872b0ee07ff
+  firebase_storage: 2ed331c6bd5bfa6d64f1a6c57f01151f4f146c16
   FirebaseAnalytics: 4ab446ce08a3fe52e8a4303dd997cf26276bf968
   FirebaseAuth: 2b78b2a32c07b3ecfa4970bdf1d3632b8304099b
   FirebaseCore: 599ee609343eaf4941bd188f85e3aa077ffe325b
