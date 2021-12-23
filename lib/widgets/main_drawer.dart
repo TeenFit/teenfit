@@ -93,7 +93,7 @@ class MainDrawer extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            Provider.of<Auth>(context, listen: false).isAuth();
+                            Provider.of<Auth>(context, listen: true).isAuth();
                           },
                         ),
                       )

@@ -73,33 +73,6 @@ class _UserScreenState extends State<UserScreen> {
               Divider(
                 thickness: 1.3,
                 color: Colors.black,
-                endIndent: 20,
-                indent: 20,
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.picture_as_pdf_rounded,
-                  size: _mediaQuery.size.height * 0.04,
-                  color: Colors.black,
-                ),
-                title: Text(
-                  'Privacy Policy',
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w900,
-                    fontSize: _mediaQuery.size.height * 0.04,
-                  ),
-                ),
-                onTap: () {
-                  Navigator.of(context)
-                      .pushNamed(PrivacyPolicyScreen.routeName);
-                },
-              ),
-              Divider(
-                thickness: 1.3,
-                color: Colors.black,
                 indent: 20,
                 endIndent: 20,
               ),

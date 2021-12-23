@@ -96,7 +96,8 @@ class _IntroPageState extends State<IntroPage> {
                       ),
                       child: Text('Get Started'),
                       onPressed: () {
-                        Navigator.of(context).pushNamed(HomeScreen.routeName);
+                        Navigator.of(context)
+                            .pushReplacementNamed(HomeScreen.routeName);
                       },
                     ),
                   ),
