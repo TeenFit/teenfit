@@ -2,13 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:teenfit/screens/privacy_policy_screen.dart';
 // import 'package:teenfit/screens/auth/error_screen.dart';
 // import 'package:teenfit/screens/auth/loading.dart';
 // import 'package:teenfit/screens/admin_screen.dart';
 // import 'package:teenfit/screens/auth/login_screen.dart';
 // import 'package:teenfit/screens/auth/signup_screen.dart';
 // import 'package:teenfit/screens/my_workouts.dart';
-import 'package:teenfit/screens/user_screen.dart';
+// import 'package:teenfit/screens/user_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '/providers/auth.dart';
@@ -55,12 +56,14 @@ class MainDrawer extends StatelessWidget {
               ),
               ListTile(
                 leading: Icon(
-                  Icons.person_rounded,
+                  // Icons.person_rounded,
+                  Icons.picture_as_pdf,
                   color: _theme.highlightColor,
                   size: _mediaQuery.size.height * 0.08,
                 ),
                 onTap: () {
-                  Navigator.of(context).pushNamed(UserScreen.routeName);
+                  Navigator.of(context)
+                      .pushNamed(PrivacyPolicyScreen.routeName);
                 },
               ),
               SizedBox(
