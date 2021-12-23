@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
 import 'package:teenfit/widgets/video_player.dart';
@@ -56,12 +56,11 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
   }
 
   Future<void> _pickImage() async {
-    var pickedImageFile = await ImagePicker()
-        .pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 60,
-      maxHeight: 600,
-      maxWidth: 337.50,
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(
+      allowMultiple: false,
+      type: FileType.image,
+      allowCompression: true,
     )
         .catchError(
       (e) async {
@@ -84,23 +83,29 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
       },
     );
 
-    if (this.mounted) {
-      setState(() {
-        if (pickedImageFile == null) {
+    if (result != null) {
+      if (this.mounted) {
+        setState(() {
+          _pickedImage = File(result.files.single.path!);
+          isLoading = false;
+        });
+      }
+    } else {
+      if (this.mounted) {
+        setState(() {
           _pickedImage = _pickedImage;
-        } else {
-          _pickedImage = File(pickedImageFile.path);
-          _pickedVideo = null;
-        }
-      });
+          isLoading = false;
+        });
+      }
     }
   }
 
   Future<void> _pickVideo() async {
-    var pickedVideoFile = await ImagePicker()
-        .pickVideo(
-      source: ImageSource.gallery,
-      maxDuration: Duration(milliseconds: 5000),
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(
+      allowMultiple: false,
+      type: FileType.video,
+      allowCompression: true,
     )
         .catchError(
       (e) async {
@@ -123,15 +128,20 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
       },
     );
 
-    if (this.mounted) {
-      setState(() {
-        if (pickedVideoFile == null) {
+    if (result != null) {
+      if (this.mounted) {
+        setState(() {
+          _pickedVideo = File(result.files.single.path!);
+          isLoading = false;
+        });
+      }
+    } else {
+      if (this.mounted) {
+        setState(() {
           _pickedVideo = _pickedVideo;
-        } else {
-          _pickedVideo = File(pickedVideoFile.path);
-          _pickedImage = null;
-        }
-      });
+          isLoading = false;
+        });
+      }
     }
   }
 
