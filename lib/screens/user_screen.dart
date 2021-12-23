@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/providers/auth.dart';
-import 'package:teenfit/screens/privacy_policy_screen.dart';
 
 //Add User Screen (Contains, access to saved workouts, privacy policy and logout button)
 
@@ -121,6 +120,33 @@ class _UserScreenState extends State<UserScreen> {
                 endIndent: 20,
                 indent: 20,
               ),
+              auth.isAdmin()
+                  ? ListTile(
+                      leading: Icon(
+                        Icons.logout,
+                        size: _mediaQuery.size.height * 0.04,
+                        color: Colors.black,
+                      ),
+                      title: Text(
+                        'Admin',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w900,
+                          fontSize: _mediaQuery.size.height * 0.04,
+                        ),
+                      ),
+                      onTap: () {},
+                    )
+                  : SizedBox(),
+              auth.isAdmin()
+                  ? Divider(
+                      thickness: 1.3,
+                      color: Colors.black,
+                      endIndent: 20,
+                      indent: 20,
+                    )
+                  : SizedBox(),
             ],
           ),
         ),
