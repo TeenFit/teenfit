@@ -17,10 +17,6 @@ import '/providers/auth.dart';
 import '../Custom/my_flutter_app_icons.dart';
 
 class MainDrawer extends StatelessWidget {
-  final bool connected;
-
-  MainDrawer(this.connected);
-
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
@@ -71,68 +67,30 @@ class MainDrawer extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.all(15),
-                child: connected
-                    ? Container(
-                        width: double.infinity,
-                        height:
-                            (_mediaQuery.size.height - _appBarHieght) * 0.075,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: _theme.highlightColor,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10))),
-                          child: FittedBox(
-                            fit: BoxFit.fitWidth,
-                            child: Text(
-                              'Create A Workout',
-                              style: TextStyle(
-                                fontFamily: 'Roboto',
-                                fontWeight: FontWeight.w900,
-                                fontSize: _mediaQuery.size.height * 0.03,
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            Provider.of<Auth>(context, listen: true).isAuth();
-                          },
-                        ),
-                      )
-                    : Container(
-                        width: double.infinity,
-                        height:
-                            (_mediaQuery.size.height - _appBarHieght) * 0.075,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: _theme.highlightColor,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10))),
-                          child: FittedBox(
-                            fit: BoxFit.fitWidth,
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.wifi_off,
-                                  color: Colors.red[300],
-                                  size: _mediaQuery.size.height * 0.03,
-                                ),
-                                SizedBox(
-                                  width: _mediaQuery.size.width * 0.02,
-                                ),
-                                Text(
-                                  'Create A Workout',
-                                  style: TextStyle(
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w900,
-                                    color: Colors.red[300],
-                                    fontSize: _mediaQuery.size.height * 0.03,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          onPressed: () {},
+                child: Container(
+                  width: double.infinity,
+                  height: (_mediaQuery.size.height - _appBarHieght) * 0.075,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: _theme.highlightColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Text(
+                        'Create A Workout',
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w900,
+                          fontSize: _mediaQuery.size.height * 0.03,
                         ),
                       ),
+                    ),
+                    onPressed: () {
+                      Provider.of<Auth>(context, listen: true).isAuth();
+                    },
+                  ),
+                ),
               ),
 
               // Padding(

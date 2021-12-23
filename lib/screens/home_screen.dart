@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
+// import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import '/providers/workouts.dart';
 import '../widgets/main_drawer.dart';
@@ -21,8 +20,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   FloatingSearchBarController controller = FloatingSearchBarController();
   bool isLoading = false;
-
-  bool connected = true;
 
   static const historyLength = 3;
 
@@ -77,28 +74,28 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
 
-    var connectivityResult = await (Connectivity().checkConnectivity());
+    // var connectivityResult = await (Connectivity().checkConnectivity());
 
-    if (connectivityResult == ConnectivityResult.wifi ||
-        connectivityResult == ConnectivityResult.ethernet) {
-      if (this.mounted) {
-        setState(() {
-          connected = true;
-        });
-      }
-    } else {
-      if (this.mounted) {
-        setState(() {
-          connected = false;
-        });
-      }
-    }
+    // if (connectivityResult == ConnectivityResult.wifi ||
+    //     connectivityResult == ConnectivityResult.ethernet) {
+    //   if (this.mounted) {
+    //     setState(() {
+    //       connected = true;
+    //     });
+    //   }
+    // } else {
+    //   if (this.mounted) {
+    //     setState(() {
+    //       connected = false;
+    //     });
+    //   }
+    // }
 
-    Connectivity().onConnectivityChanged.listen((event) {
-      if (this.mounted) {
-        Phoenix.rebirth(context);
-      }
-    });
+    // Connectivity().onConnectivityChanged.listen((event) {
+    //   if (this.mounted) {
+    //     Phoenix.rebirth(context);
+    //   }
+    // });
 
     super.didChangeDependencies();
   }
@@ -152,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final _theme = Theme.of(context);
 
     return Scaffold(
-      drawer: MainDrawer(connected),
+      drawer: MainDrawer(),
       backgroundColor: _theme.primaryColor,
       body: isLoading
           ? Center(
