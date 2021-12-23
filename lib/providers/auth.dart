@@ -1,9 +1,6 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:teenfit/screens/auth/error_screen.dart';
-import 'package:teenfit/screens/auth/loading.dart';
-import 'package:teenfit/screens/auth/signup_screen.dart';
 import 'package:teenfit/screens/home_screen.dart';
 import 'package:teenfit/screens/my_workouts.dart';
 import 'package:teenfit/screens/workout_page.dart';
@@ -31,7 +28,9 @@ class Auth with ChangeNotifier {
   }
 
   String? getCurrentUID() {
-    return FirebaseAuth.instance.currentUser?.uid;
+    return FirebaseAuth.instance.currentUser != null
+        ? FirebaseAuth.instance.currentUser!.uid
+        : null;
   }
 
   Future<void> updateToken() async {
@@ -63,6 +62,8 @@ class Auth with ChangeNotifier {
       getCurrentUID();
 
       await FirebaseAnalytics.instance.logSignUp(signUpMethod: 'Email');
+
+      notifyListeners();
       Navigator.of(context).pushReplacementNamed(CreateWorkout.routeName);
     } on FirebaseAuthException catch (e) {
       print(e);
@@ -78,9 +79,10 @@ class Auth with ChangeNotifier {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       getCurrentUID();
+      await FirebaseAnalytics.instance.logLogin();
+      notifyListeners();
 
       Navigator.of(context).pushReplacementNamed(WorkoutPage.routeName);
-      await FirebaseAnalytics.instance.logLogin();
     } on FirebaseAuthException catch (e) {
       throw HttpException(e.code.toString());
     } catch (_) {
