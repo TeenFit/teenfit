@@ -2,9 +2,9 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:teenfit/screens/auth/error_screen.dart';
-import 'package:teenfit/screens/auth/intro_page.dart';
 import 'package:teenfit/screens/auth/loading.dart';
 import 'package:teenfit/screens/auth/signup_screen.dart';
+import 'package:teenfit/screens/home_screen.dart';
 import 'package:teenfit/screens/my_workouts.dart';
 import 'package:teenfit/screens/workout_page.dart';
 
@@ -111,7 +111,7 @@ class Auth with ChangeNotifier {
       await auth.signOut();
 
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (BuildContext context) => IntroPage()),
+        MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
         ModalRoute.withName('/'),
       );
     } catch (e) {

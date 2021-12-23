@@ -9,7 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:teenfit/screens/admin_screen.dart';
 import 'package:teenfit/screens/privacy_policy_screen.dart';
 import 'package:teenfit/screens/user_screen.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import './screens/auth/reset_pass_screen.dart';
 import './providers/auth.dart';
@@ -35,7 +34,7 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
   runApp(
-    Phoenix(child: MyApp()),
+    MyApp(),
   );
 }
 
