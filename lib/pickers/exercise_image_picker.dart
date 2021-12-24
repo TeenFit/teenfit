@@ -88,6 +88,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
         setState(() {
           _pickedImage = File(result.files.single.path!);
           isLoading = false;
+          _pickedVideo = null;
         });
       }
     } else {
@@ -133,6 +134,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
         setState(() {
           _pickedVideo = File(result.files.single.path!);
           isLoading = false;
+          _pickedImage = null;
         });
       }
     } else {

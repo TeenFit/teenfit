@@ -124,7 +124,7 @@ class _UserScreenState extends State<UserScreen> {
               auth.isAdmin()
                   ? ListTile(
                       leading: Icon(
-                        Icons.logout,
+                        Icons.check_box,
                         size: _mediaQuery.size.height * 0.04,
                         color: Colors.black,
                       ),
