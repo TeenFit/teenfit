@@ -251,70 +251,73 @@ class _WorkoutTileState extends State<WorkoutTile> {
                         ],
                       ),
                     )
-                  : Stack(
-                      children: [
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Container(
-                              width: _mediaQuery.size.width * 0.8,
-                              height:
-                                  (_mediaQuery.size.height - _appBarHieght) *
-                                      0.25,
-                              alignment: Alignment.center,
-                              child: Text(
-                                widget.workout.workoutName,
-                                maxLines: 2,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: (_mediaQuery.size.height -
-                                          _appBarHieght) *
-                                      0.06,
-                                  shadows: <Shadow>[
-                                    Shadow(
-                                      offset: Offset(3.0, 3.0),
-                                      blurRadius: 1.0,
-                                      color: Color.fromARGB(255, 128, 128, 128),
-                                    ),
-                                  ],
+                  : Center(
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Container(
+                                width: _mediaQuery.size.width * 0.8,
+                                height:
+                                    (_mediaQuery.size.height - _appBarHieght) *
+                                        0.25,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  widget.workout.workoutName,
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: (_mediaQuery.size.height -
+                                            _appBarHieght) *
+                                        0.06,
+                                    shadows: <Shadow>[
+                                      Shadow(
+                                        offset: Offset(3.0, 3.0),
+                                        blurRadius: 1.0,
+                                        color:
+                                            Color.fromARGB(255, 128, 128, 128),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        Container(
-                          height:
-                              (_mediaQuery.size.height - _appBarHieght) * 0.3,
-                          width: double.infinity,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(25),
-                            onTap: () {
-                              Navigator.of(context).pushNamed(
-                                WorkoutPage.routeName,
-                                arguments: Workout(
-                                  failed: false,
-                                  pending: widget.workout.pending,
-                                  date: widget.workout.date,
-                                  creatorName: widget.workout.creatorName,
-                                  creatorId: widget.workout.creatorId,
-                                  workoutId: widget.workout.workoutId,
-                                  workoutName: widget.workout.workoutName,
-                                  instagram: widget.workout.instagram,
-                                  facebook: widget.workout.facebook,
-                                  tiktokLink: widget.workout.tiktokLink,
-                                  bannerImage: widget.workout.bannerImage,
-                                  bannerImageLink:
-                                      widget.workout.bannerImageLink,
-                                  exercises: widget.workout.exercises,
-                                ),
-                              );
-                            },
+                          Container(
+                            height:
+                                (_mediaQuery.size.height - _appBarHieght) * 0.3,
+                            width: double.infinity,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(25),
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
+                                  WorkoutPage.routeName,
+                                  arguments: Workout(
+                                    failed: false,
+                                    pending: widget.workout.pending,
+                                    date: widget.workout.date,
+                                    creatorName: widget.workout.creatorName,
+                                    creatorId: widget.workout.creatorId,
+                                    workoutId: widget.workout.workoutId,
+                                    workoutName: widget.workout.workoutName,
+                                    instagram: widget.workout.instagram,
+                                    facebook: widget.workout.facebook,
+                                    tiktokLink: widget.workout.tiktokLink,
+                                    bannerImage: widget.workout.bannerImage,
+                                    bannerImageLink:
+                                        widget.workout.bannerImageLink,
+                                    exercises: widget.workout.exercises,
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
           widget.isAdmin
               ? SizedBox()
