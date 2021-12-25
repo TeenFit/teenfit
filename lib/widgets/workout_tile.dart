@@ -88,33 +88,33 @@ class _WorkoutTileState extends State<WorkoutTile> {
                     ),
                   ),
           ),
-          Container(
-            height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
-            width: double.infinity,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(25),
-              onTap: () {
-                Navigator.of(context).pushNamed(
-                  WorkoutPage.routeName,
-                  arguments: Workout(
-                    failed: false,
-                    pending: widget.workout.pending,
-                    date: widget.workout.date,
-                    creatorName: widget.workout.creatorName,
-                    creatorId: widget.workout.creatorId,
-                    workoutId: widget.workout.workoutId,
-                    workoutName: widget.workout.workoutName,
-                    instagram: widget.workout.instagram,
-                    facebook: widget.workout.facebook,
-                    tiktokLink: widget.workout.tiktokLink,
-                    bannerImage: widget.workout.bannerImage,
-                    bannerImageLink: widget.workout.bannerImageLink,
-                    exercises: widget.workout.exercises,
-                  ),
-                );
-              },
-            ),
-          ),
+          // Container(
+          //   height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
+          //   width: double.infinity,
+          //   child: InkWell(
+          //     borderRadius: BorderRadius.circular(25),
+          //     onTap: () {
+          //       Navigator.of(context).pushNamed(
+          //         WorkoutPage.routeName,
+          //         arguments: Workout(
+          //           failed: false,
+          //           pending: widget.workout.pending,
+          //           date: widget.workout.date,
+          //           creatorName: widget.workout.creatorName,
+          //           creatorId: widget.workout.creatorId,
+          //           workoutId: widget.workout.workoutId,
+          //           workoutName: widget.workout.workoutName,
+          //           instagram: widget.workout.instagram,
+          //           facebook: widget.workout.facebook,
+          //           tiktokLink: widget.workout.tiktokLink,
+          //           bannerImage: widget.workout.bannerImage,
+          //           bannerImageLink: widget.workout.bannerImageLink,
+          //           exercises: widget.workout.exercises,
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ),
           widget.isDeletable
               ? Container(
                   width: double.infinity,
@@ -282,6 +282,33 @@ class _WorkoutTileState extends State<WorkoutTile> {
                         ),
                       ),
                     ),
+          Container(
+            height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
+            width: double.infinity,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(25),
+              onTap: () {
+                Navigator.of(context).pushNamed(
+                  WorkoutPage.routeName,
+                  arguments: Workout(
+                    failed: false,
+                    pending: widget.workout.pending,
+                    date: widget.workout.date,
+                    creatorName: widget.workout.creatorName,
+                    creatorId: widget.workout.creatorId,
+                    workoutId: widget.workout.workoutId,
+                    workoutName: widget.workout.workoutName,
+                    instagram: widget.workout.instagram,
+                    facebook: widget.workout.facebook,
+                    tiktokLink: widget.workout.tiktokLink,
+                    bannerImage: widget.workout.bannerImage,
+                    bannerImageLink: widget.workout.bannerImageLink,
+                    exercises: widget.workout.exercises,
+                  ),
+                );
+              },
+            ),
+          ),
           widget.isAdmin
               ? SizedBox()
               : widget.workout.pending
