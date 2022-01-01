@@ -9,8 +9,31 @@ import 'create_workout.dart';
 import '/providers/workouts.dart';
 import '/widgets/workout_tile.dart';
 
-class CreateWorkout extends StatelessWidget {
+class CreateWorkout extends StatefulWidget {
   static const routeName = '/create-workout';
+
+  @override
+  State<CreateWorkout> createState() => _CreateWorkoutState();
+}
+
+class _CreateWorkoutState extends State<CreateWorkout> {
+  bool isLoading = false;
+
+  @override
+  void didChangeDependencies() {
+    setState(() {
+      isLoading = true;
+    });
+
+    Provider.of<Workouts>(context, listen: false).removeFailedWorkouts();
+
+    if (this.mounted) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,56 +104,70 @@ class CreateWorkout extends StatelessWidget {
           ),
         ],
       ),
-      body: Container(
-        height: _mediaQuery.size.height,
-        width: _mediaQuery.size.width,
-        child: Consumer<Workouts>(
-          builder: (ctx, workout, _) => ListView.builder(
-            itemBuilder: (ctx, index) {
-              return workout.findByCreatorId(uid).length == 0
-                  ? Container(
-                      height: (_mediaQuery.size.height - _appBarHeight),
-                      width: _mediaQuery.size.width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: (_mediaQuery.size.height - _appBarHeight) *
-                                0.05,
-                          ),
-                          Container(
-                            height: (_mediaQuery.size.height - _appBarHeight) *
-                                0.05,
-                            width: _mediaQuery.size.width * 0.8,
-                            child: FittedBox(
-                              fit: BoxFit.fitWidth,
-                              child: Text(
-                                'Create Your First Workout...',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: _mediaQuery.size.height * 0.025,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Roboto',
+      body: isLoading
+          ? Center(
+              child: Container(
+                height: _mediaQuery.size.width * 0.5,
+                width: _mediaQuery.size.width * 0.5,
+                child: Image.asset(
+                  'assets/images/teen_fit_logo_white_withpeople 1@3x.png',
+                  fit: BoxFit.contain,
+                ),
+              ),
+            )
+          : Container(
+              height: _mediaQuery.size.height,
+              width: _mediaQuery.size.width,
+              child: Consumer<Workouts>(
+                builder: (ctx, workout, _) => ListView.builder(
+                  itemBuilder: (ctx, index) {
+                    return workout.findByCreatorId(uid).length == 0
+                        ? Container(
+                            height: (_mediaQuery.size.height - _appBarHeight),
+                            width: _mediaQuery.size.width,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: (_mediaQuery.size.height -
+                                          _appBarHeight) *
+                                      0.05,
                                 ),
-                              ),
+                                Container(
+                                  height: (_mediaQuery.size.height -
+                                          _appBarHeight) *
+                                      0.05,
+                                  width: _mediaQuery.size.width * 0.8,
+                                  child: FittedBox(
+                                    fit: BoxFit.fitWidth,
+                                    child: Text(
+                                      'Create Your First Workout...',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize:
+                                            _mediaQuery.size.height * 0.025,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Roboto',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : WorkoutTile(
-                      workout.findByCreatorId(uid)[index],
-                      true,
-                      false,
-                    );
-            },
-            itemCount: workout.findByCreatorId(uid).length == 0
-                ? 1
-                : workout.findByCreatorId(uid).length,
-          ),
-        ),
-      ),
+                          )
+                        : WorkoutTile(
+                            workout.findByCreatorId(uid)[index],
+                            true,
+                            false,
+                          );
+                  },
+                  itemCount: workout.findByCreatorId(uid).length == 0
+                      ? 1
+                      : workout.findByCreatorId(uid).length,
+                ),
+              ),
+            ),
     );
   }
 }

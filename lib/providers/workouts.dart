@@ -465,6 +465,18 @@ class Workouts with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> removeFailedWorkouts() async {
+    final failedWorkouts = workouts.where((element) => element.failed).toList();
+
+    int i = 0;
+
+    do {
+      await deleteWorkout(failedWorkouts[i]);
+      i++;
+    } while (i < failedWorkouts.length);
+    notifyListeners();
+  }
+
   Future<void> failWorkout(Workout workouT) async {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
