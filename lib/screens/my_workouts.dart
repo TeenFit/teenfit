@@ -20,12 +20,12 @@ class _CreateWorkoutState extends State<CreateWorkout> {
   bool isLoading = false;
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     setState(() {
       isLoading = true;
     });
 
-    Provider.of<Workouts>(context, listen: false).removeFailedWorkouts();
+    await Provider.of<Workouts>(context, listen: false).removeFailedWorkouts();
 
     if (this.mounted) {
       setState(() {
