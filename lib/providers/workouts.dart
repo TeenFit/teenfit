@@ -466,7 +466,16 @@ class Workouts with ChangeNotifier {
   }
 
   Future<void> removeFailedWorkouts() async {
-    final failedWorkouts = workouts.where((element) => element.failed).toList();
+    final failedWorkouts = workouts.where((element) {
+      final date = element.date;
+      final timeNow = DateTime.now();
+
+      int difference = timeNow.difference(date).inDays;
+
+      final daysLeft = 15 - difference;
+
+      return element.failed && daysLeft <= 0;
+    }).toList();
 
     int i = 0;
 
