@@ -25,7 +25,10 @@ class _CreateWorkoutState extends State<CreateWorkout> {
       isLoading = true;
     });
 
-    await Provider.of<Workouts>(context, listen: false).removeFailedWorkouts();
+    try {
+      await Provider.of<Workouts>(context, listen: false)
+          .removeFailedWorkouts();
+    } catch (e) {}
 
     if (this.mounted) {
       setState(() {
