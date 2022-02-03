@@ -45,13 +45,13 @@ class ExerciseTiles extends StatelessWidget {
                     ? FadeInImage(
                         imageErrorBuilder: (context, image, _) => Image.asset(
                           'assets/images/ImageUploadError.png',
-                          fit: BoxFit.cover,
+                          fit: BoxFit.contain,
                         ),
                         placeholder:
                             AssetImage('assets/images/loading-gif.gif'),
                         image: CachedNetworkImageProvider(
                             exercise.exerciseImageLink!),
-                        fit: BoxFit.cover,
+                        fit: BoxFit.contain,
                       )
                     : FadeInImage(
                         imageErrorBuilder: (context, image, _) => Image.asset(
@@ -61,7 +61,7 @@ class ExerciseTiles extends StatelessWidget {
                         placeholder:
                             AssetImage('assets/images/loading-gif.gif'),
                         image: FileImage(exercise.exerciseImage!),
-                        fit: BoxFit.cover,
+                        fit: BoxFit.contain,
                       ),
               ),
             ),

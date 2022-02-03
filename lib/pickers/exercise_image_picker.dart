@@ -285,7 +285,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                                                 'assets/images/loading-gif.gif',
                                                 fit: BoxFit.contain,
                                               ),
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.contain,
                                       image: CachedNetworkImageProvider(
                                           widget.imageLink!),
                                       imageErrorBuilder: (image, _, __) =>
@@ -301,12 +301,12 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                                     'assets/images/loading-gif.gif',
                                     fit: BoxFit.contain,
                                   ),
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.contain,
                                   image: FileImage(pickedVideo!),
                                   imageErrorBuilder: (image, _, __) =>
                                       Image.asset(
                                     'assets/images/ImageUploadError.png',
-                                    fit: BoxFit.cover,
+                                    fit: BoxFit.contain,
                                   ),
                                 )
                           : FadeInImage(
@@ -317,7 +317,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                                 'assets/images/loading-gif.gif',
                                 fit: BoxFit.contain,
                               ),
-                              fit: BoxFit.cover,
+                              fit: BoxFit.contain,
                               image: FileImage(_pickedImage!),
                               imageErrorBuilder: (image, _, __) => Image.asset(
                                 'assets/images/ImageUploadError.png',

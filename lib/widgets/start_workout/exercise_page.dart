@@ -51,7 +51,8 @@ class _ExercisePageState extends State<ExercisePage> {
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Container(
-                        height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
+                        height:
+                            (_mediaQuery.size.height - _appBarHeight) * 0.45,
                         width: _mediaQuery.size.width,
                         child: widget.exercise.exerciseImageLink == null
                             ? FadeInImage(
@@ -69,7 +70,7 @@ class _ExercisePageState extends State<ExercisePage> {
                                     AssetImage('assets/images/loading-gif.gif'),
                                 image:
                                     FileImage(widget.exercise.exerciseImage!),
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               )
                             : FadeInImage(
                                 imageErrorBuilder: (context, image, _) =>
@@ -86,7 +87,7 @@ class _ExercisePageState extends State<ExercisePage> {
                                     AssetImage('assets/images/loading-gif.gif'),
                                 image: CachedNetworkImageProvider(
                                     widget.exercise.exerciseImageLink!),
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                       ),
                     ),
@@ -112,7 +113,7 @@ class _ExercisePageState extends State<ExercisePage> {
                       ),
                     ),
                     SizedBox(
-                      height: (_mediaQuery.size.height - _appBarHeight) * 0.15,
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.05,
                     ),
                     Container(
                       height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
@@ -190,7 +191,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Container(
-                    height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
+                    height: (_mediaQuery.size.height - _appBarHeight) * 0.45,
                     width: _mediaQuery.size.width,
                     child: widget.exercise.exerciseImageLink == null
                         ? FadeInImage(
@@ -207,7 +208,7 @@ class _ExercisePageState extends State<ExercisePage> {
                             placeholder:
                                 AssetImage('assets/images/loading-gif.gif'),
                             image: FileImage(widget.exercise.exerciseImage!),
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                           )
                         : FadeInImage(
                             imageErrorBuilder: (context, image, _) =>
@@ -224,7 +225,7 @@ class _ExercisePageState extends State<ExercisePage> {
                                 AssetImage('assets/images/loading-gif.gif'),
                             image: CachedNetworkImageProvider(
                                 widget.exercise.exerciseImageLink!),
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                           ),
                   ),
                 ),
@@ -249,7 +250,7 @@ class _ExercisePageState extends State<ExercisePage> {
                   ),
                 ),
                 SizedBox(
-                  height: (_mediaQuery.size.height - _appBarHeight) * 0.2,
+                  height: (_mediaQuery.size.height - _appBarHeight) * 0.05,
                 ),
                 Container(
                   height: (_mediaQuery.size.height - _appBarHeight) * 0.045,
