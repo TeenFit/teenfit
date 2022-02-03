@@ -138,7 +138,6 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
           onSave: (value) async {
             setState(() {
               pickedVideo = File(value.toString());
-              isLoading = false;
               _pickedImage = null;
             });
           },
@@ -153,6 +152,10 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
         );
 
         _trimmer.dispose();
+
+        setState(() {
+          isLoading = false;
+        });
       }
     } else {
       if (this.mounted) {
