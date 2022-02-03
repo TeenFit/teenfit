@@ -7,6 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
 import 'package:video_trimmer/video_trimmer.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 class ExerciseImagePicker extends StatefulWidget {
   final String? imageLink;
@@ -89,8 +90,23 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
 
     if (result != null) {
       if (this.mounted) {
+        var image = await ImageCropper.cropImage(
+          sourcePath: result.files.single.path!,
+          compressQuality: 80,
+          compressFormat: ImageCompressFormat.png,
+          iosUiSettings: IOSUiSettings(
+            resetAspectRatioEnabled: true,
+            cancelButtonTitle: 'cancel',
+            doneButtonTitle: 'done',
+            resetButtonHidden: false,
+            rotateButtonsHidden: false,
+            rotateClockwiseButtonHidden: false,
+            showCancelConfirmationDialog: true,
+            title: 'Crop Your Image',
+          ),
+        );
         setState(() {
-          _pickedImage = File(result.files.single.path!);
+          _pickedImage = image;
           isLoading = false;
           pickedVideo = null;
         });
