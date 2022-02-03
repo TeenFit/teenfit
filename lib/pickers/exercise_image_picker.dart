@@ -56,6 +56,10 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
   }
 
   Future<void> _pickImage() async {
+    setState(() {
+      isLoading = true;
+    });
+
     FilePickerResult? result = await FilePicker.platform
         .pickFiles(
       allowMultiple: false,
@@ -102,6 +106,10 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
   }
 
   Future<void> _pickVideo() async {
+    setState(() {
+      isLoading = true;
+    });
+
     FilePickerResult? result = await FilePicker.platform
         .pickFiles(
       allowMultiple: false,
