@@ -115,34 +115,17 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
               exerciseImageLink: newExercise!.exerciseImageLink);
         });
       } else if (video != null) {
-        final Trimmer _trimmer = Trimmer();
-        await _trimmer.loadVideo(videoFile: video);
-
-        await _trimmer.saveTrimmedVideo(
-          onSave: (value) async {
-            setState(() {
-              newExercise = Exercise(
-                  exerciseId: newExercise!.exerciseId,
-                  name: newExercise!.name,
-                  exerciseImage: File(value.toString()),
-                  sets: newExercise!.sets,
-                  reps: newExercise!.reps,
-                  timeSeconds: newExercise!.timeSeconds,
-                  restTime: newExercise!.restTime,
-                  exerciseImageLink: newExercise!.exerciseImageLink);
-            });
-          },
-          videoFileName: DateTime.now().toString(),
-          videoFolderName: 'Workout-Gifs',
-          storageDir: StorageDir.temporaryDirectory,
-          startValue: 0,
-          endValue: 5000,
-          outputFormat: FileFormat.gif,
-          fpsGIF: 8,
-          scaleGIF: 380,
-        );
-
-        _trimmer.dispose();
+        setState(() {
+          newExercise = Exercise(
+              exerciseId: newExercise!.exerciseId,
+              name: newExercise!.name,
+              exerciseImage: video,
+              sets: newExercise!.sets,
+              reps: newExercise!.reps,
+              timeSeconds: newExercise!.timeSeconds,
+              restTime: newExercise!.restTime,
+              exerciseImageLink: newExercise!.exerciseImageLink);
+        });
       }
       if (this.mounted) {
         setState(() {

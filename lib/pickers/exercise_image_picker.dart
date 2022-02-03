@@ -6,7 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
-import 'package:teenfit/widgets/video_player.dart';
+import 'package:video_trimmer/video_trimmer.dart';
 
 class ExerciseImagePicker extends StatefulWidget {
   final String? imageLink;
@@ -21,7 +21,7 @@ class ExerciseImagePicker extends StatefulWidget {
 
 class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
   File? _pickedImage;
-  File? _pickedVideo;
+  File? pickedVideo;
   bool isLoading = false;
   bool isInit = false;
 
@@ -88,7 +88,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
         setState(() {
           _pickedImage = File(result.files.single.path!);
           isLoading = false;
-          _pickedVideo = null;
+          pickedVideo = null;
         });
       }
     } else {
@@ -131,16 +131,33 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
 
     if (result != null) {
       if (this.mounted) {
-        setState(() {
-          _pickedVideo = File(result.files.single.path!);
-          isLoading = false;
-          _pickedImage = null;
-        });
+        final Trimmer _trimmer = Trimmer();
+        await _trimmer.loadVideo(videoFile: File(result.files.single.path!));
+
+        await _trimmer.saveTrimmedVideo(
+          onSave: (value) async {
+            setState(() {
+              pickedVideo = File(value.toString());
+              isLoading = false;
+              _pickedImage = null;
+            });
+          },
+          videoFileName: DateTime.now().toString(),
+          videoFolderName: 'Workout-Gifs',
+          storageDir: StorageDir.temporaryDirectory,
+          startValue: 0,
+          endValue: 5000,
+          outputFormat: FileFormat.gif,
+          fpsGIF: 8,
+          scaleGIF: 380,
+        );
+
+        _trimmer.dispose();
       }
     } else {
       if (this.mounted) {
         setState(() {
-          _pickedVideo = _pickedVideo;
+          pickedVideo = pickedVideo;
           isLoading = false;
         });
       }
@@ -190,7 +207,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                               });
                               await _pickImage();
                               Navigator.of(context).pop();
-                              await widget.pickFn(_pickedImage, _pickedVideo);
+                              await widget.pickFn(_pickedImage, pickedVideo);
                               if (this.mounted) {
                                 setState(() {
                                   isLoading = false;
@@ -216,9 +233,9 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                               setState(() {
                                 isLoading = true;
                               });
-                              await _pickVideo();
                               Navigator.of(context).pop();
-                              await widget.pickFn(_pickedImage, _pickedVideo);
+                              await _pickVideo();
+                              await widget.pickFn(_pickedImage, pickedVideo);
 
                               if (this.mounted) {
                                 setState(() {
@@ -254,7 +271,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                     )
                   : InkWell(
                       child: _pickedImage == null
-                          ? _pickedVideo == null
+                          ? pickedVideo == null
                               ? widget.imageLink == null
                                   ? Image.asset(
                                       'assets/images/UploadImage.png',
@@ -276,8 +293,21 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                                             'assets/images/ImageUploadError.png',
                                             fit: BoxFit.contain,
                                           ))
-                              : VideoPlayerWidget(
-                                  videofile: _pickedVideo,
+                              : FadeInImage(
+                                  placeholder: AssetImage(
+                                      'assets/images/loading-gif.gif'),
+                                  placeholderErrorBuilder: (context, _, __) =>
+                                      Image.asset(
+                                    'assets/images/loading-gif.gif',
+                                    fit: BoxFit.contain,
+                                  ),
+                                  fit: BoxFit.cover,
+                                  image: FileImage(pickedVideo!),
+                                  imageErrorBuilder: (image, _, __) =>
+                                      Image.asset(
+                                    'assets/images/ImageUploadError.png',
+                                    fit: BoxFit.cover,
+                                  ),
                                 )
                           : FadeInImage(
                               placeholder:
