@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:teenfit/Custom/custom_dialog.dart';
@@ -68,8 +69,25 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
 
     if (result != null) {
       if (this.mounted) {
+        var image = await ImageCropper.cropImage(
+          sourcePath: result.files.single.path!,
+          compressQuality: 80,
+          aspectRatio: CropAspectRatio(ratioX: 16, ratioY: 9),
+          compressFormat: ImageCompressFormat.png,
+          iosUiSettings: IOSUiSettings(
+            resetAspectRatioEnabled: true,
+            cancelButtonTitle: 'cancel',
+            doneButtonTitle: 'done',
+            resetButtonHidden: false,
+            rotateButtonsHidden: false,
+            rotateClockwiseButtonHidden: false,
+            showCancelConfirmationDialog: true,
+            title: 'Crop Your Image',
+          ),
+        );
+
         setState(() {
-          _pickedImage = File(result.files.single.path!);
+          _pickedImage = image;
           isLoading = false;
         });
       }
