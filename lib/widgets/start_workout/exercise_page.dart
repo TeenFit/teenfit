@@ -49,6 +49,27 @@ class _ExercisePageState extends State<ExercisePage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Container(
+                        height:
+                            (_mediaQuery.size.height - _appBarHeight) * 0.11,
+                        width: _mediaQuery.size.width,
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Text(
+                            widget.exercise.name,
+                            maxLines: 2,
+                            style: TextStyle(
+                              color: _theme.cardColor,
+                              fontFamily: 'Roboto',
+                              fontSize: _mediaQuery.size.height * 0.05,
+                              letterSpacing: 1,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Container(
                         height:
@@ -89,27 +110,6 @@ class _ExercisePageState extends State<ExercisePage> {
                                     widget.exercise.exerciseImageLink!),
                                 fit: BoxFit.contain,
                               ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Container(
-                        height:
-                            (_mediaQuery.size.height - _appBarHeight) * 0.11,
-                        width: _mediaQuery.size.width,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            widget.exercise.name,
-                            maxLines: 2,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Roboto',
-                              fontSize: _mediaQuery.size.height * 0.05,
-                              letterSpacing: 1,
-                            ),
-                          ),
-                        ),
                       ),
                     ),
                     SizedBox(
@@ -185,13 +185,33 @@ class _ExercisePageState extends State<ExercisePage> {
             height: (_mediaQuery.size.height - _appBarHeight),
             width: _mediaQuery.size.width,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Container(
+                    height: (_mediaQuery.size.height - _appBarHeight) * 0.12,
+                    width: _mediaQuery.size.width,
+                    child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: Text(
+                        widget.exercise.name,
+                        maxLines: 2,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Roboto',
+                          fontSize: _mediaQuery.size.height * 0.045,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Container(
-                    height: (_mediaQuery.size.height - _appBarHeight) * 0.45,
+                    height: (_mediaQuery.size.height - _appBarHeight) * 0.57,
                     width: _mediaQuery.size.width,
                     child: widget.exercise.exerciseImageLink == null
                         ? FadeInImage(
@@ -229,92 +249,125 @@ class _ExercisePageState extends State<ExercisePage> {
                           ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Container(
-                    height: (_mediaQuery.size.height - _appBarHeight) * 0.12,
-                    width: _mediaQuery.size.width,
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: Text(
-                        widget.exercise.name,
-                        maxLines: 2,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Roboto',
-                          fontSize: _mediaQuery.size.height * 0.045,
-                          letterSpacing: 1,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
                 SizedBox(
                   height: (_mediaQuery.size.height - _appBarHeight) * 0.05,
                 ),
                 Container(
-                  height: (_mediaQuery.size.height - _appBarHeight) * 0.045,
+                  height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                   width: double.infinity,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        '${widget.exercise.sets} sets',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'PTSans',
-                          fontSize: _mediaQuery.size.height * 0.035,
-                          letterSpacing: 1,
+                      Container(
+                        width: _mediaQuery.size.width * 0.5,
+                        height:
+                            (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                        decoration: BoxDecoration(
+                          color: _theme.cardColor,
+                          borderRadius:
+                              BorderRadius.only(topLeft: Radius.circular(25)),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '${widget.exercise.sets} sets',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'PTSans',
+                              fontSize: _mediaQuery.size.height * 0.035,
+                              letterSpacing: 1,
+                            ),
+                          ),
                         ),
                       ),
-                      Text(
-                        '${widget.exercise.reps} reps',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'PTSans',
-                          fontSize: _mediaQuery.size.height * 0.035,
-                          letterSpacing: 1,
+                      Container(
+                        width: _mediaQuery.size.width * 0.5,
+                        height:
+                            (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                        decoration: BoxDecoration(
+                          color: _theme.cardColor,
+                          borderRadius:
+                              BorderRadius.only(topRight: Radius.circular(25)),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '${widget.exercise.reps} reps',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'PTSans',
+                              fontSize: _mediaQuery.size.height * 0.035,
+                              letterSpacing: 1,
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(),
                 Container(
-                  height: (_mediaQuery.size.height - _appBarHeight) * 0.2,
+                  height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                   width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  primary: _theme.highlightColor),
-                              onPressed: () {
-                                widget.goToPrevious();
-                              },
-                              child: Text('Back')),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: _mediaQuery.size.width * 0.5,
+                        height:
+                            (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                        decoration: BoxDecoration(
+                          color: _theme.cardColor,
                         ),
-                        SizedBox(
-                          width: _mediaQuery.size.width * 0.03,
+                        child: TextButton(
+                            style: TextButton.styleFrom(
+                              primary: Colors.black,
+                            ),
+                            onPressed: () {
+                              widget.goToPrevious();
+                            },
+                            child: Text(
+                              '<- Back',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'PTSans',
+                                fontSize: _mediaQuery.size.height * 0.035,
+                                letterSpacing: 1,
+                              ),
+                            )),
+                      ),
+                      Container(
+                        width: _mediaQuery.size.width * 0.5,
+                        height:
+                            (_mediaQuery.size.height - _appBarHeight) * 0.08,
+                        decoration: BoxDecoration(
+                          color: _theme.cardColor,
                         ),
-                        Expanded(
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  primary: _theme.highlightColor),
-                              onPressed: () {
-                                widget.goToNext();
-                              },
-                              child: Text('Next')),
-                        )
-                      ],
-                    ),
+                        child: TextButton(
+                            style: TextButton.styleFrom(
+                              primary: Colors.black,
+                            ),
+                            onPressed: () {
+                              widget.goToNext();
+                            },
+                            child: Text(
+                              'Next ->',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'PTSans',
+                                fontSize: _mediaQuery.size.height * 0.035,
+                                letterSpacing: 1,
+                              ),
+                            )),
+                      ),
+                    ],
                   ),
-                )
+                ),
               ],
             ),
           );
