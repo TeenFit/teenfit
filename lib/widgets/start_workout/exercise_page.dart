@@ -60,7 +60,7 @@ class _ExercisePageState extends State<ExercisePage> {
                             widget.exercise.name,
                             maxLines: 2,
                             style: TextStyle(
-                              color: _theme.cardColor,
+                              color: Colors.black,
                               fontFamily: 'Roboto',
                               fontSize: _mediaQuery.size.height * 0.05,
                               letterSpacing: 1,
@@ -199,7 +199,7 @@ class _ExercisePageState extends State<ExercisePage> {
                         widget.exercise.name,
                         maxLines: 2,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: _theme.highlightColor,
                           fontFamily: 'Roboto',
                           fontSize: _mediaQuery.size.height * 0.045,
                           letterSpacing: 1,
@@ -264,7 +264,7 @@ class _ExercisePageState extends State<ExercisePage> {
                         height:
                             (_mediaQuery.size.height - _appBarHeight) * 0.08,
                         decoration: BoxDecoration(
-                          color: _theme.cardColor,
+                          color: _theme.highlightColor,
                           borderRadius:
                               BorderRadius.only(topLeft: Radius.circular(25)),
                         ),
@@ -273,7 +273,7 @@ class _ExercisePageState extends State<ExercisePage> {
                             '${widget.exercise.sets} sets',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.black,
+                              color: _theme.cardColor,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'PTSans',
                               fontSize: _mediaQuery.size.height * 0.035,
@@ -287,7 +287,7 @@ class _ExercisePageState extends State<ExercisePage> {
                         height:
                             (_mediaQuery.size.height - _appBarHeight) * 0.08,
                         decoration: BoxDecoration(
-                          color: _theme.cardColor,
+                          color: _theme.highlightColor,
                           borderRadius:
                               BorderRadius.only(topRight: Radius.circular(25)),
                         ),
@@ -296,7 +296,7 @@ class _ExercisePageState extends State<ExercisePage> {
                             '${widget.exercise.reps} reps',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.black,
+                              color: _theme.cardColor,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'PTSans',
                               fontSize: _mediaQuery.size.height * 0.035,
@@ -320,11 +320,11 @@ class _ExercisePageState extends State<ExercisePage> {
                         height:
                             (_mediaQuery.size.height - _appBarHeight) * 0.08,
                         decoration: BoxDecoration(
-                          color: _theme.cardColor,
+                          color: _theme.highlightColor,
                         ),
                         child: TextButton(
                             style: TextButton.styleFrom(
-                              primary: Colors.black,
+                              primary: _theme.cardColor,
                             ),
                             onPressed: () {
                               widget.goToPrevious();
@@ -332,7 +332,7 @@ class _ExercisePageState extends State<ExercisePage> {
                             child: Text(
                               '<- Back',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: _theme.cardColor,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'PTSans',
                                 fontSize: _mediaQuery.size.height * 0.035,
@@ -345,11 +345,11 @@ class _ExercisePageState extends State<ExercisePage> {
                         height:
                             (_mediaQuery.size.height - _appBarHeight) * 0.08,
                         decoration: BoxDecoration(
-                          color: _theme.cardColor,
+                          color: _theme.highlightColor,
                         ),
                         child: TextButton(
                             style: TextButton.styleFrom(
-                              primary: Colors.black,
+                              primary: _theme.cardColor,
                             ),
                             onPressed: () {
                               widget.goToNext();
@@ -357,7 +357,7 @@ class _ExercisePageState extends State<ExercisePage> {
                             child: Text(
                               'Next ->',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: _theme.cardColor,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'PTSans',
                                 fontSize: _mediaQuery.size.height * 0.035,
