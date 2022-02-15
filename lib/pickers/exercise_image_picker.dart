@@ -22,7 +22,7 @@ class ExerciseImagePicker extends StatefulWidget {
 
 class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
   File? _pickedImage;
-  File? pickedVideo;
+  File? _pickedVideo;
   bool isLoading = false;
   bool isInit = false;
 
@@ -57,10 +57,6 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
   }
 
   Future<void> _pickImage() async {
-    setState(() {
-      isLoading = true;
-    });
-
     FilePickerResult? result = await FilePicker.platform
         .pickFiles(
       allowMultiple: false,
@@ -108,14 +104,13 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
         setState(() {
           _pickedImage = image;
           isLoading = false;
-          pickedVideo = null;
+          _pickedVideo = null;
         });
       }
     } else {
       if (this.mounted) {
         setState(() {
           _pickedImage = _pickedImage;
-          isLoading = false;
         });
       }
     }
@@ -161,9 +156,11 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
         await _trimmer.saveTrimmedVideo(
           onSave: (value) async {
             setState(() {
-              pickedVideo = File(value.toString());
+              _pickedVideo = File(value.toString());
               _pickedImage = null;
+              isLoading = false;
             });
+            await widget.pickFn(null, File(value.toString()));
           },
           videoFileName: DateTime.now().toString(),
           videoFolderName: 'Workout-Gifs',
@@ -174,17 +171,11 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
           fpsGIF: 8,
           scaleGIF: 380,
         );
-
-        _trimmer.dispose();
-
-        setState(() {
-          isLoading = false;
-        });
       }
     } else {
       if (this.mounted) {
         setState(() {
-          pickedVideo = pickedVideo;
+          _pickedVideo = _pickedVideo;
           isLoading = false;
         });
       }
@@ -234,7 +225,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                               });
                               await _pickImage();
                               Navigator.of(context).pop();
-                              await widget.pickFn(_pickedImage, pickedVideo);
+                              await widget.pickFn(_pickedImage, null);
                               if (this.mounted) {
                                 setState(() {
                                   isLoading = false;
@@ -262,8 +253,6 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                               });
                               Navigator.of(context).pop();
                               await _pickVideo();
-                              await widget.pickFn(_pickedImage, pickedVideo);
-
                               if (this.mounted) {
                                 setState(() {
                                   isLoading = false;
@@ -298,7 +287,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                     )
                   : InkWell(
                       child: _pickedImage == null
-                          ? pickedVideo == null
+                          ? _pickedVideo == null
                               ? widget.imageLink == null
                                   ? Image.asset(
                                       'assets/images/UploadImage.png',
@@ -329,7 +318,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                                     fit: BoxFit.contain,
                                   ),
                                   fit: BoxFit.contain,
-                                  image: FileImage(pickedVideo!),
+                                  image: FileImage(_pickedVideo!),
                                   imageErrorBuilder: (image, _, __) =>
                                       Image.asset(
                                     'assets/images/ImageUploadError.png',
