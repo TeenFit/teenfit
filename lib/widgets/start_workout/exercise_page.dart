@@ -42,10 +42,10 @@ class _ExercisePageState extends State<ExercisePage> {
                 _restCountDownController,
               )
             : Container(
-                height: (_mediaQuery.size.height - _appBarHeight),
+                height: _mediaQuery.size.height,
                 width: _mediaQuery.size.width,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Padding(
@@ -73,7 +73,7 @@ class _ExercisePageState extends State<ExercisePage> {
                       padding: const EdgeInsets.all(15.0),
                       child: Container(
                         height:
-                            (_mediaQuery.size.height - _appBarHeight) * 0.45,
+                            (_mediaQuery.size.height - _appBarHeight) * 0.51,
                         width: _mediaQuery.size.width,
                         child: widget.exercise.exerciseImageLink == null
                             ? FadeInImage(
@@ -113,10 +113,10 @@ class _ExercisePageState extends State<ExercisePage> {
                       ),
                     ),
                     SizedBox(
-                      height: (_mediaQuery.size.height - _appBarHeight) * 0.05,
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
                     ),
                     Container(
-                      height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.25,
                       width: double.infinity,
                       child: FittedBox(
                         fit: BoxFit.fitWidth,
@@ -132,7 +132,7 @@ class _ExercisePageState extends State<ExercisePage> {
                                 _countDownController.pause();
                               },
                               icon: Icon(Icons.pause),
-                              color: _theme.cardColor,
+                              color: _theme.primaryColor,
                             ),
                             CircularCountDownTimer(
                               initialDuration: 0,
@@ -172,17 +172,20 @@ class _ExercisePageState extends State<ExercisePage> {
                                 _countDownController.restart();
                               },
                               icon: Icon(Icons.play_arrow),
-                              color: _theme.cardColor,
+                              color: _theme.primaryColor,
                             ),
                           ],
                         ),
                       ),
-                    )
+                    ),
+                    SizedBox(
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
+                    ),
                   ],
                 ),
               )
         : Container(
-            height: (_mediaQuery.size.height - _appBarHeight),
+            height: (_mediaQuery.size.height),
             width: _mediaQuery.size.width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -191,7 +194,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Container(
-                    height: (_mediaQuery.size.height - _appBarHeight) * 0.12,
+                    height: (_mediaQuery.size.height - _appBarHeight) * 0.1,
                     width: _mediaQuery.size.width,
                     child: FittedBox(
                       fit: BoxFit.contain,
@@ -199,7 +202,7 @@ class _ExercisePageState extends State<ExercisePage> {
                         widget.exercise.name,
                         maxLines: 2,
                         style: TextStyle(
-                          color: _theme.highlightColor,
+                          color: Colors.black,
                           fontFamily: 'Roboto',
                           fontSize: _mediaQuery.size.height * 0.045,
                           letterSpacing: 1,
@@ -211,7 +214,7 @@ class _ExercisePageState extends State<ExercisePage> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Container(
-                    height: (_mediaQuery.size.height - _appBarHeight) * 0.57,
+                    height: (_mediaQuery.size.height - _appBarHeight) * 0.63,
                     width: _mediaQuery.size.width,
                     child: widget.exercise.exerciseImageLink == null
                         ? FadeInImage(
@@ -250,7 +253,7 @@ class _ExercisePageState extends State<ExercisePage> {
                   ),
                 ),
                 SizedBox(
-                  height: (_mediaQuery.size.height - _appBarHeight) * 0.05,
+                  height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
                 ),
                 Container(
                   height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
@@ -264,7 +267,7 @@ class _ExercisePageState extends State<ExercisePage> {
                         height:
                             (_mediaQuery.size.height - _appBarHeight) * 0.08,
                         decoration: BoxDecoration(
-                          color: _theme.highlightColor,
+                          color: _theme.shadowColor,
                           borderRadius:
                               BorderRadius.only(topLeft: Radius.circular(25)),
                         ),
@@ -287,7 +290,7 @@ class _ExercisePageState extends State<ExercisePage> {
                         height:
                             (_mediaQuery.size.height - _appBarHeight) * 0.08,
                         decoration: BoxDecoration(
-                          color: _theme.highlightColor,
+                          color: _theme.shadowColor,
                           borderRadius:
                               BorderRadius.only(topRight: Radius.circular(25)),
                         ),
@@ -320,7 +323,7 @@ class _ExercisePageState extends State<ExercisePage> {
                         height:
                             (_mediaQuery.size.height - _appBarHeight) * 0.08,
                         decoration: BoxDecoration(
-                          color: _theme.highlightColor,
+                          color: _theme.shadowColor,
                         ),
                         child: TextButton(
                             style: TextButton.styleFrom(
@@ -345,7 +348,7 @@ class _ExercisePageState extends State<ExercisePage> {
                         height:
                             (_mediaQuery.size.height - _appBarHeight) * 0.08,
                         decoration: BoxDecoration(
-                          color: _theme.highlightColor,
+                          color: _theme.shadowColor,
                         ),
                         child: TextButton(
                             style: TextButton.styleFrom(

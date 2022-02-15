@@ -43,7 +43,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
+      backgroundColor: _theme.cardColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
@@ -61,7 +61,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
           icon: Icon(Icons.arrow_back),
         ),
         iconTheme: IconThemeData(
-          color: Colors.white,
+          color: Colors.black,
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
