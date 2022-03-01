@@ -14,13 +14,14 @@ class ExerciseTiles extends StatelessWidget {
   final Function updateExercise;
 
   ExerciseTiles({
+    Key? key,
     required this.exercise,
     required this.size,
     required this.isDeleteable,
     required this.delete,
     required this.addExercise,
     required this.updateExercise,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,7 @@ class ExerciseTiles extends StatelessWidget {
     final _theme = Theme.of(context);
 
     return Container(
+      color: Colors.transparent,
       height: _mediaQuery.size.height * 0.2,
       width: size,
       child: Card(

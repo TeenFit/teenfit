@@ -84,8 +84,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     }
 
     void addExercise(Exercise exercisE) {
-      exerciseEditList!.insert(
-        0,
+      exerciseEditList!.add(
         Exercise(
             exerciseImageLink: exercisE.exerciseImageLink,
             exerciseId: exercisE.exerciseId,
@@ -511,25 +510,41 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                     width: 10,
                   ),
                 ),
-                child: ListView.builder(
-                  itemBuilder: (ctx, index) => ExerciseTiles(
-                    isDeleteable: true,
-                    addExercise: _isLoading == true ? () {} : addExercise,
-                    updateExercise: _isLoading == true ? () {} : updateExercise,
-                    delete: _isLoading == true ? () {} : deleteExercise,
-                    exercise: Exercise(
-                      exerciseId: newWorkout!.exercises[index].exerciseId,
-                      name: newWorkout!.exercises[index].name,
-                      exerciseImage: newWorkout!.exercises[index].exerciseImage,
-                      exerciseImageLink:
-                          newWorkout!.exercises[index].exerciseImageLink,
-                      reps: newWorkout!.exercises[index].reps,
-                      sets: newWorkout!.exercises[index].sets,
-                      restTime: newWorkout!.exercises[index].restTime,
-                      timeSeconds: newWorkout!.exercises[index].timeSeconds,
-                    ),
-                    size: _mediaQuery.size.width * 0.9,
-                  ),
+                child: ReorderableListView.builder(
+                  onReorder: (oldIndex, newIndex) {
+                    setState(() {
+                      if (newIndex > oldIndex) {
+                        newIndex = newIndex - 1;
+                      }
+                      final element = exerciseEditList!.removeAt(oldIndex);
+                      exerciseEditList!.insert(newIndex, element);
+                    });
+                  },
+                  itemBuilder: (ctx, index) {
+                    final String id = exerciseEditList![index].exerciseId;
+
+                    return ExerciseTiles(
+                      key: ValueKey(id),
+                      isDeleteable: true,
+                      addExercise: _isLoading == true ? () {} : addExercise,
+                      updateExercise:
+                          _isLoading == true ? () {} : updateExercise,
+                      delete: _isLoading == true ? () {} : deleteExercise,
+                      exercise: Exercise(
+                        exerciseId: newWorkout!.exercises[index].exerciseId,
+                        name: newWorkout!.exercises[index].name,
+                        exerciseImage:
+                            newWorkout!.exercises[index].exerciseImage,
+                        exerciseImageLink:
+                            newWorkout!.exercises[index].exerciseImageLink,
+                        reps: newWorkout!.exercises[index].reps,
+                        sets: newWorkout!.exercises[index].sets,
+                        restTime: newWorkout!.exercises[index].restTime,
+                        timeSeconds: newWorkout!.exercises[index].timeSeconds,
+                      ),
+                      size: _mediaQuery.size.width * 0.9,
+                    );
+                  },
                   itemCount: newWorkout!.exercises.length,
                 ),
               ),
