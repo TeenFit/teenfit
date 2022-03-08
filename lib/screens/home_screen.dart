@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:app_review/app_review.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
@@ -66,12 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 _showToast('Unable To Load New Workouts, Try Again Later'));
       } catch (e) {
         _showToast('Unable To Load New Workouts, Try Again Later');
-      }
-
-      if (Platform.isIOS) {
-        AppReview.requestReview.then((onValue) {
-          print(onValue);
-        });
       }
 
       if (this.mounted) {
