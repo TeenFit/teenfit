@@ -95,12 +95,7 @@ class _WorkoutTileState extends State<WorkoutTile> {
             width: double.infinity,
             child: InkWell(
               borderRadius: BorderRadius.circular(25),
-              onTap: () async {
-                if (Platform.isIOS) {
-                  await AppReview.requestReview
-                      .onError((error, stackTrace) => null);
-                }
-
+              onTap: () {
                 Navigator.of(context).pushNamed(
                   WorkoutPage.routeName,
                   arguments: Workout(
@@ -262,7 +257,11 @@ class _WorkoutTileState extends State<WorkoutTile> {
                       height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
                       width: double.infinity,
                       child: InkWell(
-                        onTap: () {
+                        onTap: () async {
+                          if (Platform.isIOS) {
+                            await AppReview.requestReview
+                                .onError((error, stackTrace) => null);
+                          }
                           Navigator.of(context).pushNamed(
                             WorkoutPage.routeName,
                             arguments: Workout(
