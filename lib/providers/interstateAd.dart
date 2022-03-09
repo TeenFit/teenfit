@@ -54,8 +54,6 @@ class AdmobHelper {
           .pushNamed(ExerciseScreen.routeName, arguments: arguments);
     });
 
-    await _interstitialAd!.show();
-
-    _interstitialAd = null;
+    _interstitialAd!.show().then((_) => _interstitialAd = null);
   }
 }
