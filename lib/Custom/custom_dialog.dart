@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:teenfit/providers/auth.dart';
 import 'package:teenfit/providers/interstateAd.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
@@ -120,9 +121,13 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                         isLoading = true;
                                       });
 
-                                      await AdmobHelper().createInterad();
-                                      await AdmobHelper().showInterad(
-                                          context, widget.arguments);
+                                      if (Provider.of<Auth>(context)
+                                          .isAdmin()) {
+                                      } else {
+                                        await AdmobHelper().createInterad();
+                                        await AdmobHelper().showInterad(
+                                            context, widget.arguments);
+                                      }
 
                                       if (this.mounted) {
                                         setState(() {
