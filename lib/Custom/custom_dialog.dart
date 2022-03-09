@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:teenfit/providers/interstateAd.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
@@ -119,6 +120,13 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                       setState(() {
                                         isLoading = true;
                                       });
+
+                                      await MobileAds.instance
+                                          .updateRequestConfiguration(
+                                              RequestConfiguration(
+                                                  testDeviceIds: [
+                                            'c4b1b5d9cbf27b84a2b1d27ab487ddc8'
+                                          ]));
 
                                       await AdmobHelper().createInterad();
                                       await AdmobHelper().showInterad(

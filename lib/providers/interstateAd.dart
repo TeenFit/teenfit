@@ -11,7 +11,8 @@ class AdmobHelper {
   // create interstitial ads
   Future<void> createInterad() async {
     await InterstitialAd.load(
-      adUnitId: 'ca-app-pub-3605247207313682/6959471110',
+      // adUnitId: 'ca-app-pub-3605247207313682/6959471110',
+      adUnitId: 'ca-app-pub-3940256099942544/4411468910',
       request: AdRequest(),
       adLoadCallback:
           InterstitialAdLoadCallback(onAdLoaded: (InterstitialAd ad) {
@@ -55,7 +56,5 @@ class AdmobHelper {
     });
 
     await _interstitialAd!.show();
-
-    _interstitialAd = null;
   }
 }
