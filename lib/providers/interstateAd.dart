@@ -11,19 +11,19 @@ class AdmobHelper {
   // create interstitial ads
   Future<void> createInterad() async {
     await InterstitialAd.load(
-      adUnitId: 'ca-app-pub-3605247207313682/6959471110',
+      // adUnitId: 'ca-app-pub-3605247207313682/6959471110',
+      adUnitId: InterstitialAd.testAdUnitId,
       request: AdRequest(),
       adLoadCallback:
           InterstitialAdLoadCallback(onAdLoaded: (InterstitialAd ad) {
-        _interstitialAd = ad;
-        numofattemptload = 0;
+        this._interstitialAd = ad;
+        // numofattemptload = 0;
       }, onAdFailedToLoad: (LoadAdError error) {
-        numofattemptload++;
+        // numofattemptload++;
         _interstitialAd = null;
-
-        if (numofattemptload <= 2) {
-          createInterad();
-        }
+        // if (numofattemptload <= 2) {
+        //   createInterad();
+        // }
       }),
     );
   }
@@ -44,16 +44,22 @@ class AdmobHelper {
     }, onAdDismissedFullScreenContent: (InterstitialAd ad) {
       print("ad Disposed");
       ad.dispose();
+      _interstitialAd?.dispose();
 
       Navigator.of(context)
           .pushNamed(ExerciseScreen.routeName, arguments: arguments);
     }, onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError aderror) {
       print('$ad OnAdFailed $aderror');
       ad.dispose();
+      _interstitialAd?.dispose();
       Navigator.of(context)
           .pushNamed(ExerciseScreen.routeName, arguments: arguments);
+    }, onAdImpression: (InterstitialAd ad) {
+      print('ad impression');
     });
 
-    _interstitialAd!.show().then((_) => _interstitialAd = null);
+    await _interstitialAd!.show();
+
+    _interstitialAd = null;
   }
 }
