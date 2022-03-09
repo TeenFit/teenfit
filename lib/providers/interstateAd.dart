@@ -12,6 +12,7 @@ class AdmobHelper {
   Future<void> createInterad() async {
     await MobileAds.instance.updateRequestConfiguration(RequestConfiguration(
         testDeviceIds: ['115733308bd2f2a218053cbfc69aa606']));
+
     await InterstitialAd.load(
       // adUnitId: 'ca-app-pub-3605247207313682/6959471110',
       adUnitId: InterstitialAd.testAdUnitId,
