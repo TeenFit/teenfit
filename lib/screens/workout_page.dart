@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:app_review/app_review.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -306,11 +303,7 @@ class WorkoutPage extends StatelessWidget {
                         fontFamily: 'PTSans',
                         fontSize: _mediaQuery.size.height * 0.035),
                   ),
-                  onPressed: () async {
-                    if (Platform.isIOS) {
-                      await AppReview.requestReview
-                          .onError((error, stackTrace) => null);
-                    }
+                  onPressed: () {
                     showDialog(
                         context: context,
                         builder: (ctx) => CustomDialogBox(

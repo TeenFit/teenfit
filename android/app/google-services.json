@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:851298419338:android:71ed9b64e4a21ede10a373",
         "android_client_info": {
-          "package_name": "com.muqeeth.teenfit"
+          "package_name": "com.teenfit.muqeeth"
         }
       },
       "oauth_client": [
@@ -34,7 +34,7 @@
               "client_id": "851298419338-6rham68f9sd8jldim9iv9tberepu8c9j.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.muqeeth.teenfit"
+                "bundle_id": "com.teenfit.muqeeth"
               }
             }
           ]

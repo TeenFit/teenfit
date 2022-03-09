@@ -4,7 +4,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:teenfit/screens/exercise_screen.dart';
 
 class AdmobHelper {
-  InterstitialAd? _interstitialAd;
+  InterstitialAd? interstitialAd;
 
   int numofattemptload = 0;
 
@@ -12,14 +12,14 @@ class AdmobHelper {
   Future<void> createInterad() async {
     await InterstitialAd.load(
       adUnitId: 'ca-app-pub-3605247207313682/6959471110',
-      request: AdRequest(),
+      request: AdRequest(nonPersonalizedAds: true),
       adLoadCallback:
           InterstitialAdLoadCallback(onAdLoaded: (InterstitialAd ad) {
-        _interstitialAd = ad;
+        this.interstitialAd = ad;
         numofattemptload = 0;
       }, onAdFailedToLoad: (LoadAdError error) {
         numofattemptload++;
-        _interstitialAd = null;
+        this.interstitialAd = null;
 
         if (numofattemptload <= 2) {
           createInterad();
@@ -30,13 +30,13 @@ class AdmobHelper {
 
 // show interstitial ads to user
   Future<void> showInterad(BuildContext context, arguments) async {
-    if (_interstitialAd == null) {
+    if (this.interstitialAd == null) {
       Navigator.of(context)
           .pushNamed(ExerciseScreen.routeName, arguments: arguments);
       return;
     }
 
-    _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+    this.interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
         onAdShowedFullScreenContent: (InterstitialAd ad) {
       print("ad onAdshowedFullscreen");
 
@@ -54,8 +54,8 @@ class AdmobHelper {
           .pushNamed(ExerciseScreen.routeName, arguments: arguments);
     });
 
-    await _interstitialAd!.show();
+    await this.interstitialAd!.show();
 
-    _interstitialAd = null;
+    this.interstitialAd = null;
   }
 }
