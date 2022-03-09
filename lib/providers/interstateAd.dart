@@ -12,7 +12,7 @@ class AdmobHelper {
   Future<void> createInterad() async {
     await InterstitialAd.load(
       adUnitId: 'ca-app-pub-3605247207313682/6959471110',
-      request: AdRequest(),
+      request: AdRequest(nonPersonalizedAds: true),
       adLoadCallback:
           InterstitialAdLoadCallback(onAdLoaded: (InterstitialAd ad) {
         this.interstitialAd = ad;
