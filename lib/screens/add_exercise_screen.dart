@@ -70,50 +70,53 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     Widget buildDropDown() {
       return Center(
         child: Container(
-          child: DropdownButtonFormField2(
-            decoration: InputDecoration(
-              isDense: true,
-              contentPadding: EdgeInsets.all(5),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-            ),
-            isExpanded: true,
-            icon: const Icon(
-              Icons.arrow_drop_down,
-              color: Colors.black45,
-            ),
-            iconSize: 30,
-            buttonHeight: 60,
-            buttonPadding: const EdgeInsets.only(left: 20, right: 10),
-            dropdownDecoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            items: [
-              DropdownMenuItem<String>(
-                value: 'Reps and Sets',
-                child: Text(
-                  'Reps and Sets',
-                  style: const TextStyle(
-                    fontSize: 14,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButtonFormField2(
+              decoration: InputDecoration(
+                isDense: true,
+                contentPadding: EdgeInsets.zero,
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+              ),
+              isExpanded: true,
+              icon: const Icon(
+                Icons.arrow_drop_down,
+                color: Colors.black45,
+              ),
+              iconSize: 30,
+              buttonHeight: 60,
+              buttonPadding: const EdgeInsets.only(left: 20, right: 10),
+              dropdownDecoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              items: [
+                DropdownMenuItem<String>(
+                  value: 'Reps and Sets',
+                  child: Text(
+                    'Reps and Sets',
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
                   ),
                 ),
-              ),
-              DropdownMenuItem<String>(
-                value: 'Time',
-                child: Text(
-                  'Time',
-                  style: const TextStyle(
-                    fontSize: 14,
+                DropdownMenuItem<String>(
+                  value: 'Time',
+                  child: Text(
+                    'Time',
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
                   ),
                 ),
-              ),
-            ],
-            value: exerciseType,
-            onChanged: (value) {
-              setState(() {
-                exerciseType = value.toString();
-              });
-            },
+              ],
+              value: exerciseType,
+              onChanged: (value) {
+                setState(() {
+                  exerciseType = value.toString();
+                });
+              },
+            ),
           ),
         ),
       );
