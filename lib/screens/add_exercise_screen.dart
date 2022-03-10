@@ -131,10 +131,8 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                 height: _mediaQuery.size.height * 0.03,
               ),
               switchOnOf!
-                  ? SizedBox()
-                  : SetsAndReps(
-                      exerciseProv,
-                    ),
+                  ? TimeExercise(exerciseProv)
+                  : SetsAndReps(exerciseProv),
             ],
           ),
         ),

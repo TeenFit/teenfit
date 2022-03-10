@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:teenfit/pickers/exercise_image_picker.dart';
@@ -11,7 +10,7 @@ import 'package:uuid/uuid.dart';
 class TimeExercise extends StatefulWidget {
   final Map? exerciseProv;
 
-  TimeExercise({this.exerciseProv});
+  TimeExercise(this.exerciseProv);
 
   @override
   _TimeExerciseState createState() => _TimeExerciseState();
