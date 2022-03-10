@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
+// import 'package:flutter_switch/flutter_switch.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:teenfit/widgets/exercise_types/sets_and_reps.dart';
 import 'package:teenfit/widgets/exercise_types/time.dart';
 import '../providers/exercise.dart';
@@ -19,7 +20,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
   Map? exerciseProv;
   Exercise? newExercise;
-  bool? switchOnOf;
+  String? exerciseType;
 
   @override
   void didChangeDependencies() {
@@ -28,7 +29,8 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     if (isInit == false) {
       newExercise = exerciseProv!['exercise'];
 
-      switchOnOf = newExercise!.timeSeconds == null ? false : true;
+      exerciseType =
+          newExercise!.timeSeconds == null ? 'Reps and Sets' : 'Time';
 
       // newExercise = Exercise(
       //   exerciseImageLink: newExercise!.exerciseImageLink,
@@ -65,28 +67,51 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
     bool isEdit = exerciseProv!['edit'];
 
-    Widget buildSwitch() {
+    Widget buildDropDown() {
       return Center(
         child: Container(
-          child: FlutterSwitch(
-            width: _mediaQuery.size.width * 0.45,
-            height: _mediaQuery.size.height * 0.06,
-            valueFontSize: _mediaQuery.size.height * 0.03,
-            toggleSize: _mediaQuery.size.height * 0.04,
-            activeColor: _theme.primaryColor,
-            inactiveColor: _theme.highlightColor,
-            activeTextColor: Colors.white,
-            inactiveTextColor: Colors.white,
-            value: switchOnOf!,
-            activeText: 'Time',
-            inactiveText: 'Reps',
-            borderRadius: 25,
-            padding: 10,
-            showOnOff: true,
-            disabled: false,
-            onToggle: (status) {
+          child: DropdownButtonFormField2(
+            decoration: InputDecoration(
+              isDense: true,
+              contentPadding: EdgeInsets.zero,
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+            ),
+            isExpanded: true,
+            icon: const Icon(
+              Icons.arrow_drop_down,
+              color: Colors.black45,
+            ),
+            iconSize: 30,
+            buttonHeight: 60,
+            buttonPadding: const EdgeInsets.only(left: 20, right: 10),
+            dropdownDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            items: [
+              DropdownMenuItem<String>(
+                value: 'Reps and Sets',
+                child: Text(
+                  'Reps and Sets',
+                  style: const TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+              DropdownMenuItem<String>(
+                value: 'Time',
+                child: Text(
+                  'Time',
+                  style: const TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ),
+            ],
+            value: exerciseType,
+            onChanged: (value) {
               setState(() {
-                switchOnOf = status;
+                exerciseType = value.toString();
               });
             },
           ),
@@ -125,11 +150,11 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
               SizedBox(
                 height: _mediaQuery.size.height * 0.03,
               ),
-              buildSwitch(),
+              buildDropDown(),
               SizedBox(
                 height: _mediaQuery.size.height * 0.03,
               ),
-              switchOnOf!
+              exerciseType == 'Time'
                   ? TimeExercise(exerciseProv)
                   : SetsAndReps(exerciseProv),
             ],
