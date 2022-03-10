@@ -71,7 +71,8 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       return Center(
         child: Container(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
             child: DropdownButtonFormField2(
               decoration: InputDecoration(
                 isDense: true,
