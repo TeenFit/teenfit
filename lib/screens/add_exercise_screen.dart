@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:teenfit/widgets/exercise_types/sets_and_reps.dart';
 import 'package:teenfit/widgets/exercise_types/time.dart';
 import '../providers/exercise.dart';

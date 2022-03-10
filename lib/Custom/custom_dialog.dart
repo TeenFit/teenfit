@@ -121,7 +121,8 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                         isLoading = true;
                                       });
 
-                                      if (Provider.of<Auth>(context)
+                                      if (Provider.of<Auth>(context,
+                                              listen: false)
                                           .isAdmin()) {
                                       } else {
                                         await AdmobHelper().createInterad();
