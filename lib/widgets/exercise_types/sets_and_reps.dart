@@ -280,7 +280,7 @@ class _SetsAndRepsState extends State<SetsAndReps> {
     }
 
     return Container(
-      height: (_mediaQuery.size.height - _appBarHeight) * 0.8,
+      height: (_mediaQuery.size.height - _appBarHeight) * 0.77,
       width: _mediaQuery.size.width,
       child: Form(
         key: _formKey4,

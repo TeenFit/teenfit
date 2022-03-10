@@ -277,7 +277,7 @@ class _TimeExerciseState extends State<TimeExercise> {
     }
 
     return Container(
-      height: (_mediaQuery.size.height - _appBarHeight) * 0.8,
+      height: (_mediaQuery.size.height - _appBarHeight) * 0.77,
       width: _mediaQuery.size.width,
       child: Form(
         key: _formKey10,
