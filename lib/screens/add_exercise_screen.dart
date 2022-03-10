@@ -73,7 +73,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
           child: DropdownButtonFormField2(
             decoration: InputDecoration(
               isDense: true,
-              contentPadding: EdgeInsets.zero,
+              contentPadding: EdgeInsets.all(5),
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
             ),
