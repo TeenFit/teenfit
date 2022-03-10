@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:teenfit/providers/auth.dart';
 import 'package:teenfit/providers/interstateAd.dart';
+import '../screens/exercise_screen.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
 
@@ -124,6 +125,9 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                       if (Provider.of<Auth>(context,
                                               listen: false)
                                           .isAdmin()) {
+                                        Navigator.of(context).pushNamed(
+                                            ExerciseScreen.routeName,
+                                            arguments: widget.arguments);
                                       } else {
                                         await AdmobHelper().createInterad();
                                         await AdmobHelper().showInterad(
