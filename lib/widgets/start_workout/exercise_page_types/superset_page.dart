@@ -135,8 +135,9 @@ class _SuperSetPageState extends State<SuperSetPage> {
                           });
                           goToNext();
                         },
-                        icon: Icon(Icons.arrow_circle_right_outlined),
+                        icon: Icon(Icons.arrow_right),
                         color: _theme.primaryColor,
+                        iconSize: 50,
                       ),
                     ],
                   ),
@@ -193,8 +194,9 @@ class _SuperSetPageState extends State<SuperSetPage> {
                           });
                           goToPrevious();
                         },
-                        icon: Icon(Icons.arrow_circle_left_outlined),
+                        icon: Icon(Icons.arrow_left),
                         color: _theme.primaryColor,
+                        iconSize: 50,
                       ),
                     ],
                   ),

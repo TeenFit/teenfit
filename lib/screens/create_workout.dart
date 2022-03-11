@@ -193,7 +193,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             : await Provider.of<Workouts>(context, listen: false)
                 .addWorkout(newWorkout!);
       } catch (e) {
-        _showToast('Unable To Add Workout Try Again Later');
+        // _showToast('Unable To Add Workout Try Again Later');
+        _showToast(e.toString());
       }
 
       List<Exercise> deleteFiles = newWorkout!.exercises

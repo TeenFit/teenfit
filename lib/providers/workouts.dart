@@ -103,7 +103,7 @@ class Workouts with ChangeNotifier {
             : null;
 
         exerciseImages.add({
-          'image2': exerciseLink2,
+          'image2': exerciseLink2 != null ? exerciseLink2.toString() : null,
           'image': exerciseLink,
           'id': exerciseS[i].exerciseId + workouT.workoutId,
         });
@@ -137,9 +137,7 @@ class Workouts with ChangeNotifier {
           'restTime': e.restTime,
           'timeSeconds': e.timeSeconds,
           'exerciseImage': exerciseImages[exerciseIndex]['image'].toString(),
-          'exerciseImage2': exerciseImages[exerciseIndex]['image2'] != null
-              ? exerciseImages[exerciseIndex]['image2'].toString()
-              : null,
+          'exerciseImage2': exerciseImages[exerciseIndex]['image2'],
         };
       }).toList();
 
@@ -245,12 +243,13 @@ class Workouts with ChangeNotifier {
           }
 
           final exerciseLink = await exerciseRef.getDownloadURL();
-          final exerciseLink2 = exerciseS[i].exerciseImage2 != null
+          final exerciseLink2 = exerciseS[i].exerciseImage2 != null &&
+                  exerciseS[i].exerciseImageLink != null
               ? await exerciseRef2.getDownloadURL()
               : null;
 
           exerciseImages.add({
-            'image2': exerciseLink2,
+            'image2': exerciseLink2 != null ? exerciseLink2.toString() : null,
             'image': exerciseLink,
             'id': exerciseS[i].exerciseId + workouT.workoutId
           });
@@ -321,9 +320,7 @@ class Workouts with ChangeNotifier {
           'restTime': e.restTime,
           'timeSeconds': e.timeSeconds,
           'exerciseImage': exerciseImages[exerciseIndex]['image'].toString(),
-          'exerciseImage2': exerciseImages[exerciseIndex]['image2'] != null
-              ? exerciseImages[exerciseIndex]['image2'].toString()
-              : null,
+          'exerciseImage2': exerciseImages[exerciseIndex]['image2'],
         };
       }).toList();
 
