@@ -85,16 +85,6 @@ class _SuperSetPageState extends State<SuperSetPage> {
                   Stack(
                     alignment: Alignment.centerRight,
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            isFirstImage = false;
-                          });
-                          goToNext();
-                        },
-                        icon: Icon(Icons.arrow_circle_right_outlined),
-                        color: _theme.primaryColor,
-                      ),
                       Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Container(
@@ -138,21 +128,21 @@ class _SuperSetPageState extends State<SuperSetPage> {
                                 ),
                         ),
                       ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isFirstImage = false;
+                          });
+                          goToNext();
+                        },
+                        icon: Icon(Icons.arrow_circle_right_outlined),
+                        color: _theme.primaryColor,
+                      ),
                     ],
                   ),
                   Stack(
                     alignment: Alignment.centerLeft,
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            isFirstImage = true;
-                          });
-                          goToPrevious();
-                        },
-                        icon: Icon(Icons.arrow_circle_left_outlined),
-                        color: _theme.primaryColor,
-                      ),
                       Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Container(
@@ -195,6 +185,16 @@ class _SuperSetPageState extends State<SuperSetPage> {
                                   fit: BoxFit.contain,
                                 ),
                         ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isFirstImage = true;
+                          });
+                          goToPrevious();
+                        },
+                        icon: Icon(Icons.arrow_circle_left_outlined),
+                        color: _theme.primaryColor,
                       ),
                     ],
                   ),
