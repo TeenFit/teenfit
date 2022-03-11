@@ -34,7 +34,6 @@ dependencies:
   material_floating_search_bar: ^0.3.4
   circular_countdown_timer: ^0.2.0
   uuid: ^3.0.4
-  flutter_switch: ^0.3.2
   fluttertoast: ^8.0.8
   intl: ^0.17.0
   firebase_storage: ^10.0.6
