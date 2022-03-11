@@ -91,7 +91,7 @@ class Workouts with ChangeNotifier {
         final exerciseRef2 = FirebaseStorage.instance
             .ref()
             .child('${workouT.workoutId}')
-            .child(exerciseS[i].exerciseId + workouT.workoutId + '2');
+            .child(exerciseS[i].exerciseId + workouT.workoutId + 'second');
 
         if (exerciseS[i].exerciseImage2 != null) {
           await exerciseRef2.putFile(exerciseS[i].exerciseImage2!);
@@ -222,11 +222,11 @@ class Workouts with ChangeNotifier {
     Future<void> addExerciseImageLink(List<Exercise> exerciseS) async {
       int i = 0;
 
-      do {
-        print(exerciseS);
+      var storageinstance = FirebaseStorage.instance;
 
+      do {
         try {
-          final exerciseRef = FirebaseStorage.instance
+          final exerciseRef = storageinstance
               .ref()
               .child('${workouT.workoutId}')
               .child(exerciseS[i].exerciseId + workouT.workoutId);
@@ -235,13 +235,13 @@ class Workouts with ChangeNotifier {
             await exerciseRef.putFile(exerciseS[i].exerciseImage!);
           }
 
-          final exerciseRef2 = FirebaseStorage.instance
+          final exerciseRef2 = storageinstance
               .ref()
               .child('${workouT.workoutId}')
-              .child(exerciseS[i].exerciseId + workouT.workoutId + '2');
+              .child(exerciseS[i].exerciseId + workouT.workoutId + 'second');
 
           if (exerciseS[i].exerciseImage2 != null) {
-            await exerciseRef.putFile(exerciseS[i].exerciseImage2!);
+            await exerciseRef2.putFile(exerciseS[i].exerciseImage2!);
           }
 
           final exerciseLink = await exerciseRef.getDownloadURL();
@@ -279,8 +279,8 @@ class Workouts with ChangeNotifier {
         {
           unavailableExercises
               .remove(exerciseS[index].exerciseId + workouT.workoutId);
-          unavailableExercises
-              .remove(exerciseS[index].exerciseId + workouT.workoutId + '2');
+          unavailableExercises.remove(
+              exerciseS[index].exerciseId + workouT.workoutId + 'second');
         }
         index = index + 1;
       } while (index < exerciseS.length);
