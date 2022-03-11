@@ -286,13 +286,11 @@ class Workouts with ChangeNotifier {
       } while (index < exerciseS.length);
 
       unavailableExercises.forEach((element) async {
-        if (element != (workouT.workoutId)) {
-          await FirebaseStorage.instance
-              .ref()
-              .child(workouT.workoutId)
-              .child(element)
-              .delete();
-        }
+        await FirebaseStorage.instance
+            .ref()
+            .child(workouT.workoutId)
+            .child(element)
+            .delete();
       });
     }
 
@@ -423,6 +421,14 @@ class Workouts with ChangeNotifier {
             .child('${workouT.workoutId}')
             .child(exerciseS[index].exerciseId + workouT.workoutId)
             .delete();
+
+        if (exerciseS[index].reps2 != null) {
+          await FirebaseStorage.instance
+              .ref()
+              .child('${workouT.workoutId}')
+              .child(exerciseS[index].exerciseId + workouT.workoutId + 'second')
+              .delete();
+        }
 
         index = index + 1;
       } while (index < exerciseS.length);
