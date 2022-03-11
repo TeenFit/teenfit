@@ -40,6 +40,9 @@ class _TimeExerciseState extends State<TimeExercise> {
       restTime = newExercise!.restTime != null ? newExercise!.restTime! : 5;
 
       newExercise = Exercise(
+        exerciseImage2: newExercise!.exerciseImage2,
+        exerciseImageLink2: newExercise!.exerciseImageLink2,
+        reps2: newExercise!.reps2,
         exerciseImageLink: newExercise!.exerciseImageLink,
         exerciseId: newExercise!.exerciseId,
         name: newExercise!.name,
@@ -90,6 +93,9 @@ class _TimeExerciseState extends State<TimeExercise> {
       if (image != null) {
         setState(() {
           newExercise = Exercise(
+              exerciseImage2: newExercise!.exerciseImage2,
+              exerciseImageLink2: newExercise!.exerciseImageLink2,
+              reps2: newExercise!.reps2,
               exerciseId: newExercise!.exerciseId,
               name: newExercise!.name,
               exerciseImage: image,
@@ -102,6 +108,9 @@ class _TimeExerciseState extends State<TimeExercise> {
       } else if (video != null) {
         setState(() {
           newExercise = Exercise(
+              exerciseImage2: newExercise!.exerciseImage2,
+              exerciseImageLink2: newExercise!.exerciseImageLink2,
+              reps2: newExercise!.reps2,
               exerciseId: newExercise!.exerciseId,
               name: newExercise!.name,
               exerciseImage: video,
@@ -189,6 +198,9 @@ class _TimeExerciseState extends State<TimeExercise> {
             },
             onSaved: (input) {
               newExercise = Exercise(
+                  exerciseImage2: newExercise!.exerciseImage2,
+                  exerciseImageLink2: newExercise!.exerciseImageLink2,
+                  reps2: newExercise!.reps2,
                   exerciseId: newExercise!.exerciseId,
                   name: input.toString().trim(),
                   timeSeconds: newExercise!.timeSeconds,

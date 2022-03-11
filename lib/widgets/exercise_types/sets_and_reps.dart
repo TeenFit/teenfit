@@ -44,6 +44,9 @@ class _SetsAndRepsState extends State<SetsAndReps> {
       sets = _newExercise!.sets != null ? _newExercise!.sets! : 5;
 
       _newExercise = Exercise(
+        exerciseImage2: _newExercise!.exerciseImage2,
+        exerciseImageLink2: _newExercise!.exerciseImageLink2,
+        reps2: _newExercise!.reps2,
         exerciseImageLink: _newExercise!.exerciseImageLink,
         exerciseId: _newExercise!.exerciseId,
         name: _newExercise!.name,
@@ -94,6 +97,9 @@ class _SetsAndRepsState extends State<SetsAndReps> {
       if (image != null) {
         setState(() {
           _newExercise = Exercise(
+              exerciseImage2: _newExercise!.exerciseImage2,
+              exerciseImageLink2: _newExercise!.exerciseImageLink2,
+              reps2: _newExercise!.reps2,
               exerciseId: _newExercise!.exerciseId,
               name: _newExercise!.name,
               exerciseImage: image,
@@ -106,6 +112,9 @@ class _SetsAndRepsState extends State<SetsAndReps> {
       } else if (video != null) {
         setState(() {
           _newExercise = Exercise(
+              exerciseImage2: _newExercise!.exerciseImage2,
+              exerciseImageLink2: _newExercise!.exerciseImageLink2,
+              reps2: _newExercise!.reps2,
               exerciseId: _newExercise!.exerciseId,
               name: _newExercise!.name,
               exerciseImage: video,
@@ -192,6 +201,9 @@ class _SetsAndRepsState extends State<SetsAndReps> {
             },
             onSaved: (input) {
               _newExercise = Exercise(
+                  exerciseImage2: _newExercise!.exerciseImage2,
+                  exerciseImageLink2: _newExercise!.exerciseImageLink2,
+                  reps2: _newExercise!.reps2,
                   exerciseId: _newExercise!.exerciseId,
                   name: input.toString().trim(),
                   timeSeconds: _newExercise!.timeSeconds,
