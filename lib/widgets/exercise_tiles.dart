@@ -97,6 +97,11 @@ class ExerciseTiles extends StatelessWidget {
                                         'updateExercise': updateExercise,
                                         'edit': true,
                                         'exercise': Exercise(
+                                            exerciseImage2:
+                                                exercise.exerciseImage2,
+                                            exerciseImageLink2:
+                                                exercise.exerciseImageLink2,
+                                            reps2: exercise.reps2,
                                             exerciseImageLink:
                                                 exercise.exerciseImageLink,
                                             exerciseId: exercise.exerciseId,

@@ -29,6 +29,14 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     if (isInit == false) {
       newExercise = exerciseProv!['exercise'];
 
+      if (newExercise!.restTime != null) {
+        exerciseType = 'Time';
+      } else if (newExercise!.reps2 != null) {
+        exerciseType = 'Superset';
+      } else {
+        exerciseType = 'Reps and Sets';
+      }
+
       exerciseType =
           newExercise!.timeSeconds == null ? 'Reps and Sets' : 'Time';
 
@@ -110,6 +118,15 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                     ),
                   ),
                 ),
+                DropdownMenuItem<String>(
+                  value: 'Superset',
+                  child: Text(
+                    'Superset',
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
               ],
               value: exerciseType,
               onChanged: (value) {
@@ -160,7 +177,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
               ),
               exerciseType == 'Time'
                   ? TimeExercise(exerciseProv)
-                  : SetsAndReps(exerciseProv),
+                  : exerciseType == 'Superset'
+                      ? SizedBox()
+                      : SetsAndReps(exerciseProv),
             ],
           ),
         ),

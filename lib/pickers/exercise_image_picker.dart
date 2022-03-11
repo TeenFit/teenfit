@@ -13,8 +13,11 @@ class ExerciseImagePicker extends StatefulWidget {
   final String? imageLink;
   final File? imageFile;
   final Function pickFn;
+  final Function? pickFn2;
+  final bool isSuperSet;
 
-  ExerciseImagePicker(this.pickFn, this.imageLink, this.imageFile);
+  ExerciseImagePicker(this.pickFn, this.pickFn2, this.imageLink, this.imageFile,
+      this.isSuperSet);
 
   @override
   _ExerciseImagePickerState createState() => _ExerciseImagePickerState();
@@ -160,7 +163,9 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
               _pickedImage = null;
               isLoading = false;
             });
-            await widget.pickFn(null, File(value.toString()));
+            widget.isSuperSet
+                ? await widget.pickFn2!(null, File(value.toString()))
+                : await widget.pickFn(null, File(value.toString()));
           },
           videoFileName: DateTime.now().toString(),
           videoFolderName: 'Workout-Gifs',
@@ -225,7 +230,9 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                               });
                               await _pickImage();
                               Navigator.of(context).pop();
-                              await widget.pickFn(_pickedImage, null);
+                              widget.isSuperSet
+                                  ? await widget.pickFn2!(_pickedImage, null)
+                                  : await widget.pickFn(_pickedImage, null);
                               if (this.mounted) {
                                 setState(() {
                                   isLoading = false;

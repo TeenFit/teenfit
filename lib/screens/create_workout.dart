@@ -86,6 +86,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     void addExercise(Exercise exercisE) {
       exerciseEditList!.add(
         Exercise(
+            exerciseImage2: exercisE.exerciseImage2,
+            exerciseImageLink2: exercisE.exerciseImageLink2,
+            reps2: exercisE.reps2,
             exerciseImageLink: exercisE.exerciseImageLink,
             exerciseId: exercisE.exerciseId,
             name: exercisE.name,
@@ -489,6 +492,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                                     restTime: null,
                                     exerciseImage: null,
                                     exerciseImageLink: null,
+                                    exerciseImage2: null,
+                                    exerciseImageLink2: null,
+                                    reps2: null,
                                   ),
                                 },
                               );
@@ -531,6 +537,11 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                           _isLoading == true ? () {} : updateExercise,
                       delete: _isLoading == true ? () {} : deleteExercise,
                       exercise: Exercise(
+                        exerciseImage2:
+                            newWorkout!.exercises[index].exerciseImage2,
+                        exerciseImageLink2:
+                            newWorkout!.exercises[index].exerciseImageLink2,
+                        reps2: newWorkout!.exercises[index].reps2,
                         exerciseId: newWorkout!.exercises[index].exerciseId,
                         name: newWorkout!.exercises[index].name,
                         exerciseImage:

@@ -142,6 +142,9 @@ class _TimeExerciseState extends State<TimeExercise> {
         exerciseImage: newExercise!.exerciseImage,
         sets: null,
         reps: null,
+        exerciseImage2: null,
+        exerciseImageLink2: null,
+        reps2: null,
         timeSeconds: time,
         restTime: restTime,
         exerciseImageLink: newExercise!.exerciseImageLink,
@@ -287,8 +290,8 @@ class _TimeExerciseState extends State<TimeExercise> {
               SizedBox(
                 height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
               ),
-              ExerciseImagePicker(_pick, newExercise!.exerciseImageLink,
-                  newExercise!.exerciseImage),
+              ExerciseImagePicker(_pick, null, newExercise!.exerciseImageLink,
+                  newExercise!.exerciseImage, false),
               buildExerciseName(),
               SizedBox(
                 height: _mediaQuery.size.height * 0.03,

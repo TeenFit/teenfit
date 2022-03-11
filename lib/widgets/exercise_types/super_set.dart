@@ -7,22 +7,23 @@ import 'package:teenfit/pickers/exercise_image_picker.dart';
 import '/providers/exercise.dart';
 import 'package:uuid/uuid.dart';
 
-class SetsAndReps extends StatefulWidget {
+class SuperSet extends StatefulWidget {
   final Map? exerciseProv;
 
-  SetsAndReps(
+  SuperSet(
     this.exerciseProv,
   );
 
   @override
-  _SetsAndRepsState createState() => _SetsAndRepsState();
+  _SuperSetState createState() => _SuperSetState();
 }
 
-class _SetsAndRepsState extends State<SetsAndReps> {
+class _SuperSetState extends State<SuperSet> {
   final _formKey4 = GlobalKey<FormState>();
   var uuid = Uuid();
   bool isInit = false;
   bool isLoading = false;
+  int reps2 = 5;
   int reps = 5;
   int sets = 5;
   int time = 5;
@@ -41,9 +42,13 @@ class _SetsAndRepsState extends State<SetsAndReps> {
       _newExercise = _exerciseProv!['exercise'];
 
       reps = _newExercise!.reps != null ? _newExercise!.reps! : 5;
+      reps2 = _newExercise!.reps2 != null ? _newExercise!.reps2! : 5;
       sets = _newExercise!.sets != null ? _newExercise!.sets! : 5;
 
       _newExercise = Exercise(
+        exerciseImage2: _newExercise!.exerciseImage2,
+        exerciseImageLink2: _newExercise!.exerciseImageLink2,
+        reps2: _newExercise!.reps2,
         exerciseImageLink: _newExercise!.exerciseImageLink,
         exerciseId: _newExercise!.exerciseId,
         name: _newExercise!.name,
@@ -94,6 +99,9 @@ class _SetsAndRepsState extends State<SetsAndReps> {
       if (image != null) {
         setState(() {
           _newExercise = Exercise(
+              exerciseImage2: _newExercise!.exerciseImage2,
+              exerciseImageLink2: _newExercise!.exerciseImageLink2,
+              reps2: _newExercise!.reps2,
               exerciseId: _newExercise!.exerciseId,
               name: _newExercise!.name,
               exerciseImage: image,
@@ -106,9 +114,54 @@ class _SetsAndRepsState extends State<SetsAndReps> {
       } else if (video != null) {
         setState(() {
           _newExercise = Exercise(
+              exerciseImage2: _newExercise!.exerciseImage2,
+              exerciseImageLink2: _newExercise!.exerciseImageLink2,
+              reps2: _newExercise!.reps2,
               exerciseId: _newExercise!.exerciseId,
               name: _newExercise!.name,
               exerciseImage: video,
+              sets: _newExercise!.sets,
+              reps: _newExercise!.reps,
+              timeSeconds: _newExercise!.timeSeconds,
+              restTime: _newExercise!.restTime,
+              exerciseImageLink: _newExercise!.exerciseImageLink);
+        });
+      }
+      if (this.mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
+
+    Future<void> _pick2(File? image2, File? video2) async {
+      setState(() {
+        isLoading = true;
+      });
+      if (image2 != null) {
+        setState(() {
+          _newExercise = Exercise(
+              exerciseImage2: image2,
+              exerciseImageLink2: _newExercise!.exerciseImageLink2,
+              reps2: _newExercise!.reps2,
+              exerciseId: _newExercise!.exerciseId,
+              name: _newExercise!.name,
+              exerciseImage: _newExercise!.exerciseImage,
+              sets: _newExercise!.sets,
+              reps: _newExercise!.reps,
+              timeSeconds: _newExercise!.timeSeconds,
+              restTime: _newExercise!.restTime,
+              exerciseImageLink: _newExercise!.exerciseImageLink);
+        });
+      } else if (video2 != null) {
+        setState(() {
+          _newExercise = Exercise(
+              exerciseImage2: video2,
+              exerciseImageLink2: _newExercise!.exerciseImageLink2,
+              reps2: _newExercise!.reps2,
+              exerciseId: _newExercise!.exerciseId,
+              name: _newExercise!.name,
+              exerciseImage: _newExercise!.exerciseImage,
               sets: _newExercise!.sets,
               reps: _newExercise!.reps,
               timeSeconds: _newExercise!.timeSeconds,
@@ -129,6 +182,11 @@ class _SetsAndRepsState extends State<SetsAndReps> {
         return;
       }
 
+      if (_newExercise!.exerciseImage2 == null && isEdit == false) {
+        _showToast('Image 2 Required');
+        return;
+      }
+
       if (!_formKey4.currentState!.validate()) {
         _showToast('Failed Fields');
         return;
@@ -146,11 +204,11 @@ class _SetsAndRepsState extends State<SetsAndReps> {
           exerciseImage: _newExercise!.exerciseImage,
           sets: sets,
           reps: reps,
-          reps2: null,
           timeSeconds: null,
           restTime: null,
-          exerciseImage2: null,
-          exerciseImageLink2: null,
+          exerciseImage2: _newExercise!.exerciseImage2,
+          exerciseImageLink2: _newExercise!.exerciseImageLink2,
+          reps2: _newExercise!.reps2,
           exerciseImageLink: _newExercise!.exerciseImageLink);
 
       isEdit
@@ -175,7 +233,7 @@ class _SetsAndRepsState extends State<SetsAndReps> {
           child: TextFormField(
             initialValue: _newExercise!.name,
             decoration: InputDecoration(
-              hintText: 'Exercise Name',
+              hintText: 'Exercise Name 1 * Exercise Name 2',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
             ),
             style: TextStyle(
@@ -192,6 +250,9 @@ class _SetsAndRepsState extends State<SetsAndReps> {
             },
             onSaved: (input) {
               _newExercise = Exercise(
+                  exerciseImage2: _newExercise!.exerciseImage2,
+                  exerciseImageLink2: _newExercise!.exerciseImageLink2,
+                  reps2: _newExercise!.reps2,
                   exerciseId: _newExercise!.exerciseId,
                   name: input.toString().trim(),
                   timeSeconds: _newExercise!.timeSeconds,
@@ -206,78 +267,125 @@ class _SetsAndRepsState extends State<SetsAndReps> {
       );
     }
 
+    Widget buildSets() {
+      return Container(
+        height: _mediaQuery.size.height * 0.35,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              height: (_mediaQuery.size.height - _appBarHeight) * 0.32,
+              width: _mediaQuery.size.width,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: _mediaQuery.size.height * 0.02,
+                  ),
+                  Text(
+                    'SETS',
+                    style: TextStyle(
+                      wordSpacing: 2,
+                      fontSize: 20,
+                    ),
+                  ),
+                  NumberPicker(
+                    axis: Axis.horizontal,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      border: Border.all(),
+                    ),
+                    value: sets,
+                    minValue: 1,
+                    maxValue: 10,
+                    step: 1,
+                    onChanged: (value) => setState(() => sets = value),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     Widget buildReps() {
       return Container(
-        height: _mediaQuery.size.height * 0.7,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                height: (_mediaQuery.size.height - _appBarHeight) * 0.32,
-                width: _mediaQuery.size.width,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: _mediaQuery.size.height * 0.02,
+        height: _mediaQuery.size.height * 0.35,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              height: (_mediaQuery.size.height - _appBarHeight) * 0.32,
+              width: _mediaQuery.size.width,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: _mediaQuery.size.height * 0.02,
+                  ),
+                  Text(
+                    'REPS',
+                    style: TextStyle(
+                      wordSpacing: 2,
+                      fontSize: 20,
                     ),
-                    Text(
-                      'SETS',
-                      style: TextStyle(
-                        wordSpacing: 2,
-                        fontSize: 20,
-                      ),
+                  ),
+                  NumberPicker(
+                    axis: Axis.horizontal,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      border: Border.all(),
                     ),
-                    NumberPicker(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        border: Border.all(),
-                      ),
-                      value: sets,
-                      minValue: 1,
-                      maxValue: 10,
-                      step: 1,
-                      onChanged: (value) => setState(() => sets = value),
-                    ),
-                  ],
-                ),
+                    value: reps,
+                    minValue: 5,
+                    maxValue: 25,
+                    step: 1,
+                    onChanged: (value) => setState(() => reps = value),
+                  ),
+                ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                height: (_mediaQuery.size.height - _appBarHeight) * 0.32,
-                width: _mediaQuery.size.width,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: _mediaQuery.size.height * 0.02,
+          ),
+        ),
+      );
+    }
+
+    Widget buildReps2() {
+      return Container(
+        height: _mediaQuery.size.height * 0.35,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              height: (_mediaQuery.size.height - _appBarHeight) * 0.32,
+              width: _mediaQuery.size.width,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: _mediaQuery.size.height * 0.02,
+                  ),
+                  Text(
+                    'REPS 2',
+                    style: TextStyle(
+                      wordSpacing: 2,
+                      fontSize: 20,
                     ),
-                    Text(
-                      'REPS',
-                      style: TextStyle(
-                        wordSpacing: 2,
-                        fontSize: 20,
-                      ),
+                  ),
+                  NumberPicker(
+                    axis: Axis.horizontal,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      border: Border.all(),
                     ),
-                    NumberPicker(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        border: Border.all(),
-                      ),
-                      value: reps,
-                      minValue: 5,
-                      maxValue: 25,
-                      step: 1,
-                      onChanged: (value) => setState(() => reps = value),
-                    ),
-                  ],
-                ),
+                    value: reps2,
+                    minValue: 5,
+                    maxValue: 25,
+                    step: 1,
+                    onChanged: (value) => setState(() => reps2 = value),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       );
     }
@@ -293,13 +401,21 @@ class _SetsAndRepsState extends State<SetsAndReps> {
               SizedBox(
                 height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
               ),
-              ExerciseImagePicker(_pick, null, _newExercise!.exerciseImageLink,
-                  _newExercise!.exerciseImage, false),
               buildExerciseName(),
               SizedBox(
                 height: _mediaQuery.size.height * 0.03,
               ),
+              buildSets(),
+              ExerciseImagePicker(_pick, null, _newExercise!.exerciseImageLink,
+                  _newExercise!.exerciseImage, false),
               buildReps(),
+              ExerciseImagePicker(
+                  _pick,
+                  _pick2,
+                  _newExercise!.exerciseImageLink,
+                  _newExercise!.exerciseImage,
+                  true),
+              buildReps2(),
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Container(
