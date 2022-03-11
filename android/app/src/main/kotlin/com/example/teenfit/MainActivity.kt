@@ -1,4 +1,4 @@
-package com.teenfit.muqeeth
+package com.muqeeth.teenfit
 
 import io.flutter.embedding.android.FlutterActivity
 

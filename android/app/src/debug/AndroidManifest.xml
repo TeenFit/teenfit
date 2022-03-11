@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.teenfit.muqeeth">
+    package="com.muqeeth.teenfit">
     <application android:usesCleartextTraffic="true">
   <!-- possibly other elements -->
   <!-- Flutter needs it to communicate with the running application
