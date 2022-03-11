@@ -129,6 +129,7 @@ class _SuperSetPageState extends State<SuperSetPage> {
                         ),
                       ),
                       IconButton(
+                        padding: EdgeInsets.zero,
                         onPressed: () {
                           setState(() {
                             isFirstImage = false;

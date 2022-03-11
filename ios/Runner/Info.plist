@@ -33,7 +33,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string> To Pick Photo&apos;s and Videos For Workouts</string>
+	<string> To Pick Photo's and Videos For Workouts</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>
