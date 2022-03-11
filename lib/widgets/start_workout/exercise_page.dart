@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:teenfit/widgets/start_workout/exercise_page_types/sets_reps_page.dart';
+import 'package:teenfit/widgets/start_workout/exercise_page_types/superset_page.dart';
 import 'package:teenfit/widgets/start_workout/exercise_page_types/time_page.dart';
 
 import 'exercise_page_types/rest_page.dart';
@@ -21,13 +22,10 @@ class ExercisePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _mediaQuery = MediaQuery.of(context);
-    final _theme = Theme.of(context);
-    final _appBarHeight =
-        (AppBar().preferredSize.height + _mediaQuery.padding.top);
-
-    return exercise.restTime != null && exercise.timeSeconds != null
+    return exercise.restTime != null
         ? TimePage(exercise, goToNext, goToPrevious)
-        : SetsAndRepsPage(exercise, goToNext, goToPrevious);
+        : exercise.reps2 != null
+            ? SuperSetPage(exercise, goToNext, goToPrevious)
+            : SetsAndRepsPage(exercise, goToNext, goToPrevious);
   }
 }
