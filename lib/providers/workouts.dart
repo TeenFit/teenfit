@@ -154,9 +154,7 @@ class Workouts with ChangeNotifier {
           restTime: e.restTime,
           timeSeconds: e.timeSeconds,
           exerciseImageLink: exerciseImages[exerciseIndex]['image'].toString(),
-          exerciseImageLink2: exerciseImages[exerciseIndex]['image2'] != null
-              ? exerciseImages[exerciseIndex]['image2'].toString()
-              : null,
+          exerciseImageLink2: exerciseImages[exerciseIndex]['image2'],
           exerciseImage: null,
           exerciseImage2: null,
         );
@@ -284,6 +282,8 @@ class Workouts with ChangeNotifier {
         index = index + 1;
       } while (index < exerciseS.length);
 
+      unavailableExercises.remove(workouT.workoutId);
+
       unavailableExercises.forEach((element) async {
         await FirebaseStorage.instance
             .ref()
@@ -338,9 +338,7 @@ class Workouts with ChangeNotifier {
             timeSeconds: e.timeSeconds,
             exerciseImageLink:
                 exerciseImages[exerciseIndex]['image'].toString(),
-            exerciseImageLink2: exerciseImages[exerciseIndex]['image2'] != null
-                ? exerciseImages[exerciseIndex]['image2'].toString()
-                : null,
+            exerciseImageLink2: exerciseImages[exerciseIndex]['image2'],
             exerciseImage: null,
             exerciseImage2: null);
       }).toList();
