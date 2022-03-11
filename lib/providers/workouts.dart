@@ -48,6 +48,8 @@ class Workouts with ChangeNotifier {
                             exerciseId: e['exerciseId'],
                             name: e['name'],
                             exerciseImageLink: e['exerciseImage'],
+                            exerciseImageLink2: e['exerciseImage2'],
+                            reps2: e['reps2'],
                             reps: e['reps'],
                             sets: e['sets'],
                             restTime: e['restTime'],
@@ -86,11 +88,24 @@ class Workouts with ChangeNotifier {
 
         await exerciseRef.putFile(exerciseS[i].exerciseImage!);
 
+        final exerciseRef2 = FirebaseStorage.instance
+            .ref()
+            .child('${workouT.workoutId}')
+            .child(exerciseS[i].exerciseId + workouT.workoutId + '2');
+
+        if (exerciseS[i].exerciseImage2 != null) {
+          await exerciseRef2.putFile(exerciseS[i].exerciseImage2!);
+        }
+
         var exerciseLink = await exerciseRef.getDownloadURL();
+        var exerciseLink2 = exerciseS[i].exerciseImage2 != null
+            ? await exerciseRef2.getDownloadURL()
+            : null;
 
         exerciseImages.add({
+          'image2': exerciseLink2,
           'image': exerciseLink,
-          'id': exerciseS[i].exerciseId + workouT.workoutId
+          'id': exerciseS[i].exerciseId + workouT.workoutId,
         });
 
         i = i + 1;
@@ -117,10 +132,14 @@ class Workouts with ChangeNotifier {
           'exerciseId': e.exerciseId,
           'name': e.name,
           'reps': e.reps,
+          'reps2': e.reps2,
           'sets': e.sets,
           'restTime': e.restTime,
           'timeSeconds': e.timeSeconds,
           'exerciseImage': exerciseImages[exerciseIndex]['image'].toString(),
+          'exerciseImage2': exerciseImages[exerciseIndex]['image2'] != null
+              ? exerciseImages[exerciseIndex]['image2'].toString()
+              : null,
         };
       }).toList();
 
@@ -129,15 +148,20 @@ class Workouts with ChangeNotifier {
             (element) => element['id'] == e.exerciseId + workouT.workoutId);
 
         return Exercise(
-            exerciseId: e.exerciseId,
-            name: e.name,
-            reps: e.reps,
-            sets: e.sets,
-            restTime: e.restTime,
-            timeSeconds: e.timeSeconds,
-            exerciseImageLink:
-                exerciseImages[exerciseIndex]['image'].toString(),
-            exerciseImage: null);
+          exerciseId: e.exerciseId,
+          name: e.name,
+          reps: e.reps,
+          reps2: e.reps2,
+          sets: e.sets,
+          restTime: e.restTime,
+          timeSeconds: e.timeSeconds,
+          exerciseImageLink: exerciseImages[exerciseIndex]['image'].toString(),
+          exerciseImageLink2: exerciseImages[exerciseIndex]['image2'] != null
+              ? exerciseImages[exerciseIndex]['image2'].toString()
+              : null,
+          exerciseImage: null,
+          exerciseImage2: null,
+        );
       }).toList();
 
       var workoutDocInfo = {
@@ -211,9 +235,22 @@ class Workouts with ChangeNotifier {
             await exerciseRef.putFile(exerciseS[i].exerciseImage!);
           }
 
+          final exerciseRef2 = FirebaseStorage.instance
+              .ref()
+              .child('${workouT.workoutId}')
+              .child(exerciseS[i].exerciseId + workouT.workoutId + '2');
+
+          if (exerciseS[i].exerciseImage2 != null) {
+            await exerciseRef.putFile(exerciseS[i].exerciseImage2!);
+          }
+
           final exerciseLink = await exerciseRef.getDownloadURL();
+          final exerciseLink2 = exerciseS[i].exerciseImage2 != null
+              ? await exerciseRef2.getDownloadURL()
+              : null;
 
           exerciseImages.add({
+            'image2': exerciseLink2,
             'image': exerciseLink,
             'id': exerciseS[i].exerciseId + workouT.workoutId
           });
@@ -242,6 +279,8 @@ class Workouts with ChangeNotifier {
         {
           unavailableExercises
               .remove(exerciseS[index].exerciseId + workouT.workoutId);
+          unavailableExercises
+              .remove(exerciseS[index].exerciseId + workouT.workoutId + '2');
         }
         index = index + 1;
       } while (index < exerciseS.length);
@@ -279,10 +318,14 @@ class Workouts with ChangeNotifier {
           'exerciseId': e.exerciseId,
           'name': e.name,
           'reps': e.reps,
+          'reps2': e.reps2,
           'sets': e.sets,
           'restTime': e.restTime,
           'timeSeconds': e.timeSeconds,
           'exerciseImage': exerciseImages[exerciseIndex]['image'].toString(),
+          'exerciseImage2': exerciseImages[exerciseIndex]['image2'] != null
+              ? exerciseImages[exerciseIndex]['image2'].toString()
+              : null,
         };
       }).toList();
 
@@ -294,12 +337,17 @@ class Workouts with ChangeNotifier {
             exerciseId: e.exerciseId,
             name: e.name,
             reps: e.reps,
+            reps2: e.reps2,
             sets: e.sets,
             restTime: e.restTime,
             timeSeconds: e.timeSeconds,
             exerciseImageLink:
                 exerciseImages[exerciseIndex]['image'].toString(),
-            exerciseImage: null);
+            exerciseImageLink2: exerciseImages[exerciseIndex]['image2'] != null
+                ? exerciseImages[exerciseIndex]['image2'].toString()
+                : null,
+            exerciseImage: null,
+            exerciseImage2: null);
       }).toList();
 
       var workoutDocInfo = {

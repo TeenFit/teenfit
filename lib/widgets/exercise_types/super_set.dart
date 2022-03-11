@@ -25,9 +25,7 @@ class _SuperSetState extends State<SuperSet> {
   bool isLoading = false;
   int reps2 = 5;
   int reps = 5;
-  int sets = 5;
-  int time = 5;
-  int restTime = 5;
+  int sets = 1;
 
   Map? _exerciseProv;
   Exercise? _newExercise;
@@ -208,7 +206,7 @@ class _SuperSetState extends State<SuperSet> {
           restTime: null,
           exerciseImage2: _newExercise!.exerciseImage2,
           exerciseImageLink2: _newExercise!.exerciseImageLink2,
-          reps2: _newExercise!.reps2,
+          reps2: reps2,
           exerciseImageLink: _newExercise!.exerciseImageLink);
 
       isEdit
@@ -269,18 +267,15 @@ class _SuperSetState extends State<SuperSet> {
 
     Widget buildSets() {
       return Container(
-        height: _mediaQuery.size.height * 0.35,
+        height: _mediaQuery.size.height * 0.2,
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
             child: Container(
               height: (_mediaQuery.size.height - _appBarHeight) * 0.32,
               width: _mediaQuery.size.width,
               child: Column(
                 children: [
-                  SizedBox(
-                    height: _mediaQuery.size.height * 0.02,
-                  ),
                   Text(
                     'SETS',
                     style: TextStyle(
@@ -310,18 +305,15 @@ class _SuperSetState extends State<SuperSet> {
 
     Widget buildReps() {
       return Container(
-        height: _mediaQuery.size.height * 0.35,
+        height: _mediaQuery.size.height * 0.2,
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
             child: Container(
               height: (_mediaQuery.size.height - _appBarHeight) * 0.32,
               width: _mediaQuery.size.width,
               child: Column(
                 children: [
-                  SizedBox(
-                    height: _mediaQuery.size.height * 0.02,
-                  ),
                   Text(
                     'REPS',
                     style: TextStyle(
@@ -351,18 +343,15 @@ class _SuperSetState extends State<SuperSet> {
 
     Widget buildReps2() {
       return Container(
-        height: _mediaQuery.size.height * 0.35,
+        height: _mediaQuery.size.height * 0.2,
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
             child: Container(
               height: (_mediaQuery.size.height - _appBarHeight) * 0.32,
               width: _mediaQuery.size.width,
               child: Column(
                 children: [
-                  SizedBox(
-                    height: _mediaQuery.size.height * 0.02,
-                  ),
                   Text(
                     'REPS 2',
                     style: TextStyle(
@@ -412,8 +401,8 @@ class _SuperSetState extends State<SuperSet> {
               ExerciseImagePicker(
                   _pick,
                   _pick2,
-                  _newExercise!.exerciseImageLink,
-                  _newExercise!.exerciseImage,
+                  _newExercise!.exerciseImageLink2,
+                  _newExercise!.exerciseImage2,
                   true),
               buildReps2(),
               Padding(

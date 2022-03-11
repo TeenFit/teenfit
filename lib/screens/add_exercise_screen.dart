@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_switch/flutter_switch.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:teenfit/widgets/exercise_types/sets_and_reps.dart';
+import 'package:teenfit/widgets/exercise_types/super_set.dart';
 import 'package:teenfit/widgets/exercise_types/time.dart';
 import '../providers/exercise.dart';
 import 'package:uuid/uuid.dart';
@@ -36,9 +37,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       } else {
         exerciseType = 'Reps and Sets';
       }
-
-      exerciseType =
-          newExercise!.timeSeconds == null ? 'Reps and Sets' : 'Time';
 
       // newExercise = Exercise(
       //   exerciseImageLink: newExercise!.exerciseImageLink,
@@ -178,7 +176,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
               exerciseType == 'Time'
                   ? TimeExercise(exerciseProv)
                   : exerciseType == 'Superset'
-                      ? SizedBox()
+                      ? SuperSet(exerciseProv)
                       : SetsAndReps(exerciseProv),
             ],
           ),
