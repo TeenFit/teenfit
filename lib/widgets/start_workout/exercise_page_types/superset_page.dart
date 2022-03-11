@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import '/providers/exercise.dart';
 
-class SuperSetPage extends StatelessWidget {
+class SuperSetPage extends StatefulWidget {
   final Exercise? exercise;
   final Function? goToNext;
   final Function? goToPrevious;
@@ -13,6 +14,22 @@ class SuperSetPage extends StatelessWidget {
     this.goToNext,
     this.goToPrevious,
   );
+
+  @override
+  State<SuperSetPage> createState() => _SuperSetPageState();
+}
+
+class _SuperSetPageState extends State<SuperSetPage> {
+  CarouselController _carouselController = CarouselController();
+  bool isFirstImage = true;
+
+  void goToNext() {
+    _carouselController.nextPage();
+  }
+
+  void goToPrevious() {
+    _carouselController.previousPage();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +53,7 @@ class SuperSetPage extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.contain,
                 child: Text(
-                  exercise!.name,
+                  widget.exercise!.name,
                   maxLines: 2,
                   style: TextStyle(
                     color: Colors.black,
@@ -51,38 +68,138 @@ class SuperSetPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Container(
-              height: (_mediaQuery.size.height - _appBarHeight) * 0.63,
               width: _mediaQuery.size.width,
-              child: exercise!.exerciseImageLink == null
-                  ? FadeInImage(
-                      imageErrorBuilder: (context, image, _) => Image.asset(
-                        'assets/images/ImageUploadError.png',
-                        fit: BoxFit.cover,
+              height: (_mediaQuery.size.height - _appBarHeight) * 0.63,
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  viewportFraction: 1,
+                  height: (_mediaQuery.size.height - _appBarHeight),
+                  initialPage: 0,
+                  enableInfiniteScroll: false,
+                  autoPlay: false,
+                  reverse: false,
+                  enlargeCenterPage: false,
+                ),
+                carouselController: _carouselController,
+                items: [
+                  Stack(
+                    alignment: Alignment.centerRight,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isFirstImage = false;
+                          });
+                          goToNext();
+                        },
+                        icon: Icon(Icons.arrow_circle_right_outlined),
+                        color: _theme.primaryColor,
                       ),
-                      placeholderErrorBuilder: (context, image, _) =>
-                          Image.asset(
-                        'assets/images/ImageUploadError.png',
-                        fit: BoxFit.cover,
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Container(
+                          height:
+                              (_mediaQuery.size.height - _appBarHeight) * 0.63,
+                          width: _mediaQuery.size.width,
+                          child: widget.exercise!.exerciseImageLink == null
+                              ? FadeInImage(
+                                  imageErrorBuilder: (context, image, _) =>
+                                      Image.asset(
+                                    'assets/images/ImageUploadError.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                  placeholderErrorBuilder:
+                                      (context, image, _) => Image.asset(
+                                    'assets/images/ImageUploadError.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                  placeholder: AssetImage(
+                                      'assets/images/loading-gif.gif'),
+                                  image: FileImage(
+                                      widget.exercise!.exerciseImage!),
+                                  fit: BoxFit.contain,
+                                )
+                              : FadeInImage(
+                                  imageErrorBuilder: (context, image, _) =>
+                                      Image.asset(
+                                    'assets/images/ImageUploadError.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                  placeholderErrorBuilder:
+                                      (context, image, _) => Image.asset(
+                                    'assets/images/ImageUploadError.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                  placeholder: AssetImage(
+                                      'assets/images/loading-gif.gif'),
+                                  image: CachedNetworkImageProvider(
+                                      widget.exercise!.exerciseImageLink!),
+                                  fit: BoxFit.contain,
+                                ),
+                        ),
                       ),
-                      placeholder: AssetImage('assets/images/loading-gif.gif'),
-                      image: FileImage(exercise!.exerciseImage!),
-                      fit: BoxFit.contain,
-                    )
-                  : FadeInImage(
-                      imageErrorBuilder: (context, image, _) => Image.asset(
-                        'assets/images/ImageUploadError.png',
-                        fit: BoxFit.cover,
+                    ],
+                  ),
+                  Stack(
+                    alignment: Alignment.centerLeft,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            isFirstImage = true;
+                          });
+                          goToPrevious();
+                        },
+                        icon: Icon(Icons.arrow_circle_left_outlined),
+                        color: _theme.primaryColor,
                       ),
-                      placeholderErrorBuilder: (context, image, _) =>
-                          Image.asset(
-                        'assets/images/ImageUploadError.png',
-                        fit: BoxFit.cover,
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Container(
+                          height:
+                              (_mediaQuery.size.height - _appBarHeight) * 0.63,
+                          width: _mediaQuery.size.width,
+                          child: widget.exercise!.exerciseImageLink2 == null
+                              ? FadeInImage(
+                                  imageErrorBuilder: (context, image, _) =>
+                                      Image.asset(
+                                    'assets/images/ImageUploadError.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                  placeholderErrorBuilder:
+                                      (context, image, _) => Image.asset(
+                                    'assets/images/ImageUploadError.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                  placeholder: AssetImage(
+                                      'assets/images/loading-gif.gif'),
+                                  image: FileImage(
+                                      widget.exercise!.exerciseImage2!),
+                                  fit: BoxFit.contain,
+                                )
+                              : FadeInImage(
+                                  imageErrorBuilder: (context, image, _) =>
+                                      Image.asset(
+                                    'assets/images/ImageUploadError.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                  placeholderErrorBuilder:
+                                      (context, image, _) => Image.asset(
+                                    'assets/images/ImageUploadError.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                  placeholder: AssetImage(
+                                      'assets/images/loading-gif.gif'),
+                                  image: CachedNetworkImageProvider(
+                                      widget.exercise!.exerciseImageLink2!),
+                                  fit: BoxFit.contain,
+                                ),
+                        ),
                       ),
-                      placeholder: AssetImage('assets/images/loading-gif.gif'),
-                      image: CachedNetworkImageProvider(
-                          exercise!.exerciseImageLink!),
-                      fit: BoxFit.contain,
-                    ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           SizedBox(
@@ -105,7 +222,7 @@ class SuperSetPage extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      '${exercise!.sets} sets',
+                      '${widget.exercise!.sets} sets',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: _theme.cardColor,
@@ -127,7 +244,9 @@ class SuperSetPage extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      '${exercise!.reps} reps',
+                      isFirstImage
+                          ? '${widget.exercise!.reps} reps'
+                          : '${widget.exercise!.reps2} reps',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: _theme.cardColor,
@@ -160,7 +279,7 @@ class SuperSetPage extends StatelessWidget {
                         primary: _theme.cardColor,
                       ),
                       onPressed: () {
-                        goToPrevious!();
+                        widget.goToPrevious!();
                       },
                       child: Text(
                         '<- Back',
@@ -184,7 +303,7 @@ class SuperSetPage extends StatelessWidget {
                         primary: _theme.cardColor,
                       ),
                       onPressed: () {
-                        goToNext!();
+                        widget.goToNext!();
                       },
                       child: Text(
                         'Next ->',
