@@ -6,6 +6,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:teenfit/providers/basic.dart';
 import 'package:teenfit/screens/admin_screen.dart';
 import 'package:teenfit/screens/privacy_policy_screen.dart';
 import 'package:teenfit/screens/user_screen.dart';
@@ -77,6 +78,9 @@ class _MyAppState extends State<MyApp> {
       },
       child: MultiProvider(
         providers: [
+          ChangeNotifierProvider<BasicCommands>(
+            create: (ctx) => BasicCommands(),
+          ),
           ChangeNotifierProvider<Auth>(
             create: (ctx) => Auth(),
           ),
