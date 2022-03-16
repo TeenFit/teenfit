@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -53,9 +52,6 @@ class Auth with ChangeNotifier {
 
   Future<void> signup(
       String email, String password, BuildContext context) async {
-    CollectionReference workoutsCollection =
-        FirebaseFirestore.instance.collection('/users');
-
     try {
       await auth.createUserWithEmailAndPassword(
         email: email,
@@ -63,15 +59,6 @@ class Auth with ChangeNotifier {
       );
 
       getCurrentUID();
-
-      var userinfo = {
-        'userId': userId,
-        'email': email,
-        'profilePic': null,
-      };
-
-      await workoutsCollection.doc(userId).set(userinfo).onError(
-          (error, stackTrace) => throw HttpException(error.toString()));
 
       await FirebaseAnalytics.instance.logSignUp(signUpMethod: 'Email');
 
@@ -88,22 +75,9 @@ class Auth with ChangeNotifier {
 
   Future<void> login(
       String email, String password, BuildContext context) async {
-    CollectionReference workoutsCollection =
-        FirebaseFirestore.instance.collection('/users');
-
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
-
       getCurrentUID();
-
-      var userinfo = {
-        'userId': userId,
-        'email': email,
-        'profilePic': null,
-      };
-
-      var ref = workoutsCollection.doc(userId);
-
       await FirebaseAnalytics.instance.logLogin();
       notifyListeners();
 
