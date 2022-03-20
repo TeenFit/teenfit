@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfire_ui/firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/providers/auth.dart';
 import 'package:teenfit/screens/user_screen.dart';
@@ -25,10 +27,10 @@ class _CreateWorkoutState extends State<CreateWorkout> {
       isLoading = true;
     });
 
-    try {
-      await Provider.of<Workouts>(context, listen: false)
-          .removeFailedWorkouts();
-    } catch (e) {}
+    // try {
+    //   await Provider.of<Workouts>(context, listen: false)
+    //       .removeFailedWorkouts();
+    // } catch (e) {}
 
     if (this.mounted) {
       setState(() {
@@ -49,6 +51,14 @@ class _CreateWorkoutState extends State<CreateWorkout> {
 
     String uid = Provider.of<Auth>(context, listen: false).userId!;
 
+    final queryWorkout = FirebaseFirestore.instance
+        .collection('/workouts')
+        .where('creatorId', isEqualTo: uid)
+        .orderBy('date', descending: false)
+        .withConverter<Workout>(
+            fromFirestore: (snapshot, _) => Workout.fromJson(snapshot.data()!),
+            toFirestore: (worKout, _) => worKout.toJson());
+
     return Scaffold(
       backgroundColor: _theme.primaryColor,
       appBar: AppBar(
@@ -65,6 +75,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                   AddWorkoutScreen.routeName,
                   arguments: {
                     'workout': Workout(
+                      searchTerms: [],
                       failed: false,
                       pending: true,
                       date: DateTime.now(),
@@ -121,54 +132,52 @@ class _CreateWorkoutState extends State<CreateWorkout> {
           : Container(
               height: _mediaQuery.size.height,
               width: _mediaQuery.size.width,
-              child: Consumer<Workouts>(
-                builder: (ctx, workout, _) => ListView.builder(
-                  itemBuilder: (ctx, index) {
-                    return workout.findByCreatorId(uid).length == 0
-                        ? Container(
-                            height: (_mediaQuery.size.height - _appBarHeight),
-                            width: _mediaQuery.size.width,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: (_mediaQuery.size.height -
-                                          _appBarHeight) *
-                                      0.05,
-                                ),
-                                Container(
-                                  height: (_mediaQuery.size.height -
-                                          _appBarHeight) *
-                                      0.05,
-                                  width: _mediaQuery.size.width * 0.8,
-                                  child: FittedBox(
-                                    fit: BoxFit.fitWidth,
-                                    child: Text(
-                                      'Create Your First Workout...',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize:
-                                            _mediaQuery.size.height * 0.025,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Roboto',
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : WorkoutTile(
-                            workout.findByCreatorId(uid)[index],
-                            true,
-                            false,
-                          );
-                  },
-                  itemCount: workout.findByCreatorId(uid).length == 0
-                      ? 1
-                      : workout.findByCreatorId(uid).length,
-                ),
+              child: FirestoreListView<Workout>(
+                query: queryWorkout,
+                pageSize: 5,
+                itemBuilder: (ctx, snapshot) {
+                  final workout = snapshot.data();
+                  // return workout.findByCreatorId(uid).length == 0
+                  //     ? Container(
+                  //         height: (_mediaQuery.size.height - _appBarHeight),
+                  //         width: _mediaQuery.size.width,
+                  //         child: Column(
+                  //           crossAxisAlignment: CrossAxisAlignment.center,
+                  //           children: [
+                  //             SizedBox(
+                  //               height: (_mediaQuery.size.height -
+                  //                       _appBarHeight) *
+                  //                   0.05,
+                  //             ),
+                  //             Container(
+                  //               height: (_mediaQuery.size.height -
+                  //                       _appBarHeight) *
+                  //                   0.05,
+                  //               width: _mediaQuery.size.width * 0.8,
+                  //               child: FittedBox(
+                  //                 fit: BoxFit.fitWidth,
+                  //                 child: Text(
+                  //                   'Create Your First Workout...',
+                  //                   textAlign: TextAlign.center,
+                  //                   style: TextStyle(
+                  //                     color: Colors.white,
+                  //                     fontSize:
+                  //                         _mediaQuery.size.height * 0.025,
+                  //                     fontWeight: FontWeight.bold,
+                  //                     fontFamily: 'Roboto',
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ) :
+                  return WorkoutTile(
+                    workout,
+                    true,
+                    false,
+                  );
+                },
               ),
             ),
     );

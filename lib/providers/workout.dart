@@ -15,8 +15,10 @@ class Workout {
   final DateTime date;
   final bool pending;
   final bool failed;
+  final List<String> searchTerms;
 
-  Workout({
+  const Workout({
+    required this.searchTerms,
     required this.date,
     required this.creatorName,
     required this.creatorId,
@@ -31,4 +33,67 @@ class Workout {
     required this.exercises,
     required this.failed,
   });
+
+  Workout.fromJson(Map<String, dynamic> e)
+      : this(
+          searchTerms: e['searchTerms'],
+          failed: e['failed'],
+          pending: e['pending'],
+          date: DateTime.parse(e['date']),
+          creatorName: e['creatorName'],
+          creatorId: e['creatorId'],
+          workoutId: e['workoutId'],
+          workoutName: e['workoutName'],
+          instagram: e['instagram'],
+          facebook: e['facebook'],
+          tiktokLink: e['tiktokLink'],
+          bannerImage: null,
+          bannerImageLink: e['bannerImage'],
+          exercises: (e['exercises'] as List)
+              .toList()
+              .map(
+                (e) => Exercise(
+                  exerciseId: e['exerciseId'],
+                  name: e['name'],
+                  exerciseImageLink: e['exerciseImage'],
+                  exerciseImageLink2: e['exerciseImage2'],
+                  reps2: e['reps2'],
+                  reps: e['reps'],
+                  sets: e['sets'],
+                  restTime: e['restTime'],
+                  timeSeconds: e['timeSeconds'],
+                ),
+              )
+              .toList(),
+        );
+
+  Map<String, Object?> toJson() => {
+        'searchTerms': searchTerms,
+        'failed': failed,
+        'pending': pending,
+        'date': date.toString(),
+        'creatorName': creatorName,
+        'creatorId': creatorId,
+        'workoutId': workoutId,
+        'workoutName': workoutName,
+        'instagram': instagram,
+        'facebook': facebook,
+        'tiktokLink': tiktokLink,
+        'bannerImage': bannerImageLink,
+        'exercises': (exercises)
+            .map(
+              (e) => {
+                'exerciseId': e.exerciseId,
+                'name': e.name,
+                'exerciseImage': e.exerciseImageLink,
+                'exerciseImage2': e.exerciseImageLink2,
+                'reps2': e.reps2,
+                'reps': e.reps,
+                'sets': e.sets,
+                'restTime': e.restTime,
+                'timeSeconds': e.timeSeconds,
+              },
+            )
+            .toList(),
+      };
 }

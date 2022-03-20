@@ -1,7 +1,13 @@
 PODS:
   - app_review (1.0.1):
     - Flutter
-  - cloud_firestore (3.1.5):
+  - AppAuth (1.5.0):
+    - AppAuth/Core (= 1.5.0)
+    - AppAuth/ExternalUserAgent (= 1.5.0)
+  - AppAuth/Core (1.5.0)
+  - AppAuth/ExternalUserAgent (1.5.0):
+    - AppAuth/Core
+  - cloud_firestore (3.1.10):
     - Firebase/Firestore (= 8.9.0)
     - firebase_core
     - Flutter
@@ -36,6 +42,14 @@ PODS:
   - DKPhotoGallery/Resource (0.0.17):
     - SDWebImage
     - SwiftyGif
+  - FBAEMKit (13.0.0):
+    - FBSDKCoreKit_Basics (= 13.0.0)
+  - FBSDKCoreKit (13.0.0):
+    - FBAEMKit (= 13.0.0)
+    - FBSDKCoreKit_Basics (= 13.0.0)
+  - FBSDKCoreKit_Basics (13.0.0)
+  - FBSDKLoginKit (13.0.0):
+    - FBSDKCoreKit (= 13.0.0)
   - ffmpeg-kit-ios-https (4.5.LTS)
   - ffmpeg_kit_flutter (4.5.0):
     - ffmpeg_kit_flutter/https-lts (= 4.5.0)
@@ -56,6 +70,12 @@ PODS:
     - FirebaseAnalytics (~> 8.9.0)
   - Firebase/CoreOnly (8.9.0):
     - FirebaseCore (= 8.9.0)
+  - Firebase/Database (8.9.0):
+    - Firebase/CoreOnly
+    - FirebaseDatabase (~> 8.9.0)
+  - Firebase/DynamicLinks (8.9.0):
+    - Firebase/CoreOnly
+    - FirebaseDynamicLinks (~> 8.9.0)
   - Firebase/Firestore (8.9.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 8.9.0)
@@ -66,12 +86,20 @@ PODS:
     - Firebase/Analytics (= 8.9.0)
     - firebase_core
     - Flutter
-  - firebase_auth (3.3.4):
+  - firebase_auth (3.3.11):
     - Firebase/Auth (= 8.9.0)
     - firebase_core
     - Flutter
   - firebase_core (1.10.6):
     - Firebase/CoreOnly (= 8.9.0)
+    - Flutter
+  - firebase_database (9.0.8):
+    - Firebase/Database (= 8.9.0)
+    - firebase_core
+    - Flutter
+  - firebase_dynamic_links (4.1.1):
+    - Firebase/DynamicLinks (= 8.9.0)
+    - firebase_core
     - Flutter
   - firebase_storage (10.2.4):
     - Firebase/Storage (= 8.9.0)
@@ -109,6 +137,11 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/Logger (~> 7.7)
     - nanopb (~> 2.30908.0)
+  - FirebaseDatabase (8.9.0):
+    - FirebaseCore (~> 8.0)
+    - leveldb-library (~> 1.22)
+  - FirebaseDynamicLinks (8.9.0):
+    - FirebaseCore (~> 8.0)
   - FirebaseFirestore (8.9.0):
     - FirebaseFirestore/AutodetectLeveldb (= 8.9.0)
   - FirebaseFirestore/AutodetectLeveldb (8.9.0):
@@ -126,6 +159,10 @@ PODS:
     - FirebaseCore (~> 8.0)
     - GTMSessionFetcher/Core (~> 1.5)
   - Flutter (1.0.0)
+  - flutter_facebook_auth (4.1.2):
+    - FBSDKCoreKit (~> 13.0.0)
+    - FBSDKLoginKit (~> 13.0.0)
+    - Flutter
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
@@ -138,6 +175,9 @@ PODS:
   - google_mobile_ads (0.0.1):
     - Flutter
     - Google-Mobile-Ads-SDK (= 8.11.0)
+  - google_sign_in (0.0.1):
+    - Flutter
+    - GoogleSignIn (~> 5.0)
   - GoogleAppMeasurement (8.9.1):
     - GoogleAppMeasurement/AdIdSupport (= 8.9.1)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.6)
@@ -162,6 +202,10 @@ PODS:
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleSignIn (5.0.2):
+    - AppAuth (~> 1.2)
+    - GTMAppAuth (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
   - GoogleUserMessagingPlatform (2.0.0)
   - GoogleUtilities/AppDelegateSwizzler (7.7.0):
     - GoogleUtilities/Environment
@@ -182,10 +226,14 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.7.0):
     - GoogleUtilities/Logger
+  - GTMAppAuth (1.2.2):
+    - AppAuth/Core (~> 1.4)
+    - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.7.0)
   - image_cropper (0.0.4):
     - Flutter
     - TOCropViewController (~> 2.6.0)
+  - leveldb-library (1.22.1)
   - libwebp (1.2.1):
     - libwebp/demux (= 1.2.1)
     - libwebp/mux (= 1.2.1)
@@ -210,12 +258,16 @@ PODS:
   - SDWebImage (5.12.4):
     - SDWebImage/Core (= 5.12.4)
   - SDWebImage/Core (5.12.4)
+  - sign_in_with_apple (0.0.1):
+    - Flutter
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
   - SwiftyGif (5.4.3)
   - Toast (4.0.0)
   - TOCropViewController (2.6.1)
+  - twitter_login (0.0.1):
+    - Flutter
   - url_launcher_ios (0.0.1):
     - Flutter
   - video_player (0.0.1):
@@ -232,39 +284,55 @@ DEPENDENCIES:
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
+  - firebase_database (from `.symlinks/plugins/firebase_database/ios`)
+  - firebase_dynamic_links (from `.symlinks/plugins/firebase_dynamic_links/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `8.9.0`)
   - Flutter (from `Flutter`)
+  - flutter_facebook_auth (from `.symlinks/plugins/flutter_facebook_auth/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - google_mobile_ads (from `.symlinks/plugins/google_mobile_ads/ios`)
+  - google_sign_in (from `.symlinks/plugins/google_sign_in/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
+  - twitter_login (from `.symlinks/plugins/twitter_login/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - video_player (from `.symlinks/plugins/video_player/ios`)
   - video_thumbnail (from `.symlinks/plugins/video_thumbnail/ios`)
 
 SPEC REPOS:
   trunk:
+    - AppAuth
     - DKImagePickerController
     - DKPhotoGallery
+    - FBAEMKit
+    - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
+    - FBSDKLoginKit
     - ffmpeg-kit-ios-https
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
+    - FirebaseDatabase
+    - FirebaseDynamicLinks
     - FirebaseInstallations
     - FirebaseStorage
     - FMDB
     - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleDataTransport
+    - GoogleSignIn
     - GoogleUserMessagingPlatform
     - GoogleUtilities
+    - GTMAppAuth
     - GTMSessionFetcher
+    - leveldb-library
     - libwebp
     - nanopb
     - PromisesObjC
@@ -288,6 +356,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
+  firebase_database:
+    :path: ".symlinks/plugins/firebase_database/ios"
+  firebase_dynamic_links:
+    :path: ".symlinks/plugins/firebase_dynamic_links/ios"
   firebase_storage:
     :path: ".symlinks/plugins/firebase_storage/ios"
   FirebaseFirestore:
@@ -295,10 +367,14 @@ EXTERNAL SOURCES:
     :tag: 8.9.0
   Flutter:
     :path: Flutter
+  flutter_facebook_auth:
+    :path: ".symlinks/plugins/flutter_facebook_auth/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
   google_mobile_ads:
     :path: ".symlinks/plugins/google_mobile_ads/ios"
+  google_sign_in:
+    :path: ".symlinks/plugins/google_sign_in/ios"
   image_cropper:
     :path: ".symlinks/plugins/image_cropper/ios"
   package_info:
@@ -307,8 +383,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
+  sign_in_with_apple:
+    :path: ".symlinks/plugins/sign_in_with_apple/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
+  twitter_login:
+    :path: ".symlinks/plugins/twitter_login/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   video_player:
@@ -323,35 +403,49 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   app_review: 6f51001269c59a2f4a5b5ae68b7d106401152764
-  cloud_firestore: 338122a6149c14ca376ad363626b5bf3037a5056
+  AppAuth: 80317d99ac7ff2801a2f18ff86b48cd315ed465d
+  cloud_firestore: a7640ea347114cf598438e3ab95c5cd8a19c94a0
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
+  FBAEMKit: 11a0bcdc7a88e26ed764bcf56372afc6cbbbdcd9
+  FBSDKCoreKit: 00e1e751257e1005304fa29cb683d2dfe008f41a
+  FBSDKCoreKit_Basics: 96ec2ddb67a032e54f0754ea3d59db6f84f42389
+  FBSDKLoginKit: 66ff4ddf372d9c3fc360e65ae048a47a482c29b9
   ffmpeg-kit-ios-https: 420b7d6e105f4b872d048a84f4f713479bea8b2b
   ffmpeg_kit_flutter: 4475e259bfc0e495d1db6559d0ecf0ebfa1215c7
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
   Firebase: 13d8d96499e2635428d5bf0ec675df21f95d9a95
   firebase_analytics: cc1ab30e479b7089c0a952c0cae7ba286d464c68
-  firebase_auth: e875a50b81aefb20f305dfede425647e9675c19e
+  firebase_auth: 18bc17765e1b3d177b9a91febb43581dba8bc808
   firebase_core: c263d7daf1dc92fcd9895e6abdc04872b0ee07ff
+  firebase_database: 15bcd67514e74b8bfdc0a0bbf51c6e470a92c309
+  firebase_dynamic_links: a85878e7840c38c5c48089e0d7806d4b50872c97
   firebase_storage: 2ed331c6bd5bfa6d64f1a6c57f01151f4f146c16
   FirebaseAnalytics: 4ab446ce08a3fe52e8a4303dd997cf26276bf968
   FirebaseAuth: 2b78b2a32c07b3ecfa4970bdf1d3632b8304099b
   FirebaseCore: 599ee609343eaf4941bd188f85e3aa077ffe325b
   FirebaseCoreDiagnostics: c2836d254a8f0bbb4121ff18f2c2ea39d118fd08
+  FirebaseDatabase: 2236b804cf0cac165b4620669bedf7ee643a2bcc
+  FirebaseDynamicLinks: 50980cbe21d2bbe8374afcdccd94dc2db20dffca
   FirebaseFirestore: 7c22bff6c0e1f222920cd110e9da13a117b61fea
   FirebaseInstallations: 60edbf7e11d91ae4c751d26c200dfd037099abe0
   FirebaseStorage: 452c98c31ccb40b819764bf3039426c4388d9939
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  flutter_facebook_auth: c0a8473f857cf44b0a27bfe752facf1d5fedd863
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   Google-Mobile-Ads-SDK: be2192b51b74d74a6ed70590c2e8275412f1b71e
   google_mobile_ads: a2f8b901601401bf7e691b4224d5992e9a37599a
+  google_sign_in: f669f45933dad48cd218dc3e189726bced3d19f4
   GoogleAppMeasurement: 837649ad3987936c232f6717c5680216f6243d24
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
+  GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
   GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   image_cropper: f1668dd8d2cad2d357955caad15a40547856edcb
+  leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
@@ -359,10 +453,12 @@ SPEC CHECKSUMS:
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   SDWebImage: 631cf572cc93dfdfe54162e556410a61f1141928
+  sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   SwiftyGif: 6c3eafd0ce693cad58bb63d2b2fb9bacb8552780
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
+  twitter_login: 2794db69b7640681171b17b3c2c84ad9dfb4a57f
   url_launcher_ios: 02f1989d4e14e998335b02b67a7590fa34f971af
   video_player: ecd305f42e9044793efd34846e1ce64c31ea6fcb
   video_thumbnail: c4e2a3c539e247d4de13cd545344fd2d26ffafd1

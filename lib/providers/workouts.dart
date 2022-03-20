@@ -11,65 +11,65 @@ import './workout.dart';
 class Workouts with ChangeNotifier {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  List<Workout> get workouts {
-    return [..._workouts];
-  }
+  // List<Workout> get workouts {
+  //   return [..._workouts];
+  // }
 
-  List<Workout> _workouts = [];
+  // List<Workout> _workouts = [];
 
-  Future<void> fetchAndSetWorkout() async {
-    CollectionReference workoutsCollection =
-        FirebaseFirestore.instance.collection('/workouts');
+  // Future<void> fetchAndSetWorkout() async {
+  //   CollectionReference workoutsCollection =
+  //       FirebaseFirestore.instance.collection('/workouts');
 
-    try {
-      await workoutsCollection
-          .orderBy('date', descending: true)
-          .get()
-          .then(
-            (workouts) => _workouts = workouts.docs
-                .map(
-                  (e) => Workout(
-                    failed: e['failed'],
-                    pending: e['pending'],
-                    date: DateTime.parse(e['date']),
-                    creatorName: e['creatorName'],
-                    creatorId: e['creatorId'],
-                    workoutId: e['workoutId'],
-                    workoutName: e['workoutName'],
-                    instagram: e['instagram'],
-                    facebook: e['facebook'],
-                    tiktokLink: e['tiktokLink'],
-                    bannerImage: null,
-                    bannerImageLink: e['bannerImage'],
-                    exercises: (e['exercises'] as List)
-                        .toList()
-                        .map(
-                          (e) => Exercise(
-                            exerciseId: e['exerciseId'],
-                            name: e['name'],
-                            exerciseImageLink: e['exerciseImage'],
-                            exerciseImageLink2: e['exerciseImage2'],
-                            reps2: e['reps2'],
-                            reps: e['reps'],
-                            sets: e['sets'],
-                            restTime: e['restTime'],
-                            timeSeconds: e['timeSeconds'],
-                          ),
-                        )
-                        .toList(),
-                  ),
-                )
-                .toList(),
-          )
-          .onError(
-            (error, stackTrace) => throw HttpException(''),
-          );
-    } on FirebaseException catch (_) {
-      throw HttpException('');
-    } catch (e) {
-      throw HttpException(e.toString());
-    }
-  }
+  //   try {
+  //     await workoutsCollection
+  //         .orderBy('date', descending: true)
+  //         .get()
+  //         .then(
+  //           (workouts) => _workouts = workouts.docs
+  //               .map(
+  //                 (e) => Workout(
+  //                   failed: e['failed'],
+  //                   pending: e['pending'],
+  //                   date: DateTime.parse(e['date']),
+  //                   creatorName: e['creatorName'],
+  //                   creatorId: e['creatorId'],
+  //                   workoutId: e['workoutId'],
+  //                   workoutName: e['workoutName'],
+  //                   instagram: e['instagram'],
+  //                   facebook: e['facebook'],
+  //                   tiktokLink: e['tiktokLink'],
+  //                   bannerImage: null,
+  //                   bannerImageLink: e['bannerImage'],
+  //                   exercises: (e['exercises'] as List)
+  //                       .toList()
+  //                       .map(
+  //                         (e) => Exercise(
+  //                           exerciseId: e['exerciseId'],
+  //                           name: e['name'],
+  //                           exerciseImageLink: e['exerciseImage'],
+  //                           exerciseImageLink2: e['exerciseImage2'],
+  //                           reps2: e['reps2'],
+  //                           reps: e['reps'],
+  //                           sets: e['sets'],
+  //                           restTime: e['restTime'],
+  //                           timeSeconds: e['timeSeconds'],
+  //                         ),
+  //                       )
+  //                       .toList(),
+  //                 ),
+  //               )
+  //               .toList(),
+  //         )
+  //         .onError(
+  //           (error, stackTrace) => throw HttpException(''),
+  //         );
+  //   } on FirebaseException catch (_) {
+  //     throw HttpException('');
+  //   } catch (e) {
+  //     throw HttpException(e.toString());
+  //   }
+  // }
 
   Future<void> addWorkout(Workout workouT) async {
     CollectionReference workoutsCollection =
@@ -141,24 +141,24 @@ class Workouts with ChangeNotifier {
         };
       }).toList();
 
-      List<Exercise> exerciseSClassList = workouT.exercises.map((e) {
-        final exerciseIndex = exerciseImages.indexWhere(
-            (element) => element['id'] == e.exerciseId + workouT.workoutId);
+      // List<Exercise> exerciseSClassList = workouT.exercises.map((e) {
+      //   final exerciseIndex = exerciseImages.indexWhere(
+      //       (element) => element['id'] == e.exerciseId + workouT.workoutId);
 
-        return Exercise(
-          exerciseId: e.exerciseId,
-          name: e.name,
-          reps: e.reps,
-          reps2: e.reps2,
-          sets: e.sets,
-          restTime: e.restTime,
-          timeSeconds: e.timeSeconds,
-          exerciseImageLink: exerciseImages[exerciseIndex]['image'].toString(),
-          exerciseImageLink2: exerciseImages[exerciseIndex]['image2'],
-          exerciseImage: null,
-          exerciseImage2: null,
-        );
-      }).toList();
+      //   return Exercise(
+      //     exerciseId: e.exerciseId,
+      //     name: e.name,
+      //     reps: e.reps,
+      //     reps2: e.reps2,
+      //     sets: e.sets,
+      //     restTime: e.restTime,
+      //     timeSeconds: e.timeSeconds,
+      //     exerciseImageLink: exerciseImages[exerciseIndex]['image'].toString(),
+      //     exerciseImageLink2: exerciseImages[exerciseIndex]['image2'],
+      //     exerciseImage: null,
+      //     exerciseImage2: null,
+      //   );
+      // }).toList();
 
       var workoutDocInfo = {
         'failed': workouT.failed,
@@ -183,23 +183,23 @@ class Workouts with ChangeNotifier {
           .onError(
               (error, stackTrace) => throw HttpException(error.toString()));
 
-      _workouts.insert(
-          0,
-          Workout(
-            failed: false,
-            pending: workouT.pending,
-            bannerImage: workouT.bannerImage,
-            bannerImageLink: url,
-            date: workouT.date,
-            creatorName: workouT.creatorName,
-            creatorId: workouT.creatorId,
-            workoutId: workouT.workoutId,
-            workoutName: workouT.workoutName,
-            instagram: workouT.instagram,
-            facebook: workouT.facebook,
-            tiktokLink: workouT.tiktokLink,
-            exercises: exerciseSClassList,
-          ));
+      // _workouts.insert(
+      //     0,
+      //     Workout(
+      //       failed: false,
+      //       pending: workouT.pending,
+      //       bannerImage: workouT.bannerImage,
+      //       bannerImageLink: url,
+      //       date: workouT.date,
+      //       creatorName: workouT.creatorName,
+      //       creatorId: workouT.creatorId,
+      //       workoutId: workouT.workoutId,
+      //       workoutName: workouT.workoutName,
+      //       instagram: workouT.instagram,
+      //       facebook: workouT.facebook,
+      //       tiktokLink: workouT.tiktokLink,
+      //       exercises: exerciseSClassList,
+      //     ));
       notifyListeners();
     } on FirebaseException catch (e) {
       throw HttpException(e.toString());
@@ -324,24 +324,24 @@ class Workouts with ChangeNotifier {
         };
       }).toList();
 
-      List<Exercise> exerciseSClassList = workouT.exercises.map((e) {
-        final exerciseIndex = exerciseImages.indexWhere(
-            (element) => element['id'] == e.exerciseId + workouT.workoutId);
+      // List<Exercise> exerciseSClassList = workouT.exercises.map((e) {
+      //   final exerciseIndex = exerciseImages.indexWhere(
+      //       (element) => element['id'] == e.exerciseId + workouT.workoutId);
 
-        return Exercise(
-            exerciseId: e.exerciseId,
-            name: e.name,
-            reps: e.reps,
-            reps2: e.reps2,
-            sets: e.sets,
-            restTime: e.restTime,
-            timeSeconds: e.timeSeconds,
-            exerciseImageLink:
-                exerciseImages[exerciseIndex]['image'].toString(),
-            exerciseImageLink2: exerciseImages[exerciseIndex]['image2'],
-            exerciseImage: null,
-            exerciseImage2: null);
-      }).toList();
+      //   return Exercise(
+      //       exerciseId: e.exerciseId,
+      //       name: e.name,
+      //       reps: e.reps,
+      //       reps2: e.reps2,
+      //       sets: e.sets,
+      //       restTime: e.restTime,
+      //       timeSeconds: e.timeSeconds,
+      //       exerciseImageLink:
+      //           exerciseImages[exerciseIndex]['image'].toString(),
+      //       exerciseImageLink2: exerciseImages[exerciseIndex]['image2'],
+      //       exerciseImage: null,
+      //       exerciseImage2: null);
+      // }).toList();
 
       var workoutDocInfo = {
         'failed': workouT.failed,
@@ -366,27 +366,27 @@ class Workouts with ChangeNotifier {
           .onError(
               (error, stackTrace) => throw HttpException(error.toString()));
 
-      int index = _workouts
-          .indexWhere((element) => element.workoutId == workouT.workoutId);
-      _workouts
-          .removeWhere((workoUT) => workoUT.workoutId == workouT.workoutId);
-      _workouts.insert(
-          index,
-          Workout(
-            failed: false,
-            pending: workouT.pending,
-            bannerImage: workouT.bannerImage,
-            bannerImageLink: url,
-            date: workouT.date,
-            creatorName: workouT.creatorName,
-            creatorId: workouT.creatorId,
-            workoutId: workouT.workoutId,
-            workoutName: workouT.workoutName,
-            instagram: workouT.instagram,
-            facebook: workouT.facebook,
-            tiktokLink: workouT.tiktokLink,
-            exercises: exerciseSClassList,
-          ));
+      // int index = _workouts
+      //     .indexWhere((element) => element.workoutId == workouT.workoutId);
+      // _workouts
+      //     .removeWhere((workoUT) => workoUT.workoutId == workouT.workoutId);
+      // _workouts.insert(
+      //     index,
+      //     Workout(
+      //       failed: false,
+      //       pending: workouT.pending,
+      //       bannerImage: workouT.bannerImage,
+      //       bannerImageLink: url,
+      //       date: workouT.date,
+      //       creatorName: workouT.creatorName,
+      //       creatorId: workouT.creatorId,
+      //       workoutId: workouT.workoutId,
+      //       workoutName: workouT.workoutName,
+      //       instagram: workouT.instagram,
+      //       facebook: workouT.facebook,
+      //       tiktokLink: workouT.tiktokLink,
+      //       exercises: exerciseSClassList,
+      //     ));
       notifyListeners();
     } on FirebaseException catch (e) {
       throw HttpException(e.toString());
@@ -436,8 +436,8 @@ class Workouts with ChangeNotifier {
       await workoutsCollection.doc(workouT.workoutId).delete().onError(
           (error, stackTrace) =>
               throw HttpException('Unable To Delete Exercise'));
-      _workouts
-          .removeWhere((workout) => workout.workoutId == workouT.workoutId);
+      // _workouts
+      //     .removeWhere((workout) => workout.workoutId == workouT.workoutId);
       notifyListeners();
     } on FirebaseException catch (_) {
       throw HttpException('Unable To Save Exercise');
@@ -447,40 +447,40 @@ class Workouts with ChangeNotifier {
     notifyListeners();
   }
 
-  List<Workout> findByCreatorId(String creatorId) {
-    return workouts.where((workout) => workout.creatorId == creatorId).toList();
-  }
+  // List<Workout> findByCreatorId(String creatorId) {
+  //   return workouts.where((workout) => workout.creatorId == creatorId).toList();
+  // }
 
-  List<Workout> isNotPendingWorkouts() {
-    return workouts
-        .where((element) => element.pending == false && element.failed == false)
-        .toList();
-  }
+  // List<Workout> isNotPendingWorkouts() {
+  //   return workouts
+  //       .where((element) => element.pending == false && element.failed == false)
+  //       .toList();
+  // }
 
-  List<Workout> isPendingWorkouts() {
-    return workouts
-        .where((element) => element.pending == true)
-        .toList()
-        .reversed
-        .toList();
-  }
+  // List<Workout> isPendingWorkouts() {
+  //   return workouts
+  //       .where((element) => element.pending == true)
+  //       .toList()
+  //       .reversed
+  //       .toList();
+  // }
 
-  List<Workout> findByName(String name) {
-    return workouts
-        .where(
-          (workouT) => ((workouT.workoutName.contains(name) ||
-                  workouT.workoutName.toLowerCase().contains(name) ||
-                  workouT.workoutName.toUpperCase().contains(name) ||
-                  workouT.workoutName.characters.contains(name) ||
-                  workouT.creatorName.contains(name) ||
-                  workouT.creatorName.toLowerCase().contains(name) ||
-                  workouT.creatorName.toUpperCase().contains(name) ||
-                  workouT.creatorName.characters.contains(name)) &&
-              workouT.pending == false &&
-              workouT.failed == false),
-        )
-        .toList();
-  }
+  // List<Workout> findByName(String name) {
+  //   return workouts
+  //       .where(
+  //         (workouT) => ((workouT.workoutName.contains(name) ||
+  //                 workouT.workoutName.toLowerCase().contains(name) ||
+  //                 workouT.workoutName.toUpperCase().contains(name) ||
+  //                 workouT.workoutName.characters.contains(name) ||
+  //                 workouT.creatorName.contains(name) ||
+  //                 workouT.creatorName.toLowerCase().contains(name) ||
+  //                 workouT.creatorName.toUpperCase().contains(name) ||
+  //                 workouT.creatorName.characters.contains(name)) &&
+  //             workouT.pending == false &&
+  //             workouT.failed == false),
+  //       )
+  //       .toList();
+  // }
 
   Future<void> acceptWorkout(Workout workouT) async {
     CollectionReference workoutsCollection =
@@ -492,48 +492,48 @@ class Workouts with ChangeNotifier {
         .doc(workouT.workoutId)
         .update({'pending': false, 'date': time.toString()});
 
-    int index = _workouts
-        .indexWhere((element) => element.workoutId == workouT.workoutId);
-    _workouts.removeWhere((element) => element.workoutId == workouT.workoutId);
-    _workouts.insert(
-        index,
-        Workout(
-            failed: false,
-            bannerImage: workouT.bannerImage,
-            bannerImageLink: workouT.bannerImageLink,
-            date: time,
-            creatorName: workouT.creatorName,
-            creatorId: workouT.creatorId,
-            workoutId: workouT.workoutId,
-            workoutName: workouT.workoutName,
-            instagram: workouT.instagram,
-            facebook: workouT.facebook,
-            tiktokLink: workouT.tiktokLink,
-            pending: false,
-            exercises: workouT.exercises));
+    // int index = _workouts
+    //     .indexWhere((element) => element.workoutId == workouT.workoutId);
+    // _workouts.removeWhere((element) => element.workoutId == workouT.workoutId);
+    // _workouts.insert(
+    //     index,
+    //     Workout(
+    //         failed: false,
+    //         bannerImage: workouT.bannerImage,
+    //         bannerImageLink: workouT.bannerImageLink,
+    //         date: time,
+    //         creatorName: workouT.creatorName,
+    //         creatorId: workouT.creatorId,
+    //         workoutId: workouT.workoutId,
+    //         workoutName: workouT.workoutName,
+    //         instagram: workouT.instagram,
+    //         facebook: workouT.facebook,
+    //         tiktokLink: workouT.tiktokLink,
+    //         pending: false,
+    //         exercises: workouT.exercises));
     notifyListeners();
   }
 
-  Future<void> removeFailedWorkouts() async {
-    final failedWorkouts = workouts.where((element) {
-      final date = element.date;
-      final timeNow = DateTime.now();
+  // Future<void> removeFailedWorkouts() async {
+  //   final failedWorkouts = workouts.where((element) {
+  //     final date = element.date;
+  //     final timeNow = DateTime.now();
 
-      int difference = timeNow.difference(date).inDays;
+  //     int difference = timeNow.difference(date).inDays;
 
-      final daysLeft = 15 - difference;
+  //     final daysLeft = 15 - difference;
 
-      return element.failed && daysLeft <= 0;
-    }).toList();
+  //     return element.failed && daysLeft <= 0;
+  //   }).toList();
 
-    int i = 0;
+  //   int i = 0;
 
-    do {
-      await deleteWorkout(failedWorkouts[i]);
-      i++;
-    } while (i < failedWorkouts.length);
-    notifyListeners();
-  }
+  //   do {
+  //     await deleteWorkout(failedWorkouts[i]);
+  //     i++;
+  //   } while (i < failedWorkouts.length);
+  //   notifyListeners();
+  // }
 
   Future<void> failWorkout(Workout workouT) async {
     CollectionReference workoutsCollection =
@@ -545,25 +545,25 @@ class Workouts with ChangeNotifier {
         .doc(workouT.workoutId)
         .update({'failed': true, 'pending': false, 'date': time.toString()});
 
-    int index = _workouts
-        .indexWhere((element) => element.workoutId == workouT.workoutId);
-    _workouts.removeWhere((element) => element.workoutId == workouT.workoutId);
-    _workouts.insert(
-        index,
-        Workout(
-            failed: true,
-            bannerImage: workouT.bannerImage,
-            bannerImageLink: workouT.bannerImageLink,
-            date: time,
-            creatorName: workouT.creatorName,
-            creatorId: workouT.creatorId,
-            workoutId: workouT.workoutId,
-            workoutName: workouT.workoutName,
-            instagram: workouT.instagram,
-            facebook: workouT.facebook,
-            tiktokLink: workouT.tiktokLink,
-            pending: false,
-            exercises: workouT.exercises));
+    // int index = _workouts
+    //     .indexWhere((element) => element.workoutId == workouT.workoutId);
+    // _workouts.removeWhere((element) => element.workoutId == workouT.workoutId);
+    // _workouts.insert(
+    //     index,
+    //     Workout(
+    //         failed: true,
+    //         bannerImage: workouT.bannerImage,
+    //         bannerImageLink: workouT.bannerImageLink,
+    //         date: time,
+    //         creatorName: workouT.creatorName,
+    //         creatorId: workouT.creatorId,
+    //         workoutId: workouT.workoutId,
+    //         workoutName: workouT.workoutName,
+    //         instagram: workouT.instagram,
+    //         facebook: workouT.facebook,
+    //         tiktokLink: workouT.tiktokLink,
+    //         pending: false,
+    //         exercises: workouT.exercises));
     notifyListeners();
   }
 }

@@ -44,6 +44,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
     if (isInit == false) {
       newWorkout = Workout(
+        searchTerms: newWorkout!.searchTerms,
         failed: false,
         pending: true,
         date: workout!.date,
@@ -116,6 +117,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     void _pickImage(File? image) {
       setState(() {
         newWorkout = Workout(
+          searchTerms: newWorkout!.searchTerms,
           failed: false,
           pending: true,
           date: workout!.date,
@@ -168,6 +170,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
       newWorkout = Workout(
         failed: false,
+        searchTerms: newWorkout!.searchTerms,
         pending: newWorkout!.pending,
         date: newWorkout!.date,
         creatorName: newWorkout!.creatorName,
@@ -245,6 +248,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                searchTerms: newWorkout!.searchTerms,
                 failed: false,
                 pending: newWorkout!.pending,
                 date: newWorkout!.date,
@@ -291,6 +295,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                searchTerms: newWorkout!.searchTerms,
                 failed: false,
                 pending: newWorkout!.pending,
                 date: newWorkout!.date,
@@ -334,6 +339,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                searchTerms: newWorkout!.searchTerms,
                 failed: false,
                 pending: newWorkout!.pending,
                 date: newWorkout!.date,
@@ -378,6 +384,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                searchTerms: newWorkout!.searchTerms,
                 failed: false,
                 pending: newWorkout!.pending,
                 date: newWorkout!.date,
@@ -422,6 +429,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                searchTerms: newWorkout!.searchTerms,
                 failed: false,
                 pending: newWorkout!.pending,
                 date: newWorkout!.date,
