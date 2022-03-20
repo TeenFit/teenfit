@@ -99,6 +99,7 @@ class _WorkoutTileState extends State<WorkoutTile> {
                 Navigator.of(context).pushNamed(
                   WorkoutPage.routeName,
                   arguments: Workout(
+                    searchTerms: widget.workout.searchTerms,
                     failed: false,
                     pending: widget.workout.pending,
                     date: widget.workout.date,
@@ -337,6 +338,7 @@ class _WorkoutTileState extends State<WorkoutTile> {
                             Navigator.of(context).pushNamed(
                               WorkoutPage.routeName,
                               arguments: Workout(
+                                searchTerms: widget.workout.searchTerms,
                                 failed: false,
                                 pending: widget.workout.pending,
                                 date: widget.workout.date,
