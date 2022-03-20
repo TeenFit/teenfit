@@ -75,6 +75,26 @@ class Workouts with ChangeNotifier {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
 
+    List<String> searchTermsList = [];
+
+    Future<void> addSearchTerms(String creatorName, String workoutName) async {
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(0, i));
+      }
+
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(0, i).toLowerCase());
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(0, i));
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(0, i).toLowerCase());
+      }
+    }
+
     List<Map> exerciseImages = [];
 
     Future<void> addExerciseImageLink(List<Exercise> exerciseS) async {
@@ -160,6 +180,8 @@ class Workouts with ChangeNotifier {
       //   );
       // }).toList();
 
+      addSearchTerms(workouT.creatorName, workouT.workoutName);
+
       var workoutDocInfo = {
         'failed': workouT.failed,
         'pending': workouT.pending,
@@ -212,6 +234,26 @@ class Workouts with ChangeNotifier {
   Future<void> updateWorkout(Workout workouT) async {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
+
+    List<String> searchTermsList = [];
+
+    Future<void> addSearchTerms(String creatorName, String workoutName) async {
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(0, i));
+      }
+
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(0, i).toLowerCase());
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(0, i));
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(0, i).toLowerCase());
+      }
+    }
 
     List<Map> exerciseImages = [];
 
@@ -343,7 +385,10 @@ class Workouts with ChangeNotifier {
       //       exerciseImage2: null);
       // }).toList();
 
+      await addSearchTerms(workouT.creatorName, workouT.workoutName);
+
       var workoutDocInfo = {
+        'searchTerms': searchTermsList,
         'failed': workouT.failed,
         'pending': workouT.pending,
         'date': workouT.date.toString(),

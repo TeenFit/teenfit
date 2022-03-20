@@ -15,7 +15,7 @@ class Workout {
   final DateTime date;
   final bool pending;
   final bool failed;
-  final List<String> searchTerms;
+  final List? searchTerms;
 
   const Workout({
     required this.searchTerms,
