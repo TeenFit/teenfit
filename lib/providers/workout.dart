@@ -18,7 +18,7 @@ class Workout {
   final List? searchTerms;
 
   const Workout({
-    required this.searchTerms,
+    this.searchTerms,
     required this.date,
     required this.creatorName,
     required this.creatorId,

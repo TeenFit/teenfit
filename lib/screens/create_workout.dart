@@ -44,7 +44,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
     if (isInit == false) {
       newWorkout = Workout(
-        searchTerms: newWorkout!.searchTerms,
+        searchTerms: workout!.searchTerms,
         failed: false,
         pending: true,
         date: workout!.date,
@@ -117,7 +117,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     void _pickImage(File? image) {
       setState(() {
         newWorkout = Workout(
-          searchTerms: newWorkout!.searchTerms,
+          searchTerms: workout!.searchTerms,
           failed: false,
           pending: true,
           date: workout!.date,
