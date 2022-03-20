@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-// import 'package:provider/provider.dart';
 import 'package:teenfit/providers/workout.dart';
 
-// import '../providers/workouts.dart';
 import '../widgets/workout_tile.dart';
 
 class SearchResultWorkouts extends StatefulWidget {
@@ -55,8 +52,6 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
-    final _appBarHieght = AppBar().preferredSize.height;
-    final _theme = Theme.of(context);
 
     final fsb = FloatingSearchBar.of(context);
 
