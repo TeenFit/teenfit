@@ -8,7 +8,6 @@ import 'package:uuid/uuid.dart';
 
 import '/providers/workout.dart';
 import 'create_workout.dart';
-import '/providers/workouts.dart';
 import '/widgets/workout_tile.dart';
 
 class CreateWorkout extends StatefulWidget {

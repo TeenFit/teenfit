@@ -1,12 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:provider/provider.dart';
-// import 'package:flutter_phoenix/flutter_phoenix.dart';
 
-import '/providers/workouts.dart';
 import '../widgets/main_drawer.dart';
 import '../widgets/search_result_workouts.dart';
 
