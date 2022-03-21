@@ -156,6 +156,7 @@ class _WorkoutTileState extends State<WorkoutTile> {
                       ),
                       IconButton(
                         onPressed: () {
+                          // add a seperate one time function here to add name to all workouts.
                           Navigator.of(context).pushNamed(
                               AddWorkoutScreen.routeName,
                               arguments: {

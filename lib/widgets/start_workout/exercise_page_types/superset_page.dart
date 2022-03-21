@@ -53,7 +53,9 @@ class _SuperSetPageState extends State<SuperSetPage> {
               child: FittedBox(
                 fit: BoxFit.contain,
                 child: Text(
-                  widget.exercise!.name,
+                  isFirstImage == true
+                      ? widget.exercise!.name
+                      : widget.exercise!.name2!,
                   maxLines: 2,
                   style: TextStyle(
                     color: Colors.black,
@@ -72,6 +74,15 @@ class _SuperSetPageState extends State<SuperSetPage> {
               height: (_mediaQuery.size.height - _appBarHeight) * 0.63,
               child: CarouselSlider(
                 options: CarouselOptions(
+                  onPageChanged: (index, _) {
+                    setState(() {
+                      if (isFirstImage == true) {
+                        isFirstImage = false;
+                      } else {
+                        isFirstImage = true;
+                      }
+                    });
+                  },
                   viewportFraction: 1,
                   height: (_mediaQuery.size.height - _appBarHeight),
                   initialPage: 0,
