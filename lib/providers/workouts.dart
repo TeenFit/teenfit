@@ -38,6 +38,14 @@ class Workouts with ChangeNotifier {
         searchTermsList.add(creatorName.substring(i - 3, i));
       }
 
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 4, i));
+      }
+
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 5, i));
+      }
+
       for (var i = 0; i <= workoutName.characters.length; i++) {
         searchTermsList.add(workoutName.substring(0, i));
       }
@@ -51,8 +59,22 @@ class Workouts with ChangeNotifier {
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 2, i));
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
         searchTermsList.add(workoutName.substring(i - 3, i));
       }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 4, i));
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 5, i));
+      }
+
+      searchTermsList = searchTermsList.toSet().toList();
     }
 
     List<Map> exerciseImages = [];
@@ -182,6 +204,14 @@ class Workouts with ChangeNotifier {
         searchTermsList.add(creatorName.substring(i - 3, i));
       }
 
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 4, i));
+      }
+
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 5, i));
+      }
+
       for (var i = 0; i <= workoutName.characters.length; i++) {
         searchTermsList.add(workoutName.substring(0, i));
       }
@@ -195,8 +225,22 @@ class Workouts with ChangeNotifier {
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 2, i));
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
         searchTermsList.add(workoutName.substring(i - 3, i));
       }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 4, i));
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 5, i));
+      }
+
+      searchTermsList = searchTermsList.toSet().toList();
     }
 
     List<Map> exerciseImages = [];
