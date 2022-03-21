@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:teenfit/providers/auth.dart';
-import 'package:teenfit/providers/interstateAd.dart';
 import '../screens/exercise_screen.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
@@ -122,16 +121,22 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                         isLoading = true;
                                       });
 
-                                      if (Provider.of<Auth>(context,
-                                              listen: false)
-                                          .isAdmin()) {
-                                        Navigator.of(context).pushNamed(
-                                            ExerciseScreen.routeName,
-                                            arguments: widget.arguments);
-                                      } else {
-                                        //show ads here
+                                      Navigator.of(context).pushNamed(
+                                          ExerciseScreen.routeName,
+                                          arguments: widget.arguments);
 
-                                      }
+                                      // if (Provider.of<Auth>(context,
+                                      //         listen: false)
+                                      //     .isAdmin()) {
+                                      //   Navigator.of(context).pushNamed(
+                                      //       ExerciseScreen.routeName,
+                                      //       arguments: widget.arguments);
+                                      // } else {
+                                      //   //show ads here
+                                      //   Navigator.of(context).pushNamed(
+                                      //       ExerciseScreen.routeName,
+                                      //       arguments: widget.arguments);
+                                      // }
 
                                       if (this.mounted) {
                                         setState(() {
