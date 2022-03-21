@@ -29,7 +29,6 @@ class ExerciseTiles extends StatelessWidget {
     final _theme = Theme.of(context);
 
     return Container(
-      key: key,
       color: Colors.transparent,
       height: exercise.reps2 == null
           ? _mediaQuery.size.height * 0.25
@@ -42,9 +41,9 @@ class ExerciseTiles extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-                height: exercise.reps2 == null
-                    ? 0
-                    : _mediaQuery.size.height * 0.01),
+              height:
+                  exercise.reps2 == null ? 0 : _mediaQuery.size.height * 0.01,
+            ),
             exercise.reps2 == null
                 ? SizedBox()
                 : Center(
