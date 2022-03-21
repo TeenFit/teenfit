@@ -422,7 +422,9 @@ class Workouts with ChangeNotifier {
           'restTime': e.restTime,
           'timeSeconds': e.timeSeconds,
           'exerciseImage': exerciseImages[exerciseIndex]['image'].toString(),
-          'exerciseImage2': exerciseImages[exerciseIndex]['image2'],
+          'exerciseImage2': exerciseImages[exerciseIndex]['image2'] == null
+              ? e.exerciseImageLink2
+              : exerciseImages[exerciseIndex]['image2'],
         };
       }).toList();
 
