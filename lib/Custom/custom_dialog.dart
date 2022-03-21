@@ -129,9 +129,8 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                             ExerciseScreen.routeName,
                                             arguments: widget.arguments);
                                       } else {
-                                        await AdmobHelper().createInterad();
-                                        await AdmobHelper().showInterad(
-                                            context, widget.arguments);
+                                        //show ads here
+
                                       }
 
                                       if (this.mounted) {
