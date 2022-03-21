@@ -11,66 +11,6 @@ import './workout.dart';
 class Workouts with ChangeNotifier {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  // List<Workout> get workouts {
-  //   return [..._workouts];
-  // }
-
-  // List<Workout> _workouts = [];
-
-  // Future<void> fetchAndSetWorkout() async {
-  //   CollectionReference workoutsCollection =
-  //       FirebaseFirestore.instance.collection('/workouts');
-
-  //   try {
-  //     await workoutsCollection
-  //         .orderBy('date', descending: true)
-  //         .get()
-  //         .then(
-  //           (workouts) => _workouts = workouts.docs
-  //               .map(
-  //                 (e) => Workout(
-  //                   failed: e['failed'],
-  //                   pending: e['pending'],
-  //                   date: DateTime.parse(e['date']),
-  //                   creatorName: e['creatorName'],
-  //                   creatorId: e['creatorId'],
-  //                   workoutId: e['workoutId'],
-  //                   workoutName: e['workoutName'],
-  //                   instagram: e['instagram'],
-  //                   facebook: e['facebook'],
-  //                   tiktokLink: e['tiktokLink'],
-  //                   bannerImage: null,
-  //                   bannerImageLink: e['bannerImage'],
-  //                   exercises: (e['exercises'] as List)
-  //                       .toList()
-  //                       .map(
-  //                         (e) => Exercise(
-  //                           exerciseId: e['exerciseId'],
-  //                           name: e['name'],
-  //                           exerciseImageLink: e['exerciseImage'],
-  //                           exerciseImageLink2: e['exerciseImage2'],
-  //                           reps2: e['reps2'],
-  //                           reps: e['reps'],
-  //                           sets: e['sets'],
-  //                           restTime: e['restTime'],
-  //                           timeSeconds: e['timeSeconds'],
-  //                         ),
-  //                       )
-  //                       .toList(),
-  //                 ),
-  //               )
-  //               .toList(),
-  //         )
-  //         .onError(
-  //           (error, stackTrace) => throw HttpException(''),
-  //         );
-  //   } on FirebaseException catch (_) {
-  //     throw HttpException('');
-  //   } catch (e) {
-  //     throw HttpException(e.toString());
-  //   }
-  // }
-
   Future<void> addWorkout(Workout workouT) async {
     CollectionReference workoutsCollection =
         FirebaseFirestore.instance.collection('/workouts');
@@ -86,12 +26,32 @@ class Workouts with ChangeNotifier {
         searchTermsList.add(creatorName.substring(0, i).toLowerCase());
       }
 
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(0, i).toUpperCase());
+      }
+
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 2, i));
+      }
+
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 3, i));
+      }
+
       for (var i = 0; i <= workoutName.characters.length; i++) {
         searchTermsList.add(workoutName.substring(0, i));
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
         searchTermsList.add(workoutName.substring(0, i).toLowerCase());
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(0, i).toUpperCase());
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 3, i));
       }
     }
 
@@ -161,25 +121,6 @@ class Workouts with ChangeNotifier {
         };
       }).toList();
 
-      // List<Exercise> exerciseSClassList = workouT.exercises.map((e) {
-      //   final exerciseIndex = exerciseImages.indexWhere(
-      //       (element) => element['id'] == e.exerciseId + workouT.workoutId);
-
-      //   return Exercise(
-      //     exerciseId: e.exerciseId,
-      //     name: e.name,
-      //     reps: e.reps,
-      //     reps2: e.reps2,
-      //     sets: e.sets,
-      //     restTime: e.restTime,
-      //     timeSeconds: e.timeSeconds,
-      //     exerciseImageLink: exerciseImages[exerciseIndex]['image'].toString(),
-      //     exerciseImageLink2: exerciseImages[exerciseIndex]['image2'],
-      //     exerciseImage: null,
-      //     exerciseImage2: null,
-      //   );
-      // }).toList();
-
       addSearchTerms(workouT.creatorName, workouT.workoutName);
 
       var workoutDocInfo = {
@@ -205,23 +146,6 @@ class Workouts with ChangeNotifier {
           .onError(
               (error, stackTrace) => throw HttpException(error.toString()));
 
-      // _workouts.insert(
-      //     0,
-      //     Workout(
-      //       failed: false,
-      //       pending: workouT.pending,
-      //       bannerImage: workouT.bannerImage,
-      //       bannerImageLink: url,
-      //       date: workouT.date,
-      //       creatorName: workouT.creatorName,
-      //       creatorId: workouT.creatorId,
-      //       workoutId: workouT.workoutId,
-      //       workoutName: workouT.workoutName,
-      //       instagram: workouT.instagram,
-      //       facebook: workouT.facebook,
-      //       tiktokLink: workouT.tiktokLink,
-      //       exercises: exerciseSClassList,
-      //     ));
       notifyListeners();
     } on FirebaseException catch (e) {
       throw HttpException(e.toString());
@@ -246,12 +170,32 @@ class Workouts with ChangeNotifier {
         searchTermsList.add(creatorName.substring(0, i).toLowerCase());
       }
 
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(0, i).toUpperCase());
+      }
+
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 2, i));
+      }
+
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 3, i));
+      }
+
       for (var i = 0; i <= workoutName.characters.length; i++) {
         searchTermsList.add(workoutName.substring(0, i));
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
         searchTermsList.add(workoutName.substring(0, i).toLowerCase());
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(0, i).toUpperCase());
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 3, i));
       }
     }
 
