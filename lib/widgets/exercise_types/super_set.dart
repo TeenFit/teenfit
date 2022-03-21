@@ -279,7 +279,7 @@ class _SuperSetState extends State<SuperSet> {
           height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
           width: _mediaQuery.size.width,
           child: TextFormField(
-            initialValue: _newExercise!.name,
+            initialValue: _newExercise!.name2,
             decoration: InputDecoration(
               hintText: 'Exercise 2 Name',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),

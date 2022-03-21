@@ -26,8 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<String> filteredSearchHistory;
 
   String? selectedTerm;
-  bool isInit = false;
-  bool isStart = true;
 
   List<String> filterSearchTerms(
     String? filter,
