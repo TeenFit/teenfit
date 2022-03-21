@@ -17,7 +17,7 @@ class Exercise {
   Exercise({
     required this.exerciseId,
     required this.name,
-    required this.name2,
+    this.name2,
     this.reps2,
     this.reps,
     this.sets,

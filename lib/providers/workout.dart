@@ -86,6 +86,7 @@ class Workout {
               (e) => {
                 'exerciseId': e.exerciseId,
                 'name': e.name,
+                'name2': e.name2,
                 'exerciseImage': e.exerciseImageLink,
                 'exerciseImage2': e.exerciseImageLink2,
                 'reps2': e.reps2,

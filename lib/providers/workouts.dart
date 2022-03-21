@@ -167,6 +167,7 @@ class Workouts with ChangeNotifier {
 
         return {
           'exerciseId': e.exerciseId,
+          'name2': e.name2,
           'name': e.name,
           'reps': e.reps,
           'reps2': e.reps2,
@@ -414,6 +415,7 @@ class Workouts with ChangeNotifier {
         return {
           'exerciseId': e.exerciseId,
           'name': e.name,
+          'name2': e.name2,
           'reps': e.reps,
           'reps2': e.reps2,
           'sets': e.sets,
