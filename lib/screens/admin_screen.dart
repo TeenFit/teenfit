@@ -49,11 +49,43 @@ class AdminScreen extends StatelessWidget {
           pageSize: 5,
           itemBuilder: (ctx, snapshot) {
             final workout = snapshot.data();
-            return WorkoutTile(
-              workout,
-              false,
-              true,
-            );
+            return snapshot.exists
+                ? WorkoutTile(
+                    workout,
+                    false,
+                    true,
+                  )
+                : Container(
+                    height: (_mediaQuery.size.height - _appBarHeight),
+                    width: _mediaQuery.size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height:
+                              (_mediaQuery.size.height - _appBarHeight) * 0.05,
+                        ),
+                        Container(
+                          height:
+                              (_mediaQuery.size.height - _appBarHeight) * 0.05,
+                          width: _mediaQuery.size.width * 0.8,
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Text(
+                              'No Workouts Pending...',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: _mediaQuery.size.height * 0.025,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Roboto',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
           },
         ),
       ),
@@ -61,36 +93,6 @@ class AdminScreen extends StatelessWidget {
   }
 }
 
-// Container(
-//                     height: (_mediaQuery.size.height - _appBarHeight),
-//                     width: _mediaQuery.size.width,
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.center,
-//                       children: [
-//                         SizedBox(
-//                           height:
-//                               (_mediaQuery.size.height - _appBarHeight) * 0.05,
-//                         ),
-//                         Container(
-//                           height:
-//                               (_mediaQuery.size.height - _appBarHeight) * 0.05,
-//                           width: _mediaQuery.size.width * 0.8,
-//                           child: FittedBox(
-//                             fit: BoxFit.fitWidth,
-//                             child: Text(
-//                               'No Workouts Pending...',
-//                               textAlign: TextAlign.center,
-//                               style: TextStyle(
-//                                 color: Colors.white,
-//                                 fontSize: _mediaQuery.size.height * 0.025,
-//                                 fontWeight: FontWeight.bold,
-//                                 fontFamily: 'Roboto',
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   )
+
 // use same format as my workouts page but create a new field in workout tiles called is Admin, which will allow the
 // admin to view different controls, one is accept, and the other is deny with a message,
