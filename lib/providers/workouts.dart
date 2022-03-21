@@ -197,19 +197,19 @@ class Workouts with ChangeNotifier {
       }
 
       for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 2, i));
+        searchTermsList.add(creatorName.substring(i - 2 < 0 ? 0 : i - 2, i));
       }
 
       for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 3, i));
+        searchTermsList.add(creatorName.substring(i - 3 < 0 ? 0 : i - 3, i));
       }
 
       for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 4, i));
+        searchTermsList.add(creatorName.substring(i - 4 < 0 ? 0 : i - 4, i));
       }
 
       for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 5, i));
+        searchTermsList.add(creatorName.substring(i - 5 < 0 ? 0 : i - 5, i));
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
@@ -225,19 +225,19 @@ class Workouts with ChangeNotifier {
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 2, i));
+        searchTermsList.add(workoutName.substring(i - 2 < 0 ? 0 : i - 2, i));
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 3, i));
+        searchTermsList.add(workoutName.substring(i - 3 < 0 ? 0 : i - 3, i));
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 4, i));
+        searchTermsList.add(workoutName.substring(i - 4 < 0 ? 0 : i - 4, i));
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 5, i));
+        searchTermsList.add(workoutName.substring(i - 5 < 0 ? 0 : i - 5, i));
       }
 
       searchTermsList = searchTermsList.toSet().toList();
