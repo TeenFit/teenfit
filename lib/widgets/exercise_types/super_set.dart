@@ -44,6 +44,7 @@ class _SuperSetState extends State<SuperSet> {
       sets = _newExercise!.sets != null ? _newExercise!.sets! : 5;
 
       _newExercise = Exercise(
+        name2: _newExercise!.name2,
         exerciseImage2: _newExercise!.exerciseImage2,
         exerciseImageLink2: _newExercise!.exerciseImageLink2,
         reps2: _newExercise!.reps2,
@@ -97,6 +98,7 @@ class _SuperSetState extends State<SuperSet> {
       if (image != null) {
         setState(() {
           _newExercise = Exercise(
+              name2: _newExercise!.name2,
               exerciseImage2: _newExercise!.exerciseImage2,
               exerciseImageLink2: _newExercise!.exerciseImageLink2,
               reps2: _newExercise!.reps2,
@@ -112,6 +114,7 @@ class _SuperSetState extends State<SuperSet> {
       } else if (video != null) {
         setState(() {
           _newExercise = Exercise(
+              name2: _newExercise!.name2,
               exerciseImage2: _newExercise!.exerciseImage2,
               exerciseImageLink2: _newExercise!.exerciseImageLink2,
               reps2: _newExercise!.reps2,
@@ -139,6 +142,7 @@ class _SuperSetState extends State<SuperSet> {
       if (image2 != null) {
         setState(() {
           _newExercise = Exercise(
+              name2: _newExercise!.name2,
               exerciseImage2: image2,
               exerciseImageLink2: _newExercise!.exerciseImageLink2,
               reps2: _newExercise!.reps2,
@@ -154,6 +158,7 @@ class _SuperSetState extends State<SuperSet> {
       } else if (video2 != null) {
         setState(() {
           _newExercise = Exercise(
+              name2: _newExercise!.name2,
               exerciseImage2: video2,
               exerciseImageLink2: _newExercise!.exerciseImageLink2,
               reps2: _newExercise!.reps2,
@@ -197,6 +202,7 @@ class _SuperSetState extends State<SuperSet> {
       _formKey4.currentState!.save();
 
       _newExercise = Exercise(
+          name2: _newExercise!.name2,
           exerciseId: _newExercise!.exerciseId,
           name: _newExercise!.name,
           exerciseImage: _newExercise!.exerciseImage,
@@ -248,6 +254,7 @@ class _SuperSetState extends State<SuperSet> {
             },
             onSaved: (input) {
               _newExercise = Exercise(
+                  name2: _newExercise!.name2,
                   exerciseImage2: _newExercise!.exerciseImage2,
                   exerciseImageLink2: _newExercise!.exerciseImageLink2,
                   reps2: _newExercise!.reps2,

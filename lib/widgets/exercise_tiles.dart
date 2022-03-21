@@ -30,123 +30,208 @@ class ExerciseTiles extends StatelessWidget {
 
     return Container(
       color: Colors.transparent,
-      height: _mediaQuery.size.height * 0.2,
+      height: exercise.reps2 == null
+          ? _mediaQuery.size.height * 0.2
+          : _mediaQuery.size.height * 0.43,
       width: size,
       child: Card(
         color: _theme.shadowColor,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Container(
-                height: _mediaQuery.size.height * 0.18,
-                width: size * 0.5,
-                child: exercise.exerciseImage == null
-                    ? FadeInImage(
-                        imageErrorBuilder: (context, image, _) => Image.asset(
-                          'assets/images/ImageUploadError.png',
-                          fit: BoxFit.contain,
-                        ),
-                        placeholder:
-                            AssetImage('assets/images/loading-gif.gif'),
-                        image: CachedNetworkImageProvider(
-                            exercise.exerciseImageLink!),
-                        fit: BoxFit.contain,
-                      )
-                    : FadeInImage(
-                        imageErrorBuilder: (context, image, _) => Image.asset(
-                          'assets/images/ImageUploadError.png',
-                          fit: BoxFit.cover,
-                        ),
-                        placeholder:
-                            AssetImage('assets/images/loading-gif.gif'),
-                        image: FileImage(exercise.exerciseImage!),
-                        fit: BoxFit.contain,
-                      ),
+            Text(
+              'SUPERSET',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontFamily: 'PTSans',
+                fontSize: _mediaQuery.size.height * 0.02,
+                letterSpacing: 1,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 15, 5, 5),
-              child: Container(
-                width: size * 0.3,
-                height: _mediaQuery.size.height * 0.2,
-                child: Column(
-                  children: [
-                    Text(
-                      exercise.name,
-                      maxLines: 2,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'PTSans',
-                        fontSize: _mediaQuery.size.height * 0.025,
-                        letterSpacing: 1,
-                      ),
-                    ),
-                    isDeleteable
-                        ? FittedBox(
-                            child: Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pushNamed(
-                                      AddExerciseScreen.routeName,
-                                      arguments: {
-                                        'addExercise': addExercise,
-                                        'updateExercise': updateExercise,
-                                        'edit': true,
-                                        'exercise': Exercise(
-                                            exerciseImage2:
-                                                exercise.exerciseImage2,
-                                            exerciseImageLink2:
-                                                exercise.exerciseImageLink2,
-                                            reps2: exercise.reps2,
-                                            exerciseImageLink:
-                                                exercise.exerciseImageLink,
-                                            exerciseId: exercise.exerciseId,
-                                            exerciseImage:
-                                                exercise.exerciseImage,
-                                            name: exercise.name,
-                                            reps: exercise.reps,
-                                            sets: exercise.sets,
-                                            restTime: exercise.restTime,
-                                            timeSeconds: exercise.timeSeconds),
-                                      },
-                                    );
-                                  },
-                                  icon: Icon(Icons.edit),
-                                  color: Colors.grey[200],
-                                  iconSize: _mediaQuery.size.height * 0.05,
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (ctx) => CustomDialogBox(
-                                        'Are You Sure?',
-                                        'This action will delete the exercise and it can never be recoverd',
-                                        'assets/images/trash.png',
-                                        'delete-exercise',
-                                        {
-                                          'delete': delete,
-                                          'id': exercise.exerciseId,
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  icon: Icon(Icons.delete),
-                                  color: Colors.red,
-                                  iconSize: _mediaQuery.size.height * 0.05,
-                                ),
-                              ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15),
+                  child: Container(
+                    height: _mediaQuery.size.height * 0.18,
+                    width: size * 0.5,
+                    child: exercise.exerciseImage == null
+                        ? FadeInImage(
+                            imageErrorBuilder: (context, image, _) =>
+                                Image.asset(
+                              'assets/images/ImageUploadError.png',
+                              fit: BoxFit.contain,
                             ),
+                            placeholder:
+                                AssetImage('assets/images/loading-gif.gif'),
+                            image: CachedNetworkImageProvider(
+                                exercise.exerciseImageLink!),
+                            fit: BoxFit.contain,
                           )
-                        : SizedBox(),
-                  ],
+                        : FadeInImage(
+                            imageErrorBuilder: (context, image, _) =>
+                                Image.asset(
+                              'assets/images/ImageUploadError.png',
+                              fit: BoxFit.cover,
+                            ),
+                            placeholder:
+                                AssetImage('assets/images/loading-gif.gif'),
+                            image: FileImage(exercise.exerciseImage!),
+                            fit: BoxFit.contain,
+                          ),
+                  ),
                 ),
-              ),
-            )
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 15, 5, 5),
+                  child: Container(
+                    width: size * 0.3,
+                    height: _mediaQuery.size.height * 0.2,
+                    child: Column(
+                      children: [
+                        Text(
+                          exercise.name,
+                          maxLines: 2,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'PTSans',
+                            fontSize: _mediaQuery.size.height * 0.025,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                        isDeleteable
+                            ? FittedBox(
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pushNamed(
+                                          AddExerciseScreen.routeName,
+                                          arguments: {
+                                            'addExercise': addExercise,
+                                            'updateExercise': updateExercise,
+                                            'edit': true,
+                                            'exercise': Exercise(
+                                                name2: exercise.name2,
+                                                exerciseImage2:
+                                                    exercise.exerciseImage2,
+                                                exerciseImageLink2:
+                                                    exercise.exerciseImageLink2,
+                                                reps2: exercise.reps2,
+                                                exerciseImageLink:
+                                                    exercise.exerciseImageLink,
+                                                exerciseId: exercise.exerciseId,
+                                                exerciseImage:
+                                                    exercise.exerciseImage,
+                                                name: exercise.name,
+                                                reps: exercise.reps,
+                                                sets: exercise.sets,
+                                                restTime: exercise.restTime,
+                                                timeSeconds:
+                                                    exercise.timeSeconds),
+                                          },
+                                        );
+                                      },
+                                      icon: Icon(Icons.edit),
+                                      color: Colors.grey[200],
+                                      iconSize: _mediaQuery.size.height * 0.05,
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (ctx) => CustomDialogBox(
+                                            'Are You Sure?',
+                                            'This action will delete the exercise and it can never be recoverd',
+                                            'assets/images/trash.png',
+                                            'delete-exercise',
+                                            {
+                                              'delete': delete,
+                                              'id': exercise.exerciseId,
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      icon: Icon(Icons.delete),
+                                      color: Colors.red,
+                                      iconSize: _mediaQuery.size.height * 0.05,
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : SizedBox(),
+                        exercise.reps2 != null
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(15),
+                                    child: Container(
+                                      height: _mediaQuery.size.height * 0.18,
+                                      width: size * 0.5,
+                                      child: exercise.exerciseImage2 == null
+                                          ? FadeInImage(
+                                              imageErrorBuilder:
+                                                  (context, image, _) =>
+                                                      Image.asset(
+                                                'assets/images/ImageUploadError.png',
+                                                fit: BoxFit.contain,
+                                              ),
+                                              placeholder: AssetImage(
+                                                  'assets/images/loading-gif.gif'),
+                                              image: CachedNetworkImageProvider(
+                                                  exercise.exerciseImageLink2!),
+                                              fit: BoxFit.contain,
+                                            )
+                                          : FadeInImage(
+                                              imageErrorBuilder:
+                                                  (context, image, _) =>
+                                                      Image.asset(
+                                                'assets/images/ImageUploadError.png',
+                                                fit: BoxFit.cover,
+                                              ),
+                                              placeholder: AssetImage(
+                                                  'assets/images/loading-gif.gif'),
+                                              image: FileImage(
+                                                  exercise.exerciseImage2!),
+                                              fit: BoxFit.contain,
+                                            ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 15, 5, 5),
+                                    child: Container(
+                                      width: size * 0.3,
+                                      height: _mediaQuery.size.height * 0.2,
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            exercise.name2!,
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontFamily: 'PTSans',
+                                              fontSize:
+                                                  _mediaQuery.size.height *
+                                                      0.025,
+                                              letterSpacing: 1,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )
+                            : SizedBox(),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),

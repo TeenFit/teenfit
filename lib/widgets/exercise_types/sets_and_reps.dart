@@ -44,6 +44,7 @@ class _SetsAndRepsState extends State<SetsAndReps> {
       sets = _newExercise!.sets != null ? _newExercise!.sets! : 5;
 
       _newExercise = Exercise(
+        name2: _newExercise!.name2,
         exerciseImage2: _newExercise!.exerciseImage2,
         exerciseImageLink2: _newExercise!.exerciseImageLink2,
         reps2: _newExercise!.reps2,
@@ -97,6 +98,7 @@ class _SetsAndRepsState extends State<SetsAndReps> {
       if (image != null) {
         setState(() {
           _newExercise = Exercise(
+              name2: _newExercise!.name2,
               exerciseImage2: _newExercise!.exerciseImage2,
               exerciseImageLink2: _newExercise!.exerciseImageLink2,
               reps2: _newExercise!.reps2,
@@ -112,6 +114,7 @@ class _SetsAndRepsState extends State<SetsAndReps> {
       } else if (video != null) {
         setState(() {
           _newExercise = Exercise(
+              name2: _newExercise!.name2,
               exerciseImage2: _newExercise!.exerciseImage2,
               exerciseImageLink2: _newExercise!.exerciseImageLink2,
               reps2: _newExercise!.reps2,
@@ -150,6 +153,7 @@ class _SetsAndRepsState extends State<SetsAndReps> {
       _formKey4.currentState!.save();
 
       _newExercise = Exercise(
+          name2: null,
           exerciseId: _newExercise!.exerciseId,
           name: _newExercise!.name,
           exerciseImage: _newExercise!.exerciseImage,
@@ -201,6 +205,7 @@ class _SetsAndRepsState extends State<SetsAndReps> {
             },
             onSaved: (input) {
               _newExercise = Exercise(
+                  name2: _newExercise!.name2,
                   exerciseImage2: _newExercise!.exerciseImage2,
                   exerciseImageLink2: _newExercise!.exerciseImageLink2,
                   reps2: _newExercise!.reps2,

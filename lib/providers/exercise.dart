@@ -12,10 +12,12 @@ class Exercise {
   final String? exerciseImageLink;
   final String? exerciseImageLink2;
   final String exerciseId;
+  final String? name2;
 
   Exercise({
     required this.exerciseId,
     required this.name,
+    required this.name2,
     this.reps2,
     this.reps,
     this.sets,

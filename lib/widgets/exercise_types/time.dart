@@ -40,6 +40,7 @@ class _TimeExerciseState extends State<TimeExercise> {
       restTime = newExercise!.restTime != null ? newExercise!.restTime! : 5;
 
       newExercise = Exercise(
+        name2: newExercise!.name2,
         exerciseImage2: newExercise!.exerciseImage2,
         exerciseImageLink2: newExercise!.exerciseImageLink2,
         reps2: newExercise!.reps2,
@@ -93,6 +94,7 @@ class _TimeExerciseState extends State<TimeExercise> {
       if (image != null) {
         setState(() {
           newExercise = Exercise(
+              name2: newExercise!.name2,
               exerciseImage2: newExercise!.exerciseImage2,
               exerciseImageLink2: newExercise!.exerciseImageLink2,
               reps2: newExercise!.reps2,
@@ -108,6 +110,7 @@ class _TimeExerciseState extends State<TimeExercise> {
       } else if (video != null) {
         setState(() {
           newExercise = Exercise(
+              name2: newExercise!.name2,
               exerciseImage2: newExercise!.exerciseImage2,
               exerciseImageLink2: newExercise!.exerciseImageLink2,
               reps2: newExercise!.reps2,
@@ -146,6 +149,7 @@ class _TimeExerciseState extends State<TimeExercise> {
       _formKey10.currentState!.save();
 
       newExercise = Exercise(
+        name2: null,
         exerciseId: newExercise!.exerciseId,
         name: newExercise!.name,
         exerciseImage: newExercise!.exerciseImage,
@@ -198,6 +202,7 @@ class _TimeExerciseState extends State<TimeExercise> {
             },
             onSaved: (input) {
               newExercise = Exercise(
+                  name2: newExercise!.name2,
                   exerciseImage2: newExercise!.exerciseImage2,
                   exerciseImageLink2: newExercise!.exerciseImageLink2,
                   reps2: newExercise!.reps2,

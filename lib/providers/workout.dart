@@ -53,6 +53,7 @@ class Workout {
               .toList()
               .map(
                 (e) => Exercise(
+                  name2: e['name2'],
                   exerciseId: e['exerciseId'],
                   name: e['name'],
                   exerciseImageLink: e['exerciseImage'],
