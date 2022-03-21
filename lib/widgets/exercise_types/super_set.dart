@@ -272,6 +272,50 @@ class _SuperSetState extends State<SuperSet> {
       );
     }
 
+    Widget buildExerciseName2() {
+      return Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Container(
+          height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+          width: _mediaQuery.size.width,
+          child: TextFormField(
+            initialValue: _newExercise!.name,
+            decoration: InputDecoration(
+              hintText: 'Exercise 2 Name',
+              hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
+            ),
+            style: TextStyle(
+              fontSize: 20,
+            ),
+            textInputAction: TextInputAction.next,
+            validator: (value) {
+              if (value.toString().trim().isEmpty) {
+                return 'Name is Required';
+              } else if (value == null) {
+                return 'Name is Required';
+              }
+              return null;
+            },
+            onSaved: (input) {
+              _newExercise = Exercise(
+                  name2: input.toString().trim(),
+                  exerciseImage2: _newExercise!.exerciseImage2,
+                  exerciseImageLink2: _newExercise!.exerciseImageLink2,
+                  reps2: _newExercise!.reps2,
+                  exerciseId: _newExercise!.exerciseId,
+                  name: _newExercise!.name,
+                  timeSeconds: _newExercise!.timeSeconds,
+                  restTime: _newExercise!.restTime,
+                  sets: _newExercise!.sets,
+                  reps: _newExercise!.reps,
+                  exerciseImage: _newExercise!.exerciseImage,
+                  exerciseImageLink: _newExercise!.exerciseImageLink);
+            },
+          ),
+        ),
+      );
+    }
+
     Widget buildSets() {
       return Container(
         height: _mediaQuery.size.height * 0.2,
@@ -397,13 +441,13 @@ class _SuperSetState extends State<SuperSet> {
               SizedBox(
                 height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
               ),
+              buildSets(),
+              ExerciseImagePicker(_pick, null, _newExercise!.exerciseImageLink,
+                  _newExercise!.exerciseImage, false),
               buildExerciseName(),
               SizedBox(
                 height: _mediaQuery.size.height * 0.03,
               ),
-              buildSets(),
-              ExerciseImagePicker(_pick, null, _newExercise!.exerciseImageLink,
-                  _newExercise!.exerciseImage, false),
               buildReps(),
               ExerciseImagePicker(
                   _pick,
@@ -411,6 +455,10 @@ class _SuperSetState extends State<SuperSet> {
                   _newExercise!.exerciseImageLink2,
                   _newExercise!.exerciseImage2,
                   true),
+              buildExerciseName2(),
+              SizedBox(
+                height: _mediaQuery.size.height * 0.03,
+              ),
               buildReps2(),
               Padding(
                 padding: const EdgeInsets.all(15.0),
