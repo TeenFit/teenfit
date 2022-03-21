@@ -136,46 +136,46 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                 pageSize: 5,
                 itemBuilder: (ctx, snapshot) {
                   final workout = snapshot.data();
-                  // return workout.findByCreatorId(uid).length == 0
-                  //     ? Container(
-                  //         height: (_mediaQuery.size.height - _appBarHeight),
-                  //         width: _mediaQuery.size.width,
-                  //         child: Column(
-                  //           crossAxisAlignment: CrossAxisAlignment.center,
-                  //           children: [
-                  //             SizedBox(
-                  //               height: (_mediaQuery.size.height -
-                  //                       _appBarHeight) *
-                  //                   0.05,
-                  //             ),
-                  //             Container(
-                  //               height: (_mediaQuery.size.height -
-                  //                       _appBarHeight) *
-                  //                   0.05,
-                  //               width: _mediaQuery.size.width * 0.8,
-                  //               child: FittedBox(
-                  //                 fit: BoxFit.fitWidth,
-                  //                 child: Text(
-                  //                   'Create Your First Workout...',
-                  //                   textAlign: TextAlign.center,
-                  //                   style: TextStyle(
-                  //                     color: Colors.white,
-                  //                     fontSize:
-                  //                         _mediaQuery.size.height * 0.025,
-                  //                     fontWeight: FontWeight.bold,
-                  //                     fontFamily: 'Roboto',
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ) :
-                  return WorkoutTile(
-                    workout,
-                    true,
-                    false,
-                  );
+
+                  return snapshot.exists
+                      ? WorkoutTile(
+                          workout,
+                          true,
+                          false,
+                        )
+                      : Container(
+                          height: (_mediaQuery.size.height - _appBarHeight),
+                          width: _mediaQuery.size.width,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height:
+                                    (_mediaQuery.size.height - _appBarHeight) *
+                                        0.05,
+                              ),
+                              Container(
+                                height:
+                                    (_mediaQuery.size.height - _appBarHeight) *
+                                        0.05,
+                                width: _mediaQuery.size.width * 0.8,
+                                child: FittedBox(
+                                  fit: BoxFit.fitWidth,
+                                  child: Text(
+                                    'Create Your First Workout...',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: _mediaQuery.size.height * 0.025,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Roboto',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
                 },
               ),
             ),

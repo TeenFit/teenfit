@@ -27,10 +27,9 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
   //   );
   // }
 
-  // Future<void> _refreshWorkouts(BuildContext context) async {
-  //   setState(() {
-  //     isLoading = true;
-  //   });
+  Future<void> _refreshWorkouts(BuildContext context) async {
+    setState(() {});
+  }
 
   //   // try {
   //   //   await Provider.of<Workouts>(context, listen: false)
@@ -52,6 +51,8 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
+    final _appBarHieght =
+        AppBar().preferredSize.height + _mediaQuery.padding.top;
 
     final fsb = FloatingSearchBar.of(context);
 
@@ -78,103 +79,63 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
       child: Container(
         height: _mediaQuery.size.height,
         width: _mediaQuery.size.width,
-        // child: isLoading
-        //     ? Center(
-        //         child: CircularProgressIndicator(
-        //           strokeWidth: 4,
-        //           backgroundColor: _theme.shadowColor,
-        //           color: Colors.white,
-        //         ),
-        //       )
-        //     : RefreshIndicator(
-        //         onRefresh: () async {
-        //           // return await _refreshWorkouts(context);
-        //         },
-        child: Padding(
-          padding: EdgeInsets.all(15),
-          child: FirestoreListView<Workout>(
-            padding: EdgeInsets.only(
-                top: fsb!.value.height + fsb.value.margins.vertical),
-            query: queryWorkout,
-            pageSize: 5,
-            itemBuilder: (context, snapshot) {
-              final workout = snapshot.data();
-              return WorkoutTile(
-                workout,
-                false,
-                false,
-              );
-            },
+        child: RefreshIndicator(
+          onRefresh: () async {
+            return await _refreshWorkouts(context);
+          },
+          child: Padding(
+            padding: EdgeInsets.all(15),
+            child: FirestoreListView<Workout>(
+              padding: EdgeInsets.only(
+                  top: fsb!.value.height + fsb.value.margins.vertical),
+              query: queryWorkout,
+              pageSize: 5,
+              itemBuilder: (context, snapshot) {
+                final workout = snapshot.data();
+                return snapshot.exists
+                    ? WorkoutTile(
+                        workout,
+                        false,
+                        false,
+                      )
+                    : Container(
+                        height: (_mediaQuery.size.height - _appBarHieght),
+                        width: _mediaQuery.size.width,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height:
+                                  (_mediaQuery.size.height - _appBarHieght) *
+                                      0.05,
+                            ),
+                            Container(
+                              height:
+                                  (_mediaQuery.size.height - _appBarHieght) *
+                                      0.05,
+                              width: _mediaQuery.size.width * 0.8,
+                              child: FittedBox(
+                                fit: BoxFit.fitWidth,
+                                child: Text(
+                                  'No Search Results Available...',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: _mediaQuery.size.height * 0.025,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Roboto',
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+              },
+            ),
           ),
-          // child: ListView.builder(
-          //   padding: EdgeInsets.only(
-          //       top: fsb!.value.height + fsb.value.margins.vertical),
-          //   itemBuilder: (ctx, index) {
-          //     if (widget.searchTerm == null) {
-          //       return WorkoutTile(
-          //         workoutprovider.isNotPendingWorkouts()[index],
-          //         false,
-          //         false,
-          //       );
-          //     } else if (workoutprovider
-          //         .findByName(widget.searchTerm!)
-          //         .toList()
-          //         .isEmpty) {
-          //       return Container(
-          //         height: (_mediaQuery.size.height - _appBarHieght),
-          //         width: _mediaQuery.size.width,
-          //         child: Column(
-          //           crossAxisAlignment: CrossAxisAlignment.center,
-          //           children: [
-          //             SizedBox(
-          //               height:
-          //                   (_mediaQuery.size.height - _appBarHieght) *
-          //                       0.05,
-          //             ),
-          //             Container(
-          //               height:
-          //                   (_mediaQuery.size.height - _appBarHieght) *
-          //                       0.05,
-          //               width: _mediaQuery.size.width * 0.8,
-          //               child: FittedBox(
-          //                 fit: BoxFit.fitWidth,
-          //                 child: Text(
-          //                   'No Search Results Available...',
-          //                   textAlign: TextAlign.center,
-          //                   style: TextStyle(
-          //                     color: Colors.white,
-          //                     fontSize: _mediaQuery.size.height * 0.025,
-          //                     fontWeight: FontWeight.bold,
-          //                     fontFamily: 'Roboto',
-          //                   ),
-          //                 ),
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //       );
-          //     } else {
-          //       return WorkoutTile(
-          //         workoutprovider.findByName(widget.searchTerm!)[index],
-          //         false,
-          //         false,
-          //       );
-          //     }
-          //   },
-          //   itemCount: widget.searchTerm != null
-          //       ? workoutprovider
-          //               .findByName(widget.searchTerm!)
-          //               .toList()
-          //               .isEmpty
-          //           ? 1
-          //           : workoutprovider
-          //               .findByName(widget.searchTerm!)
-          //               .length
-          //       : workoutprovider.isNotPendingWorkouts().length,
-          // ),
         ),
       ),
-      // ),
     );
   }
 }

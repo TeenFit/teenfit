@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 import '../widgets/main_drawer.dart';
@@ -48,62 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     }
 
-    if (isInit == false && this.mounted) {
-      setState(() {
-        isLoading = true;
-      });
-
-      try {
-        // await Provider.of<Workouts>(context).fetchAndSetWorkout().onError(
-        //     (error, stackTrace) =>
-        //         _showToast('Unable To Load New Workouts, Try Again Later'));
-      } catch (e) {
-        _showToast('Unable To Load New Workouts, Try Again Later');
-      }
-
-      if (this.mounted) {
-        setState(() {
-          isLoading = false;
-          isInit = true;
-        });
-      }
-    }
-
-    // var connectivityResult = await (Connectivity().checkConnectivity());
-
-    // if (connectivityResult == ConnectivityResult.wifi ||
-    //     connectivityResult == ConnectivityResult.ethernet) {
-    //   if (this.mounted) {
-    //     setState(() {
-    //       connected = true;
-    //     });
-    //   }
-    // } else {
-    //   if (this.mounted) {
-    //     setState(() {
-    //       connected = false;
-    //     });
-    //   }
-    // }
-
-    // Connectivity().onConnectivityChanged.listen((event) {
-    //   if (this.mounted) {
-    //     Phoenix.rebirth(context);
-    //   }
-    // });
-
     super.didChangeDependencies();
-  }
-
-  void _showToast(String msg) {
-    Fluttertoast.showToast(
-      msg: msg,
-      gravity: ToastGravity.CENTER,
-      timeInSecForIosWeb: 10,
-      webShowClose: true,
-      textColor: Colors.white,
-      backgroundColor: Colors.grey.shade700,
-    );
   }
 
   void addSearchTerm(String term) {
