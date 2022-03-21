@@ -31,23 +31,33 @@ class ExerciseTiles extends StatelessWidget {
     return Container(
       color: Colors.transparent,
       height: exercise.reps2 == null
-          ? _mediaQuery.size.height * 0.2
-          : _mediaQuery.size.height * 0.43,
+          ? _mediaQuery.size.height * 0.25
+          : _mediaQuery.size.height * 0.51,
       width: size,
       child: Card(
         color: _theme.shadowColor,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'SUPERSET',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontFamily: 'PTSans',
-                fontSize: _mediaQuery.size.height * 0.02,
-                letterSpacing: 1,
-              ),
-            ),
+            SizedBox(
+                height: exercise.reps2 == null
+                    ? 0
+                    : _mediaQuery.size.height * 0.01),
+            exercise.reps2 == null
+                ? SizedBox()
+                : Center(
+                    child: Text(
+                      'SUPERSET',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontFamily: 'PTSans',
+                        fontSize: _mediaQuery.size.height * 0.02,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -96,7 +106,7 @@ class ExerciseTiles extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'PTSans',
-                            fontSize: _mediaQuery.size.height * 0.025,
+                            fontSize: _mediaQuery.size.height * 0.028,
                             letterSpacing: 1,
                           ),
                         ),
@@ -161,77 +171,72 @@ class ExerciseTiles extends StatelessWidget {
                                 ),
                               )
                             : SizedBox(),
-                        exercise.reps2 != null
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(15),
-                                    child: Container(
-                                      height: _mediaQuery.size.height * 0.18,
-                                      width: size * 0.5,
-                                      child: exercise.exerciseImage2 == null
-                                          ? FadeInImage(
-                                              imageErrorBuilder:
-                                                  (context, image, _) =>
-                                                      Image.asset(
-                                                'assets/images/ImageUploadError.png',
-                                                fit: BoxFit.contain,
-                                              ),
-                                              placeholder: AssetImage(
-                                                  'assets/images/loading-gif.gif'),
-                                              image: CachedNetworkImageProvider(
-                                                  exercise.exerciseImageLink2!),
-                                              fit: BoxFit.contain,
-                                            )
-                                          : FadeInImage(
-                                              imageErrorBuilder:
-                                                  (context, image, _) =>
-                                                      Image.asset(
-                                                'assets/images/ImageUploadError.png',
-                                                fit: BoxFit.cover,
-                                              ),
-                                              placeholder: AssetImage(
-                                                  'assets/images/loading-gif.gif'),
-                                              image: FileImage(
-                                                  exercise.exerciseImage2!),
-                                              fit: BoxFit.contain,
-                                            ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 15, 5, 5),
-                                    child: Container(
-                                      width: size * 0.3,
-                                      height: _mediaQuery.size.height * 0.2,
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            exercise.name2!,
-                                            maxLines: 2,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontFamily: 'PTSans',
-                                              fontSize:
-                                                  _mediaQuery.size.height *
-                                                      0.025,
-                                              letterSpacing: 1,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              )
-                            : SizedBox(),
                       ],
                     ),
                   ),
                 )
               ],
             ),
+            exercise.reps2 != null
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Container(
+                          height: _mediaQuery.size.height * 0.18,
+                          width: size * 0.5,
+                          child: exercise.exerciseImage2 == null
+                              ? FadeInImage(
+                                  imageErrorBuilder: (context, image, _) =>
+                                      Image.asset(
+                                    'assets/images/ImageUploadError.png',
+                                    fit: BoxFit.contain,
+                                  ),
+                                  placeholder: AssetImage(
+                                      'assets/images/loading-gif.gif'),
+                                  image: CachedNetworkImageProvider(
+                                      exercise.exerciseImageLink2!),
+                                  fit: BoxFit.contain,
+                                )
+                              : FadeInImage(
+                                  imageErrorBuilder: (context, image, _) =>
+                                      Image.asset(
+                                    'assets/images/ImageUploadError.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                  placeholder: AssetImage(
+                                      'assets/images/loading-gif.gif'),
+                                  image: FileImage(exercise.exerciseImage2!),
+                                  fit: BoxFit.contain,
+                                ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 15, 5, 5),
+                        child: Container(
+                          width: size * 0.3,
+                          height: _mediaQuery.size.height * 0.2,
+                          child: Column(
+                            children: [
+                              Text(
+                                exercise.name2!,
+                                maxLines: 2,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'PTSans',
+                                  fontSize: _mediaQuery.size.height * 0.028,
+                                  letterSpacing: 1,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                : SizedBox(),
           ],
         ),
       ),
