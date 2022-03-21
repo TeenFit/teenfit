@@ -69,7 +69,7 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
 
     if (result != null) {
       if (this.mounted) {
-        var image = await ImageCropper.cropImage(
+        var image = await ImageCropper().cropImage(
           sourcePath: result.files.single.path!,
           compressQuality: 80,
           aspectRatio: CropAspectRatio(ratioX: 16, ratioY: 9),

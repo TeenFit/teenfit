@@ -89,7 +89,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
 
     if (result != null) {
       if (this.mounted) {
-        var image = await ImageCropper.cropImage(
+        var image = await ImageCropper().cropImage(
           sourcePath: result.files.single.path!,
           compressQuality: 80,
           compressFormat: ImageCompressFormat.png,
