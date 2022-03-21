@@ -55,7 +55,7 @@ class _SuperSetPageState extends State<SuperSetPage> {
                 child: Text(
                   isFirstImage == true
                       ? widget.exercise!.name
-                      : widget.exercise!.name2!,
+                      : widget.exercise!.name2 ?? '',
                   maxLines: 2,
                   style: TextStyle(
                     color: Colors.black,
