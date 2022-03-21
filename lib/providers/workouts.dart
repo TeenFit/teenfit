@@ -45,6 +45,21 @@ class Workouts with ChangeNotifier {
       for (var i = 0; i <= creatorName.characters.length; i++) {
         searchTermsList.add(creatorName.substring(i - 5 < 0 ? 0 : i - 5, i));
       }
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 6 < 0 ? 0 : i - 6, i));
+      }
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 7 < 0 ? 0 : i - 7, i));
+      }
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 8 < 0 ? 0 : i - 8, i));
+      }
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 9 < 0 ? 0 : i - 9, i));
+      }
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 10 < 0 ? 0 : i - 10, i));
+      }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
         searchTermsList.add(workoutName.substring(0, i));
@@ -72,6 +87,26 @@ class Workouts with ChangeNotifier {
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
         searchTermsList.add(workoutName.substring(i - 5 < 0 ? 0 : i - 5, i));
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 6 < 0 ? 0 : i - 6, i));
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 7 < 0 ? 0 : i - 7, i));
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 8 < 0 ? 0 : i - 8, i));
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 9 < 0 ? 0 : i - 9, i));
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 10 < 0 ? 0 : i - 10, i));
       }
 
       searchTermsList = searchTermsList.toSet().toList();
@@ -211,6 +246,21 @@ class Workouts with ChangeNotifier {
       for (var i = 0; i <= creatorName.characters.length; i++) {
         searchTermsList.add(creatorName.substring(i - 5 < 0 ? 0 : i - 5, i));
       }
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 6 < 0 ? 0 : i - 6, i));
+      }
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 7 < 0 ? 0 : i - 7, i));
+      }
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 8 < 0 ? 0 : i - 8, i));
+      }
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 9 < 0 ? 0 : i - 9, i));
+      }
+      for (var i = 0; i <= creatorName.characters.length; i++) {
+        searchTermsList.add(creatorName.substring(i - 10 < 0 ? 0 : i - 10, i));
+      }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
         searchTermsList.add(workoutName.substring(0, i));
@@ -238,6 +288,26 @@ class Workouts with ChangeNotifier {
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
         searchTermsList.add(workoutName.substring(i - 5 < 0 ? 0 : i - 5, i));
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 6 < 0 ? 0 : i - 6, i));
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 7 < 0 ? 0 : i - 7, i));
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 8 < 0 ? 0 : i - 8, i));
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 9 < 0 ? 0 : i - 9, i));
+      }
+
+      for (var i = 0; i <= workoutName.characters.length; i++) {
+        searchTermsList.add(workoutName.substring(i - 10 < 0 ? 0 : i - 10, i));
       }
 
       searchTermsList = searchTermsList.toSet().toList();
