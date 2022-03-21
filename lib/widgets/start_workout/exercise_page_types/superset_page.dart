@@ -142,9 +142,6 @@ class _SuperSetPageState extends State<SuperSetPage> {
                       IconButton(
                         padding: EdgeInsets.zero,
                         onPressed: () {
-                          setState(() {
-                            isFirstImage = false;
-                          });
                           goToNext();
                         },
                         icon: Icon(Icons.arrow_right),
@@ -201,9 +198,6 @@ class _SuperSetPageState extends State<SuperSetPage> {
                       ),
                       IconButton(
                         onPressed: () {
-                          setState(() {
-                            isFirstImage = true;
-                          });
                           goToPrevious();
                         },
                         icon: Icon(Icons.arrow_left),
