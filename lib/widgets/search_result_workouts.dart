@@ -60,6 +60,7 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
         ? FirebaseFirestore.instance
             .collection('/workouts')
             .where('pending', isEqualTo: false)
+            .where('failed', isEqualTo: false)
             .orderBy('date', descending: true)
             .withConverter<Workout>(
                 fromFirestore: (snapshot, _) =>
@@ -68,6 +69,7 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
         : FirebaseFirestore.instance
             .collection('/workouts')
             .where('pending', isEqualTo: false)
+            .where('failed', isEqualTo: false)
             .where('searchTerms', arrayContains: widget.searchTerm.toString())
             .orderBy('date', descending: true)
             .withConverter<Workout>(
