@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfire_ui/database.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:teenfit/providers/workout.dart';
+import 'package:teenfit/providers/workouts.dart';
 
 import '../widgets/workout_tile.dart';
 
@@ -16,6 +19,34 @@ class SearchResultWorkouts extends StatefulWidget {
 }
 
 class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
+  bool isInit = false;
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+
+    if (isInit == false) {
+      final auth = Provider.of<Workouts>(context, listen: false);
+
+      FirebaseFirestore.instance
+          .collection('/workouts')
+          .where('failed', isEqualTo: false)
+          .where('date',
+              isLessThanOrEqualTo: DateTime.now().subtract(Duration(days: 15)))
+          .snapshots()
+          .map(
+            (snapshot) => snapshot.docs.map((e) =>
+                //  auth.deleteWorkout(
+                // e.data()['workoutId'],
+                print('delete' + e.data()['workoutName'])),
+          );
+
+      setState(() {
+        isInit = true;
+      });
+    }
+  }
+
   // void _showToast(String msg) {
   //   Fluttertoast.showToast(
   //     msg: msg,
