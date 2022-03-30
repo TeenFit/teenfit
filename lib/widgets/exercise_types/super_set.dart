@@ -237,7 +237,7 @@ class _SuperSetState extends State<SuperSet> {
           child: TextFormField(
             initialValue: _newExercise!.name,
             decoration: InputDecoration(
-              hintText: 'Exercise Name 1 * Exercise Name 2',
+              hintText: 'Exercise Name 1',
               hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
             ),
             style: TextStyle(
