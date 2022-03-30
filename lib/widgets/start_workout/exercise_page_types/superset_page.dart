@@ -67,147 +67,155 @@ class _SuperSetPageState extends State<SuperSetPage> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Container(
-              width: _mediaQuery.size.width,
-              height: (_mediaQuery.size.height - _appBarHeight) * 0.63,
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  onPageChanged: (index, _) {
-                    setState(() {
-                      if (isFirstImage == true) {
-                        isFirstImage = false;
-                      } else {
-                        isFirstImage = true;
-                      }
-                    });
-                  },
-                  viewportFraction: 1,
-                  height: (_mediaQuery.size.height - _appBarHeight),
-                  initialPage: 0,
-                  enableInfiniteScroll: false,
-                  autoPlay: false,
-                  reverse: false,
-                  enlargeCenterPage: false,
-                ),
-                carouselController: _carouselController,
-                items: [
-                  Stack(
-                    alignment: Alignment.centerRight,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Container(
-                          height:
-                              (_mediaQuery.size.height - _appBarHeight) * 0.63,
-                          width: _mediaQuery.size.width,
-                          child: widget.exercise!.exerciseImageLink == null
-                              ? FadeInImage(
-                                  imageErrorBuilder: (context, image, _) =>
-                                      Image.asset(
-                                    'assets/images/ImageUploadError.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                  placeholderErrorBuilder:
-                                      (context, image, _) => Image.asset(
-                                    'assets/images/ImageUploadError.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                  placeholder: AssetImage(
-                                      'assets/images/loading-gif.gif'),
-                                  image: FileImage(
-                                      widget.exercise!.exerciseImage!),
-                                  fit: BoxFit.contain,
-                                )
-                              : FadeInImage(
-                                  imageErrorBuilder: (context, image, _) =>
-                                      Image.asset(
-                                    'assets/images/ImageUploadError.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                  placeholderErrorBuilder:
-                                      (context, image, _) => Image.asset(
-                                    'assets/images/ImageUploadError.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                  placeholder: AssetImage(
-                                      'assets/images/loading-gif.gif'),
-                                  image: CachedNetworkImageProvider(
-                                      widget.exercise!.exerciseImageLink!),
-                                  fit: BoxFit.contain,
+          Container(
+            width: _mediaQuery.size.width,
+            height: (_mediaQuery.size.height - _appBarHeight) * 0.66,
+            child: CarouselSlider(
+              options: CarouselOptions(
+                onPageChanged: (index, _) {
+                  setState(() {
+                    if (isFirstImage == true) {
+                      isFirstImage = false;
+                    } else {
+                      isFirstImage = true;
+                    }
+                  });
+                },
+                viewportFraction: 1,
+                height: (_mediaQuery.size.height - _appBarHeight),
+                initialPage: 0,
+                enableInfiniteScroll: false,
+                autoPlay: false,
+                reverse: false,
+                enlargeCenterPage: false,
+              ),
+              carouselController: _carouselController,
+              items: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Container(
+                        height:
+                            (_mediaQuery.size.height - _appBarHeight) * 0.63,
+                        width: _mediaQuery.size.width * 0.75,
+                        child: widget.exercise!.exerciseImageLink == null
+                            ? FadeInImage(
+                                imageErrorBuilder: (context, image, _) =>
+                                    Image.asset(
+                                  'assets/images/ImageUploadError.png',
+                                  fit: BoxFit.cover,
                                 ),
-                        ),
+                                placeholderErrorBuilder: (context, image, _) =>
+                                    Image.asset(
+                                  'assets/images/ImageUploadError.png',
+                                  fit: BoxFit.cover,
+                                ),
+                                placeholder:
+                                    AssetImage('assets/images/loading-gif.gif'),
+                                image:
+                                    FileImage(widget.exercise!.exerciseImage!),
+                                fit: BoxFit.contain,
+                              )
+                            : FadeInImage(
+                                imageErrorBuilder: (context, image, _) =>
+                                    Image.asset(
+                                  'assets/images/ImageUploadError.png',
+                                  fit: BoxFit.cover,
+                                ),
+                                placeholderErrorBuilder: (context, image, _) =>
+                                    Image.asset(
+                                  'assets/images/ImageUploadError.png',
+                                  fit: BoxFit.cover,
+                                ),
+                                placeholder:
+                                    AssetImage('assets/images/loading-gif.gif'),
+                                image: CachedNetworkImageProvider(
+                                    widget.exercise!.exerciseImageLink!),
+                                fit: BoxFit.contain,
+                              ),
                       ),
-                      IconButton(
-                        padding: EdgeInsets.zero,
+                    ),
+                    Container(
+                      height: _mediaQuery.size.width * 0.25,
+                      width: _mediaQuery.size.width * 0.25,
+                      child: IconButton(
                         onPressed: () {
                           goToNext();
                         },
-                        icon: Icon(Icons.arrow_right),
+                        icon: Icon(Icons.arrow_circle_right_outlined),
                         color: _theme.primaryColor,
-                        iconSize: 150,
+                        alignment: Alignment.center,
+                        iconSize: _mediaQuery.size.height * 0.1,
                       ),
-                    ],
-                  ),
-                  Stack(
-                    alignment: Alignment.centerLeft,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Container(
-                          height:
-                              (_mediaQuery.size.height - _appBarHeight) * 0.63,
-                          width: _mediaQuery.size.width,
-                          child: widget.exercise!.exerciseImageLink2 == null
-                              ? FadeInImage(
-                                  imageErrorBuilder: (context, image, _) =>
-                                      Image.asset(
-                                    'assets/images/ImageUploadError.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                  placeholderErrorBuilder:
-                                      (context, image, _) => Image.asset(
-                                    'assets/images/ImageUploadError.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                  placeholder: AssetImage(
-                                      'assets/images/loading-gif.gif'),
-                                  image: FileImage(
-                                      widget.exercise!.exerciseImage2!),
-                                  fit: BoxFit.contain,
-                                )
-                              : FadeInImage(
-                                  imageErrorBuilder: (context, image, _) =>
-                                      Image.asset(
-                                    'assets/images/ImageUploadError.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                  placeholderErrorBuilder:
-                                      (context, image, _) => Image.asset(
-                                    'assets/images/ImageUploadError.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                  placeholder: AssetImage(
-                                      'assets/images/loading-gif.gif'),
-                                  image: CachedNetworkImageProvider(
-                                      widget.exercise!.exerciseImageLink2!),
-                                  fit: BoxFit.contain,
-                                ),
-                        ),
-                      ),
-                      IconButton(
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: _mediaQuery.size.width * 0.25,
+                      width: _mediaQuery.size.width * 0.25,
+                      child: IconButton(
                         onPressed: () {
                           goToPrevious();
                         },
-                        icon: Icon(Icons.arrow_left),
+                        icon: Icon(Icons.arrow_circle_left_outlined),
+                        alignment: Alignment.center,
                         color: _theme.primaryColor,
-                        iconSize: 150,
+                        iconSize: _mediaQuery.size.height * 0.1,
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Container(
+                        height:
+                            (_mediaQuery.size.height - _appBarHeight) * 0.63,
+                        width: _mediaQuery.size.width * 0.75,
+                        child: widget.exercise!.exerciseImageLink2 == null
+                            ? FadeInImage(
+                                imageErrorBuilder: (context, image, _) =>
+                                    Image.asset(
+                                  'assets/images/ImageUploadError.png',
+                                  fit: BoxFit.cover,
+                                ),
+                                placeholderErrorBuilder: (context, image, _) =>
+                                    Image.asset(
+                                  'assets/images/ImageUploadError.png',
+                                  fit: BoxFit.cover,
+                                ),
+                                placeholder:
+                                    AssetImage('assets/images/loading-gif.gif'),
+                                image:
+                                    FileImage(widget.exercise!.exerciseImage2!),
+                                fit: BoxFit.contain,
+                              )
+                            : FadeInImage(
+                                imageErrorBuilder: (context, image, _) =>
+                                    Image.asset(
+                                  'assets/images/ImageUploadError.png',
+                                  fit: BoxFit.cover,
+                                ),
+                                placeholderErrorBuilder: (context, image, _) =>
+                                    Image.asset(
+                                  'assets/images/ImageUploadError.png',
+                                  fit: BoxFit.cover,
+                                ),
+                                placeholder:
+                                    AssetImage('assets/images/loading-gif.gif'),
+                                image: CachedNetworkImageProvider(
+                                    widget.exercise!.exerciseImageLink2!),
+                                fit: BoxFit.contain,
+                              ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           SizedBox(
