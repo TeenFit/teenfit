@@ -118,6 +118,7 @@ class WorkoutPage extends StatelessWidget {
                                 iconSize: _appBarHeight * 0.55,
                                 color: Colors.white,
                               ),
+                              SizedBox()
                             ],
                           ),
                         ),
@@ -286,6 +287,11 @@ class WorkoutPage extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            Container(
+              width: _mediaQuery.size.width,
+              height: _mediaQuery.size.height * 0.05,
+              color: _theme.highlightColor,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
