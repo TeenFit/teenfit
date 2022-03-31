@@ -44,6 +44,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
     if (isInit == false) {
       newWorkout = Workout(
+        views: workout!.views,
         searchTerms: workout!.searchTerms,
         failed: false,
         pending: true,
@@ -118,6 +119,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     void _pickImage(File? image) {
       setState(() {
         newWorkout = Workout(
+          views: workout!.views,
           searchTerms: workout!.searchTerms,
           failed: false,
           pending: true,
@@ -170,6 +172,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       _formKey3.currentState!.save();
 
       newWorkout = Workout(
+        views: newWorkout!.views,
         failed: false,
         searchTerms: newWorkout!.searchTerms,
         pending: newWorkout!.pending,
@@ -249,6 +252,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                views: newWorkout!.views,
                 searchTerms: newWorkout!.searchTerms,
                 failed: false,
                 pending: newWorkout!.pending,
@@ -296,6 +300,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                views: newWorkout!.views,
                 searchTerms: newWorkout!.searchTerms,
                 failed: false,
                 pending: newWorkout!.pending,
@@ -340,6 +345,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                views: newWorkout!.views,
                 searchTerms: newWorkout!.searchTerms,
                 failed: false,
                 pending: newWorkout!.pending,
@@ -385,6 +391,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                views: newWorkout!.views,
                 searchTerms: newWorkout!.searchTerms,
                 failed: false,
                 pending: newWorkout!.pending,
@@ -430,6 +437,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                views: newWorkout!.views,
                 searchTerms: newWorkout!.searchTerms,
                 failed: false,
                 pending: newWorkout!.pending,

@@ -74,6 +74,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                   AddWorkoutScreen.routeName,
                   arguments: {
                     'workout': Workout(
+                      views: 0,
                       searchTerms: [],
                       failed: false,
                       pending: true,

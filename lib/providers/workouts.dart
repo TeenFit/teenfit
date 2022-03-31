@@ -184,6 +184,7 @@ class Workouts with ChangeNotifier {
       addSearchTerms(workouT.creatorName, workouT.workoutName);
 
       var workoutDocInfo = {
+        'views': workouT.views,
         'failed': workouT.failed,
         'pending': workouT.pending,
         'date': workouT.date.toString(),
@@ -452,6 +453,7 @@ class Workouts with ChangeNotifier {
       await addSearchTerms(workouT.creatorName, workouT.workoutName);
 
       var workoutDocInfo = {
+        'views': workouT.views,
         'searchTerms': searchTermsList,
         'failed': workouT.failed,
         'pending': workouT.pending,

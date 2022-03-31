@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:teenfit/providers/exercise.dart';
 
 class Workout {
+  final int views;
   final String creatorName;
   final String creatorId;
   final String workoutId;
@@ -18,6 +19,7 @@ class Workout {
   final List? searchTerms;
 
   const Workout({
+    required this.views,
     this.searchTerms,
     required this.date,
     required this.creatorName,
@@ -36,6 +38,7 @@ class Workout {
 
   Workout.fromJson(Map<String, dynamic> e)
       : this(
+          views: e['views'],
           searchTerms: e['searchTerms'],
           failed: e['failed'],
           pending: e['pending'],
@@ -69,6 +72,7 @@ class Workout {
         );
 
   Map<String, Object?> toJson() => {
+        'views': views,
         'searchTerms': searchTerms,
         'failed': failed,
         'pending': pending,
