@@ -73,8 +73,8 @@ class WorkoutPage extends StatelessWidget {
                                   'assets/images/loading-gif.gif',
                                   fit: BoxFit.cover,
                                 ),
-                                fit: BoxFit.fill,
                                 image: FileImage(workout.bannerImage!),
+                                fit: BoxFit.fill,
                                 imageErrorBuilder: (image, _, __) =>
                                     Image.asset(
                                   'assets/images/ImageUploadError.png',
@@ -90,9 +90,9 @@ class WorkoutPage extends StatelessWidget {
                             'assets/images/loading-gif.gif',
                             fit: BoxFit.cover,
                           ),
-                          fit: BoxFit.fill,
                           image: CachedNetworkImageProvider(
                               workout.bannerImageLink!),
+                          fit: BoxFit.fill,
                           imageErrorBuilder: (image, _, __) => Image.asset(
                             'assets/images/ImageUploadError.png',
                             fit: BoxFit.cover,
@@ -291,11 +291,29 @@ class WorkoutPage extends StatelessWidget {
               ),
             ),
             Container(
-              width: _mediaQuery.size.width,
-              height: _mediaQuery.size.height * 0.05,
-              color: _theme.cardColor,
-              child: Center(),
-            ),
+                width: _mediaQuery.size.width,
+                height: _mediaQuery.size.height * 0.05,
+                color: _theme.cardColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.remove_red_eye,
+                      color: Colors.black,
+                      size: _mediaQuery.size.height * 0.04,
+                    ),
+                    SizedBox(
+                      width: _mediaQuery.size.width * 0.04,
+                    ),
+                    Text(
+                      workout.views.toString(),
+                      style: TextStyle(
+                          fontFamily: 'PTSans',
+                          fontSize: _mediaQuery.size.height * 0.02),
+                    ),
+                  ],
+                )),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               child: Container(
@@ -334,7 +352,7 @@ class WorkoutPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: SingleChildScrollView(
                 child: Container(
-                  height: _mediaQuery.size.height * 0.5,
+                  height: _mediaQuery.size.height * 0.47,
                   width: _mediaQuery.size.width,
                   child: ListView.builder(
                     itemBuilder: (ctx, index) => ExerciseTiles(
