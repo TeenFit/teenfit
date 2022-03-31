@@ -43,6 +43,8 @@ class WorkoutPage extends StatelessWidget {
         height: _mediaQuery.size.height,
         width: double.infinity,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               height: _mediaQuery.size.height * 0.35,
@@ -71,7 +73,7 @@ class WorkoutPage extends StatelessWidget {
                                   'assets/images/loading-gif.gif',
                                   fit: BoxFit.cover,
                                 ),
-                                fit: BoxFit.cover,
+                                fit: BoxFit.fill,
                                 image: FileImage(workout.bannerImage!),
                                 imageErrorBuilder: (image, _, __) =>
                                     Image.asset(
@@ -88,7 +90,7 @@ class WorkoutPage extends StatelessWidget {
                             'assets/images/loading-gif.gif',
                             fit: BoxFit.cover,
                           ),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                           image: CachedNetworkImageProvider(
                               workout.bannerImageLink!),
                           imageErrorBuilder: (image, _, __) => Image.asset(
@@ -291,10 +293,11 @@ class WorkoutPage extends StatelessWidget {
             Container(
               width: _mediaQuery.size.width,
               height: _mediaQuery.size.height * 0.05,
-              color: _theme.highlightColor,
+              color: _theme.cardColor,
+              child: Center(),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               child: Container(
                 height: _mediaQuery.size.height * 0.07,
                 width: _mediaQuery.size.width,
