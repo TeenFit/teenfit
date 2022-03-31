@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:provider/provider.dart';
 
 import '/providers/exercise.dart';
 import '/Custom/http_execption.dart';
 import './workout.dart';
+import 'auth.dart';
 
 class Workouts with ChangeNotifier {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -641,6 +643,18 @@ class Workouts with ChangeNotifier {
   //   } while (i < failedWorkouts.length);
   //   notifyListeners();
   // }
+
+  Future<void> incrementView(
+      String creatorId, String workoutId, BuildContext context) async {
+    String? userId = Provider.of<Auth>(context, listen: false).userId;
+
+    if (creatorId != userId) {
+      await FirebaseFirestore.instance
+          .collection('/workouts')
+          .doc(workoutId)
+          .update({'views': FieldValue.increment(1)});
+    }
+  }
 
   Future<void> failWorkout(Workout workouT) async {
     CollectionReference workoutsCollection =

@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
 import 'package:teenfit/screens/exercise_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../providers/workouts.dart';
 import '../widgets/exercise_tiles.dart';
 import '../Custom/my_flutter_app_icons.dart';
 import '../providers/workout.dart';
@@ -303,7 +305,10 @@ class WorkoutPage extends StatelessWidget {
                         fontFamily: 'PTSans',
                         fontSize: _mediaQuery.size.height * 0.035),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    await Provider.of<Workouts>(context, listen: false)
+                        .incrementView(
+                            workout.creatorId, workout.workoutId, context);
                     showDialog(
                         context: context,
                         builder: (ctx) => CustomDialogBox(
