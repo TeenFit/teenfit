@@ -101,6 +101,8 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
               20,
               0,
             ),
+            automaticallyImplyBackButton: false,
+            autocorrect: true,
             actions: [FloatingSearchBarAction.searchToClear()],
             transition: CircularFloatingSearchBarTransition(),
             physics: BouncingScrollPhysics(),
@@ -126,8 +128,8 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
               return ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Material(
-                  color: Colors.white,
-                  elevation: 4,
+                  color: _theme.primaryColor,
+                  elevation: 0,
                   child: Builder(
                     builder: (context) {
                       if (filteredSearchHistory.isEmpty &&

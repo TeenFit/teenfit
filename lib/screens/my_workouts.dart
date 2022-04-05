@@ -9,33 +9,7 @@ import '/providers/workout.dart';
 import 'create_workout.dart';
 import '/widgets/workout_tile.dart';
 
-class CreateWorkout extends StatefulWidget {
-  @override
-  State<CreateWorkout> createState() => _CreateWorkoutState();
-}
-
-class _CreateWorkoutState extends State<CreateWorkout> {
-  bool isLoading = false;
-
-  @override
-  void didChangeDependencies() async {
-    setState(() {
-      isLoading = true;
-    });
-
-    // try {
-    //   await Provider.of<Workouts>(context, listen: false)
-    //       .removeFailedWorkouts();
-    // } catch (e) {}
-
-    if (this.mounted) {
-      setState(() {
-        isLoading = false;
-      });
-    }
-    super.didChangeDependencies();
-  }
-
+class CreateWorkout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
@@ -58,6 +32,13 @@ class _CreateWorkoutState extends State<CreateWorkout> {
     return Scaffold(
       backgroundColor: _theme.primaryColor,
       appBar: AppBar(
+        title: Text(
+          'My Workouts',
+          style: TextStyle(
+              color: _theme.secondaryHeaderColor,
+              fontWeight: FontWeight.bold,
+              fontSize: _appBarHeight * 0.35),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -99,68 +80,55 @@ class _CreateWorkoutState extends State<CreateWorkout> {
           ),
         ],
       ),
-      body: isLoading
-          ? Center(
-              child: Container(
-                height: _mediaQuery.size.width * 0.5,
-                width: _mediaQuery.size.width * 0.5,
-                child: Image.asset(
-                  'assets/images/teen_fit_logo_white_withpeople 1@3x.png',
-                  fit: BoxFit.contain,
-                ),
-              ),
-            )
-          : Container(
-              height: _mediaQuery.size.height,
-              width: _mediaQuery.size.width,
-              child: FirestoreListView<Workout>(
-                query: queryWorkout,
-                pageSize: 5,
-                itemBuilder: (ctx, snapshot) {
-                  final workout = snapshot.data();
+      body: Container(
+        height: _mediaQuery.size.height,
+        width: _mediaQuery.size.width,
+        child: FirestoreListView<Workout>(
+          query: queryWorkout,
+          pageSize: 5,
+          itemBuilder: (ctx, snapshot) {
+            final workout = snapshot.data();
 
-                  return snapshot.exists
-                      ? WorkoutTile(
-                          workout,
-                          true,
-                          false,
-                        )
-                      : Container(
-                          height: (_mediaQuery.size.height - _appBarHeight),
-                          width: _mediaQuery.size.width,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height:
-                                    (_mediaQuery.size.height - _appBarHeight) *
-                                        0.05,
+            return snapshot.exists
+                ? WorkoutTile(
+                    workout,
+                    true,
+                    false,
+                  )
+                : Container(
+                    height: (_mediaQuery.size.height - _appBarHeight),
+                    width: _mediaQuery.size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height:
+                              (_mediaQuery.size.height - _appBarHeight) * 0.05,
+                        ),
+                        Container(
+                          height:
+                              (_mediaQuery.size.height - _appBarHeight) * 0.05,
+                          width: _mediaQuery.size.width * 0.8,
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Text(
+                              'Create Your First Workout...',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: _mediaQuery.size.height * 0.025,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Roboto',
                               ),
-                              Container(
-                                height:
-                                    (_mediaQuery.size.height - _appBarHeight) *
-                                        0.05,
-                                width: _mediaQuery.size.width * 0.8,
-                                child: FittedBox(
-                                  fit: BoxFit.fitWidth,
-                                  child: Text(
-                                    'Create Your First Workout...',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: _mediaQuery.size.height * 0.025,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Roboto',
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        );
-                },
-              ),
-            ),
+                        ),
+                      ],
+                    ),
+                  );
+          },
+        ),
+      ),
     );
   }
 }
