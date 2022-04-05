@@ -35,7 +35,7 @@ class CreateWorkout extends StatelessWidget {
         title: Text(
           'My Workouts',
           style: TextStyle(
-              color: _theme.secondaryHeaderColor,
+              color: Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: _appBarHeight * 0.35),
         ),
@@ -73,7 +73,7 @@ class CreateWorkout extends StatelessWidget {
               },
               icon: Icon(
                 Icons.add_box_outlined,
-                color: _theme.secondaryHeaderColor,
+                color: Colors.black,
                 size: _appBarHeight * 0.45,
               ),
             ),

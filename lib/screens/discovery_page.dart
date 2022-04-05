@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
+import '../providers/auth.dart';
+import '../providers/workout.dart';
 import '../widgets/search_result_workouts.dart';
+import 'create_workout.dart';
 
 class DiscoveryPage extends StatefulWidget {
   @override
@@ -80,6 +85,12 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
+    final _appBarHeight =
+        (AppBar().preferredSize.height + _mediaQuery.padding.top);
+
+    var uuid = Uuid();
+
+    var auth = Provider.of<Auth>(context, listen: false);
 
     return isLoading
         ? Center(
@@ -103,7 +114,46 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
             ),
             automaticallyImplyBackButton: false,
             autocorrect: true,
-            actions: [FloatingSearchBarAction.searchToClear()],
+            actions: [
+              FloatingSearchBarAction.searchToClear(),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              //   child:
+              auth.isAuth()
+                  ? IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                          AddWorkoutScreen.routeName,
+                          arguments: {
+                            'workout': Workout(
+                              views: 0,
+                              searchTerms: [],
+                              failed: false,
+                              pending: true,
+                              date: DateTime.now(),
+                              creatorName: '',
+                              creatorId: auth.userId!,
+                              workoutId: uuid.v4(),
+                              workoutName: '',
+                              instagram: '',
+                              facebook: '',
+                              tiktokLink: '',
+                              bannerImage: null,
+                              bannerImageLink: null,
+                              exercises: [],
+                            ),
+                            'isEdit': false
+                          },
+                        );
+                      },
+                      icon: Icon(
+                        Icons.add_box_outlined,
+                        color: Colors.black,
+                      ),
+                    )
+                  : SizedBox(),
+              // ),
+            ],
             transition: CircularFloatingSearchBarTransition(),
             physics: BouncingScrollPhysics(),
             title: Text(
