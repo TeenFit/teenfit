@@ -87,7 +87,9 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
   // }
 
   Future<void> _refreshWorkouts(BuildContext context) async {
-    setState(() {});
+    setState(() {
+      isInit = false;
+    });
   }
 
   //   // try {
