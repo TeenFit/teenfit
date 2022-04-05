@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:teenfit/screens/my_workouts.dart';
 
 import '../Custom/http_execption.dart';
-import '../screens/auth/home_screen.dart';
+import '../screens/home_screen.dart';
 
 class Auth with ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;

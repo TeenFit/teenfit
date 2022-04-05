@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:teenfit/providers/basic.dart';
 import 'package:teenfit/screens/admin_screen.dart';
-import 'package:teenfit/screens/auth/home_screen.dart';
+import 'package:teenfit/screens/home_screen.dart';
 import 'package:teenfit/screens/privacy_policy_screen.dart';
 import 'package:teenfit/screens/user_screen.dart';
 
@@ -88,7 +88,8 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           title: 'TeenFit',
           theme: ThemeData(
-            primaryColor: Color(0xffF0A037),
+            primaryColor: Color.fromARGB(255, 200, 196, 196),
+            splashColor: Color(0xffF0A037),
             primaryColorDark: Color(0xffAE7E3F),
             highlightColor: Color(0xffA4B1BA),
             cardColor: Color(0xffD3D3D3),
