@@ -53,6 +53,7 @@ class _UserScreenState extends State<UserScreen> {
       ),
       body: SingleChildScrollView(
         child: Container(
+          color: _theme.primaryColor,
           height: _mediaQuery.size.height - _appBarHieght,
           width: _mediaQuery.size.width,
           child: Column(

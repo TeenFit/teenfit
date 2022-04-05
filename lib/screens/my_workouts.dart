@@ -60,8 +60,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(
-            color: _theme.secondaryHeaderColor, size: _appBarHeight * 0.5),
+        automaticallyImplyLeading: false,
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -93,7 +92,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
               },
               icon: Icon(
                 Icons.add_box_outlined,
-                color: Colors.white,
+                color: _theme.secondaryHeaderColor,
                 size: _appBarHeight * 0.45,
               ),
             ),
