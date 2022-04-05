@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:teenfit/providers/workout.dart';
@@ -25,8 +24,6 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
     final _appBarHieght =
