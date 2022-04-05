@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/providers/auth.dart';
 import 'package:teenfit/screens/admin_screen.dart';
+import 'package:teenfit/screens/privacy_policy_screen.dart';
 
 //Add User Screen (Contains, access to saved workouts, privacy policy and logout button)
 
@@ -69,6 +70,33 @@ class _UserScreenState extends State<UserScreen> {
               ),
               SizedBox(
                 height: _mediaQuery.size.height * 0.05,
+              ),
+              Divider(
+                thickness: 1.3,
+                color: Colors.black,
+                indent: 20,
+                endIndent: 20,
+              ),
+              ListTile(
+                leading: Icon(
+                  // Icons.person_rounded,
+                  Icons.picture_as_pdf,
+                  color: _theme.highlightColor,
+                  size: _mediaQuery.size.height * 0.08,
+                ),
+                title: Text(
+                  'Privacy Policy',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.w900,
+                    fontSize: _mediaQuery.size.height * 0.04,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(PrivacyPolicyScreen.routeName);
+                },
               ),
               Divider(
                 thickness: 1.3,

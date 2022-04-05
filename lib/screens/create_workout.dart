@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
 import 'package:teenfit/pickers/workout_image_picker.dart';
+import 'package:teenfit/screens/home_screen.dart';
 import 'package:teenfit/screens/my_workouts.dart';
 import 'package:uuid/uuid.dart';
 
@@ -216,7 +217,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       });
 
       Navigator.of(context).popUntil(
-        ModalRoute.withName(CreateWorkout.routeName),
+        ModalRoute.withName(HomeScreen.routeName),
       );
 
       if (this.mounted) {

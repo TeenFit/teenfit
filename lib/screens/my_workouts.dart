@@ -11,8 +11,6 @@ import 'create_workout.dart';
 import '/widgets/workout_tile.dart';
 
 class CreateWorkout extends StatefulWidget {
-  static const routeName = '/create-workout';
-
   @override
   State<CreateWorkout> createState() => _CreateWorkoutState();
 }
@@ -96,21 +94,6 @@ class _CreateWorkoutState extends State<CreateWorkout> {
               },
               icon: Icon(
                 Icons.add_box_outlined,
-                color: Colors.white,
-                size: _appBarHeight * 0.45,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(5, 0, 15, 0),
-            child: IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(
-                  UserScreen.routeName,
-                );
-              },
-              icon: Icon(
-                Icons.person_rounded,
                 color: Colors.white,
                 size: _appBarHeight * 0.45,
               ),

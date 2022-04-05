@@ -1,6 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:teenfit/screens/auth/login_screen.dart';
 import 'package:teenfit/screens/my_workouts.dart';
 
 import '../Custom/http_execption.dart';
@@ -63,7 +64,7 @@ class Auth with ChangeNotifier {
       await FirebaseAnalytics.instance.logSignUp(signUpMethod: 'Email');
 
       notifyListeners();
-      Navigator.of(context).pushReplacementNamed(CreateWorkout.routeName);
+      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
     } on FirebaseAuthException catch (e) {
       print(e);
       throw HttpException(e.code.toString());
@@ -81,7 +82,7 @@ class Auth with ChangeNotifier {
       await FirebaseAnalytics.instance.logLogin();
       notifyListeners();
 
-      Navigator.of(context).pushReplacementNamed(CreateWorkout.routeName);
+      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
     } on FirebaseAuthException catch (e) {
       throw HttpException(e.code.toString());
     } catch (_) {
@@ -98,6 +99,8 @@ class Auth with ChangeNotifier {
         MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
         ModalRoute.withName('/'),
       );
+
+      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
     } catch (e) {
       throw e;
     }

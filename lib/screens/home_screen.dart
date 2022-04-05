@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:teenfit/providers/auth.dart';
-import 'package:teenfit/screens/auth/login_screen.dart';
 import 'package:teenfit/screens/discovery_page.dart';
 import 'package:teenfit/screens/workout_page.dart';
 
@@ -28,8 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
-
-    bool isAuth = Provider.of<Auth>(context, listen: false).isAuth();
 
     return Scaffold(
       body: PageView(

@@ -17,7 +17,6 @@ import './screens/auth/error_screen.dart';
 import './screens/auth/loading.dart';
 import './screens/add_exercise_screen.dart';
 import 'screens/create_workout.dart';
-import 'screens/my_workouts.dart';
 import './screens/exercise_screen.dart';
 import './screens/auth/login_screen.dart';
 import './screens/auth/signup_screen.dart';
@@ -120,8 +119,8 @@ class _MyAppState extends State<MyApp> {
                               return Builder(
                                 builder: (context) {
                                   return isAuth != null
-                                      ? HomeScreen()
-                                      : LoginScreen();
+                                      ? LoginScreen()
+                                      : HomeScreen();
                                 },
                               );
                             } else if (snapshot.hasError) {
@@ -142,7 +141,6 @@ class _MyAppState extends State<MyApp> {
             SignupScreen.routeName: (ctx) => SignupScreen(),
             HomeScreen.routeName: (ctx) => HomeScreen(),
             ExerciseScreen.routeName: (ctx) => ExerciseScreen(),
-            CreateWorkout.routeName: (ctx) => CreateWorkout(),
             AddWorkoutScreen.routeName: (ctx) => AddWorkoutScreen(),
             AddExerciseScreen.routeName: (ctx) => AddExerciseScreen(),
             UserScreen.routeName: (ctx) => UserScreen(),

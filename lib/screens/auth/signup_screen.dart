@@ -276,13 +276,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     width: _mediaQuery.size.width,
                     height: _appBarHieght,
                     alignment: Alignment.centerLeft,
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_back),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      iconSize: _appBarHieght * 0.4,
-                    ),
                   ),
                   SizedBox(
                     height: (_mediaQuery.size.height - _appBarHieght) * 0.25,
