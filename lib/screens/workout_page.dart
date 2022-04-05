@@ -51,6 +51,7 @@ class WorkoutPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
+              padding: EdgeInsets.only(top: 2),
               height: _mediaQuery.size.height * 0.35,
               width: _mediaQuery.size.width,
               child: Stack(
