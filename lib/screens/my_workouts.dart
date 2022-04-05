@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/providers/auth.dart';
-import 'package:teenfit/screens/user_screen.dart';
 import 'package:uuid/uuid.dart';
 
 import '/providers/workout.dart';

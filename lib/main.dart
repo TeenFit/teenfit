@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +17,6 @@ import './screens/auth/loading.dart';
 import './screens/add_exercise_screen.dart';
 import 'screens/create_workout.dart';
 import './screens/exercise_screen.dart';
-import './screens/auth/login_screen.dart';
 import './screens/auth/signup_screen.dart';
 import './providers/workouts.dart';
 
