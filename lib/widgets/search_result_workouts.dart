@@ -16,13 +16,10 @@ class SearchResultWorkouts extends StatefulWidget {
 }
 
 class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
-  bool isInit = false;
   Query<Workout>? queryWorkout;
 
   Future<void> _refreshWorkouts(BuildContext context) async {
-    setState(() {
-      isInit = false;
-    });
+    setState(() {});
   }
 
   @override
@@ -34,32 +31,26 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
 
     final fsb = FloatingSearchBar.of(context);
 
-    if (isInit == false) {
-      queryWorkout = widget.searchTerm == null
-          ? FirebaseFirestore.instance
-              .collection('/workouts')
-              .where('pending', isEqualTo: false)
-              .where('failed', isEqualTo: false)
-              .orderBy('date', descending: true)
-              .withConverter<Workout>(
-                  fromFirestore: (snapshot, _) =>
-                      Workout.fromJson(snapshot.data()!),
-                  toFirestore: (worKout, _) => worKout.toJson())
-          : FirebaseFirestore.instance
-              .collection('/workouts')
-              .where('pending', isEqualTo: false)
-              .where('failed', isEqualTo: false)
-              .where('searchTerms', arrayContains: widget.searchTerm.toString())
-              .orderBy('date', descending: true)
-              .withConverter<Workout>(
-                  fromFirestore: (snapshot, _) =>
-                      Workout.fromJson(snapshot.data()!),
-                  toFirestore: (worKout, _) => worKout.toJson());
-
-      setState(() {
-        isInit = true;
-      });
-    }
+    queryWorkout = widget.searchTerm == null
+        ? FirebaseFirestore.instance
+            .collection('/workouts')
+            .where('pending', isEqualTo: false)
+            .where('failed', isEqualTo: false)
+            .orderBy('date', descending: true)
+            .withConverter<Workout>(
+                fromFirestore: (snapshot, _) =>
+                    Workout.fromJson(snapshot.data()!),
+                toFirestore: (worKout, _) => worKout.toJson())
+        : FirebaseFirestore.instance
+            .collection('/workouts')
+            .where('pending', isEqualTo: false)
+            .where('failed', isEqualTo: false)
+            .where('searchTerms', arrayContains: widget.searchTerm.toString())
+            .orderBy('date', descending: true)
+            .withConverter<Workout>(
+                fromFirestore: (snapshot, _) =>
+                    Workout.fromJson(snapshot.data()!),
+                toFirestore: (worKout, _) => worKout.toJson());
 
     return SingleChildScrollView(
       child: Container(

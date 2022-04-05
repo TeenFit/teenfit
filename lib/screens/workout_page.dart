@@ -37,7 +37,8 @@ class WorkoutPage extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: _theme.highlightColor,
+      extendBodyBehindAppBar: true,
+      backgroundColor: _theme.primaryColor,
       resizeToAvoidBottomInset: false,
       body: Container(
         height: _mediaQuery.size.height,
@@ -293,7 +294,7 @@ class WorkoutPage extends StatelessWidget {
             Container(
                 width: _mediaQuery.size.width,
                 height: _mediaQuery.size.height * 0.05,
-                color: _theme.cardColor,
+                color: _theme.primaryColor,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
