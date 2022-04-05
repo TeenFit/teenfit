@@ -20,8 +20,8 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
   Query<Workout>? queryWorkout;
 
   @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
 
     if (isInit == false) {
       queryWorkout = widget.searchTerm == null
@@ -51,63 +51,11 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
     }
   }
 
-  //   if (isInit == false) {
-  //     final auth = Provider.of<Workouts>(context, listen: false);
-
-  //     FirebaseFirestore.instance
-  //         .collection('/workouts')
-  //         .where('failed', isEqualTo: true)
-  //         .where('date',
-  //             isNotEqualTo:
-  //                 DateTime.now().subtract(Duration(days: 15)).toString())
-  //         .snapshots()
-  //         .map(
-  //           (snapshot) => snapshot.docs.map((e) =>
-  //               //  auth.deleteWorkout(
-  //               // e.data()['workoutId'],
-  //               _showToast('delete' + e.data()['workoutName'])),
-  //         );
-
-  //     setState(() {
-  //       isInit = true;
-  //     });
-  //   }
-  // }
-
-  // void _showToast(String msg) {
-  //   Fluttertoast.showToast(
-  //     toastLength: Toast.LENGTH_LONG,
-  //     msg: msg,
-  //     gravity: ToastGravity.CENTER,
-  //     timeInSecForIosWeb: 10,
-  //     webShowClose: true,
-  //     textColor: Colors.white,
-  //     backgroundColor: Colors.grey.shade700,
-  //   );
-  // }
-
   Future<void> _refreshWorkouts(BuildContext context) async {
     setState(() {
       isInit = false;
     });
   }
-
-  //   // try {
-  //   //   await Provider.of<Workouts>(context, listen: false)
-  //   //       .fetchAndSetWorkout()
-  //   //       .onError(
-  //   //         (error, stackTrace) => _showToast('Unable To Refresh Workouts'),
-  //   //       );
-  //   // } catch (e) {
-  //   //   _showToast('Unable To Refresh Workouts');
-  //   // }
-
-  //   if (this.mounted) {
-  //     setState(() {
-  //       isLoading = false;
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 
 import '../Custom/custom_dialog.dart';
 import '../screens/create_workout.dart';

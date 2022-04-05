@@ -35,12 +35,11 @@ class CreateWorkout extends StatelessWidget {
         title: Text(
           'My Workouts',
           style: TextStyle(
-              color: Colors.black,
+              color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: _appBarHeight * 0.35),
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        backgroundColor: _theme.secondaryHeaderColor,
         automaticallyImplyLeading: false,
         actions: [
           Padding(
@@ -73,7 +72,7 @@ class CreateWorkout extends StatelessWidget {
               },
               icon: Icon(
                 Icons.add_box_outlined,
-                color: Colors.black,
+                color: Colors.white,
                 size: _appBarHeight * 0.45,
               ),
             ),

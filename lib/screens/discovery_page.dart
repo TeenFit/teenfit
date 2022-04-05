@@ -85,8 +85,6 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
-    final _appBarHeight =
-        (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
     var uuid = Uuid();
 
