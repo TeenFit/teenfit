@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:teenfit/providers/basic.dart';
 import 'package:teenfit/screens/admin_screen.dart';
 import 'package:teenfit/screens/auth/home_screen.dart';

@@ -1,12 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/database.dart';
 import 'package:flutterfire_ui/firestore.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
-import 'package:provider/provider.dart';
 import 'package:teenfit/providers/workout.dart';
-import 'package:teenfit/providers/workouts.dart';
 
 import '../widgets/workout_tile.dart';
 
