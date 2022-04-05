@@ -18,7 +18,7 @@ class WorkoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
+      statusBarBrightness: Brightness.light,
     ));
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
