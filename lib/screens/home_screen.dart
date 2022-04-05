@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: pageController,
         children: [
           DiscoveryPage(),
-          isAuth ? LoginScreen() : WorkoutPage(),
+          WorkoutPage(),
           Container(),
         ],
       ),
