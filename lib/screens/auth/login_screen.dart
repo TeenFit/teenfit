@@ -9,8 +9,6 @@ import '../auth/signup_screen.dart';
 // import '/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  static const routeName = '/login-screen';
-
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -357,7 +355,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             onPressed: () {
                               Navigator.of(context)
-                                  .pushReplacementNamed(SignupScreen.routeName);
+                                  .pushNamed(SignupScreen.routeName);
                             },
                           ),
                         )),

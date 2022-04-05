@@ -104,51 +104,55 @@ class _UserScreenState extends State<UserScreen> {
                 indent: 20,
                 endIndent: 20,
               ),
-              _isLoading
-                  ? Center(
-                      child: CircularProgressIndicator(
-                        strokeWidth: 4,
-                        backgroundColor: _theme.shadowColor,
-                        color: Colors.black,
-                      ),
+              auth.isAuth()
+                  ? _isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            strokeWidth: 4,
+                            backgroundColor: _theme.shadowColor,
+                            color: Colors.black,
+                          ),
+                        )
+                      : ListTile(
+                          leading: Icon(
+                            Icons.logout,
+                            size: _mediaQuery.size.height * 0.04,
+                            color: Colors.black,
+                          ),
+                          title: Text(
+                            'Log Out?',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.w900,
+                              fontSize: _mediaQuery.size.height * 0.04,
+                            ),
+                          ),
+                          onTap: () async {
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            try {
+                              await auth.logout(context);
+                            } catch (e) {
+                              _showToast('Unable To Logout Try Again Later');
+                            }
+                            if (this.mounted) {
+                              setState(() {
+                                _isLoading = false;
+                              });
+                            }
+                          },
+                        )
+                  : SizedBox(),
+              auth.isAuth()
+                  ? Divider(
+                      thickness: 1.3,
+                      color: Colors.black,
+                      endIndent: 20,
+                      indent: 20,
                     )
-                  : ListTile(
-                      leading: Icon(
-                        Icons.logout,
-                        size: _mediaQuery.size.height * 0.04,
-                        color: Colors.black,
-                      ),
-                      title: Text(
-                        'Log Out?',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w900,
-                          fontSize: _mediaQuery.size.height * 0.04,
-                        ),
-                      ),
-                      onTap: () async {
-                        setState(() {
-                          _isLoading = true;
-                        });
-                        try {
-                          await auth.logout(context);
-                        } catch (e) {
-                          _showToast('Unable To Logout Try Again Later');
-                        }
-                        if (this.mounted) {
-                          setState(() {
-                            _isLoading = false;
-                          });
-                        }
-                      },
-                    ),
-              Divider(
-                thickness: 1.3,
-                color: Colors.black,
-                endIndent: 20,
-                indent: 20,
-              ),
+                  : SizedBox(),
               auth.isAdmin()
                   ? ListTile(
                       leading: Icon(

@@ -108,28 +108,7 @@ class _MyAppState extends State<MyApp> {
                       }
                       // Once complete, show your application
                       if (snapshot.connectionState == ConnectionState.done) {
-                        return StreamBuilder<User?>(
-                          initialData: FirebaseAuth.instance.currentUser,
-                          stream: auth.onAuthStateChanged,
-                          builder: (BuildContext context,
-                              AsyncSnapshot<User?> snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.active) {
-                              var isAuth = snapshot.data;
-                              return Builder(
-                                builder: (context) {
-                                  return isAuth != null
-                                      ? LoginScreen()
-                                      : HomeScreen();
-                                },
-                              );
-                            } else if (snapshot.hasError) {
-                              return ErrorScreen();
-                            } else {
-                              return LoadingScreen();
-                            }
-                          },
-                        );
+                        return HomeScreen();
                       }
                       // Otherwise, show something whilst waiting for initialization to complete
                       return LoadingScreen();
@@ -137,7 +116,6 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
           routes: {
-            LoginScreen.routeName: (ctx) => LoginScreen(),
             SignupScreen.routeName: (ctx) => SignupScreen(),
             HomeScreen.routeName: (ctx) => HomeScreen(),
             ExerciseScreen.routeName: (ctx) => ExerciseScreen(),

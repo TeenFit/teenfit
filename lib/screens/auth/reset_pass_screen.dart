@@ -165,8 +165,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         width: double.infinity,
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(_theme.primaryColor),
+                            backgroundColor: MaterialStateProperty.all(
+                                _theme.secondaryHeaderColor),
                             elevation: MaterialStateProperty.all(5),
                             shape: MaterialStateProperty.all(
                               RoundedRectangleBorder(
@@ -221,7 +221,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                       fontFamily: 'Roboto',
                                       fontSize: (_mediaQuery.size.height -
                                               _appBarHieght) *
-                                          0.01,
+                                          0.015,
                                       letterSpacing: 1,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -232,7 +232,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                       fontFamily: 'Roboto',
                                       fontSize: (_mediaQuery.size.height -
                                               _appBarHieght) *
-                                          0.01,
+                                          0.015,
                                       letterSpacing: 1,
                                       fontWeight: FontWeight.bold),
                                 ),

@@ -100,7 +100,7 @@ class Auth with ChangeNotifier {
         ModalRoute.withName('/'),
       );
 
-      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
     } catch (e) {
       throw e;
     }
