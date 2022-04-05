@@ -175,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Container(
