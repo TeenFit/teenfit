@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:app_review/app_review.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:teenfit/providers/auth.dart';
@@ -115,6 +118,10 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                       Navigator.of(context).popUntil(
                                           ModalRoute.withName(
                                               WorkoutPage.routeName));
+                                      if (Platform.isIOS) {
+                                        await AppReview.requestReview.onError(
+                                            (error, stackTrace) => null);
+                                      }
                                     } else if (widget.dialogOrganizerId ==
                                         '/exercise-screen') {
                                       setState(() {

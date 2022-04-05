@@ -20,8 +20,8 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
   Query<Workout>? queryWorkout;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
     if (isInit == false) {
       queryWorkout = FirebaseFirestore.instance

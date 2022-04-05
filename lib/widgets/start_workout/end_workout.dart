@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:app_review/app_review.dart';
 import 'package:flutter/material.dart';
 import '/Custom/custom_dialog.dart';
 
@@ -69,10 +66,6 @@ class EndWorkout extends StatelessWidget {
                       fontSize: _mediaQuery.size.height * 0.035),
                 ),
                 onPressed: () async {
-                  if (Platform.isIOS) {
-                    await AppReview.requestReview
-                        .onError((error, stackTrace) => null);
-                  }
                   showDialog(
                       context: context,
                       builder: (ctx) => CustomDialogBox(
