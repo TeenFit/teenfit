@@ -89,7 +89,7 @@ class _MyAppState extends State<MyApp> {
           title: 'TeenFit',
           theme: ThemeData(
             primaryColor: Color(0xffF7F4EB),
-            canvasColor: Color(0xffF0A037),
+            secondaryHeaderColor: Color(0xffF0A037),
             splashColor: Colors.transparent,
             primaryColorDark: Color(0xffAE7E3F),
             highlightColor: Color(0xffA4B1BA),
