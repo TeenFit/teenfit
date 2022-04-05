@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teenfit/screens/discovery_page.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home-screen';
@@ -11,25 +12,57 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   PageController pageController = PageController();
 
+  void onTap(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    pageController.animateToPage(index,
+        duration: Duration(milliseconds: 1000), curve: Curves.easeIn);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
 
     return Scaffold(
       body: PageView(
         controller: pageController,
+        children: [
+          DiscoveryPage(),
+          Container(),
+          Container(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Find'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.search_rounded), label: 'Find'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings), label: 'Settings'),
         ],
+        elevation: 5,
         currentIndex: _selectedIndex,
-        selectedItemColor: _theme.splashColor,
+        selectedItemColor: _theme.canvasColor,
         unselectedItemColor: Colors.grey,
+        showSelectedLabels: true,
+        showUnselectedLabels: false,
         backgroundColor: _theme.primaryColor,
+        selectedLabelStyle: TextStyle(
+          color: _theme.cardColor,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'PTSans',
+          letterSpacing: 1,
+        ),
+        unselectedLabelStyle: TextStyle(
+          color: _theme.cardColor,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'PTSans',
+          letterSpacing: 1,
+        ),
+        onTap: onTap,
+        iconSize: _mediaQuery.size.height * 0.05,
       ),
     );
   }

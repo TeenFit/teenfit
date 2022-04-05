@@ -16,49 +16,46 @@ class SearchResultWorkouts extends StatefulWidget {
 }
 
 class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
-  // bool isInit = false;
+  bool isInit = false;
 
-  // @override
-  // void didChangeDependencies() async {
-  //   super.didChangeDependencies();
+  var queryWorkout;
 
-  //   if (isInit == false) {
-  //     final auth = Provider.of<Workouts>(context, listen: false);
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
 
-  //     FirebaseFirestore.instance
-  //         .collection('/workouts')
-  //         .where('failed', isEqualTo: true)
-  //         .where('date',
-  //             isNotEqualTo:
-  //                 DateTime.now().subtract(Duration(days: 15)).toString())
-  //         .snapshots()
-  //         .map(
-  //           (snapshot) => snapshot.docs.map((e) =>
-  //               //  auth.deleteWorkout(
-  //               // e.data()['workoutId'],
-  //               _showToast('delete' + e.data()['workoutName'])),
-  //         );
+    if (isInit = false) {
+      queryWorkout = widget.searchTerm == null
+          ? FirebaseFirestore.instance
+              .collection('/workouts')
+              .where('pending', isEqualTo: false)
+              .where('failed', isEqualTo: false)
+              .orderBy('date', descending: true)
+              .withConverter<Workout>(
+                  fromFirestore: (snapshot, _) =>
+                      Workout.fromJson(snapshot.data()!),
+                  toFirestore: (worKout, _) => worKout.toJson())
+          : FirebaseFirestore.instance
+              .collection('/workouts')
+              .where('pending', isEqualTo: false)
+              .where('failed', isEqualTo: false)
+              .where('searchTerms', arrayContains: widget.searchTerm.toString())
+              .orderBy('date', descending: true)
+              .withConverter<Workout>(
+                  fromFirestore: (snapshot, _) =>
+                      Workout.fromJson(snapshot.data()!),
+                  toFirestore: (worKout, _) => worKout.toJson());
 
-  //     setState(() {
-  //       isInit = true;
-  //     });
-  //   }
-  // }
-
-  // void _showToast(String msg) {
-  //   Fluttertoast.showToast(
-  //     toastLength: Toast.LENGTH_LONG,
-  //     msg: msg,
-  //     gravity: ToastGravity.CENTER,
-  //     timeInSecForIosWeb: 10,
-  //     webShowClose: true,
-  //     textColor: Colors.white,
-  //     backgroundColor: Colors.grey.shade700,
-  //   );
-  // }
+      setState(() {
+        isInit = true;
+      });
+    }
+  }
 
   Future<void> _refreshWorkouts(BuildContext context) async {
-    setState(() {});
+    setState(() {
+      isInit = false;
+    });
   }
 
   //   // try {
@@ -83,35 +80,17 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
     final _mediaQuery = MediaQuery.of(context);
     final _appBarHieght =
         AppBar().preferredSize.height + _mediaQuery.padding.top;
+    final _theme = Theme.of(context);
 
     final fsb = FloatingSearchBar.of(context);
 
-    final queryWorkout = widget.searchTerm == null
-        ? FirebaseFirestore.instance
-            .collection('/workouts')
-            .where('pending', isEqualTo: false)
-            .where('failed', isEqualTo: false)
-            .orderBy('date', descending: true)
-            .withConverter<Workout>(
-                fromFirestore: (snapshot, _) =>
-                    Workout.fromJson(snapshot.data()!),
-                toFirestore: (worKout, _) => worKout.toJson())
-        : FirebaseFirestore.instance
-            .collection('/workouts')
-            .where('pending', isEqualTo: false)
-            .where('failed', isEqualTo: false)
-            .where('searchTerms', arrayContains: widget.searchTerm.toString())
-            .orderBy('date', descending: true)
-            .withConverter<Workout>(
-                fromFirestore: (snapshot, _) =>
-                    Workout.fromJson(snapshot.data()!),
-                toFirestore: (worKout, _) => worKout.toJson());
-
     return SingleChildScrollView(
       child: Container(
+        color: _theme.primaryColor,
         height: _mediaQuery.size.height,
         width: _mediaQuery.size.width,
         child: RefreshIndicator(
+          color: Colors.white,
           onRefresh: () async {
             return await _refreshWorkouts(context);
           },
