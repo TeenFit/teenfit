@@ -34,9 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       body: PageView(
-        onPageChanged: (value) => setState(() {
-          _selectedIndex = value;
-        }),
         controller: pageController,
         children: [
           DiscoveryPage(),

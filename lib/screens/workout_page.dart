@@ -231,7 +231,7 @@ class WorkoutPage extends StatelessWidget {
                                                   size:
                                                       _mediaQuery.size.height *
                                                           0.045,
-                                                  color: Colors.red,
+                                                  color: Colors.white,
                                                 ),
                                               ),
                                         workout.facebook.isEmpty
@@ -254,7 +254,7 @@ class WorkoutPage extends StatelessWidget {
                                                   size:
                                                       _mediaQuery.size.height *
                                                           0.045,
-                                                  color: Colors.blue,
+                                                  color: Colors.white,
                                                 ),
                                               ),
                                         workout.tiktokLink.isEmpty
@@ -274,7 +274,7 @@ class WorkoutPage extends StatelessWidget {
                                                 },
                                                 icon: Icon(
                                                   MyFlutterApp.unknown,
-                                                  color: Colors.black,
+                                                  color: Colors.white,
                                                   size:
                                                       _mediaQuery.size.height *
                                                           0.045,
