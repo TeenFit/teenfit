@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
-import 'package:app_review/app_review.dart';
 import '../Custom/custom_dialog.dart';
 import '../screens/create_workout.dart';
 import '../screens/workout_page.dart';
@@ -260,10 +259,6 @@ class _WorkoutTileState extends State<WorkoutTile> {
                       width: double.infinity,
                       child: InkWell(
                         onTap: () async {
-                          if (Platform.isIOS) {
-                            await AppReview.requestReview
-                                .onError((error, stackTrace) => null);
-                          }
                           Navigator.of(context).pushNamed(
                             WorkoutPage.routeName,
                             arguments: Workout(

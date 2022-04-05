@@ -175,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
           Container(
@@ -314,7 +314,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                   SizedBox(
-                    height: (_mediaQuery.size.height - _appBarHieght) * 0.21,
+                    height: (_mediaQuery.size.height - _appBarHieght) * 0.1,
                   ),
                   //switch screens
                   Padding(

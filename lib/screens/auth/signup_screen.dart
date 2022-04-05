@@ -254,7 +254,7 @@ class _SignupScreenState extends State<SignupScreen> {
     }
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
           Container(

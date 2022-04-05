@@ -97,8 +97,6 @@ class Auth with ChangeNotifier {
         MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
         ModalRoute.withName('/'),
       );
-
-      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
     } catch (e) {
       throw e;
     }
