@@ -24,11 +24,10 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
     super.initState();
 
     if (isInit == false) {
-      FirebaseFirestore.instance
+      queryWorkout = FirebaseFirestore.instance
           .collection('/workouts')
           .where('pending', isEqualTo: false)
           .where('failed', isEqualTo: false)
-          .where('searchTerms', arrayContains: widget.searchTerm.toString())
           .orderBy('date', descending: true)
           .withConverter<Workout>(
               fromFirestore: (snapshot, _) =>
@@ -55,6 +54,19 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
         AppBar().preferredSize.height + _mediaQuery.padding.top;
 
     final fsb = FloatingSearchBar.of(context);
+
+    queryWorkout = widget.searchTerm != null
+        ? FirebaseFirestore.instance
+            .collection('/workouts')
+            .where('pending', isEqualTo: false)
+            .where('failed', isEqualTo: false)
+            .where('searchTerms', arrayContains: widget.searchTerm.toString())
+            .orderBy('date', descending: true)
+            .withConverter<Workout>(
+                fromFirestore: (snapshot, _) =>
+                    Workout.fromJson(snapshot.data()!),
+                toFirestore: (worKout, _) => worKout.toJson())
+        : queryWorkout;
 
     return SingleChildScrollView(
       child: Container(
