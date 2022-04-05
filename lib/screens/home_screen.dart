@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: _selectedIndex,
         selectedItemColor: _theme.splashColor,
         unselectedItemColor: Colors.grey,
+        backgroundColor: _theme.primaryColor,
       ),
     );
   }
