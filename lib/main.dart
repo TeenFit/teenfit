@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:teenfit/providers/basic.dart';
 import 'package:teenfit/screens/admin_screen.dart';
+import 'package:teenfit/screens/auth/home_screen.dart';
 import 'package:teenfit/screens/privacy_policy_screen.dart';
 import 'package:teenfit/screens/user_screen.dart';
 
@@ -20,10 +21,9 @@ import 'screens/my_workouts.dart';
 import './screens/exercise_screen.dart';
 import './screens/auth/login_screen.dart';
 import './screens/auth/signup_screen.dart';
-import './screens/home_screen.dart';
+import 'screens/discovery_page.dart';
 import './providers/workouts.dart';
 import './screens/workout_page.dart';
-import './screens/auth/intro_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -109,28 +109,7 @@ class _MyAppState extends State<MyApp> {
                       }
                       // Once complete, show your application
                       if (snapshot.connectionState == ConnectionState.done) {
-                        return StreamBuilder<User?>(
-                          initialData: FirebaseAuth.instance.currentUser,
-                          stream: auth.onAuthStateChanged,
-                          builder: (BuildContext context,
-                              AsyncSnapshot<User?> snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.active) {
-                              var isAuth = snapshot.data;
-                              return Builder(
-                                builder: (context) {
-                                  return isAuth != null
-                                      ? HomeScreen()
-                                      : IntroPage();
-                                },
-                              );
-                            } else if (snapshot.hasError) {
-                              return ErrorScreen();
-                            } else {
-                              return LoadingScreen();
-                            }
-                          },
-                        );
+                        return HomeScreen();
                       }
                       // Otherwise, show something whilst waiting for initialization to complete
                       return LoadingScreen();
@@ -138,10 +117,10 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
           routes: {
-            IntroPage.routeName: (ctx) => IntroPage(),
             LoginScreen.routeName: (ctx) => LoginScreen(),
             SignupScreen.routeName: (ctx) => SignupScreen(),
             HomeScreen.routeName: (ctx) => HomeScreen(),
+            DiscoveryPage.routeName: (ctx) => DiscoveryPage(),
             WorkoutPage.routeName: (ctx) => WorkoutPage(),
             ExerciseScreen.routeName: (ctx) => ExerciseScreen(),
             CreateWorkout.routeName: (ctx) => CreateWorkout(),

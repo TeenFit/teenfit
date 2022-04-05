@@ -1,10 +1,11 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:teenfit/screens/home_screen.dart';
+import 'package:teenfit/screens/discovery_page.dart';
 import 'package:teenfit/screens/my_workouts.dart';
 
 import '../Custom/http_execption.dart';
+import '../screens/auth/home_screen.dart';
 
 class Auth with ChangeNotifier {
   FirebaseAuth auth = FirebaseAuth.instance;

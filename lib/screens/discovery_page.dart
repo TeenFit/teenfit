@@ -4,14 +4,14 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import '../widgets/main_drawer.dart';
 import '../widgets/search_result_workouts.dart';
 
-class HomeScreen extends StatefulWidget {
-  static const routeName = '/home-screen';
+class DiscoveryPage extends StatefulWidget {
+  static const routeName = '/discovery-page';
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _DiscoveryPageState createState() => _DiscoveryPageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _DiscoveryPageState extends State<DiscoveryPage> {
   FloatingSearchBarController controller = FloatingSearchBarController();
   bool isLoading = false;
 
