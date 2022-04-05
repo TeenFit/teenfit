@@ -308,8 +308,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(_theme.primaryColor),
+                          backgroundColor: MaterialStateProperty.all(
+                              _theme.secondaryHeaderColor),
                           elevation: MaterialStateProperty.all(5),
                           shape: MaterialStateProperty.all(
                             RoundedRectangleBorder(

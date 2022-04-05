@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:teenfit/providers/auth.dart';
+import 'package:teenfit/screens/auth/login_screen.dart';
 import 'package:teenfit/screens/discovery_page.dart';
+import 'package:teenfit/screens/workout_page.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home-screen';
@@ -17,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _selectedIndex = index;
     });
     pageController.animateToPage(index,
-        duration: Duration(milliseconds: 1000), curve: Curves.easeIn);
+        duration: Duration(milliseconds: 800), curve: Curves.easeIn);
   }
 
   @override
@@ -25,12 +29,14 @@ class _HomeScreenState extends State<HomeScreen> {
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
 
+    bool isAuth = Provider.of<Auth>(context, listen: false).isAuth();
+
     return Scaffold(
       body: PageView(
         controller: pageController,
         children: [
           DiscoveryPage(),
-          Container(),
+          isAuth ? LoginScreen() : WorkoutPage(),
           Container(),
         ],
       ),

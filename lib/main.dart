@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -20,9 +21,7 @@ import 'screens/my_workouts.dart';
 import './screens/exercise_screen.dart';
 import './screens/auth/login_screen.dart';
 import './screens/auth/signup_screen.dart';
-import 'screens/discovery_page.dart';
 import './providers/workouts.dart';
-import './screens/workout_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -110,7 +109,28 @@ class _MyAppState extends State<MyApp> {
                       }
                       // Once complete, show your application
                       if (snapshot.connectionState == ConnectionState.done) {
-                        return HomeScreen();
+                        return StreamBuilder<User?>(
+                          initialData: FirebaseAuth.instance.currentUser,
+                          stream: auth.onAuthStateChanged,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<User?> snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.active) {
+                              var isAuth = snapshot.data;
+                              return Builder(
+                                builder: (context) {
+                                  return isAuth != null
+                                      ? HomeScreen()
+                                      : LoginScreen();
+                                },
+                              );
+                            } else if (snapshot.hasError) {
+                              return ErrorScreen();
+                            } else {
+                              return LoadingScreen();
+                            }
+                          },
+                        );
                       }
                       // Otherwise, show something whilst waiting for initialization to complete
                       return LoadingScreen();
@@ -121,7 +141,6 @@ class _MyAppState extends State<MyApp> {
             LoginScreen.routeName: (ctx) => LoginScreen(),
             SignupScreen.routeName: (ctx) => SignupScreen(),
             HomeScreen.routeName: (ctx) => HomeScreen(),
-            WorkoutPage.routeName: (ctx) => WorkoutPage(),
             ExerciseScreen.routeName: (ctx) => ExerciseScreen(),
             CreateWorkout.routeName: (ctx) => CreateWorkout(),
             AddWorkoutScreen.routeName: (ctx) => AddWorkoutScreen(),
