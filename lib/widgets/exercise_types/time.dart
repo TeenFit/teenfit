@@ -321,7 +321,7 @@ class _TimeExerciseState extends State<TimeExercise> {
                   height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: _theme.primaryColor,
+                      primary: _theme.secondaryHeaderColor,
                       onPrimary: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),

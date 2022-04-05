@@ -63,7 +63,7 @@ class RestPage extends StatelessWidget {
                     height: (_mediaQuery.size.height - _appBarHeight) * 0.15,
                     duration: exercise.restTime!.toInt(),
                     backgroundColor: _theme.shadowColor,
-                    fillColor: _theme.primaryColor,
+                    fillColor: _theme.secondaryHeaderColor,
                     ringColor: _theme.highlightColor,
                     strokeWidth: _mediaQuery.size.width * 0.06,
                     onComplete: () {
@@ -76,7 +76,7 @@ class RestPage extends StatelessWidget {
                     textStyle: TextStyle(
                         fontSize:
                             (_mediaQuery.size.height - _appBarHeight) * 0.06,
-                        color: _theme.primaryColor,
+                        color: _theme.secondaryHeaderColor,
                         fontWeight: FontWeight.bold),
                   ),
                   IconButton(

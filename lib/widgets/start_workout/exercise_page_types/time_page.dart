@@ -127,7 +127,7 @@ class _TimePageState extends State<TimePage> {
                             _countDownController.pause();
                           },
                           icon: Icon(Icons.pause),
-                          color: _theme.primaryColor,
+                          color: _theme.secondaryHeaderColor,
                         ),
                         CircularCountDownTimer(
                           initialDuration: 0,
@@ -139,7 +139,7 @@ class _TimePageState extends State<TimePage> {
                               (_mediaQuery.size.height - _appBarHeight) * 0.15,
                           duration: widget.exercise.timeSeconds!.toInt(),
                           backgroundColor: _theme.cardColor,
-                          fillColor: _theme.primaryColor,
+                          fillColor: _theme.secondaryHeaderColor,
                           ringColor: _theme.highlightColor,
                           strokeWidth: _mediaQuery.size.width * 0.06,
                           onComplete: () {
@@ -165,7 +165,7 @@ class _TimePageState extends State<TimePage> {
                             _countDownController.restart();
                           },
                           icon: Icon(Icons.play_arrow),
-                          color: _theme.primaryColor,
+                          color: _theme.secondaryHeaderColor,
                         ),
                       ],
                     ),

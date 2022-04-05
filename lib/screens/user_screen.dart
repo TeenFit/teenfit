@@ -41,7 +41,7 @@ class _UserScreenState extends State<UserScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: _theme.primaryColor,
+        backgroundColor: _theme.secondaryHeaderColor,
         foregroundColor: Colors.white,
         title: Text(
           'User Controls',
@@ -81,8 +81,8 @@ class _UserScreenState extends State<UserScreen> {
                 leading: Icon(
                   // Icons.person_rounded,
                   Icons.picture_as_pdf,
-                  color: _theme.highlightColor,
-                  size: _mediaQuery.size.height * 0.08,
+                  size: _mediaQuery.size.height * 0.04,
+                  color: Colors.black,
                 ),
                 title: Text(
                   'Privacy Policy',

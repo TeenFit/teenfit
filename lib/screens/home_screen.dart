@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:teenfit/providers/auth.dart';
 import 'package:teenfit/screens/auth/login_screen.dart';
 import 'package:teenfit/screens/discovery_page.dart';
+import 'package:teenfit/screens/user_screen.dart';
 import 'package:teenfit/screens/workout_page.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           DiscoveryPage(),
           isAuth == true ? WorkoutPage() : LoginScreen(),
-          Container(),
+          UserScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

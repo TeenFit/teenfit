@@ -146,7 +146,7 @@ class _SuperSetPageState extends State<SuperSetPage> {
                           goToNext();
                         },
                         icon: Icon(Icons.arrow_circle_right_outlined),
-                        color: _theme.primaryColor,
+                        color: _theme.secondaryHeaderColor,
                         alignment: Alignment.center,
                         iconSize: _mediaQuery.size.height * 0.1,
                       ),
@@ -166,7 +166,7 @@ class _SuperSetPageState extends State<SuperSetPage> {
                         },
                         icon: Icon(Icons.arrow_circle_left_outlined),
                         alignment: Alignment.center,
-                        color: _theme.primaryColor,
+                        color: _theme.secondaryHeaderColor,
                         iconSize: _mediaQuery.size.height * 0.1,
                       ),
                     ),

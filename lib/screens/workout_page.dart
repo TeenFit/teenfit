@@ -324,7 +324,7 @@ class WorkoutPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      primary: _theme.primaryColor),
+                      primary: _theme.secondaryHeaderColor),
                   child: Text(
                     'Start Workout',
                     style: TextStyle(

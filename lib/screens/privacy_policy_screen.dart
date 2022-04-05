@@ -15,7 +15,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         foregroundColor: Colors.white,
-        backgroundColor: _theme.primaryColor,
+        backgroundColor: _theme.secondaryHeaderColor,
         title: Text(
           'Privacy Policy',
           style: TextStyle(

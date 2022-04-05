@@ -157,7 +157,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                                 height: _mediaQuery.size.height * 0.05,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      primary: _theme.primaryColor),
+                                      primary: _theme.secondaryHeaderColor),
                                   onPressed: () {
                                     setState(() {
                                       selectedTerm = null;
@@ -236,7 +236,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                                 height: _mediaQuery.size.height * 0.05,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      primary: _theme.primaryColor),
+                                      primary: _theme.secondaryHeaderColor),
                                   onPressed: () {
                                     setState(() {
                                       selectedTerm = null;
