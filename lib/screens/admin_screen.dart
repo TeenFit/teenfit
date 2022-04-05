@@ -24,7 +24,7 @@ class AdminScreen extends StatelessWidget {
             toFirestore: (worKout, _) => worKout.toJson());
 
     return Scaffold(
-      backgroundColor: _theme.primaryColor,
+      backgroundColor: _theme.secondaryHeaderColor,
       appBar: AppBar(
         title: Text(
           'Admin Controls',
