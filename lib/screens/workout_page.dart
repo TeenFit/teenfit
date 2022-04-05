@@ -17,8 +17,9 @@ class WorkoutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
     final _appBarHeight =
@@ -40,7 +41,6 @@ class WorkoutPage extends StatelessWidget {
     }
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
       backgroundColor: _theme.primaryColor,
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -69,6 +69,8 @@ class WorkoutPage extends StatelessWidget {
                           : Container(
                               height: _mediaQuery.size.height * 0.35,
                               width: _mediaQuery.size.width,
+                              margin: EdgeInsets.zero,
+                              padding: EdgeInsets.zero,
                               child: FadeInImage(
                                 placeholder:
                                     AssetImage('assets/images/loading-gif.gif'),
@@ -78,7 +80,7 @@ class WorkoutPage extends StatelessWidget {
                                   fit: BoxFit.cover,
                                 ),
                                 image: FileImage(workout.bannerImage!),
-                                fit: BoxFit.fill,
+                                fit: BoxFit.cover,
                                 imageErrorBuilder: (image, _, __) =>
                                     Image.asset(
                                   'assets/images/ImageUploadError.png',
@@ -96,7 +98,7 @@ class WorkoutPage extends StatelessWidget {
                           ),
                           image: CachedNetworkImageProvider(
                               workout.bannerImageLink!),
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                           imageErrorBuilder: (image, _, __) => Image.asset(
                             'assets/images/ImageUploadError.png',
                             fit: BoxFit.cover,
@@ -120,7 +122,7 @@ class WorkoutPage extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                icon: Icon(Icons.arrow_back),
+                                icon: Icon(Icons.arrow_back_ios),
                                 iconSize: _appBarHeight * 0.55,
                                 color: Colors.white,
                               ),
@@ -134,7 +136,7 @@ class WorkoutPage extends StatelessWidget {
                           child: Column(
                             children: [
                               Container(
-                                height: _mediaQuery.size.height * 0.28,
+                                height: _mediaQuery.size.height * 0.25,
                                 width: _mediaQuery.size.width * 0.9,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -206,97 +208,92 @@ class WorkoutPage extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                height: _mediaQuery.size.height * 0.07,
+                                height: _mediaQuery.size.height * 0.1,
                                 width: _mediaQuery.size.width * 0.9,
-                                alignment: Alignment.bottomRight,
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 2),
-                                  child: Container(
-                                    height: (_mediaQuery.size.height -
-                                            _appBarHeight) *
-                                        0.13,
-                                    width: _mediaQuery.size.width * 0.55,
-                                    child: FittedBox(
-                                      fit: BoxFit.fitHeight,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          workout.instagram.isEmpty
-                                              ? SizedBox()
-                                              : IconButton(
-                                                  onPressed: () {
-                                                    try {
-                                                      launch(workout.instagram)
-                                                          .catchError((e) {
-                                                        _showToast(
-                                                            'Link Not Available');
-                                                      });
-                                                    } catch (e) {
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  height: (_mediaQuery.size.height -
+                                          _appBarHeight) *
+                                      0.13,
+                                  width: _mediaQuery.size.width * 0.55,
+                                  child: FittedBox(
+                                    fit: BoxFit.fitHeight,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        workout.instagram.isEmpty
+                                            ? SizedBox()
+                                            : IconButton(
+                                                onPressed: () {
+                                                  try {
+                                                    launch(workout.instagram)
+                                                        .catchError((e) {
                                                       _showToast(
                                                           'Link Not Available');
-                                                    }
-                                                  },
-                                                  icon: Icon(
-                                                    MyFlutterApp.instagram_1,
-                                                    size: _mediaQuery
-                                                            .size.height *
-                                                        0.045,
-                                                    color: Colors.white,
-                                                  ),
+                                                    });
+                                                  } catch (e) {
+                                                    _showToast(
+                                                        'Link Not Available');
+                                                  }
+                                                },
+                                                icon: Icon(
+                                                  MyFlutterApp.instagram_1,
+                                                  size:
+                                                      _mediaQuery.size.height *
+                                                          0.045,
+                                                  color: Colors.white,
                                                 ),
-                                          workout.facebook.isEmpty
-                                              ? SizedBox()
-                                              : IconButton(
-                                                  onPressed: () {
-                                                    try {
-                                                      launch(workout.facebook)
-                                                          .catchError((e) {
-                                                        _showToast(
-                                                            'Link Not Available');
-                                                      });
-                                                    } catch (e) {
+                                              ),
+                                        workout.facebook.isEmpty
+                                            ? SizedBox()
+                                            : IconButton(
+                                                onPressed: () {
+                                                  try {
+                                                    launch(workout.facebook)
+                                                        .catchError((e) {
                                                       _showToast(
                                                           'Link Not Available');
-                                                    }
-                                                  },
-                                                  icon: Icon(
-                                                    MyFlutterApp
-                                                        .facebook_squared,
-                                                    size: _mediaQuery
-                                                            .size.height *
-                                                        0.045,
-                                                    color: Colors.white,
-                                                  ),
+                                                    });
+                                                  } catch (e) {
+                                                    _showToast(
+                                                        'Link Not Available');
+                                                  }
+                                                },
+                                                icon: Icon(
+                                                  MyFlutterApp.facebook_squared,
+                                                  size:
+                                                      _mediaQuery.size.height *
+                                                          0.045,
+                                                  color: Colors.white,
                                                 ),
-                                          workout.tiktokLink.isEmpty
-                                              ? SizedBox()
-                                              : IconButton(
-                                                  onPressed: () {
-                                                    try {
-                                                      launch(workout.tiktokLink)
-                                                          .catchError((e) {
-                                                        _showToast(
-                                                            'Link Not Available');
-                                                      });
-                                                    } catch (e) {
+                                              ),
+                                        workout.tiktokLink.isEmpty
+                                            ? SizedBox()
+                                            : IconButton(
+                                                onPressed: () {
+                                                  try {
+                                                    launch(workout.tiktokLink)
+                                                        .catchError((e) {
                                                       _showToast(
                                                           'Link Not Available');
-                                                    }
-                                                  },
-                                                  icon: Icon(
-                                                    MyFlutterApp.unknown,
-                                                    color: Colors.white,
-                                                    size: _mediaQuery
-                                                            .size.height *
-                                                        0.045,
-                                                  ),
+                                                    });
+                                                  } catch (e) {
+                                                    _showToast(
+                                                        'Link Not Available');
+                                                  }
+                                                },
+                                                icon: Icon(
+                                                  MyFlutterApp.unknown,
+                                                  color: Colors.white,
+                                                  size:
+                                                      _mediaQuery.size.height *
+                                                          0.045,
                                                 ),
-                                        ],
-                                      ),
+                                              ),
+                                      ],
                                     ),
                                   ),
                                 ),
