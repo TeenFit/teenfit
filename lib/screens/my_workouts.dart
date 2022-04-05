@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/providers/auth.dart';
@@ -13,9 +12,6 @@ import '/widgets/workout_tile.dart';
 class CreateWorkout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
     final _appBarHeight =
@@ -34,7 +30,6 @@ class CreateWorkout extends StatelessWidget {
             toFirestore: (worKout, _) => worKout.toJson());
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
       backgroundColor: _theme.primaryColor,
       appBar: AppBar(
         title: Text(
