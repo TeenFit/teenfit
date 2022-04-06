@@ -43,53 +43,58 @@ class RestPage extends StatelessWidget {
             Container(
               height: (_mediaQuery.size.height - _appBarHeight) * 0.3,
               width: double.infinity,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    iconSize: (_mediaQuery.size.height - _appBarHeight) * 0.18,
-                    onPressed: () {
-                      _restCountDownController.pause();
-                    },
-                    icon: Icon(Icons.pause),
-                    color: _theme.highlightColor,
-                  ),
-                  CircularCountDownTimer(
-                    initialDuration: 0,
-                    autoStart: true,
-                    controller: _restCountDownController,
-                    width: (_mediaQuery.size.height - _appBarHeight) * 0.15,
-                    height: (_mediaQuery.size.height - _appBarHeight) * 0.15,
-                    duration: exercise.restTime!.toInt(),
-                    backgroundColor: _theme.shadowColor,
-                    fillColor: _theme.secondaryHeaderColor,
-                    ringColor: _theme.highlightColor,
-                    strokeWidth: _mediaQuery.size.width * 0.06,
-                    onComplete: () {
-                      goToNext();
-                    },
-                    isReverse: true,
-                    isReverseAnimation: false,
-                    strokeCap: StrokeCap.round,
-                    textFormat: CountdownTextFormat.S,
-                    textStyle: TextStyle(
-                        fontSize:
-                            (_mediaQuery.size.height - _appBarHeight) * 0.06,
-                        color: _theme.secondaryHeaderColor,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  IconButton(
-                    iconSize: (_mediaQuery.size.height - _appBarHeight) * 0.18,
-                    onPressed: () {
-                      _restCountDownController.restart();
-                    },
-                    icon: Icon(Icons.play_arrow),
-                    color: _theme.highlightColor,
-                  ),
-                ],
+              child: FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                      iconSize:
+                          (_mediaQuery.size.height - _appBarHeight) * 0.18,
+                      onPressed: () {
+                        _restCountDownController.pause();
+                      },
+                      icon: Icon(Icons.pause),
+                      color: _theme.highlightColor,
+                    ),
+                    CircularCountDownTimer(
+                      initialDuration: 0,
+                      autoStart: true,
+                      controller: _restCountDownController,
+                      width: (_mediaQuery.size.height - _appBarHeight) * 0.15,
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.15,
+                      duration: exercise.restTime!.toInt(),
+                      backgroundColor: _theme.shadowColor,
+                      fillColor: _theme.secondaryHeaderColor,
+                      ringColor: _theme.highlightColor,
+                      strokeWidth: _mediaQuery.size.width * 0.06,
+                      onComplete: () {
+                        goToNext();
+                      },
+                      isReverse: true,
+                      isReverseAnimation: false,
+                      strokeCap: StrokeCap.round,
+                      textFormat: CountdownTextFormat.S,
+                      textStyle: TextStyle(
+                          fontSize:
+                              (_mediaQuery.size.height - _appBarHeight) * 0.06,
+                          color: _theme.secondaryHeaderColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    IconButton(
+                      iconSize:
+                          (_mediaQuery.size.height - _appBarHeight) * 0.18,
+                      onPressed: () {
+                        _restCountDownController.restart();
+                      },
+                      icon: Icon(Icons.play_arrow),
+                      color: _theme.highlightColor,
+                    ),
+                  ],
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),
