@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:provider/provider.dart';
@@ -117,6 +119,22 @@ class Workouts with ChangeNotifier {
 
     Future<void> addExerciseImageLink(List<Exercise> exerciseS) async {
       int i = 0;
+
+      final String id_and_key =
+          '004b2d9d74e33f20000000001:K004ORWU4mzfbmnF4/HyH7qtgg7mWfo';
+      final Codec<String, String> stringToBase64 = utf8.fuse(base64);
+      final String basic_auth_string =
+          'Basic' + stringToBase64.encode(id_and_key);
+      final headers = {'Authorization': basic_auth_string};
+
+      var response = await http.get(
+          Uri.parse(
+              'https://api.backblazeb2.com/b2api/v2/b2_authorize_account'),
+          headers: headers);
+
+      var data = json.decode(response.body) as Map<String, dynamic>;
+
+      print(data['allowed']['bucketName']);
 
       do {
         // final exerciseRef = FirebaseStorage.instance
