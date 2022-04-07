@@ -20,6 +20,23 @@ class Workouts with ChangeNotifier {
 
     List<String> searchTermsList = [];
 
+    Future<Map<String, dynamic>> getBlazeKey() async {
+      final String idAndKey =
+          '004b2d9d74e33f20000000001:K004ORWU4mzfbmnF4/HyH7qtgg7mWfo';
+      final Codec<String, String> stringToBase64 = utf8.fuse(base64);
+      final String basicAuthString = 'Basic' + stringToBase64.encode(idAndKey);
+      final headers = {'Authorization': basicAuthString};
+
+      var response = await http.get(
+          Uri.parse(
+              'https://api.backblazeb2.com/b2api/v2/b2_authorize_account'),
+          headers: headers);
+
+      var data = json.decode(response.body) as Map<String, dynamic>;
+
+      return data;
+    }
+
     Future<void> addSearchTerms(String creatorName, String workoutName) async {
       for (var i = 0; i <= creatorName.characters.length; i++) {
         searchTermsList.add(creatorName.substring(0, i));
@@ -120,23 +137,44 @@ class Workouts with ChangeNotifier {
     Future<void> addExerciseImageLink(List<Exercise> exerciseS) async {
       int i = 0;
 
-      final String idAndKey =
-          '004b2d9d74e33f20000000001:K004ORWU4mzfbmnF4/HyH7qtgg7mWfo';
-      final Codec<String, String> stringToBase64 = utf8.fuse(base64);
-      final String basicAuthString =
-          'Basic' + stringToBase64.encode(idAndKey);
-      final headers = {'Authorization': basicAuthString};
+      final data = await getBlazeKey();
 
-      var response = await http.get(
-          Uri.parse(
-              'https://api.backblazeb2.com/b2api/v2/b2_authorize_account'),
-          headers: headers);
+      var apiUrl = data['apiUrl'];
 
-      var data = json.decode(response.body) as Map<String, dynamic>;
+      var accountAuthToken = data['authorizationToken'];
 
-      print(data['allowed']['bucketName']);
+      var bucketId = data['allowed']['bucketId'];
+
+      http.Response request = await http.post(
+        Uri.parse('${apiUrl.toString}/b2api/v2/b2_get_upload_url'),
+        body: json.encode({'bucketId': bucketId}),
+        headers: {'Authorization': accountAuthToken},
+      );
+
+      var uploadData = json.decode(request.body);
 
       do {
+        var uploadUrl = uploadData['uploadUrl'];
+        var uploadAuthorizationToken = uploadData['authorizationToken'];
+        var file = exerciseS[i].exerciseImage;
+        var fileName =
+            '${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}';
+        var contentType = "b2/x-auto";
+      
+        var sha1OfFileData = ;
+
+        Map<String, String> headers = {
+          'Authorization': uploadAuthorizationToken,
+          'X-Bz-File-Name': fileName,
+          'Content-Type': contentType,
+          'X-Bz-Content-Sha1': sha1OfFileData,
+          'X-Bz-Info-Author': 'unknown',
+          'X-Bz-Server-Side-Encryption': 'AES256'
+        };
+
+        var exerciseRequest = http.post(Uri.parse(uploadUrl.toString()),
+            body: file, headers: headers);
+
         // final exerciseRef = FirebaseStorage.instance
         //     .ref()
         //     .child('${workouT.workoutId}')
