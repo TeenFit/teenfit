@@ -1,11 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:provider/provider.dart';
+
 import '/providers/exercise.dart';
 import '/Custom/http_execption.dart';
 import './workout.dart';
@@ -19,37 +18,6 @@ class Workouts with ChangeNotifier {
         FirebaseFirestore.instance.collection('/workouts');
 
     List<String> searchTermsList = [];
-
-    Future<Map<String, dynamic>> getBlazeKey() async {
-      final String idAndKey =
-          '004b2d9d74e33f20000000001:K004ORWU4mzfbmnF4/HyH7qtgg7mWfo';
-      final Codec<String, String> stringToBase64 = utf8.fuse(base64);
-      final String basicAuthString = 'Basic' + stringToBase64.encode(idAndKey);
-      final headers = {'Authorization': basicAuthString};
-
-      var response = await http.get(
-          Uri.parse(
-              'https://api.backblazeb2.com/b2api/v2/b2_authorize_account'),
-          headers: headers);
-
-      var data = json.decode(response.body) as Map<String, dynamic>;
-
-      var apiUrl = data['apiUrl'];
-
-      var accountAuthToken = data['authorizationToken'];
-
-      var bucketId = data['allowed']['bucketId'];
-
-      var request = await http.post(
-        Uri.parse('$apiUrl/b2api/v2/b2_get_upload_url'),
-        body: json.encode({'bucketId': bucketId}),
-        headers: {'Authorization': accountAuthToken},
-      );
-
-      var uploadData = await json.decode(request.body);
-
-      return uploadData;
-    }
 
     Future<void> addSearchTerms(String creatorName, String workoutName) async {
       for (var i = 0; i <= creatorName.characters.length; i++) {
@@ -148,55 +116,34 @@ class Workouts with ChangeNotifier {
 
     List<Map> exerciseImages = [];
 
-    Future<void> addExerciseImageLink(
-        List<Exercise> exerciseS, uploadData) async {
+    Future<void> addExerciseImageLink(List<Exercise> exerciseS) async {
       int i = 0;
 
       do {
-        var uploadUrl = uploadData['uploadUrl'];
-        var uploadAuthorizationToken = uploadData['authorizationToken'];
-        var file = exerciseS[i].exerciseImage;
-        var fileName =
-            '${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}';
-        var contentType = "b2/x-auto";
+        final exerciseRef = FirebaseStorage.instance
+            .ref()
+            .child('${workouT.workoutId}')
+            .child(exerciseS[i].exerciseId + workouT.workoutId);
 
-        var sha1OfFileData = 'do_not_verify';
+        await exerciseRef.putFile(exerciseS[i].exerciseImage!);
 
-        Map<String, String> headers = {
-          'Authorization': uploadAuthorizationToken,
-          'X-Bz-File-Name': fileName,
-          'Content-Type': contentType,
-          'X-Bz-Content-Sha1': sha1OfFileData,
-          'X-Bz-Info-Author': 'unknown',
-          'X-Bz-Server-Side-Encryption': 'AES256'
-        };
-
-        await http.post(Uri.parse(uploadUrl), body: file, headers: headers);
+        final exerciseRef2 = FirebaseStorage.instance
+            .ref()
+            .child('${workouT.workoutId}')
+            .child(exerciseS[i].exerciseId + workouT.workoutId + 'second');
 
         if (exerciseS[i].exerciseImage2 != null) {
-          var fileName2 =
-              '${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}second';
-
-          var file2 = exerciseS[i].exerciseImage2!;
-
-          Map<String, String> headers2 = {
-            'Authorization': uploadAuthorizationToken,
-            'X-Bz-File-Name': fileName2,
-            'Content-Type': contentType,
-            'X-Bz-Content-Sha1': sha1OfFileData,
-            'X-Bz-Info-Author': 'unknown',
-            'X-Bz-Server-Side-Encryption': 'AES256'
-          };
-
-          await http.post(Uri.parse(uploadUrl), body: file2, headers: headers2);
+          await exerciseRef2.putFile(exerciseS[i].exerciseImage2!);
         }
 
+        var exerciseLink = await exerciseRef.getDownloadURL();
+        var exerciseLink2 = exerciseS[i].exerciseImage2 != null
+            ? await exerciseRef2.getDownloadURL()
+            : null;
+
         exerciseImages.add({
-          'image2': exerciseS[i].exerciseImage2 != null
-              ? 'https://f004.backblazeb2.com/file/workoutImages/${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}second'
-              : null,
-          'image':
-              'https://f004.backblazeb2.com/file/workoutImages/${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}',
+          'image2': exerciseLink2 != null ? exerciseLink2.toString() : null,
+          'image': exerciseLink,
           'id': exerciseS[i].exerciseId + workouT.workoutId,
         });
 
@@ -205,37 +152,16 @@ class Workouts with ChangeNotifier {
     }
 
     try {
-      final uploadData = await getBlazeKey();
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('${workouT.workoutId}')
+          .child(workouT.workoutId);
 
-      var uploadUrl = uploadData['uploadUrl'];
-      var uploadAuthorizationToken = uploadData['authorizationToken'];
-      var file = workouT.bannerImage;
-      var fileName = '${workouT.workoutId}/${workouT.workoutId}';
-      var contentType = "b2/x-auto";
+      await ref.putFile(workouT.bannerImage!);
 
-      var sha1OfFileData = 'do_not_verify';
+      final url = await ref.getDownloadURL();
 
-      Map<String, String> headers = {
-        'Authorization': uploadAuthorizationToken,
-        'X-Bz-File-Name': fileName,
-        'Content-Type': contentType,
-        'X-Bz-Content-Sha1': sha1OfFileData,
-        'X-Bz-Info-Author': 'unknown',
-        'X-Bz-Server-Side-Encryption': 'AES256'
-      };
-
-      await http.post(Uri.parse(uploadUrl), body: file, headers: headers);
-      // final ref = FirebaseStorage.instance
-      //     .ref()
-      //     .child('${workouT.workoutId}')
-      //     .child(workouT.workoutId);
-
-      // await ref.putFile(workouT.bannerImage!);
-
-      final url =
-          'https://f004.backblazeb2.com/file/workoutImages/${workouT.workoutId}/${workouT.workoutId}';
-
-      await addExerciseImageLink(workouT.exercises, uploadData);
+      await addExerciseImageLink(workouT.exercises);
 
       var exerciseS = workouT.exercises.map((e) {
         final exerciseIndex = exerciseImages.indexWhere(
