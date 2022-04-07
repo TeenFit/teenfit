@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:provider/provider.dart';
-
 import '/providers/exercise.dart';
 import '/Custom/http_execption.dart';
 import './workout.dart';
@@ -120,32 +119,32 @@ class Workouts with ChangeNotifier {
       int i = 0;
 
       do {
-        final exerciseRef = FirebaseStorage.instance
-            .ref()
-            .child('${workouT.workoutId}')
-            .child(exerciseS[i].exerciseId + workouT.workoutId);
+        // final exerciseRef = FirebaseStorage.instance
+        //     .ref()
+        //     .child('${workouT.workoutId}')
+        //     .child(exerciseS[i].exerciseId + workouT.workoutId);
 
-        await exerciseRef.putFile(exerciseS[i].exerciseImage!);
+        // await exerciseRef.putFile(exerciseS[i].exerciseImage!);
 
-        final exerciseRef2 = FirebaseStorage.instance
-            .ref()
-            .child('${workouT.workoutId}')
-            .child(exerciseS[i].exerciseId + workouT.workoutId + 'second');
+        // final exerciseRef2 = FirebaseStorage.instance
+        //     .ref()
+        //     .child('${workouT.workoutId}')
+        //     .child(exerciseS[i].exerciseId + workouT.workoutId + 'second');
 
-        if (exerciseS[i].exerciseImage2 != null) {
-          await exerciseRef2.putFile(exerciseS[i].exerciseImage2!);
-        }
+        // if (exerciseS[i].exerciseImage2 != null) {
+        //   await exerciseRef2.putFile(exerciseS[i].exerciseImage2!);
+        // }
 
-        var exerciseLink = await exerciseRef.getDownloadURL();
-        var exerciseLink2 = exerciseS[i].exerciseImage2 != null
-            ? await exerciseRef2.getDownloadURL()
-            : null;
+        // var exerciseLink = await exerciseRef.getDownloadURL();
+        // var exerciseLink2 = exerciseS[i].exerciseImage2 != null
+        //     ? await exerciseRef2.getDownloadURL()
+        //     : null;
 
-        exerciseImages.add({
-          'image2': exerciseLink2 != null ? exerciseLink2.toString() : null,
-          'image': exerciseLink,
-          'id': exerciseS[i].exerciseId + workouT.workoutId,
-        });
+        // exerciseImages.add({
+        //   'image2': exerciseLink2 != null ? exerciseLink2.toString() : null,
+        //   'image': exerciseLink,
+        //   'id': exerciseS[i].exerciseId + workouT.workoutId,
+        // });
 
         i = i + 1;
       } while (i < exerciseS.length);
