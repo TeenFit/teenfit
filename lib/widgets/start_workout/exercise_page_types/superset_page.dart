@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import '/providers/exercise.dart';
@@ -20,15 +19,15 @@ class SuperSetPage extends StatefulWidget {
 }
 
 class _SuperSetPageState extends State<SuperSetPage> {
-  CarouselController _carouselController = CarouselController();
   bool isFirstImage = true;
+  PageController pageController = PageController();
 
   void goToNext() {
-    _carouselController.nextPage();
+    pageController.jumpToPage(1);
   }
 
   void goToPrevious() {
-    _carouselController.previousPage();
+    pageController.jumpToPage(1);
   }
 
   @override
@@ -45,10 +44,29 @@ class _SuperSetPageState extends State<SuperSetPage> {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Container(
+            height: (_mediaQuery.size.height - _appBarHeight) * 0.02,
+            width: _mediaQuery.size.width,
+            child: FittedBox(
+              fit: BoxFit.contain,
+              child: Center(
+                child: Text(
+                  'SUPERSET',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontFamily: 'PTSans',
+                    fontSize: _mediaQuery.size.height * 0.02,
+                    letterSpacing: 1,
+                  ),
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Container(
-              height: (_mediaQuery.size.height - _appBarHeight) * 0.1,
+              height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
               width: _mediaQuery.size.width,
               child: FittedBox(
                 fit: BoxFit.contain,
@@ -70,27 +88,9 @@ class _SuperSetPageState extends State<SuperSetPage> {
           Container(
             width: _mediaQuery.size.width,
             height: (_mediaQuery.size.height - _appBarHeight) * 0.66,
-            child: CarouselSlider(
-              options: CarouselOptions(
-                onPageChanged: (index, _) {
-                  setState(() {
-                    if (isFirstImage == true) {
-                      isFirstImage = false;
-                    } else {
-                      isFirstImage = true;
-                    }
-                  });
-                },
-                viewportFraction: 1,
-                height: (_mediaQuery.size.height - _appBarHeight),
-                initialPage: 0,
-                enableInfiniteScroll: false,
-                autoPlay: false,
-                reverse: false,
-                enlargeCenterPage: false,
-              ),
-              carouselController: _carouselController,
-              items: [
+            child: PageView(
+              controller: pageController,
+              children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
