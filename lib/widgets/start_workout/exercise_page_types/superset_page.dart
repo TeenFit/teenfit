@@ -5,13 +5,13 @@ import '/providers/exercise.dart';
 
 class SuperSetPage extends StatefulWidget {
   final Exercise? exercise;
-  final Function? goToNext;
-  final Function? goToPrevious;
+  final Function? goToPage;
+  final int index;
 
   SuperSetPage(
     this.exercise,
-    this.goToNext,
-    this.goToPrevious,
+    this.goToPage,
+    this.index,
   );
 
   @override
@@ -27,7 +27,7 @@ class _SuperSetPageState extends State<SuperSetPage> {
   }
 
   void goToPrevious() {
-    pageController.jumpToPage(1);
+    pageController.jumpToPage(0);
   }
 
   @override
@@ -295,7 +295,7 @@ class _SuperSetPageState extends State<SuperSetPage> {
                         primary: _theme.cardColor,
                       ),
                       onPressed: () {
-                        widget.goToPrevious!();
+                        widget.goToPage!(widget.index - 1);
                       },
                       child: Text(
                         '<- Back',
@@ -319,7 +319,7 @@ class _SuperSetPageState extends State<SuperSetPage> {
                         primary: _theme.cardColor,
                       ),
                       onPressed: () {
-                        widget.goToNext!();
+                        widget.goToPage!(widget.index + 1);
                       },
                       child: Text(
                         'Next ->',

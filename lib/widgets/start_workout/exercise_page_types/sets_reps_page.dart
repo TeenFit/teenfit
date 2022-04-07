@@ -5,13 +5,13 @@ import '/providers/exercise.dart';
 
 class SetsAndRepsPage extends StatelessWidget {
   final Exercise? exercise;
-  final Function? goToNext;
-  final Function? goToPrevious;
+  final Function? goToPage;
+  final int index;
 
   SetsAndRepsPage(
     this.exercise,
-    this.goToNext,
-    this.goToPrevious,
+    this.goToPage,
+    this.index,
   );
 
   @override
@@ -160,7 +160,7 @@ class SetsAndRepsPage extends StatelessWidget {
                         primary: _theme.cardColor,
                       ),
                       onPressed: () {
-                        goToPrevious!();
+                        goToPage!(index - 1);
                       },
                       child: Text(
                         '<- Back',
@@ -184,7 +184,7 @@ class SetsAndRepsPage extends StatelessWidget {
                         primary: _theme.cardColor,
                       ),
                       onPressed: () {
-                        goToNext!();
+                        goToPage!(index + 1);
                       },
                       child: Text(
                         'Next ->',

@@ -7,21 +7,17 @@ import '/providers/exercise.dart';
 
 class ExercisePage extends StatelessWidget {
   final Exercise exercise;
-  final Function goToNext;
-  final Function goToPrevious;
+  final Function goToPage;
+  final int index;
 
-  ExercisePage(
-    this.exercise,
-    this.goToNext,
-    this.goToPrevious,
-  );
+  ExercisePage(this.exercise, this.goToPage, this.index);
 
   @override
   Widget build(BuildContext context) {
     return exercise.restTime != null
-        ? TimePage(exercise, goToNext, goToPrevious)
+        ? TimePage(exercise, goToPage, index)
         : exercise.reps2 != null
-            ? SuperSetPage(exercise, goToNext, goToPrevious)
-            : SetsAndRepsPage(exercise, goToNext, goToPrevious);
+            ? SuperSetPage(exercise, goToPage, index)
+            : SetsAndRepsPage(exercise, goToPage, index);
   }
 }

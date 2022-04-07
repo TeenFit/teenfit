@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
 import 'package:teenfit/screens/workout_page.dart';
@@ -15,18 +14,17 @@ class ExerciseScreen extends StatefulWidget {
 }
 
 class _ExerciseScreenState extends State<ExerciseScreen> {
-  CarouselController _carouselController = CarouselController();
+  PageController pageController = PageController();
+  int selectedIndex = 0;
 
-  void goToNext() {
-    _carouselController.nextPage();
-  }
-
-  void goToPrevious() {
-    _carouselController.previousPage();
+  void goToPage(index) {
+    pageController.animateToPage(index,
+        duration: Duration(milliseconds: 800), curve: Curves.easeIn);
   }
 
   void goToFirst() {
-    _carouselController.jumpToPage(0);
+    pageController.animateToPage(0,
+        duration: Duration(milliseconds: 800), curve: Curves.easeIn);
   }
 
   @override
@@ -70,23 +68,19 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            child: CarouselSlider(
-              options: CarouselOptions(
-                viewportFraction: 1,
-                height: (_mediaQuery.size.height - _appBarHeight),
-                initialPage: 0,
-                enableInfiniteScroll: false,
-                autoPlay: false,
-                reverse: false,
-                enlargeCenterPage: false,
-              ),
-              carouselController: _carouselController,
-              items: [
+            height: _mediaQuery.size.height - _appBarHeight,
+            width: _mediaQuery.size.width,
+            child: PageView(
+              onPageChanged: (value) => setState(() {
+                selectedIndex = value;
+              }),
+              controller: pageController,
+              children: [
                 ...exercises.map(
                   (exercise) => ExercisePage(
                     exercise,
-                    goToNext,
-                    goToPrevious,
+                    goToPage,
+                    selectedIndex,
                   ),
                 ),
                 EndWorkout(goToFirst),

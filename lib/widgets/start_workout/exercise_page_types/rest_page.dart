@@ -6,10 +6,12 @@ import '/providers/exercise.dart';
 
 class RestPage extends StatelessWidget {
   final Exercise exercise;
-  final Function goToNext;
+  final Function goToPage;
+  final int index;
   final CountDownController _restCountDownController;
 
-  RestPage(this.exercise, this.goToNext, this._restCountDownController);
+  RestPage(
+      this.exercise, this.goToPage, this.index, this._restCountDownController);
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,7 @@ class RestPage extends StatelessWidget {
                       ringColor: _theme.highlightColor,
                       strokeWidth: _mediaQuery.size.width * 0.06,
                       onComplete: () {
-                        goToNext();
+                        goToPage(index + 1);
                       },
                       isReverse: true,
                       isReverseAnimation: false,
