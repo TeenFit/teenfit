@@ -160,8 +160,8 @@ class Workouts with ChangeNotifier {
         var fileName =
             '${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}';
         var contentType = "b2/x-auto";
-      
-        var sha1OfFileData = ;
+
+        var sha1OfFileData = 'do_not_verify';
 
         Map<String, String> headers = {
           'Authorization': uploadAuthorizationToken,
