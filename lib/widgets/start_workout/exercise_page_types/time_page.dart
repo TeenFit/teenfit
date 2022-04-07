@@ -9,13 +9,13 @@ import '/providers/exercise.dart';
 
 class TimePage extends StatefulWidget {
   final Exercise exercise;
-  final Function goToNext;
-  final Function goToPrevious;
+  final Function goToPage;
+  final int index;
 
   TimePage(
     this.exercise,
-    this.goToNext,
-    this.goToPrevious,
+    this.goToPage,
+    this.index,
   );
 
   @override
@@ -37,7 +37,8 @@ class _TimePageState extends State<TimePage> {
     return isRest == true
         ? RestPage(
             widget.exercise,
-            widget.goToNext,
+            widget.goToPage,
+            widget.index,
             _restCountDownController,
           )
         : Container(
