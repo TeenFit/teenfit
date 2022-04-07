@@ -23,11 +23,21 @@ class _SuperSetPageState extends State<SuperSetPage> {
   PageController pageController = PageController();
 
   void goToNext() {
-    pageController.jumpToPage(1);
+    pageController.animateToPage(1,
+        duration: Duration(milliseconds: 500), curve: Curves.easeIn);
+
+    setState(() {
+      isFirstImage = false;
+    });
   }
 
   void goToPrevious() {
-    pageController.jumpToPage(0);
+    pageController.animateToPage(0,
+        duration: Duration(milliseconds: 800), curve: Curves.easeIn);
+
+    setState(() {
+      isFirstImage = true;
+    });
   }
 
   @override
@@ -54,7 +64,7 @@ class _SuperSetPageState extends State<SuperSetPage> {
                   'SUPERSET',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black,
                     fontFamily: 'PTSans',
                     fontSize: _mediaQuery.size.height * 0.02,
                     letterSpacing: 1,

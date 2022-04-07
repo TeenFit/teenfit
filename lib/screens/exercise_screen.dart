@@ -19,7 +19,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
 
   void goToPage(index) {
     pageController.animateToPage(index,
-        duration: Duration(milliseconds: 800), curve: Curves.easeIn);
+        duration: Duration(milliseconds: 500), curve: Curves.easeIn);
   }
 
   void goToFirst() {
