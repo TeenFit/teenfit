@@ -120,12 +120,12 @@ class Workouts with ChangeNotifier {
     Future<void> addExerciseImageLink(List<Exercise> exerciseS) async {
       int i = 0;
 
-      final String id_and_key =
+      final String idAndKey =
           '004b2d9d74e33f20000000001:K004ORWU4mzfbmnF4/HyH7qtgg7mWfo';
       final Codec<String, String> stringToBase64 = utf8.fuse(base64);
-      final String basic_auth_string =
-          'Basic' + stringToBase64.encode(id_and_key);
-      final headers = {'Authorization': basic_auth_string};
+      final String basicAuthString =
+          'Basic' + stringToBase64.encode(idAndKey);
+      final headers = {'Authorization': basicAuthString};
 
       var response = await http.get(
           Uri.parse(
