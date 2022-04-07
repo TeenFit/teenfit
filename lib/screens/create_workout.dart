@@ -215,7 +215,11 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         await e.exerciseImage!.delete();
       });
 
-      Navigator.of(context).pop();
+      Navigator.of(context).popUntil(
+        ModalRoute.withName(HomeScreen.routeName),
+      );
+
+      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
 
       if (this.mounted) {
         setState(() {
