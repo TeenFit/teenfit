@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
@@ -589,17 +590,19 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: _theme.cardColor,
+      backgroundColor: _theme.primaryColor,
       appBar: AppBar(
+        systemOverlayStyle:
+            SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: Colors.black),
         title: Text(
           isEdit ? 'Edit A Workout' : 'Create A Workout',
           maxLines: 2,
           textAlign: TextAlign.start,
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontFamily: 'Roboto',
             fontSize: _mediaQuery.size.height * 0.03,
             letterSpacing: 1,

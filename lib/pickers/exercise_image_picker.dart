@@ -359,12 +359,12 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
                 },
                 icon: Icon(
                   Icons.image,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
                 label: Text(
                   'Add Image',
                   style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: _mediaQuery.size.height * 0.025),
                 ),
               ),
