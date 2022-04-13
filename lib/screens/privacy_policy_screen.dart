@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class PrivacyPolicyScreen extends StatelessWidget {
   static const routeName = '/privacy-policy';
@@ -12,8 +13,10 @@ class PrivacyPolicyScreen extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
+      backgroundColor: _theme.primaryColor,
       appBar: AppBar(
+        systemOverlayStyle:
+            SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
         foregroundColor: Colors.white,
         backgroundColor: _theme.secondaryHeaderColor,
         title: Text(

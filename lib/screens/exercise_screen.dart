@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
 import 'package:teenfit/screens/workout_page.dart';
 import 'package:teenfit/widgets/start_workout/end_workout.dart';
@@ -43,6 +44,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: _theme.primaryColor,
       appBar: AppBar(
+        systemOverlayStyle:
+            SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {

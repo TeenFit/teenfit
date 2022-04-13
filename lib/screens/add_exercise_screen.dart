@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter_switch/flutter_switch.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/services.dart';
 import 'package:teenfit/widgets/exercise_types/sets_and_reps.dart';
 import 'package:teenfit/widgets/exercise_types/super_set.dart';
 import 'package:teenfit/widgets/exercise_types/time.dart';
@@ -140,17 +141,19 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: _theme.cardColor,
+      backgroundColor: _theme.primaryColor,
       appBar: AppBar(
+        systemOverlayStyle:
+            SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: Colors.black),
         title: Text(
           isEdit ? 'Edit Your Exercise' : 'Add A Exercise',
           maxLines: 2,
           textAlign: TextAlign.start,
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontFamily: 'Roboto',
             fontSize: _mediaQuery.size.height * 0.03,
             letterSpacing: 1,

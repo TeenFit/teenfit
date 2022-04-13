@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/providers/auth.dart';
@@ -32,6 +33,8 @@ class CreateWorkout extends StatelessWidget {
     return Scaffold(
       backgroundColor: _theme.primaryColor,
       appBar: AppBar(
+        systemOverlayStyle:
+            SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
         title: Text(
           'My Workouts',
           style: TextStyle(
@@ -43,7 +46,7 @@ class CreateWorkout extends StatelessWidget {
         automaticallyImplyLeading: false,
         actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+            padding: const EdgeInsets.only(left: 5.0, right: 15),
             child: IconButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(

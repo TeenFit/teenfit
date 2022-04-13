@@ -1,8 +1,6 @@
-import 'dart:io';
-
-import 'package:app_review/app_review.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 // import 'package:teenfit/providers/auth.dart';
 import '../screens/exercise_screen.dart';
 import 'constants.dart';
@@ -38,6 +36,15 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
       backgroundColor: Colors.grey.shade700,
     );
   }
+
+  RateMyApp rateMyApp = RateMyApp(
+    preferencesPrefix: 'rateMyApp_',
+    minDays: 7,
+    minLaunches: 10,
+    remindDays: 7,
+    remindLaunches: 10,
+    appStoreIdentifier: '1600570883',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -118,10 +125,6 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                       Navigator.of(context).popUntil(
                                           ModalRoute.withName(
                                               WorkoutPage.routeName));
-                                      if (Platform.isIOS) {
-                                        await AppReview.requestReview.onError(
-                                            (error, stackTrace) => null);
-                                      }
                                     } else if (widget.dialogOrganizerId ==
                                         '/exercise-screen') {
                                       setState(() {

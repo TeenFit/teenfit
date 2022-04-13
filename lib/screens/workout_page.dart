@@ -43,6 +43,14 @@ class WorkoutPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: _theme.primaryColor,
       resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        systemOverlayStyle:
+            SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
+      ),
       body: Container(
         height: _mediaQuery.size.height,
         width: double.infinity,
@@ -372,22 +380,20 @@ class WorkoutPage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: SingleChildScrollView(
-                  child: Container(
-                    height: _mediaQuery.size.height * 0.47,
-                    width: _mediaQuery.size.width,
-                    child: ListView.builder(
-                      itemBuilder: (ctx, index) => ExerciseTiles(
-                        key: ValueKey(workout.exercises[index].exerciseId),
-                        exercise: workout.exercises[index],
-                        size: _mediaQuery.size.width,
-                        isDeleteable: false,
-                        addExercise: () {},
-                        delete: () {},
-                        updateExercise: () {},
-                      ),
-                      itemCount: workout.exercises.length,
+                child: Container(
+                  height: _mediaQuery.size.height * 0.47,
+                  width: _mediaQuery.size.width,
+                  child: ListView.builder(
+                    itemBuilder: (ctx, index) => ExerciseTiles(
+                      key: ValueKey(workout.exercises[index].exerciseId),
+                      exercise: workout.exercises[index],
+                      size: _mediaQuery.size.width,
+                      isDeleteable: false,
+                      addExercise: () {},
+                      delete: () {},
+                      updateExercise: () {},
                     ),
+                    itemCount: workout.exercises.length,
                   ),
                 ),
               ),
