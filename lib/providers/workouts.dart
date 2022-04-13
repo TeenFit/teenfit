@@ -24,7 +24,7 @@ class Workouts with ChangeNotifier {
     var basicAuthString = 'Basic' + stringToBase64.encode(idAndKey);
     var headers = {'Authorization': basicAuthString};
 
-    var request = await http.post(
+    var request = await http.get(
         Uri.parse('https://api.backblazeb2.com/b2api/v2/b2_authorize_account'),
         headers: headers);
 
@@ -166,25 +166,19 @@ class Workouts with ChangeNotifier {
         String fileName = exerciseS[i].exerciseId + workouT.workoutId;
         int contentLength = await fileData.length();
 
-        var request = http.MultipartRequest(
-          'POST',
+        var request = await http.patch(
           uploadUrl,
+          headers: {
+            'Authorization': uploadAuthToken,
+            'X-Bz-File-Name': fileName,
+            'Content-Type': contentType,
+            'Content-Length': contentLength.toString(),
+            'X-Bz-Content-Sha1': sha1,
+            'X-Bz-Info-Author': 'unknown',
+            'X-Bz-Server-Side-Encryption': 'AES256'
+          },
+          body: [fileData],
         );
-
-        request.headers.addAll({
-          'Authorization': uploadAuthToken,
-          'X-Bz-File-Name': fileName,
-          'Content-Type': contentType,
-          'Content-Length': contentLength.toString(),
-          'X-Bz-Content-Sha1': sha1,
-          'X-Bz-Info-Author': 'unknown',
-          'X-Bz-Server-Side-Encryption': 'AES256'
-        });
-
-        request.files
-            .add(await http.MultipartFile.fromPath('image', fileData.path));
-
-        var res = await request.send();
 
         // final exerciseRef = FirebaseStorage.instance
         //     .ref()

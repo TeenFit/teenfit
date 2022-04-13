@@ -199,9 +199,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 .updateWorkout(newWorkout!)
             : await Provider.of<Workouts>(context, listen: false)
                 .addWorkout(newWorkout!);
+
+        Navigator.of(context).pop();
       } catch (e) {
-        // _showToast('Unable To Add Workout Try Again Later');
-        _showToast(e.toString());
+        _showToast('Unable To Add Workout Try Again Later');
       }
 
       List<Exercise> deleteFiles = newWorkout!.exercises
@@ -214,8 +215,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       deleteFiles.forEach((e) async {
         await e.exerciseImage!.delete();
       });
-
-      Navigator.of(context).pop();
 
       if (this.mounted) {
         setState(() {
