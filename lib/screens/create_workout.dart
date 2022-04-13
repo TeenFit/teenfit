@@ -160,7 +160,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         return;
       }
 
-      if (exerciseEditList!.length < 3) {
+      if (exerciseEditList!.length < 1) {
         _showToast('A Minnimum Of 3 Exercises Is Required');
         return;
       }

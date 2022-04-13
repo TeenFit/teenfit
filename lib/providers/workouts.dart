@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 import '/providers/exercise.dart';
 import '/Custom/http_execption.dart';
@@ -13,10 +15,45 @@ import 'auth.dart';
 class Workouts with ChangeNotifier {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<void> addWorkout(Workout workouT) async {
-    CollectionReference workoutsCollection =
-        FirebaseFirestore.instance.collection('/workouts');
+  CollectionReference workoutsCollection =
+      FirebaseFirestore.instance.collection('/workouts');
 
+  Future<Map> authAccount() async {
+    var idAndKey = '004b2d9d74e33f20000000002:K004Cxur8QzR+hXtzoaYmfPPNiop4H0';
+    Codec<String, String> stringToBase64 = utf8.fuse(base64);
+    var basicAuthString = 'Basic' + stringToBase64.encode(idAndKey);
+    var headers = {'Authorization': basicAuthString};
+
+    var request = await http.post(
+        Uri.parse('https://api.backblazeb2.com/b2api/v2/b2_authorize_account'),
+        headers: headers);
+
+    Map<String, dynamic> response =
+        await json.decode(request.body) as Map<String, dynamic>;
+
+    return response;
+  }
+
+  Future<Map> getUploadUrl() async {
+    Map authResponse = await authAccount();
+
+    var apiUrl = authResponse['apiUrl'];
+    var authorizationToken = authResponse['authorizationToken'];
+    var bucketId = authResponse['allowed']['bucketId'];
+
+    var request = await http.post(
+      Uri.parse('$apiUrl/b2api/v2/b2_get_upload_url'),
+      body: json.encode({'bucketId': bucketId}),
+      headers: {'Authorization': authorizationToken},
+    );
+
+    Map<String, dynamic> response =
+        await json.decode(request.body) as Map<String, dynamic>;
+
+    return response;
+  }
+
+  Future<void> addWorkout(Workout workouT) async {
     List<String> searchTermsList = [];
 
     Future<void> addSearchTerms(String creatorName, String workoutName) async {
@@ -118,32 +155,62 @@ class Workouts with ChangeNotifier {
 
     Future<void> addExerciseImageLink(List<Exercise> exerciseS) async {
       int i = 0;
+      var uploadResponse = await getUploadUrl();
+      var uploadUrl = uploadResponse['uploadUrl'];
+      var uploadAuthToken = uploadResponse['authorizationToken'];
+      var contentType = 'b2/x-auto';
+      var sha1 = 'do_not_verify';
 
       do {
-        final exerciseRef = FirebaseStorage.instance
-            .ref()
-            .child('${workouT.workoutId}')
-            .child(exerciseS[i].exerciseId + workouT.workoutId);
+        File fileData = exerciseS[i].exerciseImage!;
+        String fileName = exerciseS[i].exerciseId + workouT.workoutId;
+        int contentLength = await fileData.length();
 
-        await exerciseRef.putFile(exerciseS[i].exerciseImage!);
+        var request = http.MultipartRequest(
+          'POST',
+          uploadUrl,
+        );
 
-        final exerciseRef2 = FirebaseStorage.instance
-            .ref()
-            .child('${workouT.workoutId}')
-            .child(exerciseS[i].exerciseId + workouT.workoutId + 'second');
+        request.headers.addAll({
+          'Authorization': uploadAuthToken,
+          'X-Bz-File-Name': fileName,
+          'Content-Type': contentType,
+          'Content-Length': contentLength.toString(),
+          'X-Bz-Content-Sha1': sha1,
+          'X-Bz-Info-Author': 'unknown',
+          'X-Bz-Server-Side-Encryption': 'AES256'
+        });
 
-        if (exerciseS[i].exerciseImage2 != null) {
-          await exerciseRef2.putFile(exerciseS[i].exerciseImage2!);
-        }
+        request.files
+            .add(await http.MultipartFile.fromPath('image', fileData.path));
 
-        var exerciseLink = await exerciseRef.getDownloadURL();
-        var exerciseLink2 = exerciseS[i].exerciseImage2 != null
-            ? await exerciseRef2.getDownloadURL()
-            : null;
+        var res = await request.send();
+
+        // final exerciseRef = FirebaseStorage.instance
+        //     .ref()
+        //     .child('${workouT.workoutId}')
+        //     .child(exerciseS[i].exerciseId + workouT.workoutId);
+
+        // await exerciseRef.putFile(exerciseS[i].exerciseImage!);
+
+        // final exerciseRef2 = FirebaseStorage.instance
+        //     .ref()
+        //     .child('${workouT.workoutId}')
+        //     .child(exerciseS[i].exerciseId + workouT.workoutId + 'second');
+
+        // if (exerciseS[i].exerciseImage2 != null) {
+        //   await exerciseRef2.putFile(exerciseS[i].exerciseImage2!);
+        // }
+
+        // var exerciseLink = await exerciseRef.getDownloadURL();
+        // var exerciseLink2 = exerciseS[i].exerciseImage2 != null
+        //     ? await exerciseRef2.getDownloadURL()
+        //     : null;
 
         exerciseImages.add({
-          'image2': exerciseLink2 != null ? exerciseLink2.toString() : null,
-          'image': exerciseLink,
+          'image2': null,
+          'image':
+              "https://f004.backblazeb2.com/file/workoutImages/${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}",
           'id': exerciseS[i].exerciseId + workouT.workoutId,
         });
 
@@ -152,14 +219,14 @@ class Workouts with ChangeNotifier {
     }
 
     try {
-      final ref = FirebaseStorage.instance
-          .ref()
-          .child('${workouT.workoutId}')
-          .child(workouT.workoutId);
+      // final ref = FirebaseStorage.instance
+      //     .ref()
+      //     .child('${workouT.workoutId}')
+      //     .child(workouT.workoutId);
 
-      await ref.putFile(workouT.bannerImage!);
+      // await ref.putFile(workouT.bannerImage!);
 
-      final url = await ref.getDownloadURL();
+      final url = '';
 
       await addExerciseImageLink(workouT.exercises);
 
@@ -217,9 +284,6 @@ class Workouts with ChangeNotifier {
   }
 
   Future<void> updateWorkout(Workout workouT) async {
-    CollectionReference workoutsCollection =
-        FirebaseFirestore.instance.collection('/workouts');
-
     List<String> searchTermsList = [];
 
     Future<void> addSearchTerms(String creatorName, String workoutName) async {
@@ -322,39 +386,39 @@ class Workouts with ChangeNotifier {
     Future<void> addExerciseImageLink(List<Exercise> exerciseS) async {
       int i = 0;
 
-      var storageinstance = FirebaseStorage.instance;
+      // var storageinstance = FirebaseStorage.instance;
 
       do {
         try {
-          final exerciseRef = storageinstance
-              .ref()
-              .child('${workouT.workoutId}')
-              .child(exerciseS[i].exerciseId + workouT.workoutId);
+          // final exerciseRef = storageinstance
+          //     .ref()
+          //     .child('${workouT.workoutId}')
+          //     .child(exerciseS[i].exerciseId + workouT.workoutId);
 
-          if (exerciseS[i].exerciseImage != null) {
-            await exerciseRef.putFile(exerciseS[i].exerciseImage!);
-          }
+          // if (exerciseS[i].exerciseImage != null) {
+          //   await exerciseRef.putFile(exerciseS[i].exerciseImage!);
+          // }
 
-          final exerciseRef2 = storageinstance
-              .ref()
-              .child('${workouT.workoutId}')
-              .child(exerciseS[i].exerciseId + workouT.workoutId + 'second');
+          // final exerciseRef2 = storageinstance
+          //     .ref()
+          //     .child('${workouT.workoutId}')
+          //     .child(exerciseS[i].exerciseId + workouT.workoutId + 'second');
 
-          if (exerciseS[i].exerciseImage2 != null) {
-            await exerciseRef2.putFile(exerciseS[i].exerciseImage2!);
-          }
+          // if (exerciseS[i].exerciseImage2 != null) {
+          //   await exerciseRef2.putFile(exerciseS[i].exerciseImage2!);
+          // }
 
-          final exerciseLink = await exerciseRef.getDownloadURL();
-          final exerciseLink2 = exerciseS[i].exerciseImage2 != null &&
-                  exerciseS[i].exerciseImageLink != null
-              ? await exerciseRef2.getDownloadURL()
-              : null;
+          // final exerciseLink = await exerciseRef.getDownloadURL();
+          // final exerciseLink2 = exerciseS[i].exerciseImage2 != null &&
+          //         exerciseS[i].exerciseImageLink != null
+          //     ? await exerciseRef2.getDownloadURL()
+          //     : null;
 
-          exerciseImages.add({
-            'image2': exerciseLink2 != null ? exerciseLink2.toString() : null,
-            'image': exerciseLink,
-            'id': exerciseS[i].exerciseId + workouT.workoutId
-          });
+          // exerciseImages.add({
+          //   'image2': exerciseLink2 != null ? exerciseLink2.toString() : null,
+          //   'image': exerciseLink,
+          //   'id': exerciseS[i].exerciseId + workouT.workoutId
+          // });
         } catch (e) {
           throw e;
         }
@@ -364,50 +428,50 @@ class Workouts with ChangeNotifier {
 
       //create a while loop that adds items to a list of exercises that need to be deleted
 
-      ListResult firebaseExerciseFiles = await FirebaseStorage.instance
-          .ref()
-          .child('${workouT.workoutId}')
-          .listAll();
+      //   ListResult firebaseExerciseFiles = await FirebaseStorage.instance
+      //       .ref()
+      //       .child('${workouT.workoutId}')
+      //       .listAll();
 
-      List<String> unavailableExercises = [];
+      //   List<String> unavailableExercises = [];
 
-      firebaseExerciseFiles.items.forEach((element) {
-        unavailableExercises.add(element.name);
-      });
+      //   firebaseExerciseFiles.items.forEach((element) {
+      //     unavailableExercises.add(element.name);
+      //   });
 
-      int index = 0;
-      do {
-        {
-          unavailableExercises
-              .remove(exerciseS[index].exerciseId + workouT.workoutId);
-          unavailableExercises.remove(
-              exerciseS[index].exerciseId + workouT.workoutId + 'second');
-        }
-        index = index + 1;
-      } while (index < exerciseS.length);
+      //   int index = 0;
+      //   do {
+      //     {
+      //       unavailableExercises
+      //           .remove(exerciseS[index].exerciseId + workouT.workoutId);
+      //       unavailableExercises.remove(
+      //           exerciseS[index].exerciseId + workouT.workoutId + 'second');
+      //     }
+      //     index = index + 1;
+      //   } while (index < exerciseS.length);
 
-      unavailableExercises.remove(workouT.workoutId);
+      //   unavailableExercises.remove(workouT.workoutId);
 
-      unavailableExercises.forEach((element) async {
-        await FirebaseStorage.instance
-            .ref()
-            .child(workouT.workoutId)
-            .child(element)
-            .delete();
-      });
+      //   unavailableExercises.forEach((element) async {
+      //     await FirebaseStorage.instance
+      //         .ref()
+      //         .child(workouT.workoutId)
+      //         .child(element)
+      //         .delete();
+      //   });
     }
 
     try {
-      final ref = FirebaseStorage.instance
-          .ref()
-          .child('${workouT.workoutId}')
-          .child(workouT.workoutId);
+      // final ref = FirebaseStorage.instance
+      //     .ref()
+      //     .child('${workouT.workoutId}')
+      //     .child(workouT.workoutId);
 
-      if (workouT.bannerImage != null) {
-        await ref.putFile(workouT.bannerImage!);
-      }
+      // if (workouT.bannerImage != null) {
+      //   await ref.putFile(workouT.bannerImage!);
+      // }
 
-      final url = await ref.getDownloadURL();
+      final url = '';
 
       await addExerciseImageLink(workouT.exercises);
 
@@ -508,33 +572,30 @@ class Workouts with ChangeNotifier {
   }
 
   Future<void> deleteWorkout(Workout workouT) async {
-    CollectionReference workoutsCollection =
-        FirebaseFirestore.instance.collection('/workouts');
-
-    final deleteImageRef =
-        FirebaseStorage.instance.ref().child('${workouT.workoutId}');
+    // final deleteImageRef =
+    //     FirebaseStorage.instance.ref().child('${workouT.workoutId}');
 
     final exerciseS = workouT.exercises;
 
     Future<void> deleteImages() async {
-      await deleteImageRef.child(workouT.workoutId).delete();
+      // await deleteImageRef.child(workouT.workoutId).delete();
 
       int index = 0;
 
       do {
-        await FirebaseStorage.instance
-            .ref()
-            .child('${workouT.workoutId}')
-            .child(exerciseS[index].exerciseId + workouT.workoutId)
-            .delete();
+        // await FirebaseStorage.instance
+        //     .ref()
+        //     .child('${workouT.workoutId}')
+        //     .child(exerciseS[index].exerciseId + workouT.workoutId)
+        //     .delete();
 
-        if (exerciseS[index].reps2 != null) {
-          await FirebaseStorage.instance
-              .ref()
-              .child('${workouT.workoutId}')
-              .child(exerciseS[index].exerciseId + workouT.workoutId + 'second')
-              .delete();
-        }
+        // if (exerciseS[index].reps2 != null) {
+        //   await FirebaseStorage.instance
+        //       .ref()
+        //       .child('${workouT.workoutId}')
+        //       .child(exerciseS[index].exerciseId + workouT.workoutId + 'second')
+        //       .delete();
+        // }
 
         index = index + 1;
       } while (index < exerciseS.length);
@@ -594,9 +655,6 @@ class Workouts with ChangeNotifier {
   // }
 
   Future<void> acceptWorkout(Workout workouT) async {
-    CollectionReference workoutsCollection =
-        FirebaseFirestore.instance.collection('/workouts');
-
     DateTime time = DateTime.now();
 
     await workoutsCollection
@@ -659,9 +717,6 @@ class Workouts with ChangeNotifier {
   }
 
   Future<void> failWorkout(Workout workouT) async {
-    CollectionReference workoutsCollection =
-        FirebaseFirestore.instance.collection('/workouts');
-
     DateTime time = DateTime.now();
 
     await workoutsCollection
