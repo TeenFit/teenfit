@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,8 +14,6 @@ import './workout.dart';
 import 'auth.dart';
 
 class Workouts with ChangeNotifier {
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
   CollectionReference workoutsCollection =
       FirebaseFirestore.instance.collection('/workouts');
 
@@ -162,11 +161,12 @@ class Workouts with ChangeNotifier {
       var sha1 = 'do_not_verify';
 
       do {
-        File fileData = exerciseS[i].exerciseImage!;
+        File file = exerciseS[i].exerciseImage!;
+        Uint8List fileData = await file.readAsBytes();
         String fileName = exerciseS[i].exerciseId + workouT.workoutId;
-        int contentLength = await fileData.length();
+        int contentLength = fileData.lengthInBytes;
 
-        var request = await http.patch(
+        var request = await http.put(
           uploadUrl,
           headers: {
             'Authorization': uploadAuthToken,
@@ -177,7 +177,6 @@ class Workouts with ChangeNotifier {
             'X-Bz-Info-Author': 'unknown',
             'X-Bz-Server-Side-Encryption': 'AES256'
           },
-          body: [fileData],
         );
 
         // final exerciseRef = FirebaseStorage.instance
