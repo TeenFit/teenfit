@@ -164,16 +164,14 @@ class Workouts with ChangeNotifier {
         File file = exerciseS[i].exerciseImage!;
         Uint8List fileData = await file.readAsBytes();
         String fileName = exerciseS[i].exerciseId + workouT.workoutId;
-        int contentLength = fileData.lengthInBytes;
 
-        var request = await http.put(
+        var request = await http.post(
           uploadUrl,
           body: fileData,
           headers: {
             'Authorization': uploadAuthToken,
             'X-Bz-File-Name': fileName,
             'Content-Type': contentType,
-            'Content-Length': contentLength.toString(),
             'X-Bz-Content-Sha1': sha1,
             'X-Bz-Info-Author': 'unknown',
             'X-Bz-Server-Side-Encryption': 'AES256'
