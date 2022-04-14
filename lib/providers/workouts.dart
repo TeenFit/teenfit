@@ -168,6 +168,7 @@ class Workouts with ChangeNotifier {
 
         var request = await http.put(
           uploadUrl,
+          body: fileData,
           headers: {
             'Authorization': uploadAuthToken,
             'X-Bz-File-Name': fileName,
@@ -464,7 +465,7 @@ class Workouts with ChangeNotifier {
       //   await ref.putFile(workouT.bannerImage!);
       // }
 
-      final url = '';
+      final url = null;
 
       await addExerciseImageLink(workouT.exercises);
 
