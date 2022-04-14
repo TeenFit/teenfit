@@ -126,10 +126,34 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                           ModalRoute.withName(
                                               WorkoutPage.routeName));
                                       if (rateMyApp.shouldOpenDialog) {
-                                        rateMyApp.showRateDialog(context,
-                                            title: 'Rate TeenFit',
-                                            message:
-                                                'Please leave us a review because it helps us get more workouts for you to use');
+                                        rateMyApp.showRateDialog(
+                                          context,
+                                          title: 'Rate TeenFit',
+                                          message:
+                                              'Please leave us a review because it helps us get more workouts for you to use',
+                                          rateButton: 'RATE',
+                                          noButton: 'NO THANKS',
+                                          laterButton: 'MAYBE LATER',
+                                          listener: (button) {
+                                            // The button click listener (useful if you want to cancel the click event).
+                                            switch (button) {
+                                              case RateMyAppDialogButton.rate:
+                                                print('Clicked on "Rate".');
+                                                break;
+                                              case RateMyAppDialogButton.later:
+                                                print('Clicked on "Later".');
+                                                break;
+                                              case RateMyAppDialogButton.no:
+                                                print('Clicked on "No".');
+                                                break;
+                                            }
+
+                                            return true; // Return false if you want to cancel the click event.
+                                          },
+                                          onDismissed: () => rateMyApp
+                                              .callEvent(RateMyAppEventType
+                                                  .laterButtonPressed),
+                                        );
                                       }
                                     } else if (widget.dialogOrganizerId ==
                                         '/exercise-screen') {
