@@ -39,10 +39,10 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
 
   RateMyApp rateMyApp = RateMyApp(
     preferencesPrefix: 'rateMyApp_',
-    minDays: 7,
-    minLaunches: 10,
-    remindDays: 7,
-    remindLaunches: 10,
+    minDays: 0,
+    minLaunches: 0,
+    remindDays: 5,
+    remindLaunches: 5,
     appStoreIdentifier: '1600570883',
   );
 
@@ -125,6 +125,12 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                       Navigator.of(context).popUntil(
                                           ModalRoute.withName(
                                               WorkoutPage.routeName));
+                                      if (rateMyApp.shouldOpenDialog) {
+                                        rateMyApp.showRateDialog(context,
+                                            title: 'Rate TeenFit',
+                                            message:
+                                                'Please leave us a review because it helps us get more workouts for you to use');
+                                      }
                                     } else if (widget.dialogOrganizerId ==
                                         '/exercise-screen') {
                                       setState(() {
