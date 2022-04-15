@@ -163,10 +163,13 @@ class Workouts with ChangeNotifier {
       do {
         File file = exerciseS[i].exerciseImage!;
         Uint8List fileData = await file.readAsBytes();
-        String fileName = exerciseS[i].exerciseId + workouT.workoutId;
+        String fileName = workouT.workoutId +
+            '/' +
+            exerciseS[i].exerciseId +
+            workouT.workoutId;
 
-        var request = await http.post(
-          uploadUrl,
+        await http.post(
+          Uri.parse(uploadUrl),
           body: fileData,
           headers: {
             'Authorization': uploadAuthToken,
@@ -178,29 +181,33 @@ class Workouts with ChangeNotifier {
           },
         );
 
-        // final exerciseRef = FirebaseStorage.instance
-        //     .ref()
-        //     .child('${workouT.workoutId}')
-        //     .child(exerciseS[i].exerciseId + workouT.workoutId);
+        if (exerciseS[i].exerciseImage2 != null) {
+          File file2 = exerciseS[i].exerciseImage2!;
+          Uint8List fileData2 = await file2.readAsBytes();
+          String fileName2 = workouT.workoutId +
+              '/' +
+              exerciseS[i].exerciseId +
+              workouT.workoutId +
+              'second';
 
-        // await exerciseRef.putFile(exerciseS[i].exerciseImage!);
-
-        // final exerciseRef2 = FirebaseStorage.instance
-        //     .ref()
-        //     .child('${workouT.workoutId}')
-        //     .child(exerciseS[i].exerciseId + workouT.workoutId + 'second');
-
-        // if (exerciseS[i].exerciseImage2 != null) {
-        //   await exerciseRef2.putFile(exerciseS[i].exerciseImage2!);
-        // }
-
-        // var exerciseLink = await exerciseRef.getDownloadURL();
-        // var exerciseLink2 = exerciseS[i].exerciseImage2 != null
-        //     ? await exerciseRef2.getDownloadURL()
-        //     : null;
+          await http.post(
+            Uri.parse(uploadUrl),
+            body: fileData2,
+            headers: {
+              'Authorization': uploadAuthToken,
+              'X-Bz-File-Name': fileName2,
+              'Content-Type': contentType,
+              'X-Bz-Content-Sha1': sha1,
+              'X-Bz-Info-Author': 'unknown',
+              'X-Bz-Server-Side-Encryption': 'AES256'
+            },
+          );
+        }
 
         exerciseImages.add({
-          'image2': null,
+          'image2': exerciseS[i].exerciseImage2 != null
+              ? "https://f004.backblazeb2.com/file/workoutImages/${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}second"
+              : null,
           'image':
               "https://f004.backblazeb2.com/file/workoutImages/${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}",
           'id': exerciseS[i].exerciseId + workouT.workoutId,
@@ -211,14 +218,31 @@ class Workouts with ChangeNotifier {
     }
 
     try {
-      // final ref = FirebaseStorage.instance
-      //     .ref()
-      //     .child('${workouT.workoutId}')
-      //     .child(workouT.workoutId);
+      var uploadResponse = await getUploadUrl();
+      var uploadUrl = uploadResponse['uploadUrl'];
+      var uploadAuthToken = uploadResponse['authorizationToken'];
+      var contentType = 'b2/x-auto';
+      var sha1 = 'do_not_verify';
 
-      // await ref.putFile(workouT.bannerImage!);
+      File file = workouT.bannerImage!;
+      Uint8List fileData = await file.readAsBytes();
+      String fileName = workouT.workoutId + '/' + workouT.workoutId;
 
-      final url = '';
+      await http.post(
+        Uri.parse(uploadUrl),
+        body: fileData,
+        headers: {
+          'Authorization': uploadAuthToken,
+          'X-Bz-File-Name': fileName,
+          'Content-Type': contentType,
+          'X-Bz-Content-Sha1': sha1,
+          'X-Bz-Info-Author': 'unknown',
+          'X-Bz-Server-Side-Encryption': 'AES256'
+        },
+      );
+
+      final url =
+          "https://f004.backblazeb2.com/file/workoutImages/${workouT.workoutId}/${workouT.workoutId}";
 
       await addExerciseImageLink(workouT.exercises);
 
@@ -377,94 +401,162 @@ class Workouts with ChangeNotifier {
 
     Future<void> addExerciseImageLink(List<Exercise> exerciseS) async {
       int i = 0;
-
-      // var storageinstance = FirebaseStorage.instance;
+      var uploadResponse = await getUploadUrl();
+      var uploadUrl = uploadResponse['uploadUrl'];
+      var uploadAuthToken = uploadResponse['authorizationToken'];
+      var contentType = 'b2/x-auto';
+      var sha1 = 'do_not_verify';
 
       do {
-        try {
-          // final exerciseRef = storageinstance
-          //     .ref()
-          //     .child('${workouT.workoutId}')
-          //     .child(exerciseS[i].exerciseId + workouT.workoutId);
+        if (exerciseS[i].exerciseImage != null) {
+          File file = exerciseS[i].exerciseImage!;
+          Uint8List fileData = await file.readAsBytes();
+          String fileName = workouT.workoutId +
+              '/' +
+              exerciseS[i].exerciseId +
+              workouT.workoutId;
 
-          // if (exerciseS[i].exerciseImage != null) {
-          //   await exerciseRef.putFile(exerciseS[i].exerciseImage!);
-          // }
-
-          // final exerciseRef2 = storageinstance
-          //     .ref()
-          //     .child('${workouT.workoutId}')
-          //     .child(exerciseS[i].exerciseId + workouT.workoutId + 'second');
-
-          // if (exerciseS[i].exerciseImage2 != null) {
-          //   await exerciseRef2.putFile(exerciseS[i].exerciseImage2!);
-          // }
-
-          // final exerciseLink = await exerciseRef.getDownloadURL();
-          // final exerciseLink2 = exerciseS[i].exerciseImage2 != null &&
-          //         exerciseS[i].exerciseImageLink != null
-          //     ? await exerciseRef2.getDownloadURL()
-          //     : null;
-
-          // exerciseImages.add({
-          //   'image2': exerciseLink2 != null ? exerciseLink2.toString() : null,
-          //   'image': exerciseLink,
-          //   'id': exerciseS[i].exerciseId + workouT.workoutId
-          // });
-        } catch (e) {
-          throw e;
+          await http.post(
+            Uri.parse(uploadUrl),
+            body: fileData,
+            headers: {
+              'Authorization': uploadAuthToken,
+              'X-Bz-File-Name': fileName,
+              'Content-Type': contentType,
+              'X-Bz-Content-Sha1': sha1,
+              'X-Bz-Info-Author': 'unknown',
+              'X-Bz-Server-Side-Encryption': 'AES256'
+            },
+          );
         }
+
+        if (exerciseS[i].exerciseImage2 != null) {
+          File file2 = exerciseS[i].exerciseImage2!;
+          Uint8List fileData2 = await file2.readAsBytes();
+          String fileName2 = workouT.workoutId +
+              '/' +
+              exerciseS[i].exerciseId +
+              workouT.workoutId +
+              'second';
+
+          await http.post(
+            Uri.parse(uploadUrl),
+            body: fileData2,
+            headers: {
+              'Authorization': uploadAuthToken,
+              'X-Bz-File-Name': fileName2,
+              'Content-Type': contentType,
+              'X-Bz-Content-Sha1': sha1,
+              'X-Bz-Info-Author': 'unknown',
+              'X-Bz-Server-Side-Encryption': 'AES256'
+            },
+          );
+        }
+
+        exerciseImages.add({
+          'image2': exerciseS[i].exerciseImage2 != null
+              ? "https://f004.backblazeb2.com/file/workoutImages/${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}second"
+              : exerciseS[i].reps2 == null
+                  ? null
+                  : exerciseS[i].exerciseImageLink2,
+          'image':
+              "https://f004.backblazeb2.com/file/workoutImages/${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}",
+          'id': exerciseS[i].exerciseId + workouT.workoutId,
+        });
 
         i = i + 1;
       } while (i < exerciseS.length);
 
-      //create a while loop that adds items to a list of exercises that need to be deleted
+      Map authResponse = await authAccount();
 
-      //   ListResult firebaseExerciseFiles = await FirebaseStorage.instance
-      //       .ref()
-      //       .child('${workouT.workoutId}')
-      //       .listAll();
+      var apiUrl = authResponse['apiUrl'];
+      var authorizationToken = authResponse['authorizationToken'];
+      var bucketId = authResponse['allowed']['bucketId'];
 
-      //   List<String> unavailableExercises = [];
+      var request = await http.post(
+          Uri.parse('$apiUrl/b2api/v2/b2_list_file_names'),
+          body: json.encode({'bucketId': bucketId}),
+          headers: {
+            'Authorization': authorizationToken,
+            'bucketId': bucketId,
+            'prefix': '${workouT.workoutId}/'
+          });
 
-      //   firebaseExerciseFiles.items.forEach((element) {
-      //     unavailableExercises.add(element.name);
-      //   });
+      Map<String, dynamic> response =
+          await json.decode(request.body) as Map<String, dynamic>;
 
-      //   int index = 0;
-      //   do {
-      //     {
-      //       unavailableExercises
-      //           .remove(exerciseS[index].exerciseId + workouT.workoutId);
-      //       unavailableExercises.remove(
-      //           exerciseS[index].exerciseId + workouT.workoutId + 'second');
-      //     }
-      //     index = index + 1;
-      //   } while (index < exerciseS.length);
+      List<Map> unavailableExercises = [];
 
-      //   unavailableExercises.remove(workouT.workoutId);
+      print(response);
 
-      //   unavailableExercises.forEach((element) async {
-      //     await FirebaseStorage.instance
-      //         .ref()
-      //         .child(workouT.workoutId)
-      //         .child(element)
-      //         .delete();
-      //   });
+      List<Map> files = response['files'];
+
+      files.forEach((element) {
+        unavailableExercises.add(
+            {'fileName': element['fileName'], 'fileId': element['fileId']});
+      });
+
+      int index = 0;
+      do {
+        {
+          unavailableExercises.removeWhere((element) =>
+              element['fileName'] ==
+              workouT.workoutId +
+                  '/' +
+                  exerciseS[index].exerciseId +
+                  workouT.workoutId);
+          unavailableExercises.removeWhere((element) =>
+              element['fileName'] ==
+              workouT.workoutId +
+                  '/' +
+                  exerciseS[index].exerciseId +
+                  workouT.workoutId +
+                  'second');
+        }
+        index = index + 1;
+      } while (index < exerciseS.length);
+
+      unavailableExercises.removeWhere((element) =>
+          element['fileName'] == workouT.workoutId + '/' + workouT.workoutId);
+
+      unavailableExercises.forEach((element) async {
+        await http.post(
+          Uri.parse('$apiUrl/b2api/v2/b2_delete_file_version'),
+          body: json.encode(
+              {'fileName': element['fileName'], 'fileId': element['fileId']}),
+          headers: {'Authorization': authorizationToken},
+        );
+      });
     }
 
     try {
-      // final ref = FirebaseStorage.instance
-      //     .ref()
-      //     .child('${workouT.workoutId}')
-      //     .child(workouT.workoutId);
+      var uploadResponse = await getUploadUrl();
+      var uploadUrl = uploadResponse['uploadUrl'];
+      var uploadAuthToken = uploadResponse['authorizationToken'];
+      var contentType = 'b2/x-auto';
+      var sha1 = 'do_not_verify';
 
-      // if (workouT.bannerImage != null) {
-      //   await ref.putFile(workouT.bannerImage!);
-      // }
+      if (workouT.bannerImage != null) {
+        File file = workouT.bannerImage!;
+        Uint8List fileData = await file.readAsBytes();
+        String fileName = workouT.workoutId + '/' + workouT.workoutId;
 
-      final url = null;
+        await http.post(
+          Uri.parse(uploadUrl),
+          body: fileData,
+          headers: {
+            'Authorization': uploadAuthToken,
+            'X-Bz-File-Name': fileName,
+            'Content-Type': contentType,
+            'X-Bz-Content-Sha1': sha1,
+            'X-Bz-Info-Author': 'unknown',
+            'X-Bz-Server-Side-Encryption': 'AES256'
+          },
+        );
+      }
 
+      final url =
+          "https://f004.backblazeb2.com/file/workoutImages/${workouT.workoutId}/${workouT.workoutId}";
       await addExerciseImageLink(workouT.exercises);
 
       var exerciseS = workouT.exercises.map((e) {
@@ -481,9 +573,7 @@ class Workouts with ChangeNotifier {
           'restTime': e.restTime,
           'timeSeconds': e.timeSeconds,
           'exerciseImage': exerciseImages[exerciseIndex]['image'].toString(),
-          'exerciseImage2': exerciseImages[exerciseIndex]['image2'] == null
-              ? e.exerciseImageLink2
-              : exerciseImages[exerciseIndex]['image2'],
+          'exerciseImage2': exerciseImages[exerciseIndex]['image2'].toString(),
         };
       }).toList();
 

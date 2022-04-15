@@ -122,7 +122,7 @@ class WorkoutPage extends StatelessWidget {
                         children: [
                           Container(
                             height: _mediaQuery.size.height * 0.35,
-                            width: _mediaQuery.size.width * 0.1,
+                            width: _mediaQuery.size.width * 0.2,
                             child: Column(
                               children: [
                                 SizedBox(
@@ -136,7 +136,6 @@ class WorkoutPage extends StatelessWidget {
                                   iconSize: _appBarHeight * 0.55,
                                   color: Colors.white,
                                 ),
-                                SizedBox()
                               ],
                             ),
                           ),
