@@ -73,6 +73,9 @@ class Auth with ChangeNotifier {
         'following': 0,
         'followers': 0,
         'uid': ('$userId'),
+        'date': null,
+        'searchTerms': null,
+        'link': null,
       });
 
       notifyListeners();
