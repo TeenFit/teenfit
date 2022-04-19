@@ -82,8 +82,14 @@ class _SuperSetPageState extends State<SuperSetPage> {
                 fit: BoxFit.contain,
                 child: Text(
                   isFirstImage == true
-                      ? widget.exercise!.name
-                      : widget.exercise!.name2 ?? '',
+                      ? widget.exercise!.exerciseImage == null &&
+                              widget.exercise!.exerciseImageLink == null
+                          ? ''
+                          : widget.exercise!.name
+                      : widget.exercise!.exerciseImage2 == null &&
+                              widget.exercise!.exerciseImageLink2 == null
+                          ? ''
+                          : widget.exercise!.name2!,
                   maxLines: 2,
                   style: TextStyle(
                     color: Colors.black,
@@ -112,23 +118,48 @@ class _SuperSetPageState extends State<SuperSetPage> {
                             (_mediaQuery.size.height - _appBarHeight) * 0.63,
                         width: _mediaQuery.size.width * 0.75,
                         child: widget.exercise!.exerciseImageLink == null
-                            ? FadeInImage(
-                                imageErrorBuilder: (context, image, _) =>
-                                    Image.asset(
-                                  'assets/images/ImageUploadError.png',
-                                  fit: BoxFit.cover,
-                                ),
-                                placeholderErrorBuilder: (context, image, _) =>
-                                    Image.asset(
-                                  'assets/images/ImageUploadError.png',
-                                  fit: BoxFit.cover,
-                                ),
-                                placeholder:
-                                    AssetImage('assets/images/loading-gif.gif'),
-                                image:
-                                    FileImage(widget.exercise!.exerciseImage!),
-                                fit: BoxFit.contain,
-                              )
+                            ? widget.exercise!.exerciseImage == null
+                                ? Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Container(
+                                      height: (_mediaQuery.size.height -
+                                              _appBarHeight) *
+                                          0.08,
+                                      width: _mediaQuery.size.width,
+                                      child: Center(
+                                        child: Text(
+                                          widget.exercise!.name,
+                                          textAlign: TextAlign.center,
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontFamily: 'Roboto',
+                                            fontSize:
+                                                _mediaQuery.size.height * 0.045,
+                                            letterSpacing: 1,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : FadeInImage(
+                                    imageErrorBuilder: (context, image, _) =>
+                                        Image.asset(
+                                      'assets/images/ImageUploadError.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                                    placeholderErrorBuilder:
+                                        (context, image, _) => Image.asset(
+                                      'assets/images/ImageUploadError.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                                    placeholder: AssetImage(
+                                        'assets/images/loading-gif.gif'),
+                                    image: FileImage(
+                                        widget.exercise!.exerciseImage!),
+                                    fit: BoxFit.contain,
+                                  )
                             : FadeInImage(
                                 imageErrorBuilder: (context, image, _) =>
                                     Image.asset(
@@ -187,23 +218,48 @@ class _SuperSetPageState extends State<SuperSetPage> {
                             (_mediaQuery.size.height - _appBarHeight) * 0.63,
                         width: _mediaQuery.size.width * 0.75,
                         child: widget.exercise!.exerciseImageLink2 == null
-                            ? FadeInImage(
-                                imageErrorBuilder: (context, image, _) =>
-                                    Image.asset(
-                                  'assets/images/ImageUploadError.png',
-                                  fit: BoxFit.cover,
-                                ),
-                                placeholderErrorBuilder: (context, image, _) =>
-                                    Image.asset(
-                                  'assets/images/ImageUploadError.png',
-                                  fit: BoxFit.cover,
-                                ),
-                                placeholder:
-                                    AssetImage('assets/images/loading-gif.gif'),
-                                image:
-                                    FileImage(widget.exercise!.exerciseImage2!),
-                                fit: BoxFit.contain,
-                              )
+                            ? widget.exercise!.exerciseImage2 == null
+                                ? Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Container(
+                                      height: (_mediaQuery.size.height -
+                                              _appBarHeight) *
+                                          0.08,
+                                      width: _mediaQuery.size.width,
+                                      child: Center(
+                                        child: Text(
+                                          widget.exercise!.name2!,
+                                          textAlign: TextAlign.center,
+                                          maxLines: 2,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontFamily: 'Roboto',
+                                            fontSize:
+                                                _mediaQuery.size.height * 0.045,
+                                            letterSpacing: 1,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : FadeInImage(
+                                    imageErrorBuilder: (context, image, _) =>
+                                        Image.asset(
+                                      'assets/images/ImageUploadError.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                                    placeholderErrorBuilder:
+                                        (context, image, _) => Image.asset(
+                                      'assets/images/ImageUploadError.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                                    placeholder: AssetImage(
+                                        'assets/images/loading-gif.gif'),
+                                    image: FileImage(
+                                        widget.exercise!.exerciseImage2!),
+                                    fit: BoxFit.contain,
+                                  )
                             : FadeInImage(
                                 imageErrorBuilder: (context, image, _) =>
                                     Image.asset(

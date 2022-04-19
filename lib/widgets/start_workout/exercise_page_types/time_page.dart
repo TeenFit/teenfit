@@ -48,48 +48,80 @@ class _TimePageState extends State<TimePage> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Container(
-                    height: (_mediaQuery.size.height - _appBarHeight) * 0.11,
-                    width: _mediaQuery.size.width,
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: Text(
-                        widget.exercise.name,
-                        maxLines: 2,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'Roboto',
-                          fontSize: _mediaQuery.size.height * 0.05,
-                          letterSpacing: 1,
+                widget.exercise.exerciseImage == null &&
+                        widget.exercise.exerciseImageLink == null
+                    ? SizedBox(
+                        height:
+                            (_mediaQuery.size.height - _appBarHeight) * 0.11)
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Container(
+                          height:
+                              (_mediaQuery.size.height - _appBarHeight) * 0.11,
+                          width: _mediaQuery.size.width,
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text(
+                              widget.exercise.name,
+                              maxLines: 2,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Roboto',
+                                fontSize: _mediaQuery.size.height * 0.05,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Container(
                     height: (_mediaQuery.size.height - _appBarHeight) * 0.51,
                     width: _mediaQuery.size.width,
                     child: widget.exercise.exerciseImageLink == null
-                        ? FadeInImage(
-                            imageErrorBuilder: (context, image, _) =>
-                                Image.asset(
-                              'assets/images/ImageUploadError.png',
-                              fit: BoxFit.cover,
-                            ),
-                            placeholderErrorBuilder: (context, image, _) =>
-                                Image.asset(
-                              'assets/images/ImageUploadError.png',
-                              fit: BoxFit.cover,
-                            ),
-                            placeholder:
-                                AssetImage('assets/images/loading-gif.gif'),
-                            image: FileImage(widget.exercise.exerciseImage!),
-                            fit: BoxFit.contain,
-                          )
+                        ? widget.exercise.exerciseImage == null
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                child: Container(
+                                  height: (_mediaQuery.size.height -
+                                          _appBarHeight) *
+                                      0.11,
+                                  width: _mediaQuery.size.width,
+                                  child: FittedBox(
+                                    fit: BoxFit.contain,
+                                    child: Text(
+                                      widget.exercise.name,
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: 'Roboto',
+                                        fontSize:
+                                            _mediaQuery.size.height * 0.05,
+                                        letterSpacing: 1,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : FadeInImage(
+                                imageErrorBuilder: (context, image, _) =>
+                                    Image.asset(
+                                  'assets/images/ImageUploadError.png',
+                                  fit: BoxFit.cover,
+                                ),
+                                placeholderErrorBuilder: (context, image, _) =>
+                                    Image.asset(
+                                  'assets/images/ImageUploadError.png',
+                                  fit: BoxFit.cover,
+                                ),
+                                placeholder:
+                                    AssetImage('assets/images/loading-gif.gif'),
+                                image:
+                                    FileImage(widget.exercise.exerciseImage!),
+                                fit: BoxFit.contain,
+                              )
                         : FadeInImage(
                             imageErrorBuilder: (context, image, _) =>
                                 Image.asset(
