@@ -132,6 +132,11 @@ class _TimeExerciseState extends State<TimeExercise> {
     }
 
     Future<void> _submit() async {
+      if (newExercise!.exerciseImage == null && isEdit == false) {
+        _showToast('Image Required');
+        return;
+      }
+
       if (!_formKey10.currentState!.validate()) {
         _showToast('Failed Fields');
         return;

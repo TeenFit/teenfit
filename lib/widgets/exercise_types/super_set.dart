@@ -180,6 +180,16 @@ class _SuperSetState extends State<SuperSet> {
     }
 
     Future<void> _submit() async {
+      if (_newExercise!.exerciseImage == null && isEdit == false) {
+        _showToast('Image Required');
+        return;
+      }
+
+      if (_newExercise!.exerciseImage2 == null && isEdit == false) {
+        _showToast('Image 2 Required');
+        return;
+      }
+
       if (!_formKey4.currentState!.validate()) {
         _showToast('Failed Fields');
         return;
