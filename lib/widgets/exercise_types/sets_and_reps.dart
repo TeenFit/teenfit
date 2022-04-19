@@ -136,11 +136,6 @@ class _SetsAndRepsState extends State<SetsAndReps> {
     }
 
     Future<void> _submit() async {
-      if (_newExercise!.exerciseImage == null && isEdit == false) {
-        _showToast('Image Required');
-        return;
-      }
-
       if (!_formKey4.currentState!.validate()) {
         _showToast('Failed Fields');
         return;
