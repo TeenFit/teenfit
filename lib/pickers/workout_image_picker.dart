@@ -69,23 +69,23 @@ class _WorkoutImagePickerState extends State<WorkoutImagePicker> {
 
     if (result != null) {
       if (this.mounted) {
-       
-        var image = await ImageCropper().cropImage(
-          sourcePath: result.files.single.path!,
-          compressQuality: 80,
-          aspectRatio: CropAspectRatio(ratioX: 16, ratioY: 9),
-          compressFormat: ImageCompressFormat.png,
-          iosUiSettings: IOSUiSettings(
-            resetAspectRatioEnabled: true,
-            cancelButtonTitle: 'cancel',
-            doneButtonTitle: 'done',
-            resetButtonHidden: false,
-            rotateButtonsHidden: false,
-            rotateClockwiseButtonHidden: false,
-            showCancelConfirmationDialog: true,
-            title: 'Crop Your Image',
-          ),
-        );
+        var image = File(result.files.single.path!);
+        // var image = await ImageCropper().cropImage(
+        //   sourcePath: result.files.single.path!,
+        //   compressQuality: 80,
+        //   aspectRatio: CropAspectRatio(ratioX: 16, ratioY: 9),
+        //   compressFormat: ImageCompressFormat.png,
+        //   iosUiSettings: IOSUiSettings(
+        //     resetAspectRatioEnabled: true,
+        //     cancelButtonTitle: 'cancel',
+        //     doneButtonTitle: 'done',
+        //     resetButtonHidden: false,
+        //     rotateButtonsHidden: false,
+        //     rotateClockwiseButtonHidden: false,
+        //     showCancelConfirmationDialog: true,
+        //     title: 'Crop Your Image',
+        //   ),
+        // );
 
         setState(() {
           _pickedImage = image;

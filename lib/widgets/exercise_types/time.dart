@@ -131,12 +131,25 @@ class _TimeExerciseState extends State<TimeExercise> {
       }
     }
 
-    Future<void> _submit() async {
-      if (newExercise!.exerciseImage == null && isEdit == false) {
-        _showToast('Image Required');
-        return;
-      }
+    void removeImage() {
+      setState(() {
+        newExercise = Exercise(
+            name2: newExercise!.name2,
+            exerciseImage2: newExercise!.exerciseImage2,
+            exerciseImageLink2: newExercise!.exerciseImageLink2,
+            reps2: newExercise!.reps2,
+            exerciseId: newExercise!.exerciseId,
+            name: newExercise!.name,
+            exerciseImage: null,
+            sets: newExercise!.sets,
+            reps: newExercise!.reps,
+            timeSeconds: newExercise!.timeSeconds,
+            restTime: newExercise!.restTime,
+            exerciseImageLink: null);
+      });
+    }
 
+    Future<void> _submit() async {
       if (!_formKey10.currentState!.validate()) {
         _showToast('Failed Fields');
         return;
@@ -308,7 +321,7 @@ class _TimeExerciseState extends State<TimeExercise> {
                 height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
               ),
               ExerciseImagePicker(_pick, null, newExercise!.exerciseImageLink,
-                  newExercise!.exerciseImage, false),
+                  newExercise!.exerciseImage, false, removeImage, null),
               buildExerciseName(),
               SizedBox(
                 height: _mediaQuery.size.height * 0.03,

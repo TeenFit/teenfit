@@ -135,12 +135,26 @@ class _SetsAndRepsState extends State<SetsAndReps> {
       }
     }
 
-    Future<void> _submit() async {
-      if (_newExercise!.exerciseImage == null && isEdit == false) {
-        _showToast('Image Required');
-        return;
-      }
+    void removeImage() {
+      print('image');
+      setState(() {
+        _newExercise = Exercise(
+            name2: _newExercise!.name2,
+            exerciseImage2: _newExercise!.exerciseImage2,
+            exerciseImageLink2: _newExercise!.exerciseImageLink2,
+            reps2: _newExercise!.reps2,
+            exerciseId: _newExercise!.exerciseId,
+            name: _newExercise!.name,
+            exerciseImage: null,
+            sets: _newExercise!.sets,
+            reps: _newExercise!.reps,
+            timeSeconds: _newExercise!.timeSeconds,
+            restTime: _newExercise!.restTime,
+            exerciseImageLink: null);
+      });
+    }
 
+    Future<void> _submit() async {
       if (!_formKey4.currentState!.validate()) {
         _showToast('Failed Fields');
         return;
@@ -310,8 +324,15 @@ class _SetsAndRepsState extends State<SetsAndReps> {
               SizedBox(
                 height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
               ),
-              ExerciseImagePicker(_pick, null, _newExercise!.exerciseImageLink,
-                  _newExercise!.exerciseImage, false),
+              ExerciseImagePicker(
+                _pick,
+                null,
+                _newExercise!.exerciseImageLink,
+                _newExercise!.exerciseImage,
+                false,
+                removeImage,
+                null,
+              ),
               buildExerciseName(),
               SizedBox(
                 height: _mediaQuery.size.height * 0.03,

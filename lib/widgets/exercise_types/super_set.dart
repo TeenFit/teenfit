@@ -179,17 +179,43 @@ class _SuperSetState extends State<SuperSet> {
       }
     }
 
+    void removeImage() {
+      setState(() {
+        _newExercise = Exercise(
+            name2: _newExercise!.name2,
+            exerciseImage2: _newExercise!.exerciseImage2,
+            exerciseImageLink2: _newExercise!.exerciseImageLink2,
+            reps2: _newExercise!.reps2,
+            exerciseId: _newExercise!.exerciseId,
+            name: _newExercise!.name,
+            exerciseImage: null,
+            sets: _newExercise!.sets,
+            reps: _newExercise!.reps,
+            timeSeconds: _newExercise!.timeSeconds,
+            restTime: _newExercise!.restTime,
+            exerciseImageLink: null);
+      });
+    }
+
+    void removeImage2() {
+      setState(() {
+        _newExercise = Exercise(
+            name2: _newExercise!.name2,
+            exerciseImage2: null,
+            exerciseImageLink2: null,
+            reps2: _newExercise!.reps2,
+            exerciseId: _newExercise!.exerciseId,
+            name: _newExercise!.name,
+            exerciseImage: _newExercise!.exerciseImage,
+            sets: _newExercise!.sets,
+            reps: _newExercise!.reps,
+            timeSeconds: _newExercise!.timeSeconds,
+            restTime: _newExercise!.restTime,
+            exerciseImageLink: _newExercise!.exerciseImageLink);
+      });
+    }
+
     Future<void> _submit() async {
-      if (_newExercise!.exerciseImage == null && isEdit == false) {
-        _showToast('Image Required');
-        return;
-      }
-
-      if (_newExercise!.exerciseImage2 == null && isEdit == false) {
-        _showToast('Image 2 Required');
-        return;
-      }
-
       if (!_formKey4.currentState!.validate()) {
         _showToast('Failed Fields');
         return;
@@ -442,8 +468,14 @@ class _SuperSetState extends State<SuperSet> {
                 height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
               ),
               buildSets(),
-              ExerciseImagePicker(_pick, null, _newExercise!.exerciseImageLink,
-                  _newExercise!.exerciseImage, false),
+              ExerciseImagePicker(
+                  _pick,
+                  null,
+                  _newExercise!.exerciseImageLink,
+                  _newExercise!.exerciseImage,
+                  false,
+                  removeImage,
+                  removeImage2),
               buildExerciseName(),
               SizedBox(
                 height: _mediaQuery.size.height * 0.03,
@@ -454,7 +486,9 @@ class _SuperSetState extends State<SuperSet> {
                   _pick2,
                   _newExercise!.exerciseImageLink2,
                   _newExercise!.exerciseImage2,
-                  true),
+                  true,
+                  removeImage,
+                  removeImage2),
               buildExerciseName2(),
               SizedBox(
                 height: _mediaQuery.size.height * 0.03,

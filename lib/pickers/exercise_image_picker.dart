@@ -14,10 +14,12 @@ class ExerciseImagePicker extends StatefulWidget {
   final File? imageFile;
   final Function pickFn;
   final Function? pickFn2;
+  final Function? removeImage;
+  final Function? removeImage2;
   final bool isSuperSet;
 
   ExerciseImagePicker(this.pickFn, this.pickFn2, this.imageLink, this.imageFile,
-      this.isSuperSet);
+      this.isSuperSet, this.removeImage, this.removeImage2);
 
   @override
   _ExerciseImagePickerState createState() => _ExerciseImagePickerState();
@@ -89,22 +91,22 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
 
     if (result != null) {
       if (this.mounted) {
-       
-        var image = await ImageCropper().cropImage(
-          sourcePath: result.files.single.path!,
-          compressQuality: 80,
-          compressFormat: ImageCompressFormat.png,
-          iosUiSettings: IOSUiSettings(
-            resetAspectRatioEnabled: true,
-            cancelButtonTitle: 'cancel',
-            doneButtonTitle: 'done',
-            resetButtonHidden: false,
-            rotateButtonsHidden: false,
-            rotateClockwiseButtonHidden: false,
-            showCancelConfirmationDialog: true,
-            title: 'Crop Your Image',
-          ),
-        );
+        var image = File(result.files.single.path!);
+        // var image = await ImageCropper().cropImage(
+        //   sourcePath: result.files.single.path!,
+        //   compressQuality: 80,
+        //   compressFormat: ImageCompressFormat.png,
+        //   iosUiSettings: IOSUiSettings(
+        //     resetAspectRatioEnabled: true,
+        //     cancelButtonTitle: 'cancel',
+        //     doneButtonTitle: 'done',
+        //     resetButtonHidden: false,
+        //     rotateButtonsHidden: false,
+        //     rotateClockwiseButtonHidden: false,
+        //     showCancelConfirmationDialog: true,
+        //     title: 'Crop Your Image',
+        //   ),
+        // );
         setState(() {
           _pickedImage = image;
           isLoading = false;
@@ -278,79 +280,123 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Container(
-        height: _mediaQuery.size.height * 0.35,
+        height: _mediaQuery.size.height * 0.41,
         width: _mediaQuery.size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: _mediaQuery.size.height * 0.28,
+              height: _mediaQuery.size.height * 0.035,
+              child: Text(
+                'Optional*',
+                style: TextStyle(
+                    color: Colors.red,
+                    fontSize: _mediaQuery.size.height * 0.02),
+              ),
+            ),
+            Container(
+              height: _mediaQuery.size.height * 0.29,
               width: _mediaQuery.size.width,
-              child: isLoading
-                  ? CircularProgressIndicator(
-                      strokeWidth: 4,
-                      backgroundColor: _theme.shadowColor,
-                      color: Colors.white,
-                    )
-                  : InkWell(
-                      child: _pickedImage == null
-                          ? _pickedVideo == null
-                              ? widget.imageLink == null
-                                  ? Image.asset(
-                                      'assets/images/UploadImage.png',
-                                      fit: BoxFit.contain,
-                                    )
-                                  : FadeInImage(
-                                      placeholder: AssetImage(
-                                          'assets/images/loading-gif.gif'),
-                                      placeholderErrorBuilder:
-                                          (context, _, __) => Image.asset(
-                                                'assets/images/loading-gif.gif',
-                                                fit: BoxFit.contain,
-                                              ),
-                                      fit: BoxFit.contain,
-                                      image: CachedNetworkImageProvider(
-                                          widget.imageLink!),
-                                      imageErrorBuilder: (image, _, __) =>
-                                          Image.asset(
-                                            'assets/images/ImageUploadError.png',
+              child: Stack(
+                alignment: Alignment.center,
+                clipBehavior: Clip.none,
+                fit: StackFit.loose,
+                children: [
+                  Container(
+                    height: _mediaQuery.size.height * 0.28,
+                    width: _mediaQuery.size.width,
+                    child: isLoading
+                        ? CircularProgressIndicator(
+                            strokeWidth: 4,
+                            backgroundColor: _theme.shadowColor,
+                            color: Colors.white,
+                          )
+                        : InkWell(
+                            child: _pickedImage == null
+                                ? _pickedVideo == null
+                                    ? widget.imageLink == null
+                                        ? Image.asset(
+                                            'assets/images/UploadImage.png',
                                             fit: BoxFit.contain,
-                                          ))
-                              : FadeInImage(
-                                  placeholder: AssetImage(
-                                      'assets/images/loading-gif.gif'),
-                                  placeholderErrorBuilder: (context, _, __) =>
-                                      Image.asset(
-                                    'assets/images/loading-gif.gif',
+                                          )
+                                        : FadeInImage(
+                                            placeholder: AssetImage(
+                                                'assets/images/loading-gif.gif'),
+                                            placeholderErrorBuilder:
+                                                (context, _, __) => Image.asset(
+                                                      'assets/images/loading-gif.gif',
+                                                      fit: BoxFit.contain,
+                                                    ),
+                                            fit: BoxFit.contain,
+                                            image: CachedNetworkImageProvider(
+                                                widget.imageLink!),
+                                            imageErrorBuilder: (image, _, __) =>
+                                                Image.asset(
+                                                  'assets/images/ImageUploadError.png',
+                                                  fit: BoxFit.contain,
+                                                ))
+                                    : FadeInImage(
+                                        placeholder: AssetImage(
+                                            'assets/images/loading-gif.gif'),
+                                        placeholderErrorBuilder:
+                                            (context, _, __) => Image.asset(
+                                          'assets/images/loading-gif.gif',
+                                          fit: BoxFit.contain,
+                                        ),
+                                        fit: BoxFit.contain,
+                                        image: FileImage(_pickedVideo!),
+                                        imageErrorBuilder: (image, _, __) =>
+                                            Image.asset(
+                                          'assets/images/ImageUploadError.png',
+                                          fit: BoxFit.contain,
+                                        ),
+                                      )
+                                : FadeInImage(
+                                    placeholder: AssetImage(
+                                        'assets/images/loading-gif.gif'),
+                                    placeholderErrorBuilder: (context, _, __) =>
+                                        Image.asset(
+                                      'assets/images/loading-gif.gif',
+                                      fit: BoxFit.contain,
+                                    ),
                                     fit: BoxFit.contain,
+                                    image: FileImage(_pickedImage!),
+                                    imageErrorBuilder: (image, _, __) =>
+                                        Image.asset(
+                                      'assets/images/ImageUploadError.png',
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                  fit: BoxFit.contain,
-                                  image: FileImage(_pickedVideo!),
-                                  imageErrorBuilder: (image, _, __) =>
-                                      Image.asset(
-                                    'assets/images/ImageUploadError.png',
-                                    fit: BoxFit.contain,
-                                  ),
-                                )
-                          : FadeInImage(
-                              placeholder:
-                                  AssetImage('assets/images/loading-gif.gif'),
-                              placeholderErrorBuilder: (context, _, __) =>
-                                  Image.asset(
-                                'assets/images/loading-gif.gif',
-                                fit: BoxFit.contain,
-                              ),
-                              fit: BoxFit.contain,
-                              image: FileImage(_pickedImage!),
-                              imageErrorBuilder: (image, _, __) => Image.asset(
-                                'assets/images/ImageUploadError.png',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                      onTap: () async {
-                        await showModal();
-                      }),
+                            onTap: () async {
+                              await showModal();
+                            }),
+                  ),
+                  _pickedImage != null ||
+                          _pickedVideo != null ||
+                          widget.imageLink != null
+                      ? Align(
+                          alignment: Alignment.topRight,
+                          child: IconButton(
+                            icon: Icon(Icons.close),
+                            color: Color.fromARGB(255, 223, 93, 84),
+                            onPressed: () {
+                              widget.isSuperSet == true
+                                  ? widget.removeImage2!()
+                                  : widget.removeImage!();
+
+                              setState(() {
+                                _pickedImage = null;
+                                _pickedVideo = null;
+                              });
+                            },
+                            iconSize: _mediaQuery.size.height * 0.04,
+                            splashRadius: _mediaQuery.size.height * 0.02,
+                          ),
+                        )
+                      : SizedBox()
+                ],
+              ),
             ),
             Container(
               height: _mediaQuery.size.height * 0.06,

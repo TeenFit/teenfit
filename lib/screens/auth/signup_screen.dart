@@ -255,19 +255,19 @@ class _SignupScreenState extends State<SignupScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: [
-          Container(
-            height: _mediaQuery.size.height,
-            width: _mediaQuery.size.width,
-            child: Image.asset(
-              'assets/images/SignUp.png',
-              fit: BoxFit.fill,
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              height: _mediaQuery.size.height,
+              width: _mediaQuery.size.width,
+              child: Image.asset(
+                'assets/images/SignUp.png',
+                fit: BoxFit.fill,
+              ),
             ),
-          ),
-          Form(
-            key: _formkey1,
-            child: SingleChildScrollView(
+            Form(
+              key: _formkey1,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -404,8 +404,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

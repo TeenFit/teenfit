@@ -176,19 +176,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: [
-          Container(
-            height: _mediaQuery.size.height,
-            width: _mediaQuery.size.width,
-            child: Image.asset(
-              'assets/images/LoginPage.png',
-              fit: BoxFit.fill,
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              height: _mediaQuery.size.height,
+              width: _mediaQuery.size.width,
+              child: Image.asset(
+                'assets/images/LoginPage.png',
+                fit: BoxFit.fill,
+              ),
             ),
-          ),
-          Form(
-            key: _formkey,
-            child: SingleChildScrollView(
+            Form(
+              key: _formkey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -363,8 +363,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -161,25 +161,27 @@ class Workouts with ChangeNotifier {
       var sha1 = 'do_not_verify';
 
       do {
-        File file = exerciseS[i].exerciseImage!;
-        Uint8List fileData = await file.readAsBytes();
-        String fileName = workouT.workoutId +
-            '/' +
-            exerciseS[i].exerciseId +
-            workouT.workoutId;
+        if (exerciseS[i].exerciseImage != null) {
+          File file = exerciseS[i].exerciseImage!;
+          Uint8List fileData = await file.readAsBytes();
+          String fileName = workouT.workoutId +
+              '/' +
+              exerciseS[i].exerciseId +
+              workouT.workoutId;
 
-        await http.post(
-          Uri.parse(uploadUrl),
-          body: fileData,
-          headers: {
-            'Authorization': uploadAuthToken,
-            'X-Bz-File-Name': fileName,
-            'Content-Type': contentType,
-            'X-Bz-Content-Sha1': sha1,
-            'X-Bz-Info-Author': 'unknown',
-            'X-Bz-Server-Side-Encryption': 'AES256'
-          },
-        );
+          await http.post(
+            Uri.parse(uploadUrl),
+            body: fileData,
+            headers: {
+              'Authorization': uploadAuthToken,
+              'X-Bz-File-Name': fileName,
+              'Content-Type': contentType,
+              'X-Bz-Content-Sha1': sha1,
+              'X-Bz-Info-Author': 'unknown',
+              'X-Bz-Server-Side-Encryption': 'AES256'
+            },
+          );
+        }
 
         if (exerciseS[i].exerciseImage2 != null) {
           File file2 = exerciseS[i].exerciseImage2!;
@@ -208,8 +210,9 @@ class Workouts with ChangeNotifier {
           'image2': exerciseS[i].exerciseImage2 != null
               ? "https://f004.backblazeb2.com/file/workoutImages/${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}second"
               : null,
-          'image':
-              "https://f004.backblazeb2.com/file/workoutImages/${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}",
+          'image': exerciseS[i].exerciseImage != null
+              ? "https://f004.backblazeb2.com/file/workoutImages/${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}"
+              : null,
           'id': exerciseS[i].exerciseId + workouT.workoutId,
         });
 
@@ -259,7 +262,7 @@ class Workouts with ChangeNotifier {
           'sets': e.sets,
           'restTime': e.restTime,
           'timeSeconds': e.timeSeconds,
-          'exerciseImage': exerciseImages[exerciseIndex]['image'].toString(),
+          'exerciseImage': exerciseImages[exerciseIndex]['image'],
           'exerciseImage2': exerciseImages[exerciseIndex]['image2'],
         };
       }).toList();
@@ -456,11 +459,10 @@ class Workouts with ChangeNotifier {
         exerciseImages.add({
           'image2': exerciseS[i].exerciseImage2 != null
               ? "https://f004.backblazeb2.com/file/workoutImages/${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}second"
-              : exerciseS[i].reps2 == null
-                  ? null
-                  : exerciseS[i].exerciseImageLink2,
-          'image':
-              "https://f004.backblazeb2.com/file/workoutImages/${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}",
+              : exerciseS[i].exerciseImageLink2,
+          'image': exerciseS[i].exerciseImage != null
+              ? "https://f004.backblazeb2.com/file/workoutImages/${workouT.workoutId}/${exerciseS[i].exerciseId}${workouT.workoutId}"
+              : exerciseS[i].exerciseImageLink,
           'id': exerciseS[i].exerciseId + workouT.workoutId,
         });
 
@@ -501,15 +503,13 @@ class Workouts with ChangeNotifier {
                 exerciseS[index].exerciseId +
                 workouT.workoutId);
 
-        if (exerciseS[index].reps2 != null) {
-          unavailableExercises.removeWhere((element) =>
-              element['fileName'] ==
-              workouT.workoutId +
-                  '/' +
-                  exerciseS[index].exerciseId +
-                  workouT.workoutId +
-                  'second');
-        }
+        unavailableExercises.removeWhere((element) =>
+            element['fileName'] ==
+            workouT.workoutId +
+                '/' +
+                exerciseS[index].exerciseId +
+                workouT.workoutId +
+                'second');
 
         index = index + 1;
       } while (index < exerciseS.length);
@@ -570,8 +570,8 @@ class Workouts with ChangeNotifier {
           'sets': e.sets,
           'restTime': e.restTime,
           'timeSeconds': e.timeSeconds,
-          'exerciseImage': exerciseImages[exerciseIndex]['image'].toString(),
-          'exerciseImage2': exerciseImages[exerciseIndex]['image2'].toString(),
+          'exerciseImage': exerciseImages[exerciseIndex]['image'],
+          'exerciseImage2': exerciseImages[exerciseIndex]['image2'],
         };
       }).toList();
 
