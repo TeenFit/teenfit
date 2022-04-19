@@ -67,7 +67,7 @@ class Auth with ChangeNotifier {
 
       await usersCollection.doc('$userId').set({
         'email': email,
-        'name': email.substring(0, email.indexOf('@')),
+        'name': email.substring(0, email.indexOf('@')).toLowerCase(),
         'bio': null,
         'profilePic': null,
         'following': 0,
