@@ -283,6 +283,7 @@ class Workouts with ChangeNotifier {
         'facebook': workouT.facebook,
         'tiktokLink': workouT.tiktokLink,
         'exercises': exerciseS,
+        'searchTerms': searchTermsList,
       };
 
       await workoutsCollection

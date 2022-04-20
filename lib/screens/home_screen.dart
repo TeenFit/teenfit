@@ -14,6 +14,29 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool isInit = false;
+  Widget? pageView;
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    if (isInit == false) {
+      bool isAuth = Provider.of<Auth>(context).isAuth();
+
+      pageView = PageView(
+        controller: pageController,
+        children: [
+          DiscoveryPage(),
+          isAuth == true ? CreateWorkout() : LoginScreen(),
+          UserScreen(),
+        ],
+      );
+      setState(() {
+        isInit = true;
+      });
+    }
+  }
+
   int _selectedIndex = 0;
   PageController pageController = PageController();
 
@@ -30,17 +53,16 @@ class _HomeScreenState extends State<HomeScreen> {
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
 
-    bool isAuth = Provider.of<Auth>(context).isAuth();
-
     return Scaffold(
-      body: PageView(
-        controller: pageController,
-        children: [
-          DiscoveryPage(),
-          isAuth == true ? CreateWorkout() : LoginScreen(),
-          UserScreen(),
-        ],
-      ),
+      body: isInit == false
+          ? Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 4,
+                backgroundColor: _theme.shadowColor,
+                color: Colors.white,
+              ),
+            )
+          : pageView,
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(

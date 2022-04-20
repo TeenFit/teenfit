@@ -96,6 +96,7 @@ flutter:
   - assets/images/reset_password.png
   - assets/images/Phone-Icon.jpg
   - assets/images/pending.png
+  - assets/images/no_profile_pic.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
