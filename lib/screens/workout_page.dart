@@ -4,30 +4,61 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
+import 'package:teenfit/providers/user.dart';
+import 'package:teenfit/providers/userProv.dart';
 import 'package:teenfit/screens/exercise_screen.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../providers/workouts.dart';
 import '../widgets/exercise_tiles.dart';
 import '../Custom/my_flutter_app_icons.dart';
 import '../providers/workout.dart';
+import 'create_workout.dart';
 
-class WorkoutPage extends StatelessWidget {
+class WorkoutPage extends StatefulWidget {
   static const routeName = '/workout-page';
+
+  @override
+  State<WorkoutPage> createState() => _WorkoutPageState();
+}
+
+class _WorkoutPageState extends State<WorkoutPage> {
+  bool isInit = false;
+  User? user;
+  var prov;
+  Workout? workout;
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+
+    if (isInit == false) {
+      prov = ModalRoute.of(context)!.settings.arguments as Map;
+      workout = prov['workout'];
+
+      user = await Provider.of<UserProv>(context, listen: false)
+          .fetchAUser(context, workout!.creatorId);
+
+      setState(() {
+        isInit = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarBrightness: Brightness.light,
     ));
+
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
+    final _statusBarHeight = _mediaQuery.padding.top;
     final _appBarHeight =
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
-    final _statusBarHeight = _mediaQuery.padding.top;
 
-    final Workout workout =
-        ModalRoute.of(context)!.settings.arguments as Workout;
+    bool isDeletable = prov['isDeletable'];
 
     void _showToast(String msg) {
       Fluttertoast.showToast(
@@ -40,13 +71,144 @@ class WorkoutPage extends StatelessWidget {
       );
     }
 
+    Widget _getFAB() {
+      return SpeedDial(
+        animatedIcon: AnimatedIcons.view_list,
+        animatedIconTheme: IconThemeData(size: 22),
+        backgroundColor: _theme.secondaryHeaderColor,
+        visible: true,
+        curve: Curves.bounceIn,
+        children: [
+          // FAB 1
+          SpeedDialChild(
+              child: Icon(
+                Icons.edit,
+                color: Colors.white,
+              ),
+              backgroundColor: _theme.secondaryHeaderColor,
+              onTap: () {
+                Navigator.of(context).pushNamed(AddWorkoutScreen.routeName,
+                    arguments: {'workout': workout, 'isEdit': true});
+              },
+              label: 'Edit',
+              labelStyle: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  fontSize: 16.0),
+              labelBackgroundColor: _theme.secondaryHeaderColor),
+          // FAB 2
+          SpeedDialChild(
+              child: Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
+              backgroundColor: _theme.secondaryHeaderColor,
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (ctx) => CustomDialogBox(
+                      'Are You Sure?',
+                      'This action will delete the workout and it can never be recoverd',
+                      'assets/images/trash.png',
+                      'pop',
+                      workout),
+                );
+              },
+              label: 'Delete',
+              labelStyle: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  fontSize: 16.0),
+              labelBackgroundColor: _theme.secondaryHeaderColor)
+        ],
+      );
+    }
+
     return Scaffold(
       backgroundColor: _theme.primaryColor,
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
+      floatingActionButton: isDeletable == true ? _getFAB() : SizedBox(),
       appBar: AppBar(
+        actions: [
+          SizedBox(
+            width: _mediaQuery.size.width * 0.14,
+          ),
+          Container(
+            width: _mediaQuery.size.width * 0.86,
+            height: _appBarHeight,
+            child: isInit == false
+                ? Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 4,
+                      backgroundColor: _theme.shadowColor,
+                      color: Colors.white,
+                    ),
+                  )
+                : InkWell(
+                    onTap: () {
+                      _showToast('Dialog');
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: _appBarHeight * 0.5,
+                          width: _appBarHeight * 0.5,
+                          child: CircleAvatar(
+                            child: ClipOval(
+                              child: user!.profilePic == null
+                                  ? Image.asset(
+                                      'assets/images/no_profile_pic.png',
+                                      fit: BoxFit.fitHeight,
+                                    )
+                                  : FadeInImage(
+                                      placeholder: AssetImage(
+                                          'assets/images/loading-gif.gif'),
+                                      placeholderErrorBuilder:
+                                          (context, _, __) => Image.asset(
+                                                'assets/images/loading-gif.gif',
+                                                fit: BoxFit.contain,
+                                              ),
+                                      fit: BoxFit.contain,
+                                      image: CachedNetworkImageProvider(
+                                          user!.profilePic!),
+                                      imageErrorBuilder: (image, _, __) =>
+                                          Image.asset(
+                                            'assets/images/ImageUploadError.png',
+                                            fit: BoxFit.contain,
+                                          )),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: _mediaQuery.size.width * 0.02,
+                        ),
+                        Container(
+                          height: _appBarHeight,
+                          width: _mediaQuery.size.width * 0.65,
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Center(
+                              child: Text(
+                                user!.name,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: _appBarHeight * 0.3),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+          )
+        ],
         elevation: 0,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         backgroundColor: Colors.transparent,
         systemOverlayStyle:
             SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
@@ -66,8 +228,8 @@ class WorkoutPage extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    workout.bannerImageLink == null
-                        ? workout.bannerImage == null
+                    workout!.bannerImageLink == null
+                        ? workout!.bannerImage == null
                             ? Container(
                                 height: _mediaQuery.size.height * 0.35,
                                 width: _mediaQuery.size.width,
@@ -89,7 +251,7 @@ class WorkoutPage extends StatelessWidget {
                                     'assets/images/loading-gif.gif',
                                     fit: BoxFit.cover,
                                   ),
-                                  image: FileImage(workout.bannerImage!),
+                                  image: FileImage(workout!.bannerImage!),
                                   fit: BoxFit.cover,
                                   imageErrorBuilder: (image, _, __) =>
                                       Image.asset(
@@ -107,7 +269,7 @@ class WorkoutPage extends StatelessWidget {
                               fit: BoxFit.cover,
                             ),
                             image: CachedNetworkImageProvider(
-                                workout.bannerImageLink!),
+                                workout!.bannerImageLink!),
                             fit: BoxFit.cover,
                             imageErrorBuilder: (image, _, __) => Image.asset(
                               'assets/images/ImageUploadError.png',
@@ -116,203 +278,126 @@ class WorkoutPage extends StatelessWidget {
                           ),
                     FittedBox(
                       fit: BoxFit.fitHeight,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: _mediaQuery.size.height * 0.35,
-                            width: _mediaQuery.size.width * 0.2,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: _statusBarHeight,
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  icon: Icon(Icons.arrow_back_ios),
-                                  iconSize: _appBarHeight * 0.55,
-                                  color: Colors.white,
-                                ),
-                              ],
+                      child: Container(
+                        height: _mediaQuery.size.height * 0.35,
+                        width: _mediaQuery.size.width,
+                        child: Container(
+                          height: _mediaQuery.size.height * 0.28,
+                          width: _mediaQuery.size.width,
+                          child: Center(
+                            child: Text(
+                              workout!.workoutName,
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Roboto',
+                                fontSize: _mediaQuery.size.height * 0.07,
+                                letterSpacing: 1,
+                                shadows: <Shadow>[
+                                  Shadow(
+                                    offset: Offset(2.5, 2.5),
+                                    blurRadius: 1.0,
+                                    color: Color.fromARGB(255, 128, 128, 128),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                          Container(
-                            height: _mediaQuery.size.height * 0.35,
-                            width: _mediaQuery.size.width * 0.9,
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: _mediaQuery.size.height * 0.25,
-                                  width: _mediaQuery.size.width * 0.9,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      SizedBox(
-                                        height: _statusBarHeight,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                          _mediaQuery.size.width * 0.02,
-                                          0,
-                                          _mediaQuery.size.width * 0.03,
-                                          _mediaQuery.size.width * 0.008,
-                                        ),
-                                        child: Text(
-                                          workout.workoutName,
-                                          maxLines: 2,
-                                          textAlign: TextAlign.end,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'Roboto',
-                                            fontSize:
-                                                _mediaQuery.size.height * 0.055,
-                                            letterSpacing: 1,
-                                            shadows: <Shadow>[
-                                              Shadow(
-                                                offset: Offset(2.5, 2.5),
-                                                blurRadius: 1.0,
-                                                color: Color.fromARGB(
-                                                    255, 128, 128, 128),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        alignment: Alignment.centerRight,
-                                        width: _mediaQuery.size.width,
-                                        child: Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                            _mediaQuery.size.width * 0.02,
-                                            0,
-                                            _mediaQuery.size.width * 0.03,
-                                            _mediaQuery.size.width * 0.008,
-                                          ),
-                                          child: Text(
-                                            'by: ${workout.creatorName}',
-                                            maxLines: 1,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontFamily: 'PTSans',
-                                              fontSize:
-                                                  _mediaQuery.size.height *
-                                                      0.045,
-                                              letterSpacing: 1,
-                                              shadows: <Shadow>[
-                                                Shadow(
-                                                  offset: Offset(2.5, 2.5),
-                                                  blurRadius: 1.0,
-                                                  color: Color.fromARGB(
-                                                      255, 128, 128, 128),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: _mediaQuery.size.height * 0.1,
-                                  width: _mediaQuery.size.width * 0.9,
-                                  alignment: Alignment.centerRight,
-                                  child: Container(
-                                    height: (_mediaQuery.size.height -
-                                            _appBarHeight) *
-                                        0.13,
-                                    width: _mediaQuery.size.width * 0.55,
-                                    child: FittedBox(
-                                      fit: BoxFit.fitHeight,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          workout.instagram.isEmpty
-                                              ? SizedBox()
-                                              : IconButton(
-                                                  onPressed: () {
-                                                    try {
-                                                      launch(workout.instagram)
-                                                          .catchError((e) {
-                                                        _showToast(
-                                                            'Link Not Available');
-                                                      });
-                                                    } catch (e) {
-                                                      _showToast(
-                                                          'Link Not Available');
-                                                    }
-                                                  },
-                                                  icon: Icon(
-                                                    MyFlutterApp.instagram_1,
-                                                    size: _mediaQuery
-                                                            .size.height *
-                                                        0.045,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                          workout.facebook.isEmpty
-                                              ? SizedBox()
-                                              : IconButton(
-                                                  onPressed: () {
-                                                    try {
-                                                      launch(workout.facebook)
-                                                          .catchError((e) {
-                                                        _showToast(
-                                                            'Link Not Available');
-                                                      });
-                                                    } catch (e) {
-                                                      _showToast(
-                                                          'Link Not Available');
-                                                    }
-                                                  },
-                                                  icon: Icon(
-                                                    MyFlutterApp
-                                                        .facebook_squared,
-                                                    size: _mediaQuery
-                                                            .size.height *
-                                                        0.045,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                          workout.tiktokLink.isEmpty
-                                              ? SizedBox()
-                                              : IconButton(
-                                                  onPressed: () {
-                                                    try {
-                                                      launch(workout.tiktokLink)
-                                                          .catchError((e) {
-                                                        _showToast(
-                                                            'Link Not Available');
-                                                      });
-                                                    } catch (e) {
-                                                      _showToast(
-                                                          'Link Not Available');
-                                                    }
-                                                  },
-                                                  icon: Icon(
-                                                    MyFlutterApp.unknown,
-                                                    color: Colors.white,
-                                                    size: _mediaQuery
-                                                            .size.height *
-                                                        0.045,
-                                                  ),
-                                                ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                        ),
+
+                        // Container(
+                        //   height: _mediaQuery.size.height * 0.1,
+                        //   width: _mediaQuery.size.width,
+                        //   alignment: Alignment.centerRight,
+                        //   child: Container(
+                        //     height: (_mediaQuery.size.height -
+                        //             _appBarHeight) *
+                        //         0.13,
+                        //     width: _mediaQuery.size.width * 0.55,
+                        //     child: FittedBox(
+                        //       fit: BoxFit.fitHeight,
+                        //       child: Row(
+                        //         mainAxisAlignment:
+                        //             MainAxisAlignment.start,
+                        //         crossAxisAlignment:
+                        //             CrossAxisAlignment.end,
+                        //         children: [
+                        //           workout.instagram.isEmpty
+                        //               ? SizedBox()
+                        //               : IconButton(
+                        //                   onPressed: () {
+                        //                     try {
+                        //                       launch(workout.instagram)
+                        //                           .catchError((e) {
+                        //                         _showToast(
+                        //                             'Link Not Available');
+                        //                       });
+                        //                     } catch (e) {
+                        //                       _showToast(
+                        //                           'Link Not Available');
+                        //                     }
+                        //                   },
+                        //                   icon: Icon(
+                        //                     MyFlutterApp.instagram_1,
+                        //                     size: _mediaQuery
+                        //                             .size.height *
+                        //                         0.045,
+                        //                     color: Colors.white,
+                        //                   ),
+                        //                 ),
+                        //           workout.facebook.isEmpty
+                        //               ? SizedBox()
+                        //               : IconButton(
+                        //                   onPressed: () {
+                        //                     try {
+                        //                       launch(workout.facebook)
+                        //                           .catchError((e) {
+                        //                         _showToast(
+                        //                             'Link Not Available');
+                        //                       });
+                        //                     } catch (e) {
+                        //                       _showToast(
+                        //                           'Link Not Available');
+                        //                     }
+                        //                   },
+                        //                   icon: Icon(
+                        //                     MyFlutterApp
+                        //                         .facebook_squared,
+                        //                     size: _mediaQuery
+                        //                             .size.height *
+                        //                         0.045,
+                        //                     color: Colors.white,
+                        //                   ),
+                        //                 ),
+                        //           workout.tiktokLink.isEmpty
+                        //               ? SizedBox()
+                        //               : IconButton(
+                        //                   onPressed: () {
+                        //                     try {
+                        //                       launch(workout.tiktokLink)
+                        //                           .catchError((e) {
+                        //                         _showToast(
+                        //                             'Link Not Available');
+                        //                       });
+                        //                     } catch (e) {
+                        //                       _showToast(
+                        //                           'Link Not Available');
+                        //                     }
+                        //                   },
+                        //                   icon: Icon(
+                        //                     MyFlutterApp.unknown,
+                        //                     color: Colors.white,
+                        //                     size: _mediaQuery
+                        //                             .size.height *
+                        //                         0.045,
+                        //                   ),
+                        //                 ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ),
                     ),
                   ],
@@ -335,7 +420,7 @@ class WorkoutPage extends StatelessWidget {
                         width: _mediaQuery.size.width * 0.04,
                       ),
                       Text(
-                        workout.views.toString(),
+                        workout!.views.toString(),
                         style: TextStyle(
                             fontFamily: 'PTSans',
                             fontSize: _mediaQuery.size.height * 0.02),
@@ -364,7 +449,7 @@ class WorkoutPage extends StatelessWidget {
                     onPressed: () async {
                       await Provider.of<Workouts>(context, listen: false)
                           .incrementView(
-                              workout.creatorId, workout.workoutId, context);
+                              workout!.creatorId, workout!.workoutId, context);
                       showDialog(
                           context: context,
                           builder: (ctx) => CustomDialogBox(
@@ -372,7 +457,7 @@ class WorkoutPage extends StatelessWidget {
                               'Grab a water bottle, warmup, lets do this',
                               'assets/images/water_bottle.jpg',
                               ExerciseScreen.routeName,
-                              workout.exercises));
+                              workout!.exercises));
                     },
                   ),
                 ),
@@ -384,15 +469,15 @@ class WorkoutPage extends StatelessWidget {
                   width: _mediaQuery.size.width,
                   child: ListView.builder(
                     itemBuilder: (ctx, index) => ExerciseTiles(
-                      key: ValueKey(workout.exercises[index].exerciseId),
-                      exercise: workout.exercises[index],
+                      key: ValueKey(workout!.exercises[index].exerciseId),
+                      exercise: workout!.exercises[index],
                       size: _mediaQuery.size.width,
                       isDeleteable: false,
                       addExercise: () {},
                       delete: () {},
                       updateExercise: () {},
                     ),
-                    itemCount: workout.exercises.length,
+                    itemCount: workout!.exercises.length,
                   ),
                 ),
               ),

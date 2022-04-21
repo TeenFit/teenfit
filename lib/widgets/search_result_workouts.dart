@@ -105,6 +105,7 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
                         workout,
                         false,
                         false,
+                        false,
                       )
                     : Container(
                         height: (_mediaQuery.size.height - _appBarHieght),

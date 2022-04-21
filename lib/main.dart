@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:teenfit/providers/basic.dart';
+import 'package:teenfit/providers/userProv.dart';
 import 'package:teenfit/screens/admin_screen.dart';
 import 'package:teenfit/screens/home_screen.dart';
 import 'package:teenfit/screens/privacy_policy_screen.dart';
@@ -76,6 +77,9 @@ class _MyAppState extends State<MyApp> {
           ),
           ChangeNotifierProvider<Auth>(
             create: (ctx) => Auth(),
+          ),
+          ChangeNotifierProvider<UserProv>(
+            create: (ctx) => UserProv(),
           ),
           ChangeNotifierProvider<Workouts>(
             create: (ctx) => Workouts(),

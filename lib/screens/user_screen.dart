@@ -41,17 +41,21 @@ class _UserScreenState extends State<UserScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        systemOverlayStyle:
-            SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
-        backgroundColor: _theme.secondaryHeaderColor,
-        foregroundColor: Colors.white,
-        title: Text(
-          'User Controls',
-          style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: _appBarHieght * 0.35),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(_mediaQuery.size.height * 0.07),
+        child: AppBar(
+          elevation: 5,
+          systemOverlayStyle:
+              SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
+          backgroundColor: _theme.secondaryHeaderColor,
+          foregroundColor: Colors.white,
+          title: Text(
+            'User Controls',
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: _appBarHieght * 0.3),
+          ),
         ),
       ),
       body: SingleChildScrollView(
