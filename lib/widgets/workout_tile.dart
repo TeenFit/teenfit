@@ -123,72 +123,67 @@ class _WorkoutTileState extends State<WorkoutTile> {
             ),
           ),
           widget.isAdmin
-              ? Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) => CustomDialogBox(
-                                    'Accept Workout?',
-                                    'Does The Workout Meet Standards?',
-                                    'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
-                                    'accept-workout',
-                                    widget.workout));
-                          },
-                          icon: Icon(
-                            Icons.check_box,
-                            color: Colors.green,
-                          ),
-                          iconSize: (_mediaQuery.size.height * 0.06)),
-                      Container(
-                        width: _mediaQuery.size.width * 0.55,
-                        height:
-                            (_mediaQuery.size.height - _appBarHieght) * 0.25,
-                        alignment: Alignment.center,
-                        child: Text(
-                          widget.workout.workoutName,
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize:
-                                (_mediaQuery.size.height - _appBarHieght) *
-                                    0.06,
-                            shadows: <Shadow>[
-                              Shadow(
-                                offset: Offset(3.0, 3.0),
-                                blurRadius: 1.0,
-                                color: Color.fromARGB(255, 128, 128, 128),
-                              ),
-                            ],
-                          ),
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) => CustomDialogBox(
+                                  'Accept Workout?',
+                                  'Does The Workout Meet Standards?',
+                                  'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
+                                  'accept-workout',
+                                  widget.workout));
+                        },
+                        icon: Icon(
+                          Icons.check_box,
+                          color: Colors.green,
+                        ),
+                        iconSize: (_mediaQuery.size.height * 0.06)),
+                    Container(
+                      width: _mediaQuery.size.width * 0.55,
+                      height: (_mediaQuery.size.height - _appBarHieght) * 0.25,
+                      alignment: Alignment.center,
+                      child: Text(
+                        widget.workout.workoutName,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize:
+                              (_mediaQuery.size.height - _appBarHieght) * 0.06,
+                          shadows: <Shadow>[
+                            Shadow(
+                              offset: Offset(3.0, 3.0),
+                              blurRadius: 1.0,
+                              color: Color.fromARGB(255, 128, 128, 128),
+                            ),
+                          ],
                         ),
                       ),
-                      IconButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) => CustomDialogBox(
-                                    'Delete Workout?',
-                                    'Does The Workout Not Meet Standards?',
-                                    'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
-                                    'fail-workout',
-                                    widget.workout));
-                          },
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.red[300],
-                          ),
-                          iconSize: (_mediaQuery.size.height * 0.06)),
-                    ],
-                  ),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) => CustomDialogBox(
+                                  'Delete Workout?',
+                                  'Does The Workout Not Meet Standards?',
+                                  'assets/images/teen_fit_logo_white_withpeople_withbackground.png',
+                                  'fail-workout',
+                                  widget.workout));
+                        },
+                        icon: Icon(
+                          Icons.delete,
+                          color: Colors.red[300],
+                        ),
+                        iconSize: (_mediaQuery.size.height * 0.06)),
+                  ],
                 )
               : Container(
                   height: (_mediaQuery.size.height - _appBarHieght) * 0.3,

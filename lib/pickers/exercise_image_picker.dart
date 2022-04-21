@@ -93,7 +93,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
       if (this.mounted) {
         var image = await ImageCropper().cropImage(
           sourcePath: result.files.single.path!,
-          compressQuality: 80,
+          compressQuality: 60,
           compressFormat: ImageCompressFormat.png,
           iosUiSettings: IOSUiSettings(
             resetAspectRatioEnabled: true,

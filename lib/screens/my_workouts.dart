@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -30,14 +31,13 @@ class _CreateWorkoutState extends State<CreateWorkout> {
     super.didChangeDependencies();
 
     if (isInit == false) {
-
       uid = Provider.of<Auth>(context, listen: false).userId!;
 
       setState(() {
         queryWorkout = FirebaseFirestore.instance
             .collection('/workouts')
             // .where('creatorId', isEqualTo: uid)
-            .orderBy('date', descending: false)
+            .orderBy('date', descending: true)
             .withConverter<Workout>(
                 fromFirestore: (snapshot, _) =>
                     Workout.fromJson(snapshot.data()!),
@@ -91,7 +91,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: _appBarHeight * 0.3),
+                      fontSize: _appBarHeight * 0.2),
                 ),
           backgroundColor: _theme.secondaryHeaderColor,
           automaticallyImplyLeading: false,
@@ -156,60 +156,103 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                 (_mediaQuery.size.height - _appBarHeight) * 0.2,
                             width: _mediaQuery.size.width,
                             child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: (_mediaQuery.size.height -
-                                            _appBarHeight) *
-                                        0.1,
-                                    width: (_mediaQuery.size.height -
-                                            _appBarHeight) *
-                                        0.1,
-                                    child: CircleAvatar(
-                                      child: ClipOval(
-                                        child: user!.profilePic == null
-                                            ? Image.asset(
-                                                'assets/images/no_profile_pic.png',
-                                                fit: BoxFit.contain,
-                                              )
-                                            : FadeInImage(
-                                                placeholder: AssetImage(
-                                                    'assets/images/loading-gif.gif'),
-                                                placeholderErrorBuilder:
-                                                    (context, _, __) =>
-                                                        Image.asset(
-                                                          'assets/images/loading-gif.gif',
-                                                          fit: BoxFit.contain,
-                                                        ),
-                                                fit: BoxFit.contain,
-                                                image:
-                                                    CachedNetworkImageProvider(
-                                                        user!.profilePic!),
-                                                imageErrorBuilder:
-                                                    (image, _, __) =>
-                                                        Image.asset(
-                                                          'assets/images/ImageUploadError.png',
-                                                          fit: BoxFit.contain,
-                                                        )),
-                                      ),
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: _mediaQuery.size.width * 0.05,
+                                ),
+                                Container(
+                                  height: (_mediaQuery.size.height -
+                                          _appBarHeight) *
+                                      0.15,
+                                  width: (_mediaQuery.size.height -
+                                          _appBarHeight) *
+                                      0.15,
+                                  child: user!.profilePic == null
+                                      ? Image.asset(
+                                          'assets/images/no_profile_pic.png',
+                                          fit: BoxFit.contain,
+                                        )
+                                      : Image.network(
+                                          user!.profilePic!,
+                                          errorBuilder: (image, _, __) =>
+                                              Image.asset(
+                                            'assets/images/ImageUploadError.png',
+                                            fit: BoxFit.contain,
+                                          ),
+                                          fit: BoxFit.fill,
+                                        ),
+                                ),
+                                SizedBox(
+                                  width: _mediaQuery.size.width * 0.06,
+                                ),
+                                Container(
+                                  height: (_mediaQuery.size.height -
+                                          _appBarHeight) *
+                                      0.15,
+                                  width: _mediaQuery.size.width * 0.25,
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          user!.followersNum!.toString(),
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: _appBarHeight * 0.27),
+                                        ),
+                                        Text(
+                                          'followers',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: _appBarHeight * 0.15),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  Container(
-                                    height: (_mediaQuery.size.height -
-                                            _appBarHeight) *
-                                        0.2,
-                                    width: (_mediaQuery.size.height -
-                                            _appBarHeight) *
-                                        0.2,
-                                    child: Column(children: [
-                                      Text(user!.followersNum!.toString()),
-                                      Text('followers'),
-                                    ]),
-                                  )
-                                ]),
+                                ),
+                                Container(
+                                  height: (_mediaQuery.size.height -
+                                          _appBarHeight) *
+                                      0.15,
+                                  width: _mediaQuery.size.width * 0.25,
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          user!.followingNum!.toString(),
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: _appBarHeight * 0.27),
+                                        ),
+                                        Text(
+                                          'following',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: _appBarHeight * 0.15),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
+                          Container(
+                            height:
+                                (_mediaQuery.size.height - _appBarHeight) * 0.2,
+                            width: _mediaQuery.size.width,
+                          )
                         ],
                       ),
                     ),
@@ -217,7 +260,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                 },
                 body: FirestoreQueryBuilder<Workout>(
                   query: queryWorkout,
-                  pageSize: 8,
+                  pageSize: 6,
                   builder: (ctx, snapshot, _) {
                     if (snapshot.isFetching) {
                       return Center(
@@ -232,9 +275,12 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                       return Container();
                     } else {
                       return GridView.builder(
+                          padding: EdgeInsets.zero,
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2),
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 0,
+                                  mainAxisSpacing: 0),
                           itemCount: snapshot.docs.length,
                           itemBuilder: (context, index) {
                             final hasReachedEnd = snapshot.hasMore &&

@@ -25,7 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
     if (isInit == false) {
       bool isAuth = Provider.of<Auth>(context).isAuth();
 
-      await Provider.of<UserProv>(context).fetchAndSetUser(context);
+      if (isAuth) {
+        Provider.of<UserProv>(context).fetchAndSetUser(context);
+      }
 
       pageView = PageView(
         controller: pageController,
