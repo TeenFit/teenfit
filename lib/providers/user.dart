@@ -53,6 +53,7 @@ class User {
           link: e['link'],
           tiktok: e['tiktok'],
           instagram: e['instagram'],
+          profilePicFile: null,
         );
 
   Map<String, Object?> toJson() => {

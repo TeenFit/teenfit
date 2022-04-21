@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/pickers/cicle_image_picker.dart';
 import 'package:teenfit/providers/user.dart';
+import 'package:teenfit/providers/userProv.dart';
 
 class EditProfile extends StatefulWidget {
   static const routeName = '/editProfile';
@@ -118,7 +119,9 @@ class _EditProfileScreenState extends State<EditProfile> {
       });
 
       try {
-        // Navigator.of(context).pop();
+        await Provider.of<UserProv>(context, listen: false)
+            .updateUser(user, context);
+        Navigator.of(context).pop();
       } catch (e) {
         _showToast('Unable To Add Workout Try Again Later');
       }
@@ -151,7 +154,16 @@ class _EditProfileScreenState extends State<EditProfile> {
                 return 'Name is Required';
               } else if (value.toString().trim().length > 30) {
                 return 'Stay Under 30 Characters';
+              } else if (value.toString().trim().contains(RegExp(r'[A-Z]'))) {
+                return 'No Uppercase Letters';
+              } else if (value.toString().trim().contains('-')) {
+                return 'No dashes';
+              } else if (value.toString().trim().contains(' ')) {
+                return 'No Spaces';
               }
+              // } else if (true) {
+              //   return 'This Name Already Exists!';
+              // }
               return null;
             },
             onSaved: (input) {

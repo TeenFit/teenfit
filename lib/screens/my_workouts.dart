@@ -70,7 +70,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
 
     var uuid = Uuid();
 
-    User user = Provider.of<UserProv>(context, listen: false).getUser;
+    User user = Provider.of<UserProv>(context).getUser;
 
     return Scaffold(
       backgroundColor: _theme.primaryColor,

@@ -8,11 +8,9 @@ import 'package:teenfit/providers/user.dart';
 import 'package:teenfit/providers/userProv.dart';
 import 'package:teenfit/screens/exercise_screen.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../providers/workouts.dart';
 import '../widgets/exercise_tiles.dart';
-import '../Custom/my_flutter_app_icons.dart';
 import '../providers/workout.dart';
 import 'create_workout.dart';
 
@@ -52,11 +50,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
-    final _statusBarHeight = _mediaQuery.padding.top;
     final _appBarHeight =
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
-
-    print('able');
 
     void _showToast(String msg) {
       Fluttertoast.showToast(
