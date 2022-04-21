@@ -1,8 +1,8 @@
 class User {
   final String? bio;
-  final String email;
-  final String name;
-  final String uid;
+  final String? email;
+  final String? name;
+  final String? uid;
   final String? date;
   final String? link;
   final String? profilePic;

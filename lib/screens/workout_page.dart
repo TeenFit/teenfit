@@ -25,6 +25,7 @@ class WorkoutPage extends StatefulWidget {
 
 class _WorkoutPageState extends State<WorkoutPage> {
   bool isInit = false;
+  bool isDeletable = false;
   User? user;
   var prov;
   Workout? workout;
@@ -36,6 +37,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
     if (isInit == false) {
       prov = ModalRoute.of(context)!.settings.arguments as Map;
       workout = prov['workout'];
+      isDeletable = prov['isDeletable'];
 
       user = await Provider.of<UserProv>(context, listen: false)
           .fetchAUser(context, workout!.creatorId);
@@ -48,17 +50,13 @@ class _WorkoutPageState extends State<WorkoutPage> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.light,
-    ));
-
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
     final _statusBarHeight = _mediaQuery.padding.top;
     final _appBarHeight =
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
-    bool isDeletable = prov['isDeletable'];
+    print('able');
 
     void _showToast(String msg) {
       Fluttertoast.showToast(
@@ -192,7 +190,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                             fit: BoxFit.fitWidth,
                             child: Center(
                               child: Text(
-                                user!.name,
+                                user!.name!,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: Colors.white,
@@ -465,9 +463,10 @@ class _WorkoutPageState extends State<WorkoutPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Container(
-                  height: _mediaQuery.size.height * 0.47,
+                  height: _mediaQuery.size.height * 0.51,
                   width: _mediaQuery.size.width,
                   child: ListView.builder(
+                    padding: EdgeInsets.zero,
                     itemBuilder: (ctx, index) => ExerciseTiles(
                       key: ValueKey(workout!.exercises[index].exerciseId),
                       exercise: workout!.exercises[index],

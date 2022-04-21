@@ -18,6 +18,11 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   PageController pageController = PageController();
   int selectedIndex = 0;
 
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+  }
+
   void goToPage(index) {
     pageController.animateToPage(index,
         duration: Duration(milliseconds: 500), curve: Curves.easeIn);

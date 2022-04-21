@@ -34,7 +34,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   List<Exercise>? exerciseEditList;
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
     workoutProv = ModalRoute.of(context)!.settings.arguments;
 
     workout = workoutProv['workout'];
@@ -60,6 +60,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         bannerImageLink: workout!.bannerImageLink,
         exercises: exerciseEditList!,
       );
+
       setState(() {
         isInit = true;
       });
