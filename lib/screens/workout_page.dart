@@ -8,6 +8,7 @@ import 'package:teenfit/providers/user.dart';
 import 'package:teenfit/providers/userProv.dart';
 import 'package:teenfit/screens/exercise_screen.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:teenfit/screens/my_workouts.dart';
 
 import '../providers/workouts.dart';
 import '../widgets/exercise_tiles.dart';
@@ -27,6 +28,14 @@ class _WorkoutPageState extends State<WorkoutPage> {
   User? user;
   var prov;
   Workout? workout;
+
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+      SystemUiOverlay.bottom,
+    ]);
+  }
 
   @override
   void didChangeDependencies() async {
@@ -140,7 +149,9 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   )
                 : InkWell(
                     onTap: () {
-                      _showToast('Dialog');
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              CreateWorkout(true, user!.uid)));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -149,50 +160,43 @@ class _WorkoutPageState extends State<WorkoutPage> {
                         Container(
                           height: _appBarHeight * 0.5,
                           width: _appBarHeight * 0.5,
-                          child: CircleAvatar(
-                            child: ClipOval(
-                              child: user!.profilePic == null
-                                  ? Image.asset(
-                                      'assets/images/no_profile_pic.png',
-                                      fit: BoxFit.fitHeight,
-                                    )
-                                  : FadeInImage(
-                                      placeholder: AssetImage(
-                                          'assets/images/loading-gif.gif'),
-                                      placeholderErrorBuilder:
-                                          (context, _, __) => Image.asset(
-                                                'assets/images/loading-gif.gif',
-                                                fit: BoxFit.contain,
-                                              ),
-                                      fit: BoxFit.contain,
-                                      image: CachedNetworkImageProvider(
-                                          user!.profilePic!),
-                                      imageErrorBuilder: (image, _, __) =>
-                                          Image.asset(
-                                            'assets/images/ImageUploadError.png',
-                                            fit: BoxFit.contain,
-                                          )),
-                            ),
-                          ),
+                          child: user!.profilePic == null
+                              ? Image.asset(
+                                  'assets/images/no_profile_pic.png',
+                                  fit: BoxFit.fitHeight,
+                                )
+                              : FadeInImage(
+                                  placeholder: AssetImage(
+                                      'assets/images/loading-gif.gif'),
+                                  placeholderErrorBuilder: (context, _, __) =>
+                                      Image.asset(
+                                        'assets/images/loading-gif.gif',
+                                        fit: BoxFit.contain,
+                                      ),
+                                  fit: BoxFit.contain,
+                                  image: CachedNetworkImageProvider(
+                                      user!.profilePic!),
+                                  imageErrorBuilder: (image, _, __) =>
+                                      Image.asset(
+                                        'assets/images/ImageUploadError.png',
+                                        fit: BoxFit.contain,
+                                      )),
                         ),
                         SizedBox(
-                          width: _mediaQuery.size.width * 0.02,
+                          width: _mediaQuery.size.width * 0.05,
                         ),
                         Container(
+                          alignment: Alignment.centerLeft,
                           height: _appBarHeight,
                           width: _mediaQuery.size.width * 0.65,
-                          child: FittedBox(
-                            fit: BoxFit.fitWidth,
-                            child: Center(
-                              child: Text(
-                                user!.name!,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: _appBarHeight * 0.3),
-                              ),
-                            ),
+                          child: Text(
+                            '@' + user!.name!,
+                            textAlign: TextAlign.left,
+                            maxLines: 1,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: _appBarHeight * 0.3),
                           ),
                         ),
                       ],

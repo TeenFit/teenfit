@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/pickers/cicle_image_picker.dart';
@@ -19,6 +20,14 @@ class _EditProfileScreenState extends State<EditProfile> {
   User? user;
   bool _isLoading = false;
   bool isInit = false;
+
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+      SystemUiOverlay.top,
+    ]);
+  }
 
   @override
   void didChangeDependencies() async {

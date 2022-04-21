@@ -19,6 +19,14 @@ class _UserScreenState extends State<UserScreen> {
   bool _isLoading = false;
 
   @override
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+      SystemUiOverlay.top,
+    ]);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
@@ -45,8 +53,6 @@ class _UserScreenState extends State<UserScreen> {
         preferredSize: Size.fromHeight(_mediaQuery.size.height * 0.07),
         child: AppBar(
           elevation: 5,
-          systemOverlayStyle:
-              SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
           backgroundColor: _theme.secondaryHeaderColor,
           foregroundColor: Colors.white,
           title: Text(

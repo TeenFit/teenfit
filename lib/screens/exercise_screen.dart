@@ -19,8 +19,11 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   int selectedIndex = 0;
 
   @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+      SystemUiOverlay.top,
+    ]);
   }
 
   void goToPage(index) {
@@ -49,8 +52,6 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: _theme.primaryColor,
       appBar: AppBar(
-        systemOverlayStyle:
-            SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {

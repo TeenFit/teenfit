@@ -40,6 +40,7 @@ class _WorkoutTileState extends State<WorkoutTile> {
         AppBar().preferredSize.height + _mediaQuery.padding.top;
 
     return Card(
+      margin: widget.isGrid ? EdgeInsets.zero : EdgeInsets.all(5),
       clipBehavior: Clip.hardEdge,
       shape: widget.isGrid
           ? Border.all(width: 0)

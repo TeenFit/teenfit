@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,11 @@ import 'create_workout.dart';
 import '/widgets/workout_tile.dart';
 
 class CreateWorkout extends StatefulWidget {
+  final bool isView;
+  final String? viewUid;
+
+  CreateWorkout(this.isView, this.viewUid);
+
   @override
   State<CreateWorkout> createState() => _CreateWorkoutState();
 }
@@ -25,18 +31,31 @@ class _CreateWorkoutState extends State<CreateWorkout> {
   String? uid;
   bool isInit = false;
   var queryWorkout;
+  User? user;
+
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+      SystemUiOverlay.top,
+    ]);
+  }
 
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
 
     if (isInit == false) {
-      uid = Provider.of<Auth>(context, listen: false).userId!;
+      uid = widget.isView == true
+          ? widget.viewUid
+          : Provider.of<Auth>(context, listen: false).userId!;
+
+      user = await Provider.of<UserProv>(context).fetchAUser(context, uid);
 
       setState(() {
         queryWorkout = FirebaseFirestore.instance
             .collection('/workouts')
-            // .where('creatorId', isEqualTo: uid)
+            .where('creatorId', isEqualTo: uid)
             .orderBy('date', descending: true)
             .withConverter<Workout>(
                 fromFirestore: (snapshot, _) =>
@@ -70,8 +89,6 @@ class _CreateWorkoutState extends State<CreateWorkout> {
 
     var uuid = Uuid();
 
-    User user = Provider.of<UserProv>(context).getUser;
-
     return Scaffold(
       backgroundColor: _theme.primaryColor,
       appBar: PreferredSize(
@@ -87,14 +104,14 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                   ),
                 )
               : Text(
-                  '@' + user.name!,
+                  '@' + user!.name!,
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: _appBarHeight * 0.2),
                 ),
           backgroundColor: _theme.secondaryHeaderColor,
-          automaticallyImplyLeading: false,
+          automaticallyImplyLeading: true,
           actions: [
             Padding(
               padding: const EdgeInsets.only(left: 5.0, right: 15),
@@ -165,7 +182,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                     width: (_mediaQuery.size.height -
                                             _appBarHeight) *
                                         0.15,
-                                    child: user.profilePic == null
+                                    child: user!.profilePic == null
                                         ? Image.asset(
                                             'assets/images/no_profile_pic.png',
                                             fit: BoxFit.contain,
@@ -181,7 +198,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                             fit: BoxFit.cover,
                                             //change
                                             image: CachedNetworkImageProvider(
-                                                user.profilePic!),
+                                                user!.profilePic!),
                                             imageErrorBuilder: (image, _, __) =>
                                                 Image.asset(
                                                   'assets/images/ImageUploadError.png',
@@ -203,7 +220,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          user.followersNum!.toString(),
+                                          user!.followersNum!.toString(),
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
@@ -232,7 +249,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          user.followingNum!.toString(),
+                                          user!.followingNum!.toString(),
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
@@ -259,7 +276,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                   (_mediaQuery.size.height - _appBarHeight) *
                                       0.1,
                               child: Text(
-                                user.bio == null ? '' : user.bio!,
+                                user!.bio == null ? '' : user!.bio!,
                                 textAlign: TextAlign.left,
                                 maxLines: 5,
                                 style: TextStyle(
@@ -295,7 +312,9 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                             arguments: user);
                                       },
                                       child: Text(
-                                        'Edit Profile',
+                                        widget.isView == true
+                                            ? 'Follow'
+                                            : 'Edit Profile',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.black,
@@ -303,11 +322,11 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                       )),
                                 ),
                                 SizedBox(
-                                  width: user.instagram != null
+                                  width: user!.instagram != null
                                       ? _mediaQuery.size.width * 0.01
                                       : 0,
                                 ),
-                                user.instagram != null
+                                user!.instagram != null
                                     ? Container(
                                         width: (_mediaQuery.size.height -
                                                 _appBarHeight) *
@@ -327,7 +346,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                               primary: _theme.primaryColor),
                                           onPressed: () {
                                             try {
-                                              launch(user.instagram!)
+                                              launch(user!.instagram!)
                                                   .catchError((e) {
                                                 _showToast(
                                                     'Link Not Available');
@@ -348,11 +367,11 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                       )
                                     : SizedBox(),
                                 SizedBox(
-                                  width: user.tiktok != null
+                                  width: user!.tiktok != null
                                       ? _mediaQuery.size.width * 0.01
                                       : 0,
                                 ),
-                                user.tiktok != null
+                                user!.tiktok != null
                                     ? Container(
                                         width: (_mediaQuery.size.height -
                                                 _appBarHeight) *
@@ -372,7 +391,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                               primary: _theme.primaryColor),
                                           onPressed: () {
                                             try {
-                                              launch(user.tiktok!)
+                                              launch(user!.tiktok!)
                                                   .catchError((e) {
                                                 _showToast(
                                                     'Link Not Available');
@@ -418,68 +437,68 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                       return Container();
                     } else {
                       return GridView.builder(
-                          padding: EdgeInsets.zero,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 0,
-                                  mainAxisSpacing: 0),
-                          itemCount: snapshot.docs.length,
-                          itemBuilder: (context, index) {
-                            final hasReachedEnd = snapshot.hasMore &&
-                                index + 1 == snapshot.docs.length &&
-                                !snapshot.isFetchingMore;
+                        padding: EdgeInsets.zero,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 0,
+                            mainAxisSpacing: 0),
+                        itemCount: snapshot.docs.length,
+                        itemBuilder: (context, index) {
+                          final hasReachedEnd = snapshot.hasMore &&
+                              index + 1 == snapshot.docs.length &&
+                              !snapshot.isFetchingMore;
 
-                            if (hasReachedEnd) {
-                              snapshot.fetchMore();
-                            }
+                          if (hasReachedEnd) {
+                            snapshot.fetchMore();
+                          }
 
-                            final workout = snapshot.docs[index].data();
-                            return snapshot.docs[index].exists
-                                ? WorkoutTile(
-                                    workout,
-                                    true,
-                                    false,
-                                    true,
-                                  )
-                                : Container(
-                                    height: (_mediaQuery.size.height -
-                                        _appBarHeight),
-                                    width: _mediaQuery.size.width,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          height: (_mediaQuery.size.height -
-                                                  _appBarHeight) *
-                                              0.05,
-                                        ),
-                                        Container(
-                                          height: (_mediaQuery.size.height -
-                                                  _appBarHeight) *
-                                              0.05,
-                                          width: _mediaQuery.size.width * 0.8,
-                                          child: FittedBox(
-                                            fit: BoxFit.fitWidth,
-                                            child: Text(
-                                              'Create Your First Workout...',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize:
-                                                    _mediaQuery.size.height *
-                                                        0.025,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: 'Roboto',
-                                              ),
+                          final workout = snapshot.docs[index].data();
+                          return snapshot.docs[index].exists
+                              ? WorkoutTile(
+                                  workout,
+                                  true,
+                                  false,
+                                  true,
+                                )
+                              : Container(
+                                  height:
+                                      (_mediaQuery.size.height - _appBarHeight),
+                                  width: _mediaQuery.size.width,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: (_mediaQuery.size.height -
+                                                _appBarHeight) *
+                                            0.05,
+                                      ),
+                                      Container(
+                                        height: (_mediaQuery.size.height -
+                                                _appBarHeight) *
+                                            0.05,
+                                        width: _mediaQuery.size.width * 0.8,
+                                        child: FittedBox(
+                                          fit: BoxFit.fitWidth,
+                                          child: Text(
+                                            'Create Your First Workout...',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize:
+                                                  _mediaQuery.size.height *
+                                                      0.025,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Roboto',
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  );
-                          });
+                                      ),
+                                    ],
+                                  ),
+                                );
+                        },
+                      );
                     }
                   },
                 ),

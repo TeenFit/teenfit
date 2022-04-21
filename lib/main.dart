@@ -9,6 +9,7 @@ import 'package:teenfit/providers/userProv.dart';
 import 'package:teenfit/screens/admin_screen.dart';
 import 'package:teenfit/screens/edit_profile.dart';
 import 'package:teenfit/screens/home_screen.dart';
+import 'package:teenfit/screens/my_workouts.dart';
 import 'package:teenfit/screens/privacy_policy_screen.dart';
 import 'package:teenfit/screens/user_screen.dart';
 import 'package:teenfit/screens/workout_page.dart';

@@ -34,6 +34,14 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   List<Exercise>? exerciseEditList;
 
   @override
+  void initState() {
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+      SystemUiOverlay.top,
+    ]);
+  }
+
+  @override
   void didChangeDependencies() async {
     workoutProv = ModalRoute.of(context)!.settings.arguments;
 
