@@ -49,13 +49,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         failed: false,
         pending: true,
         date: workout!.date,
-        creatorName: workout!.creatorName,
         creatorId: workout!.creatorId,
         workoutId: workout!.workoutId,
         workoutName: workout!.workoutName,
-        instagram: workout!.instagram,
-        facebook: workout!.facebook,
-        tiktokLink: workout!.tiktokLink,
         bannerImage: workout!.bannerImage,
         bannerImageLink: workout!.bannerImageLink,
         exercises: exerciseEditList!,
@@ -125,13 +121,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
           failed: false,
           pending: true,
           date: workout!.date,
-          creatorName: workout!.creatorName,
           creatorId: workout!.creatorId,
           workoutId: workout!.workoutId,
           workoutName: workout!.workoutName,
-          instagram: workout!.instagram,
-          facebook: workout!.facebook,
-          tiktokLink: workout!.tiktokLink,
           bannerImage: image,
           bannerImageLink: workout!.bannerImageLink,
           exercises: exerciseEditList!,
@@ -178,13 +170,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
         searchTerms: newWorkout!.searchTerms,
         pending: newWorkout!.pending,
         date: newWorkout!.date,
-        creatorName: newWorkout!.creatorName,
         creatorId: newWorkout!.creatorId,
         workoutId: newWorkout!.workoutId,
         workoutName: newWorkout!.workoutName,
-        instagram: newWorkout!.instagram,
-        facebook: newWorkout!.facebook,
-        tiktokLink: newWorkout!.tiktokLink,
         bannerImage: newWorkout!.bannerImage,
         bannerImageLink: newWorkout!.bannerImageLink,
         exercises: newWorkout!.exercises,
@@ -224,54 +212,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       }
     }
 
-    Widget buildCreatorName() {
-      return Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Container(
-          height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
-          width: _mediaQuery.size.width,
-          child: TextFormField(
-            initialValue: workout!.creatorName,
-            decoration: InputDecoration(
-              hintText: 'Creator Name',
-              hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
-            ),
-            style: TextStyle(
-              fontSize: 20,
-            ),
-            textInputAction: TextInputAction.next,
-            validator: (value) {
-              if (value.toString().trim().isEmpty) {
-                return 'Name is Required';
-              } else if (value.toString().trim().length > 10) {
-                return 'Stay Under 10 Characters Please';
-              }
-              return null;
-            },
-            onSaved: (input) {
-              newWorkout = Workout(
-                views: newWorkout!.views,
-                searchTerms: newWorkout!.searchTerms,
-                failed: false,
-                pending: newWorkout!.pending,
-                date: newWorkout!.date,
-                creatorName: input.toString().trim(),
-                creatorId: newWorkout!.creatorId,
-                workoutId: newWorkout!.workoutId,
-                workoutName: newWorkout!.workoutName,
-                instagram: newWorkout!.instagram,
-                facebook: newWorkout!.facebook,
-                tiktokLink: newWorkout!.tiktokLink,
-                bannerImage: newWorkout!.bannerImage,
-                bannerImageLink: newWorkout!.bannerImageLink,
-                exercises: newWorkout!.exercises,
-              );
-            },
-          ),
-        ),
-      );
-    }
-
     Widget buildWorkoutName() {
       return Padding(
         padding: const EdgeInsets.all(15.0),
@@ -303,152 +243,9 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 failed: false,
                 pending: newWorkout!.pending,
                 date: newWorkout!.date,
-                creatorName: newWorkout!.creatorName,
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,
                 workoutName: input.toString().trim(),
-                instagram: newWorkout!.instagram,
-                facebook: newWorkout!.facebook,
-                tiktokLink: newWorkout!.tiktokLink,
-                bannerImage: newWorkout!.bannerImage,
-                bannerImageLink: newWorkout!.bannerImageLink,
-                exercises: newWorkout!.exercises,
-              );
-            },
-          ),
-        ),
-      );
-    }
-
-    Widget buildInstagramLink() {
-      return Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Container(
-          height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
-          width: _mediaQuery.size.width,
-          child: TextFormField(
-            initialValue: workout!.instagram,
-            maxLines: 2,
-            decoration: InputDecoration(
-              hintText: 'Instagram Link (optional)',
-              hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
-            ),
-            style: TextStyle(
-              fontSize: 20,
-            ),
-            keyboardType: TextInputType.url,
-            textInputAction: TextInputAction.next,
-            validator: (value) {
-              return null;
-            },
-            onSaved: (input) {
-              newWorkout = Workout(
-                views: newWorkout!.views,
-                searchTerms: newWorkout!.searchTerms,
-                failed: false,
-                pending: newWorkout!.pending,
-                date: newWorkout!.date,
-                creatorName: newWorkout!.creatorName,
-                creatorId: newWorkout!.creatorId,
-                workoutId: newWorkout!.workoutId,
-                workoutName: newWorkout!.workoutName,
-                instagram: input.toString().trim().isEmpty
-                    ? ''
-                    : input.toString().trim(),
-                facebook: newWorkout!.facebook,
-                tiktokLink: newWorkout!.tiktokLink,
-                bannerImage: newWorkout!.bannerImage,
-                bannerImageLink: newWorkout!.bannerImageLink,
-                exercises: newWorkout!.exercises,
-              );
-            },
-          ),
-        ),
-      );
-    }
-
-    Widget buildTumblrLink() {
-      return Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Container(
-          height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
-          width: _mediaQuery.size.width,
-          child: TextFormField(
-            initialValue: workout!.tiktokLink,
-            decoration: InputDecoration(
-              hintText: 'Tiktok Link (optional)',
-              hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
-            ),
-            style: TextStyle(
-              fontSize: 20,
-            ),
-            keyboardType: TextInputType.url,
-            textInputAction: TextInputAction.next,
-            validator: (value) {
-              return null;
-            },
-            onSaved: (input) {
-              newWorkout = Workout(
-                views: newWorkout!.views,
-                searchTerms: newWorkout!.searchTerms,
-                failed: false,
-                pending: newWorkout!.pending,
-                date: newWorkout!.date,
-                creatorName: newWorkout!.creatorName,
-                creatorId: newWorkout!.creatorId,
-                workoutId: newWorkout!.workoutId,
-                workoutName: newWorkout!.workoutName,
-                instagram: newWorkout!.instagram,
-                bannerImageLink: newWorkout!.bannerImageLink,
-                facebook: newWorkout!.facebook,
-                tiktokLink: input.toString().trim().isEmpty
-                    ? ''
-                    : input.toString().trim(),
-                bannerImage: newWorkout!.bannerImage,
-                exercises: newWorkout!.exercises,
-              );
-            },
-          ),
-        ),
-      );
-    }
-
-    Widget buildFacebookLink() {
-      return Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Container(
-          height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
-          width: _mediaQuery.size.width,
-          child: TextFormField(
-            initialValue: workout!.facebook,
-            decoration: InputDecoration(
-              hintText: 'Facebook Link (Optional)',
-              hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
-            ),
-            style: TextStyle(
-              fontSize: 20,
-            ),
-            keyboardType: TextInputType.url,
-            textInputAction: TextInputAction.done,
-            validator: (value) {
-              return null;
-            },
-            onSaved: (input) {
-              newWorkout = Workout(
-                views: newWorkout!.views,
-                searchTerms: newWorkout!.searchTerms,
-                failed: false,
-                pending: newWorkout!.pending,
-                date: newWorkout!.date,
-                creatorName: newWorkout!.creatorName,
-                creatorId: newWorkout!.creatorId,
-                workoutId: newWorkout!.workoutId,
-                workoutName: newWorkout!.workoutName,
-                instagram: newWorkout!.instagram,
-                facebook: input.toString().trim().isEmpty
-                    ? ''
-                    : input.toString().trim(),
-                tiktokLink: newWorkout!.tiktokLink,
                 bannerImage: newWorkout!.bannerImage,
                 bannerImageLink: newWorkout!.bannerImageLink,
                 exercises: newWorkout!.exercises,
@@ -617,11 +414,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 ),
                 WorkoutImagePicker(
                     _pickImage, workout!.bannerImageLink, workout!.bannerImage),
-                buildCreatorName(),
                 buildWorkoutName(),
-                buildInstagramLink(),
-                buildTumblrLink(),
-                buildFacebookLink(),
                 buildAddExercises(),
                 Padding(
                   padding: const EdgeInsets.all(15.0),

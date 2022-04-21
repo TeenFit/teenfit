@@ -78,6 +78,8 @@ class Auth with ChangeNotifier {
         'date': null,
         'searchTerms': null,
         'link': null,
+        'instagram': null,
+        'tiktok': null,
       });
 
       notifyListeners();

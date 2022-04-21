@@ -1,16 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/services.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/providers/auth.dart';
 import 'package:teenfit/providers/user.dart';
 import 'package:teenfit/providers/userProv.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 
+import '../Custom/my_flutter_app_icons.dart';
 import '/providers/workout.dart';
 import 'create_workout.dart';
 import '/widgets/workout_tile.dart';
@@ -87,7 +87,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                   ),
                 )
               : Text(
-                  user!.name!,
+                  '@' + user!.name!,
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -109,13 +109,9 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                         failed: false,
                         pending: true,
                         date: DateTime.now(),
-                        creatorName: '',
                         creatorId: uid!,
                         workoutId: uuid.v4(),
                         workoutName: '',
-                        instagram: '',
-                        facebook: '',
-                        tiktokLink: '',
                         bannerImage: null,
                         bannerImageLink: null,
                         exercises: [],
@@ -163,27 +159,34 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                   width: _mediaQuery.size.width * 0.05,
                                 ),
                                 Container(
-                                  height: (_mediaQuery.size.height -
-                                          _appBarHeight) *
-                                      0.15,
-                                  width: (_mediaQuery.size.height -
-                                          _appBarHeight) *
-                                      0.15,
-                                  child: user!.profilePic == null
-                                      ? Image.asset(
-                                          'assets/images/no_profile_pic.png',
-                                          fit: BoxFit.contain,
-                                        )
-                                      : Image.network(
-                                          user!.profilePic!,
-                                          errorBuilder: (image, _, __) =>
-                                              Image.asset(
-                                            'assets/images/ImageUploadError.png',
+                                    height: (_mediaQuery.size.height -
+                                            _appBarHeight) *
+                                        0.15,
+                                    width: (_mediaQuery.size.height -
+                                            _appBarHeight) *
+                                        0.15,
+                                    child: user!.profilePic == null
+                                        ? Image.asset(
+                                            'assets/images/no_profile_pic.png',
                                             fit: BoxFit.contain,
-                                          ),
-                                          fit: BoxFit.fill,
-                                        ),
-                                ),
+                                          )
+                                        : FadeInImage(
+                                            placeholder: AssetImage(
+                                                'assets/images/loading-gif.gif'),
+                                            placeholderErrorBuilder:
+                                                (context, _, __) => Image.asset(
+                                                      'assets/images/loading-gif.gif',
+                                                      fit: BoxFit.contain,
+                                                    ),
+                                            fit: BoxFit.cover,
+                                            //change
+                                            image: CachedNetworkImageProvider(
+                                                user!.profilePic!),
+                                            imageErrorBuilder: (image, _, __) =>
+                                                Image.asset(
+                                                  'assets/images/ImageUploadError.png',
+                                                  fit: BoxFit.contain,
+                                                ))),
                                 SizedBox(
                                   width: _mediaQuery.size.width * 0.06,
                                 ),
@@ -248,11 +251,146 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                               ],
                             ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Container(
+                              width: _mediaQuery.size.width,
+                              height:
+                                  (_mediaQuery.size.height - _appBarHeight) *
+                                      0.1,
+                              child: Text(
+                                user!.bio == null ? '' : user!.bio!,
+                                textAlign: TextAlign.left,
+                                maxLines: 5,
+                                style: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    color: Colors.black,
+                                    fontSize: _appBarHeight * 0.17),
+                              ),
+                            ),
+                          ),
                           Container(
-                            height:
-                                (_mediaQuery.size.height - _appBarHeight) * 0.2,
+                            height: (_mediaQuery.size.height - _appBarHeight) *
+                                0.07,
                             width: _mediaQuery.size.width,
-                          )
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: _mediaQuery.size.width * 0.5,
+                                  height: (_mediaQuery.size.height -
+                                          _appBarHeight) *
+                                      0.07,
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          elevation: 0,
+                                          side: BorderSide(
+                                              width: 1,
+                                              color: _theme.primaryColorLight),
+                                          primary: _theme.primaryColor),
+                                      onPressed: () {},
+                                      child: Text(
+                                        'Edit Profile',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: _appBarHeight * 0.2),
+                                      )),
+                                ),
+                                SizedBox(
+                                  width: user!.instagram != null
+                                      ? _mediaQuery.size.width * 0.01
+                                      : 0,
+                                ),
+                                user!.instagram != null
+                                    ? Container(
+                                        width: (_mediaQuery.size.height -
+                                                _appBarHeight) *
+                                            0.07,
+                                        height: (_mediaQuery.size.height -
+                                                _appBarHeight) *
+                                            0.07,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              padding: EdgeInsets.zero,
+                                              alignment: Alignment.center,
+                                              elevation: 0,
+                                              side: BorderSide(
+                                                  width: 1,
+                                                  color:
+                                                      _theme.primaryColorLight),
+                                              primary: _theme.primaryColor),
+                                          onPressed: () {
+                                            try {
+                                              launch(user!.instagram!)
+                                                  .catchError((e) {
+                                                _showToast(
+                                                    'Link Not Available');
+                                              });
+                                            } catch (e) {
+                                              _showToast('Link Not Available');
+                                            }
+                                          },
+                                          child: Center(
+                                            child: Icon(
+                                              MyFlutterApp.instagram_1,
+                                              size: _mediaQuery.size.height *
+                                                  0.045,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : SizedBox(),
+                                SizedBox(
+                                  width: user!.tiktok != null
+                                      ? _mediaQuery.size.width * 0.01
+                                      : 0,
+                                ),
+                                user!.tiktok != null
+                                    ? Container(
+                                        width: (_mediaQuery.size.height -
+                                                _appBarHeight) *
+                                            0.07,
+                                        height: (_mediaQuery.size.height -
+                                                _appBarHeight) *
+                                            0.07,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              padding: EdgeInsets.zero,
+                                              alignment: Alignment.center,
+                                              elevation: 0,
+                                              side: BorderSide(
+                                                  width: 1,
+                                                  color:
+                                                      _theme.primaryColorLight),
+                                              primary: _theme.primaryColor),
+                                          onPressed: () {
+                                            try {
+                                              launch(user!.tiktok!)
+                                                  .catchError((e) {
+                                                _showToast(
+                                                    'Link Not Available');
+                                              });
+                                            } catch (e) {
+                                              _showToast('Link Not Available');
+                                            }
+                                          },
+                                          child: Center(
+                                            child: Icon(
+                                              MyFlutterApp.unknown,
+                                              size: _mediaQuery.size.height *
+                                                  0.045,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : SizedBox()
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),

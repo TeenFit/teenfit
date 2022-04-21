@@ -11,6 +11,8 @@ class User {
   final int? followersNum;
   final int? followingNum;
   final List? searchTerms;
+  final String? instagram;
+  final String? tiktok;
 
   const User({
     required this.email,
@@ -25,6 +27,8 @@ class User {
     this.followingNum,
     this.searchTerms,
     this.link,
+    this.instagram,
+    this.tiktok,
   });
 
   User.fromJson(Map<String, dynamic> e)
@@ -37,10 +41,14 @@ class User {
           profilePic: e['profilePic'],
           followers: e['followers'],
           following: e['following'],
-          followersNum: e['followers'] != null ? (e['followers'] as List).length : null,
-          followingNum: e['following'] != null ? (e['following'] as List).length : null,
+          followersNum:
+              e['followers'] != null ? (e['followers'] as List).length : null,
+          followingNum:
+              e['following'] != null ? (e['following'] as List).length : null,
           searchTerms: e['searchTerms'],
           link: e['link'],
+          tiktok: e['tiktok'],
+          instagram: e['instagram'],
         );
 
   Map<String, Object?> toJson() => {
@@ -54,5 +62,7 @@ class User {
         'following': following,
         'searchTerms': searchTerms,
         'link': link,
+        'instagram': instagram,
+        'tiktok': tiktok,
       };
 }

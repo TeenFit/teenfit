@@ -55,50 +55,7 @@ class Workouts with ChangeNotifier {
   Future<void> addWorkout(Workout workouT) async {
     List<String> searchTermsList = [];
 
-    Future<void> addSearchTerms(String creatorName, String workoutName) async {
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(0, i));
-      }
-
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(0, i).toLowerCase());
-      }
-
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(0, i).toUpperCase());
-      }
-
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 2 < 0 ? 0 : i - 2, i));
-      }
-
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 3 < 0 ? 0 : i - 3, i));
-      }
-
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 4 < 0 ? 0 : i - 4, i));
-      }
-
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 5 < 0 ? 0 : i - 5, i));
-      }
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 6 < 0 ? 0 : i - 6, i));
-      }
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 7 < 0 ? 0 : i - 7, i));
-      }
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 8 < 0 ? 0 : i - 8, i));
-      }
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 9 < 0 ? 0 : i - 9, i));
-      }
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 10 < 0 ? 0 : i - 10, i));
-      }
-
+    Future<void> addSearchTerms(String workoutName) async {
       for (var i = 0; i <= workoutName.characters.length; i++) {
         searchTermsList.add(workoutName.substring(0, i));
       }
@@ -267,7 +224,7 @@ class Workouts with ChangeNotifier {
         };
       }).toList();
 
-      addSearchTerms(workouT.creatorName, workouT.workoutName);
+      addSearchTerms(workouT.workoutName);
 
       var workoutDocInfo = {
         'views': workouT.views,
@@ -275,13 +232,9 @@ class Workouts with ChangeNotifier {
         'pending': workouT.pending,
         'date': workouT.date.toString(),
         'bannerImage': url,
-        'creatorName': workouT.creatorName,
         'creatorId': workouT.creatorId,
         'workoutId': workouT.workoutId,
         'workoutName': workouT.workoutName,
-        'instagram': workouT.instagram,
-        'facebook': workouT.facebook,
-        'tiktokLink': workouT.tiktokLink,
         'exercises': exerciseS,
         'searchTerms': searchTermsList,
       };
@@ -306,50 +259,7 @@ class Workouts with ChangeNotifier {
   Future<void> updateWorkout(Workout workouT) async {
     List<String> searchTermsList = [];
 
-    Future<void> addSearchTerms(String creatorName, String workoutName) async {
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(0, i));
-      }
-
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(0, i).toLowerCase());
-      }
-
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(0, i).toUpperCase());
-      }
-
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 2 < 0 ? 0 : i - 2, i));
-      }
-
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 3 < 0 ? 0 : i - 3, i));
-      }
-
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 4 < 0 ? 0 : i - 4, i));
-      }
-
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 5 < 0 ? 0 : i - 5, i));
-      }
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 6 < 0 ? 0 : i - 6, i));
-      }
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 7 < 0 ? 0 : i - 7, i));
-      }
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 8 < 0 ? 0 : i - 8, i));
-      }
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 9 < 0 ? 0 : i - 9, i));
-      }
-      for (var i = 0; i <= creatorName.characters.length; i++) {
-        searchTermsList.add(creatorName.substring(i - 10 < 0 ? 0 : i - 10, i));
-      }
-
+    Future<void> addSearchTerms(String workoutName) async {
       for (var i = 0; i <= workoutName.characters.length; i++) {
         searchTermsList.add(workoutName.substring(0, i));
       }
@@ -576,7 +486,7 @@ class Workouts with ChangeNotifier {
         };
       }).toList();
 
-      await addSearchTerms(workouT.creatorName, workouT.workoutName);
+      await addSearchTerms(workouT.workoutName);
 
       var workoutDocInfo = {
         'views': workouT.views,
@@ -585,13 +495,9 @@ class Workouts with ChangeNotifier {
         'pending': workouT.pending,
         'date': workouT.date.toString(),
         'bannerImage': url,
-        'creatorName': workouT.creatorName,
         'creatorId': workouT.creatorId,
         'workoutId': workouT.workoutId,
         'workoutName': workouT.workoutName,
-        'instagram': workouT.instagram,
-        'facebook': workouT.facebook,
-        'tiktokLink': workouT.tiktokLink,
         'exercises': exerciseS,
       };
 

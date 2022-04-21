@@ -17,25 +17,25 @@ class UserProv with ChangeNotifier {
     final userDoc =
         await FirebaseFirestore.instance.collection('/users').doc(uid).get();
 
-    var email = 'teenfitness.fit@gmail.com';
+    // var email = 'teenfitness.fit@gmail.com';
 
-    var userId = 'fu9uLdEgQCX3jsVrOMcU4KFmNCr1';
+    // var userId = 'fu9uLdEgQCX3jsVrOMcU4KFmNCr1';
 
-    final userRef =
-        await FirebaseFirestore.instance.collection('/users').doc(userId);
+    // final userRef =
+    //     await FirebaseFirestore.instance.collection('/users').doc(userId);
 
-    await userRef.set({
-      'email': email,
-      'name': 'user_${userId.toLowerCase()}'.substring(0, 30),
-      'bio': null,
-      'profilePic': null,
-      'following': null,
-      'followers': null,
-      'uid': ('$userId'),
-      'date': null,
-      'searchTerms': null,
-      'link': null,
-    });
+    // await userRef.set({
+    //   'email': email,
+    //   'name': 'user_${userId.toLowerCase()}'.substring(0, 30),
+    //   'bio': null,
+    //   'profilePic': null,
+    //   'following': null,
+    //   'followers': null,
+    //   'uid': ('$userId'),
+    //   'date': null,
+    //   'searchTerms': null,
+    //   'link': null,
+    // });
 
     _user = User(
       email: userDoc.data()!['email'],
@@ -54,6 +54,8 @@ class UserProv with ChangeNotifier {
           : 0,
       searchTerms: userDoc.data()!['searchTerms'],
       link: userDoc.data()!['link'],
+      instagram: userDoc.data()!['instagram'],
+      tiktok: userDoc.data()!['tiktok'],
     );
     notifyListeners();
   }
@@ -79,6 +81,8 @@ class UserProv with ChangeNotifier {
           : 0,
       searchTerms: userDoc.data()!['searchTerms'],
       link: userDoc.data()!['link'],
+      instagram: userDoc.data()!['instagram'],
+      tiktok: userDoc.data()!['tiktok'],
     );
   }
 }
