@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class User {
   final String? bio;
   final String? email;
@@ -13,6 +15,7 @@ class User {
   final List? searchTerms;
   final String? instagram;
   final String? tiktok;
+  final File? profilePicFile;
 
   const User({
     required this.email,
@@ -21,6 +24,7 @@ class User {
     this.date,
     this.bio,
     this.profilePic,
+    this.profilePicFile,
     this.followers,
     this.following,
     this.followersNum,

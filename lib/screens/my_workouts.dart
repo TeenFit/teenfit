@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:teenfit/providers/auth.dart';
 import 'package:teenfit/providers/user.dart';
 import 'package:teenfit/providers/userProv.dart';
+import 'package:teenfit/screens/edit_profile.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 
@@ -21,7 +22,6 @@ class CreateWorkout extends StatefulWidget {
 }
 
 class _CreateWorkoutState extends State<CreateWorkout> {
-  User? user;
   String? uid;
   bool isInit = false;
   var queryWorkout;
@@ -42,8 +42,6 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                 fromFirestore: (snapshot, _) =>
                     Workout.fromJson(snapshot.data()!),
                 toFirestore: (worKout, _) => worKout.toJson());
-
-        user = Provider.of<UserProv>(context, listen: false).getUser;
       });
 
       setState(() {
@@ -72,6 +70,8 @@ class _CreateWorkoutState extends State<CreateWorkout> {
 
     var uuid = Uuid();
 
+    User user = Provider.of<UserProv>(context, listen: false).getUser;
+
     return Scaffold(
       backgroundColor: _theme.primaryColor,
       appBar: PreferredSize(
@@ -87,7 +87,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                   ),
                 )
               : Text(
-                  '@' + user!.name!,
+                  '@' + user.name!,
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -152,7 +152,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                 (_mediaQuery.size.height - _appBarHeight) * 0.2,
                             width: _mediaQuery.size.width,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 SizedBox(
@@ -165,7 +165,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                     width: (_mediaQuery.size.height -
                                             _appBarHeight) *
                                         0.15,
-                                    child: user!.profilePic == null
+                                    child: user.profilePic == null
                                         ? Image.asset(
                                             'assets/images/no_profile_pic.png',
                                             fit: BoxFit.contain,
@@ -181,7 +181,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                             fit: BoxFit.cover,
                                             //change
                                             image: CachedNetworkImageProvider(
-                                                user!.profilePic!),
+                                                user.profilePic!),
                                             imageErrorBuilder: (image, _, __) =>
                                                 Image.asset(
                                                   'assets/images/ImageUploadError.png',
@@ -203,7 +203,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          user!.followersNum!.toString(),
+                                          user.followersNum!.toString(),
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
@@ -232,7 +232,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          user!.followingNum!.toString(),
+                                          user.followingNum!.toString(),
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
@@ -259,7 +259,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                   (_mediaQuery.size.height - _appBarHeight) *
                                       0.1,
                               child: Text(
-                                user!.bio == null ? '' : user!.bio!,
+                                user.bio == null ? '' : user.bio!,
                                 textAlign: TextAlign.left,
                                 maxLines: 5,
                                 style: TextStyle(
@@ -289,7 +289,11 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                               width: 1,
                                               color: _theme.primaryColorLight),
                                           primary: _theme.primaryColor),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.of(context).pushNamed(
+                                            EditProfile.routeName,
+                                            arguments: user);
+                                      },
                                       child: Text(
                                         'Edit Profile',
                                         style: TextStyle(
@@ -299,11 +303,11 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                       )),
                                 ),
                                 SizedBox(
-                                  width: user!.instagram != null
+                                  width: user.instagram != null
                                       ? _mediaQuery.size.width * 0.01
                                       : 0,
                                 ),
-                                user!.instagram != null
+                                user.instagram != null
                                     ? Container(
                                         width: (_mediaQuery.size.height -
                                                 _appBarHeight) *
@@ -323,7 +327,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                               primary: _theme.primaryColor),
                                           onPressed: () {
                                             try {
-                                              launch(user!.instagram!)
+                                              launch(user.instagram!)
                                                   .catchError((e) {
                                                 _showToast(
                                                     'Link Not Available');
@@ -344,11 +348,11 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                       )
                                     : SizedBox(),
                                 SizedBox(
-                                  width: user!.tiktok != null
+                                  width: user.tiktok != null
                                       ? _mediaQuery.size.width * 0.01
                                       : 0,
                                 ),
-                                user!.tiktok != null
+                                user.tiktok != null
                                     ? Container(
                                         width: (_mediaQuery.size.height -
                                                 _appBarHeight) *
@@ -368,7 +372,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                               primary: _theme.primaryColor),
                                           onPressed: () {
                                             try {
-                                              launch(user!.tiktok!)
+                                              launch(user.tiktok!)
                                                   .catchError((e) {
                                                 _showToast(
                                                     'Link Not Available');
@@ -391,6 +395,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                               ],
                             ),
                           ),
+                          SizedBox(height: _mediaQuery.size.width * 0.05),
                         ],
                       ),
                     ),

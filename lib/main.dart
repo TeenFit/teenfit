@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:teenfit/providers/basic.dart';
 import 'package:teenfit/providers/userProv.dart';
 import 'package:teenfit/screens/admin_screen.dart';
+import 'package:teenfit/screens/edit_profile.dart';
 import 'package:teenfit/screens/home_screen.dart';
 import 'package:teenfit/screens/privacy_policy_screen.dart';
 import 'package:teenfit/screens/user_screen.dart';
@@ -90,7 +91,7 @@ class _MyAppState extends State<MyApp> {
           title: 'TeenFit',
           theme: ThemeData(
             primaryColor: Color(0xffF7F4EB),
-           primaryColorLight: Color.fromARGB(255, 204, 201, 193),
+            primaryColorLight: Color.fromARGB(255, 204, 201, 193),
             secondaryHeaderColor: Color(0xffF0A037),
             splashColor: Colors.transparent,
             primaryColorDark: Color(0xffAE7E3F),
@@ -130,6 +131,7 @@ class _MyAppState extends State<MyApp> {
             ResetPasswordScreen.routeName: (ctx) => ResetPasswordScreen(),
             AdminScreen.routeName: (ctx) => AdminScreen(),
             PrivacyPolicyScreen.routeName: (ctx) => PrivacyPolicyScreen(),
+            EditProfile.routeName: (ctx) => EditProfile(),
           },
         ),
       ),
