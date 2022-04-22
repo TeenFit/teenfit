@@ -101,11 +101,15 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
               itemBuilder: (context, snapshot) {
                 final workout = snapshot.data();
                 return snapshot.exists
-                    ? WorkoutTile(
-                        workout,
-                        false,
-                        false,
-                        false,
+                    ? Container(
+                        height:
+                            (_mediaQuery.size.height - _appBarHieght) * 0.22,
+                        child: WorkoutTile(
+                          workout,
+                          false,
+                          false,
+                          false,
+                        ),
                       )
                     : Container(
                         height: (_mediaQuery.size.height - _appBarHieght),

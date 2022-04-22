@@ -53,7 +53,7 @@ class _WorkoutTileState extends State<WorkoutTile> {
           Container(
             height: widget.isGrid
                 ? _mediaQuery.size.width * 0.5
-                : (_mediaQuery.size.height - _appBarHieght) * 0.3,
+                : (_mediaQuery.size.height - _appBarHieght) * 0.22,
             width: double.infinity,
             child: widget.workout.bannerImageLink == null
                 ? widget.workout.bannerImage == null
