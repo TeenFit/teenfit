@@ -30,8 +30,11 @@ class CreateWorkout extends StatefulWidget {
 class _CreateWorkoutState extends State<CreateWorkout> {
   String? uid;
   bool isInit = false;
+  bool isView = false;
   var queryWorkout;
+  Auth? auth;
   User? user;
+  bool? isFollowing = false;
 
   @override
   void initState() {
@@ -39,18 +42,32 @@ class _CreateWorkoutState extends State<CreateWorkout> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
       SystemUiOverlay.top,
     ]);
+    isView = widget.isView;
   }
 
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
 
+    auth = Provider.of<Auth>(context, listen: false);
     if (isInit == false) {
-      uid = widget.isView == true
-          ? widget.viewUid
-          : Provider.of<Auth>(context, listen: false).userId!;
+      var currentUserUID = auth!.isAuth()
+          ? Provider.of<Auth>(context, listen: false).userId!
+          : null;
+      uid = isView != true && auth!.isAuth() ? currentUserUID : widget.viewUid;
 
+      if (currentUserUID == widget.viewUid) {
+        setState(() {
+          isView = false;
+        });
+      }
       user = await Provider.of<UserProv>(context).fetchAUser(context, uid);
+
+      if (user!.followers != null && auth!.isAuth()) {
+        isFollowing = user!.followers!.contains(auth!.userId!);
+      } else {
+        isFollowing = false;
+      }
 
       setState(() {
         queryWorkout = FirebaseFirestore.instance
@@ -113,37 +130,39 @@ class _CreateWorkoutState extends State<CreateWorkout> {
           backgroundColor: _theme.secondaryHeaderColor,
           automaticallyImplyLeading: true,
           actions: [
-            Padding(
-              padding: const EdgeInsets.only(left: 5.0, right: 15),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(
-                    AddWorkoutScreen.routeName,
-                    arguments: {
-                      'workout': Workout(
-                        views: 0,
-                        searchTerms: [],
-                        failed: false,
-                        pending: true,
-                        date: DateTime.now(),
-                        creatorId: uid!,
-                        workoutId: uuid.v4(),
-                        workoutName: '',
-                        bannerImage: null,
-                        bannerImageLink: null,
-                        exercises: [],
+            isView
+                ? SizedBox()
+                : Padding(
+                    padding: const EdgeInsets.only(left: 5.0, right: 15),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                          AddWorkoutScreen.routeName,
+                          arguments: {
+                            'workout': Workout(
+                              views: 0,
+                              searchTerms: [],
+                              failed: false,
+                              pending: true,
+                              date: DateTime.now(),
+                              creatorId: uid!,
+                              workoutId: uuid.v4(),
+                              workoutName: '',
+                              bannerImage: null,
+                              bannerImageLink: null,
+                              exercises: [],
+                            ),
+                            'isEdit': false
+                          },
+                        );
+                      },
+                      icon: Icon(
+                        Icons.add_box_outlined,
+                        color: Colors.white,
+                        size: _appBarHeight * 0.4,
                       ),
-                      'isEdit': false
-                    },
-                  );
-                },
-                icon: Icon(
-                  Icons.add_box_outlined,
-                  color: Colors.white,
-                  size: _appBarHeight * 0.4,
-                ),
-              ),
-            ),
+                    ),
+                  ),
           ],
         ),
       ),
@@ -220,7 +239,10 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          user!.followersNum!.toString(),
+                                          user!.followers == null
+                                              ? '0'
+                                              : user!.followers!.length
+                                                  .toString(),
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
@@ -249,7 +271,10 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          user!.followingNum!.toString(),
+                                          user!.following == null
+                                              ? '0'
+                                              : user!.following!.length
+                                                  .toString(),
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
@@ -272,12 +297,13 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Container(
                               width: _mediaQuery.size.width,
-                              height:
-                                  (_mediaQuery.size.height - _appBarHeight) *
+                              height: user!.bio == null
+                                  ? 0
+                                  : (_mediaQuery.size.height - _appBarHeight) *
                                       0.1,
                               child: Text(
                                 user!.bio == null ? '' : user!.bio!,
-                                textAlign: TextAlign.left,
+                                textAlign: TextAlign.center,
                                 maxLines: 5,
                                 style: TextStyle(
                                     fontFamily: 'Roboto',
@@ -304,16 +330,43 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                           elevation: 0,
                                           side: BorderSide(
                                               width: 1,
-                                              color: _theme.primaryColorLight),
+                                              color: isFollowing!
+                                                  ? Colors.blue
+                                                  : _theme.primaryColorLight),
                                           primary: _theme.primaryColor),
-                                      onPressed: () {
-                                        Navigator.of(context).pushNamed(
-                                            EditProfile.routeName,
-                                            arguments: user);
-                                      },
+                                      onPressed: isView
+                                          ? () {
+                                              var userProv =
+                                                  Provider.of<UserProv>(context,
+                                                      listen: false);
+                                              if (isFollowing! &&
+                                                  auth!.isAuth()) {
+                                                userProv
+                                                    .removeFollower(user!.uid!);
+                                              } else if (!isFollowing! &&
+                                                  auth!.isAuth()) {
+                                                userProv
+                                                    .addFollower(user!.uid!);
+                                              } else {
+                                                _showToast(
+                                                    'Sign Up to Follow Creators');
+                                              }
+                                              setState(() {
+                                                if (auth!.isAuth()) {
+                                                  isFollowing = !isFollowing!;
+                                                }
+                                              });
+                                            }
+                                          : () {
+                                              Navigator.of(context).pushNamed(
+                                                  EditProfile.routeName,
+                                                  arguments: user);
+                                            },
                                       child: Text(
-                                        widget.isView == true
-                                            ? 'Follow'
+                                        isView == true
+                                            ? isFollowing!
+                                                ? 'Following'
+                                                : 'Follow'
                                             : 'Edit Profile',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
@@ -414,7 +467,14 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                               ],
                             ),
                           ),
-                          SizedBox(height: _mediaQuery.size.width * 0.05),
+                          SizedBox(
+                            height: _mediaQuery.size.width * 0.03,
+                          ),
+                          Container(
+                            height: _mediaQuery.size.width * 0.03,
+                            width: _mediaQuery.size.width,
+                            color: _theme.secondaryHeaderColor,
+                          ),
                         ],
                       ),
                     ),
@@ -456,7 +516,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                           return snapshot.docs[index].exists
                               ? WorkoutTile(
                                   workout,
-                                  true,
+                                  !isView,
                                   false,
                                   true,
                                 )

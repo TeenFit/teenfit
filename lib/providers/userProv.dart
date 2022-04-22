@@ -86,12 +86,6 @@ class UserProv with ChangeNotifier {
       profilePic: userDoc.data()!['profilePic'],
       followers: userDoc.data()!['followers'],
       following: userDoc.data()!['following'],
-      followersNum: userDoc.data()!['followers'] != null
-          ? (userDoc.data()!['followers'] as List).length
-          : 0,
-      followingNum: userDoc.data()!['following'] != null
-          ? (userDoc.data()!['following'] as List).length
-          : 0,
       searchTerms: userDoc.data()!['searchTerms'],
       link: userDoc.data()!['link'],
       instagram: userDoc.data()!['instagram'],
@@ -113,12 +107,6 @@ class UserProv with ChangeNotifier {
       profilePic: userDoc.data()!['profilePic'],
       followers: userDoc.data()!['followers'],
       following: userDoc.data()!['following'],
-      followersNum: userDoc.data()!['followers'] != null
-          ? (userDoc.data()!['followers'] as List).length
-          : 0,
-      followingNum: userDoc.data()!['following'] != null
-          ? (userDoc.data()!['following'] as List).length
-          : 0,
       searchTerms: userDoc.data()!['searchTerms'],
       link: userDoc.data()!['link'],
       instagram: userDoc.data()!['instagram'],
@@ -227,5 +215,35 @@ class UserProv with ChangeNotifier {
     } catch (e) {
       throw e;
     }
+  }
+
+  void addFollower(String uid) {
+    FirebaseFirestore.instance.collection('/users').doc(uid.toString()).update({
+      'followers': FieldValue.arrayUnion([_user!.uid.toString()])
+    });
+
+    FirebaseFirestore.instance
+        .collection('/users')
+        .doc(_user!.uid.toString())
+        .update({
+      'following': FieldValue.arrayUnion([uid.toString()])
+    });
+
+    notifyListeners();
+  }
+
+  void removeFollower(String uid) {
+    FirebaseFirestore.instance.collection('/users').doc(uid.toString()).update({
+      'followers': FieldValue.arrayRemove([_user!.uid.toString()])
+    });
+
+    FirebaseFirestore.instance
+        .collection('/users')
+        .doc(_user!.uid.toString())
+        .update({
+      'following': FieldValue.arrayRemove([uid.toString()])
+    });
+
+    notifyListeners();
   }
 }

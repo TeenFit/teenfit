@@ -10,8 +10,6 @@ class User {
   final String? profilePic;
   final List? followers;
   final List? following;
-  final int? followersNum;
-  final int? followingNum;
   final List? searchTerms;
   final String? instagram;
   final String? tiktok;
@@ -27,8 +25,6 @@ class User {
     this.profilePicFile,
     this.followers,
     this.following,
-    this.followersNum,
-    this.followingNum,
     this.searchTerms,
     this.link,
     this.instagram,
@@ -45,10 +41,6 @@ class User {
           profilePic: e['profilePic'],
           followers: e['followers'],
           following: e['following'],
-          followersNum:
-              e['followers'] != null ? (e['followers'] as List).length : null,
-          followingNum:
-              e['following'] != null ? (e['following'] as List).length : null,
           searchTerms: e['searchTerms'],
           link: e['link'],
           tiktok: e['tiktok'],
