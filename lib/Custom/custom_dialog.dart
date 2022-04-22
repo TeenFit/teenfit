@@ -24,6 +24,7 @@ class CustomDialogBox extends StatefulWidget {
 
 class _CustomDialogBoxState extends State<CustomDialogBox> {
   bool isLoading = false;
+  final InAppReview inAppReview = InAppReview.instance;
 
   void _showToast(String msg) {
     Fluttertoast.showToast(
@@ -110,14 +111,15 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                       Navigator.of(context).popUntil(
                                           ModalRoute.withName(
                                               widget.dialogOrganizerId));
+
+                                      if (await inAppReview.isAvailable()) {
+                                        inAppReview.requestReview();
+                                      }
                                     } else if (widget.dialogOrganizerId ==
                                         '/workout-page-first') {
                                       Navigator.of(context).popUntil(
                                           ModalRoute.withName(
                                               WorkoutPage.routeName));
-
-                                      final InAppReview inAppReview =
-                                          InAppReview.instance;
 
                                       if (await inAppReview.isAvailable()) {
                                         inAppReview.requestReview();
