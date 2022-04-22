@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:rate_my_app/rate_my_app.dart';
-// import 'package:teenfit/providers/auth.dart';
+import 'package:in_app_review/in_app_review.dart';
 import '../screens/exercise_screen.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
@@ -36,15 +35,6 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
       backgroundColor: Colors.grey.shade700,
     );
   }
-
-  RateMyApp rateMyApp = RateMyApp(
-    preferencesPrefix: 'rateMyApp_',
-    minDays: 0,
-    minLaunches: 0,
-    remindDays: 5,
-    remindLaunches: 5,
-    appStoreIdentifier: '1600570883',
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -125,35 +115,12 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                       Navigator.of(context).popUntil(
                                           ModalRoute.withName(
                                               WorkoutPage.routeName));
-                                      if (rateMyApp.shouldOpenDialog) {
-                                        rateMyApp.showRateDialog(
-                                          context,
-                                          title: 'Rate TeenFit',
-                                          message:
-                                              'Please leave us a review because it helps us get more workouts for you to use',
-                                          rateButton: 'RATE',
-                                          noButton: 'NO THANKS',
-                                          laterButton: 'MAYBE LATER',
-                                          listener: (button) {
-                                            // The button click listener (useful if you want to cancel the click event).
-                                            switch (button) {
-                                              case RateMyAppDialogButton.rate:
-                                                print('Clicked on "Rate".');
-                                                break;
-                                              case RateMyAppDialogButton.later:
-                                                print('Clicked on "Later".');
-                                                break;
-                                              case RateMyAppDialogButton.no:
-                                                print('Clicked on "No".');
-                                                break;
-                                            }
 
-                                            return true; // Return false if you want to cancel the click event.
-                                          },
-                                          onDismissed: () => rateMyApp
-                                              .callEvent(RateMyAppEventType
-                                                  .laterButtonPressed),
-                                        );
+                                      final InAppReview inAppReview =
+                                          InAppReview.instance;
+
+                                      if (await inAppReview.isAvailable()) {
+                                        inAppReview.requestReview();
                                       }
                                     } else if (widget.dialogOrganizerId ==
                                         '/exercise-screen') {

@@ -53,20 +53,9 @@ class _WorkoutPageState extends State<WorkoutPage> {
     final _appBarHeight =
         (AppBar().preferredSize.height + _mediaQuery.padding.top);
 
-    void _showToast(String msg) {
-      Fluttertoast.showToast(
-        msg: msg,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 10,
-        webShowClose: true,
-        textColor: Colors.white,
-        backgroundColor: Colors.grey.shade700,
-      );
-    }
-
     Widget _getFAB() {
       return SpeedDial(
-        animatedIcon: AnimatedIcons.view_list,
+        animatedIcon: AnimatedIcons.list_view,
         animatedIconTheme: IconThemeData(size: 22),
         backgroundColor: _theme.secondaryHeaderColor,
         visible: true,
@@ -140,7 +129,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   )
                 : InkWell(
                     onTap: () {
-                   
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>
                               CreateWorkout(true, user!.uid)));
@@ -190,7 +178,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: _appBarHeight * 0.3),
+                                  fontSize: _appBarHeight * 0.23),
                             ),
                           ),
                         ),

@@ -55,7 +55,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
         ? Provider.of<Auth>(context, listen: false).userId!
         : null;
     uid = isView != true && auth!.isAuth() ? currentUserUID : widget.viewUid;
-    
+
     if (isInit == false) {
       if (currentUserUID == widget.viewUid) {
         setState(() {
@@ -359,9 +359,15 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                               });
                                             }
                                           : () {
-                                              Navigator.of(context).pushNamed(
-                                                  EditProfile.routeName,
-                                                  arguments: user);
+                                              Navigator.of(context)
+                                                  .pushNamed(
+                                                      EditProfile.routeName,
+                                                      arguments: user)
+                                                  .then((value) => setState(() {
+                                                        value != null
+                                                            ? isInit = false
+                                                            : isInit = isInit;
+                                                      }));
                                             },
                                       child: Text(
                                         isView == true
