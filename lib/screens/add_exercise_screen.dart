@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter_switch/flutter_switch.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:flutter/services.dart';
 import 'package:teenfit/widgets/exercise_types/sets_and_reps.dart';
 import 'package:teenfit/widgets/exercise_types/super_set.dart';
 import 'package:teenfit/widgets/exercise_types/time.dart';
@@ -143,8 +142,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       resizeToAvoidBottomInset: true,
       backgroundColor: _theme.primaryColor,
       appBar: AppBar(
-        systemOverlayStyle:
-            SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
+       
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.black),

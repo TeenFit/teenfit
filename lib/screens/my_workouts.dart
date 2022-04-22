@@ -50,12 +50,13 @@ class _CreateWorkoutState extends State<CreateWorkout> {
     super.didChangeDependencies();
 
     auth = Provider.of<Auth>(context, listen: false);
-    if (isInit == false) {
-      var currentUserUID = auth!.isAuth()
-          ? Provider.of<Auth>(context, listen: false).userId!
-          : null;
-      uid = isView != true && auth!.isAuth() ? currentUserUID : widget.viewUid;
 
+    var currentUserUID = auth!.isAuth()
+        ? Provider.of<Auth>(context, listen: false).userId!
+        : null;
+    uid = isView != true && auth!.isAuth() ? currentUserUID : widget.viewUid;
+    
+    if (isInit == false) {
       if (currentUserUID == widget.viewUid) {
         setState(() {
           isView = false;

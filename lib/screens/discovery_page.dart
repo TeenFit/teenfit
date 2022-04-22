@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -39,13 +38,6 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-      SystemUiOverlay.top,
-    ]);
-  }
 
   @override
   void didChangeDependencies() async {

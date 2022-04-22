@@ -75,8 +75,12 @@ class Auth with ChangeNotifier {
         'following': null,
         'followers': null,
         'uid': ('$userId'),
-        'date': null,
-        'searchTerms': null,
+        'date': DateTime.now().toString(),
+        'searchTerms': [
+          'user_$userId ${email.substring(0, email.indexOf('@')).toLowerCase()}'
+              .substring(0, 30),
+          ''
+        ],
         'link': null,
         'instagram': null,
         'tiktok': null,

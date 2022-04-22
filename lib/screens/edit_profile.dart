@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/pickers/cicle_image_picker.dart';
@@ -20,14 +19,6 @@ class _EditProfileScreenState extends State<EditProfile> {
   User? user;
   bool _isLoading = false;
   bool isInit = false;
-
-  @override
-  void initState() {
-    super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-      SystemUiOverlay.top,
-    ]);
-  }
 
   @override
   void didChangeDependencies() async {
@@ -214,7 +205,9 @@ class _EditProfileScreenState extends State<EditProfile> {
             ),
             textInputAction: TextInputAction.next,
             validator: (value) {
-              if (!value.toString().trim().contains('http') ||
+              if (value.toString().trim().isEmpty) {
+                return null;
+              } else if (!value.toString().trim().contains('http') ||
                   !value.toString().trim().contains('https')) {
                 return 'put a Link';
               }
@@ -234,7 +227,9 @@ class _EditProfileScreenState extends State<EditProfile> {
                 searchTerms: user!.searchTerms,
                 link: user!.link,
                 tiktok: user!.tiktok,
-                instagram: input.toString().trim(),
+                instagram: input.toString().trim().isEmpty
+                    ? null
+                    : input.toString().trim(),
               );
             },
           ),
@@ -259,7 +254,9 @@ class _EditProfileScreenState extends State<EditProfile> {
             ),
             textInputAction: TextInputAction.next,
             validator: (value) {
-              if (!value.toString().trim().contains('http') ||
+              if (value.toString().trim().isEmpty) {
+                return null;
+              } else if (!value.toString().trim().contains('http') ||
                   !value.toString().trim().contains('https')) {
                 return 'put a Link';
               }
@@ -278,7 +275,9 @@ class _EditProfileScreenState extends State<EditProfile> {
                 following: user!.following,
                 searchTerms: user!.searchTerms,
                 link: user!.link,
-                tiktok: input.toString().trim(),
+                tiktok: input.toString().trim().isEmpty
+                    ? null
+                    : input.toString().trim(),
                 instagram: user!.instagram,
               );
             },
@@ -403,7 +402,10 @@ class _EditProfileScreenState extends State<EditProfile> {
                             },
                     ),
                   ),
-                )
+                ),
+                SizedBox(
+                  height: _mediaQuery.size.height * 0.08,
+                ),
               ],
             ),
           ),

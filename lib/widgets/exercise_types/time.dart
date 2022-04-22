@@ -361,7 +361,10 @@ class _TimeExerciseState extends State<TimeExercise> {
                           },
                   ),
                 ),
-              )
+              ),
+              SizedBox(
+                height: _mediaQuery.size.height * 0.08,
+              ),
             ],
           ),
         ),

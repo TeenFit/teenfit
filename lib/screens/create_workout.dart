@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
@@ -33,13 +32,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
   List<Exercise>? exerciseEditList;
 
-  @override
-  void initState() {
-    super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-      SystemUiOverlay.top,
-    ]);
-  }
+
 
   @override
   void didChangeDependencies() async {
@@ -392,8 +385,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       resizeToAvoidBottomInset: true,
       backgroundColor: _theme.primaryColor,
       appBar: AppBar(
-        systemOverlayStyle:
-            SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
+    
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.black),
@@ -467,7 +459,10 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                             },
                     ),
                   ),
-                )
+                ),
+                  SizedBox(
+                  height: _mediaQuery.size.height * 0.08,
+                ),
               ],
             ),
           ),

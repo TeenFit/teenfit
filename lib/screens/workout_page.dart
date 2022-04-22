@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
@@ -28,14 +27,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
   User? user;
   var prov;
   Workout? workout;
-
-  @override
-  void initState() {
-    super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-      SystemUiOverlay.bottom,
-    ]);
-  }
 
   @override
   void didChangeDependencies() async {
@@ -149,6 +140,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   )
                 : InkWell(
                     onTap: () {
+                   
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>
                               CreateWorkout(true, user!.uid)));
@@ -189,14 +181,17 @@ class _WorkoutPageState extends State<WorkoutPage> {
                           alignment: Alignment.centerLeft,
                           height: _appBarHeight,
                           width: _mediaQuery.size.width * 0.65,
-                          child: Text(
-                            '@' + user!.name!,
-                            textAlign: TextAlign.left,
-                            maxLines: 1,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: _appBarHeight * 0.3),
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Text(
+                              '@' + user!.name!,
+                              textAlign: TextAlign.left,
+                              maxLines: 1,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: _appBarHeight * 0.3),
+                            ),
                           ),
                         ),
                       ],
@@ -207,8 +202,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
         elevation: 0,
         automaticallyImplyLeading: true,
         backgroundColor: Colors.transparent,
-        systemOverlayStyle:
-            SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
       ),
       body: Container(
         height: _mediaQuery.size.height,

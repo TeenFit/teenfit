@@ -4,6 +4,7 @@ import 'package:flutterfire_ui/firestore.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:teenfit/providers/workout.dart';
 
+import '../providers/user.dart';
 import '../widgets/workout_tile.dart';
 
 class SearchResultWorkouts extends StatefulWidget {
@@ -17,6 +18,7 @@ class SearchResultWorkouts extends StatefulWidget {
 
 class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
   Query<Workout>? queryWorkout;
+  Query<User>? userQuery;
 
   Future<void> _refreshWorkouts(BuildContext context) async {
     setState(() {});
@@ -45,107 +47,114 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
             .collection('/workouts')
             .where('pending', isEqualTo: false)
             .where('failed', isEqualTo: false)
-            .where('searchTerms', arrayContains: widget.searchTerm.toString())
+            .where('searchTerms',
+                arrayContains: widget.searchTerm.toString().trim())
             .orderBy('date', descending: true)
             .withConverter<Workout>(
                 fromFirestore: (snapshot, _) =>
                     Workout.fromJson(snapshot.data()!),
                 toFirestore: (worKout, _) => worKout.toJson());
 
-    return SingleChildScrollView(
-      child: Container(
-        color: _theme.primaryColor,
-        height: _mediaQuery.size.height,
-        width: _mediaQuery.size.width,
-        child: RefreshIndicator(
-          onRefresh: () async {
-            return await _refreshWorkouts(context);
-          },
-          child: Padding(
-            padding: EdgeInsets.all(15),
-            child: FirestoreListView<Workout>(
-              errorBuilder: (context, obj, _) => Container(
-                height: (_mediaQuery.size.height - _appBarHieght),
-                width: _mediaQuery.size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
-                    ),
-                    Container(
-                      height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
-                      width: _mediaQuery.size.width * 0.8,
-                      child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Text(
-                          'No Search Results Available...',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: _mediaQuery.size.height * 0.025,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Roboto',
-                          ),
+    userQuery = widget.searchTerm != null
+        ? FirebaseFirestore.instance
+            .collection('/users')
+            .where('searchterms',
+                arrayContains: widget.searchTerm.toString().trim())
+            .orderBy('date', descending: true)
+            .withConverter<User>(
+                fromFirestore: (snapshot, _) => User.fromJson(snapshot.data()!),
+                toFirestore: (useR, _) => useR.toJson())
+        : null;
+
+    return Container(
+      color: _theme.primaryColor,
+      height: _mediaQuery.size.height,
+      width: _mediaQuery.size.width,
+      child: RefreshIndicator(
+        onRefresh: () async {
+          return await _refreshWorkouts(context);
+        },
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: FirestoreListView<Workout>(
+            errorBuilder: (context, obj, _) => Container(
+              height: (_mediaQuery.size.height),
+              width: _mediaQuery.size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
+                  ),
+                  Container(
+                    height: (_mediaQuery.size.height - _appBarHieght) * 0.05,
+                    width: _mediaQuery.size.width * 0.8,
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Text(
+                        'No Search Results Available...',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: _mediaQuery.size.height * 0.025,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Roboto',
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              padding: EdgeInsets.only(
-                  top: fsb!.value.height + fsb.value.margins.vertical,
-                  bottom: _mediaQuery.padding.bottom),
-              query: queryWorkout!,
-              pageSize: 5,
-              itemBuilder: (context, snapshot) {
-                final workout = snapshot.data();
-                return snapshot.exists
-                    ? Container(
-                        height:
-                            (_mediaQuery.size.height - _appBarHieght) * 0.22,
-                        child: WorkoutTile(
-                          workout,
-                          false,
-                          false,
-                          false,
-                        ),
-                      )
-                    : Container(
-                        height: (_mediaQuery.size.height - _appBarHieght),
-                        width: _mediaQuery.size.width,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height:
-                                  (_mediaQuery.size.height - _appBarHieght) *
-                                      0.05,
-                            ),
-                            Container(
-                              height:
-                                  (_mediaQuery.size.height - _appBarHieght) *
-                                      0.05,
-                              width: _mediaQuery.size.width * 0.8,
-                              child: FittedBox(
-                                fit: BoxFit.fitWidth,
-                                child: Text(
-                                  'No Search Results Available...',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: _mediaQuery.size.height * 0.025,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Roboto',
-                                  ),
+            ),
+            padding: EdgeInsets.only(
+                top: fsb!.value.height + fsb.value.margins.vertical,
+                bottom: _mediaQuery.padding.bottom),
+            query: queryWorkout!,
+            pageSize: 5,
+            itemBuilder: (context, snapshot) {
+              final workout = snapshot.data();
+              return snapshot.exists
+                  ? Container(
+                      height: (_mediaQuery.size.height - _appBarHieght) * 0.22,
+                      child: WorkoutTile(
+                        workout,
+                        false,
+                        false,
+                        false,
+                      ),
+                    )
+                  : Container(
+                      height: (_mediaQuery.size.height - _appBarHieght),
+                      width: _mediaQuery.size.width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: (_mediaQuery.size.height - _appBarHieght) *
+                                0.05,
+                          ),
+                          Container(
+                            height: (_mediaQuery.size.height - _appBarHieght) *
+                                0.05,
+                            width: _mediaQuery.size.width * 0.8,
+                            child: FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                'No Search Results Available...',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: _mediaQuery.size.height * 0.025,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Roboto',
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                      );
-              },
-            ),
+                          ),
+                        ],
+                      ),
+                    );
+            },
           ),
         ),
       ),

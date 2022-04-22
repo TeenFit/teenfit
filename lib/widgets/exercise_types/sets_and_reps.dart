@@ -372,7 +372,10 @@ class _SetsAndRepsState extends State<SetsAndReps> {
                           },
                   ),
                 ),
-              )
+              ),
+                SizedBox(
+                  height: _mediaQuery.size.height * 0.08,
+                ),
             ],
           ),
         ),
