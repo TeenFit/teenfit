@@ -59,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final _theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: _theme.primaryColor,
       body: isInit == false
           ? Center(
               child: CircularProgressIndicator(
