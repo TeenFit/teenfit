@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:teenfit/pickers/cicle_image_picker.dart';
+import 'package:teenfit/pickers/circle_image_picker.dart';
 import 'package:teenfit/providers/user.dart';
 import 'package:teenfit/providers/userProv.dart';
 
