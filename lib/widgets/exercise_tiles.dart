@@ -32,7 +32,7 @@ class ExerciseTiles extends StatelessWidget {
       color: Colors.transparent,
       height: exercise.reps2 == null
           ? _mediaQuery.size.height * 0.25
-          : _mediaQuery.size.height * 0.51,
+          : _mediaQuery.size.height * 0.53,
       width: size,
       child: Card(
         color: _theme.shadowColor,
