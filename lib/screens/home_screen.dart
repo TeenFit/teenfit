@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
         badge: true,
         carPlay: false,
         criticalAlert: false,
-        provisional: false,
+        provisional: true,
         sound: true,
       );
     }
