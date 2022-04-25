@@ -75,9 +75,9 @@ class _CircleImagePickerState extends State<CircleImagePicker> {
           sourcePath: result.files.single.path!,
           compressQuality: 70,
           cropStyle: CropStyle.circle,
+          aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
           compressFormat: ImageCompressFormat.png,
           iosUiSettings: IOSUiSettings(
-            resetAspectRatioEnabled: true,
             cancelButtonTitle: 'cancel',
             doneButtonTitle: 'done',
             resetButtonHidden: false,
@@ -145,23 +145,28 @@ class _CircleImagePickerState extends State<CircleImagePicker> {
                                       'assets/images/UploadImage.png',
                                       fit: BoxFit.contain,
                                     )
-                                  : FadeInImage(
-                                      placeholder: AssetImage(
-                                          'assets/images/loading-gif.gif'),
-                                      placeholderErrorBuilder:
-                                          (context, _, __) => Image.asset(
-                                                'assets/images/loading-gif.gif',
-                                                fit: BoxFit.contain,
-                                              ),
-                                      fit: BoxFit.cover,
-                                      //change
-                                      image: CachedNetworkImageProvider(
-                                          widget.imageLink!),
-                                      imageErrorBuilder: (image, _, __) =>
-                                          Image.asset(
-                                            'assets/images/ImageUploadError.png',
-                                            fit: BoxFit.contain,
-                                          ))
+                                  : CircleAvatar(
+                                      child: FittedBox(
+                                        fit: BoxFit.cover,
+                                        child: FadeInImage(
+                                            placeholder: AssetImage(
+                                                'assets/images/loading-gif.gif'),
+                                            placeholderErrorBuilder:
+                                                (context, _, __) => Image.asset(
+                                                      'assets/images/loading-gif.gif',
+                                                      fit: BoxFit.contain,
+                                                    ),
+                                            fit: BoxFit.cover,
+                                            //change
+                                            image: CachedNetworkImageProvider(
+                                                widget.imageLink!),
+                                            imageErrorBuilder: (image, _, __) =>
+                                                Image.asset(
+                                                  'assets/images/ImageUploadError.png',
+                                                  fit: BoxFit.contain,
+                                                )),
+                                      ),
+                                    )
                               : FadeInImage(
                                   placeholder: AssetImage(
                                       'assets/images/loading-gif.gif'),

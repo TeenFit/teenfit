@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/providers/auth.dart';
@@ -17,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool isInit = false;
   Widget? pageView;
+  NotificationSettings? settings;
 
   @override
   void didChangeDependencies() async {
@@ -36,9 +38,18 @@ class _HomeScreenState extends State<HomeScreen> {
           UserScreen(),
         ],
       );
-      setState(() {
-        isInit = true;
-      });
+
+      FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+      settings = await messaging.requestPermission(
+        alert: true,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true,
+      );
     }
   }
 
