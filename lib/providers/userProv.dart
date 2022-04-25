@@ -288,7 +288,7 @@ class UserProv with ChangeNotifier {
     //   },
     //   {
     //     'email': 'sammyk378@icloud.com',
-    //     'uid': 'vH2slwy8LEZUl1Gyly6RGLqJoK52',
+    //     'uid': 'vH2slwy8LEZUl1Gyly6RGLqJoK52',},
     // {
     // 'email': 'alexhughes2006@icloud.com',
     // 'uid': 'JrpgkvdF70PhQLIo2bVpb90Rpev1'
