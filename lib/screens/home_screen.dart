@@ -9,6 +9,7 @@ import 'package:teenfit/screens/my_workouts.dart';
 import 'package:teenfit/screens/user_screen.dart';
 import 'package:teenfit/screens/workout_page.dart';
 
+import '../providers/exercise.dart';
 import '../providers/workout.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,17 +28,33 @@ class _HomeScreenState extends State<HomeScreen> {
     if (message.data['type'] == 'newWorkout') {
       Navigator.of(context).pushNamed(WorkoutPage.routeName, arguments: {
         'workout': Workout(
-          views: message.data['workout']['views'],
-          searchTerms: message.data['workout']['searchTerms'],
-          failed: message.data['workout']['failed'],
-          pending: message.data['workout']['pending'],
-          date: DateTime.parse(message.data['workout']['date']),
-          creatorId: message.data['workout']['creatorId'],
-          workoutId: message.data['workout']['workoutId'],
-          workoutName: message.data['workout']['workoutName'],
+          views: message.data['views'],
+          searchTerms: message.data['searchTerms'],
+          failed: message.data['failed'],
+          pending: message.data['pending'],
+          date: DateTime.parse(message.data['date']),
+          creatorId: message.data['creatorId'],
+          workoutId: message.data['workoutId'],
+          workoutName: message.data['workoutName'],
           bannerImage: null,
-          bannerImageLink: message.data['workout']['bannerImage'],
-          exercises: message.data['workout']['exercises'],
+          bannerImageLink: message.data['bannerImage'],
+          exercises: (message.data['exercises'] as List)
+              .toList()
+              .map(
+                (e) => Exercise(
+                  name2: e['name2'],
+                  exerciseId: e['exerciseId'],
+                  name: e['name'],
+                  exerciseImageLink: e['exerciseImage'],
+                  exerciseImageLink2: e['exerciseImage2'],
+                  reps2: e['reps2'],
+                  reps: e['reps'],
+                  sets: e['sets'],
+                  restTime: e['restTime'],
+                  timeSeconds: e['timeSeconds'],
+                ),
+              )
+              .toList(),
         ),
         'isDeletable': false,
       });
@@ -59,6 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // Also handle any interaction when the app is in the background via a
     // Stream listener
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+    await FirebaseMessaging.instance.subscribeToTopic("newWorkout");
   }
 
   @override
