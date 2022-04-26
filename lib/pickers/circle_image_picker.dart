@@ -145,9 +145,9 @@ class _CircleImagePickerState extends State<CircleImagePicker> {
                                       'assets/images/UploadImage.png',
                                       fit: BoxFit.contain,
                                     )
-                                  : CircleAvatar(
-                                      child: FittedBox(
-                                        fit: BoxFit.cover,
+                                  : AspectRatio(
+                                      aspectRatio: 1 / 1,
+                                      child: ClipOval(
                                         child: FadeInImage(
                                             placeholder: AssetImage(
                                                 'assets/images/loading-gif.gif'),
@@ -167,21 +167,26 @@ class _CircleImagePickerState extends State<CircleImagePicker> {
                                                 )),
                                       ),
                                     )
-                              : FadeInImage(
-                                  placeholder: AssetImage(
-                                      'assets/images/loading-gif.gif'),
-                                  placeholderErrorBuilder: (context, _, __) =>
-                                      Image.asset(
-                                    'assets/images/loading-gif.gif',
-                                    fit: BoxFit.contain,
-                                  ),
-                                  fit: BoxFit.cover,
-                                  //change
-                                  image: FileImage(_pickedImage!),
-                                  imageErrorBuilder: (image, _, __) =>
-                                      Image.asset(
-                                    'assets/images/ImageUploadError.png',
-                                    fit: BoxFit.cover,
+                              : AspectRatio(
+                                  aspectRatio: 1 / 1,
+                                  child: ClipOval(
+                                    child: FadeInImage(
+                                      placeholder: AssetImage(
+                                          'assets/images/loading-gif.gif'),
+                                      placeholderErrorBuilder:
+                                          (context, _, __) => Image.asset(
+                                        'assets/images/loading-gif.gif',
+                                        fit: BoxFit.contain,
+                                      ),
+                                      fit: BoxFit.cover,
+                                      //change
+                                      image: FileImage(_pickedImage!),
+                                      imageErrorBuilder: (image, _, __) =>
+                                          Image.asset(
+                                        'assets/images/ImageUploadError.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
                                   ),
                                 ),
                           onTap: () async {

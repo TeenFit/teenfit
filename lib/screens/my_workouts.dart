@@ -207,23 +207,31 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                             'assets/images/no_profile_pic.png',
                                             fit: BoxFit.contain,
                                           )
-                                        : FadeInImage(
-                                            placeholder: AssetImage(
-                                                'assets/images/loading-gif.gif'),
-                                            placeholderErrorBuilder:
-                                                (context, _, __) => Image.asset(
-                                                      'assets/images/loading-gif.gif',
-                                                      fit: BoxFit.contain,
-                                                    ),
-                                            fit: BoxFit.cover,
-                                            //change
-                                            image: CachedNetworkImageProvider(
-                                                user!.profilePic!),
-                                            imageErrorBuilder: (image, _, __) =>
-                                                Image.asset(
-                                                  'assets/images/ImageUploadError.png',
-                                                  fit: BoxFit.contain,
-                                                ))),
+                                        : AspectRatio(
+                                            aspectRatio: 1 / 1,
+                                            child: ClipOval(
+                                              child: FadeInImage(
+                                                  placeholder: AssetImage(
+                                                      'assets/images/loading-gif.gif'),
+                                                  placeholderErrorBuilder:
+                                                      (context, _, __) =>
+                                                          Image.asset(
+                                                            'assets/images/loading-gif.gif',
+                                                            fit: BoxFit.contain,
+                                                          ),
+                                                  fit: BoxFit.cover,
+                                                  //change
+                                                  image:
+                                                      CachedNetworkImageProvider(
+                                                          user!.profilePic!),
+                                                  imageErrorBuilder:
+                                                      (image, _, __) =>
+                                                          Image.asset(
+                                                            'assets/images/ImageUploadError.png',
+                                                            fit: BoxFit.contain,
+                                                          )),
+                                            ),
+                                          )),
                                 SizedBox(
                                   width: _mediaQuery.size.width * 0.06,
                                 ),
