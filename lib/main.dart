@@ -153,7 +153,6 @@ Widget _handleMessage(RemoteMessage message, BuildContext context) {
   if (message.data['type'] == 'newWorkout') {
     returnedWidget = CreateWorkout(true, message.data['uid']);
   }
-  returnedWidget == null ? HomeScreen() : returnedWidget;
 
-  return returnedWidget!;
+  return returnedWidget == null ? HomeScreen() : returnedWidget;
 }
