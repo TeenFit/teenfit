@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import 'package:teenfit/screens/exercise_screen.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:teenfit/screens/my_workouts.dart';
 
+import '../providers/exercise.dart';
 import '../providers/workouts.dart';
 import '../widgets/exercise_tiles.dart';
 import '../providers/workout.dart';
@@ -34,7 +36,39 @@ class _WorkoutPageState extends State<WorkoutPage> {
 
     if (isInit == false) {
       prov = ModalRoute.of(context)!.settings.arguments as Map;
-      workout = prov['workout'];
+      var workoutDoc = await FirebaseFirestore.instance
+          .collection('workouts')
+          .doc(prov['workout'])
+          .get();
+      workout = Workout(
+        views: workoutDoc.data()!['views'],
+        searchTerms: workoutDoc.data()!['searchTerms'],
+        failed: workoutDoc.data()!['failed'],
+        pending: workoutDoc.data()!['pending'],
+        date: DateTime.parse(workoutDoc.data()!['date']),
+        creatorId: workoutDoc.data()!['creatorId'],
+        workoutId: workoutDoc.data()!['workoutId'],
+        workoutName: workoutDoc.data()!['workoutName'],
+        bannerImage: null,
+        bannerImageLink: workoutDoc.data()!['bannerImage'],
+        exercises: (workoutDoc.data()!['exercises'] as List)
+            .toList()
+            .map(
+              (e) => Exercise(
+                name2: e['name2'],
+                exerciseId: e['exerciseId'],
+                name: e['name'],
+                exerciseImageLink: e['exerciseImage'],
+                exerciseImageLink2: e['exerciseImage2'],
+                reps2: e['reps2'],
+                reps: e['reps'],
+                sets: e['sets'],
+                restTime: e['restTime'],
+                timeSeconds: e['timeSeconds'],
+              ),
+            )
+            .toList(),
+      );
       isDeletable = prov['isDeletable'];
 
       user = await Provider.of<UserProv>(context, listen: false)
