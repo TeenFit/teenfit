@@ -28,6 +28,7 @@ import './providers/workouts.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FirebaseMessaging.instance.setAutoInitEnabled(true);
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -46,6 +47,14 @@ class _MyAppState extends State<MyApp> {
   bool isInit = false;
   bool isLoading = true;
   RemoteMessage? initialMessage;
+
+  Widget handleMessage(RemoteMessage message, BuildContext context) {
+    if (message.data['type'] == 'newWorkout') {
+      return CreateWorkout(true, message.data['uid']);
+    } else {
+      return HomeScreen();
+    }
+  }
 
   @override
   void didChangeDependencies() async {
@@ -118,7 +127,7 @@ class _MyAppState extends State<MyApp> {
                       // Once complete, show your application
                       if (snapshot.connectionState == ConnectionState.done) {
                         if (initialMessage != null) {
-                          return _handleMessage(initialMessage!, context);
+                          return handleMessage(initialMessage!, context);
                         } else {
                           return HomeScreen();
                         }
@@ -145,14 +154,4 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-}
-
-Widget _handleMessage(RemoteMessage message, BuildContext context) {
-  Widget? returnedWidget;
-
-  if (message.data['type'] == 'newWorkout') {
-    returnedWidget = CreateWorkout(true, message.data['uid']);
-  }
-
-  return returnedWidget == null ? HomeScreen() : returnedWidget;
 }
