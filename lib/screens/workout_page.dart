@@ -137,31 +137,59 @@ class _WorkoutPageState extends State<WorkoutPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          height: _appBarHeight * 0.5,
-                          width: _appBarHeight * 0.5,
-                          child: user!.profilePic == null
-                              ? Image.asset(
-                                  'assets/images/no_profile_pic.png',
-                                  fit: BoxFit.fitHeight,
-                                )
-                              : FadeInImage(
-                                  placeholder: AssetImage(
-                                      'assets/images/loading-gif.gif'),
-                                  placeholderErrorBuilder: (context, _, __) =>
-                                      Image.asset(
-                                        'assets/images/loading-gif.gif',
+                        user!.profilePic != null
+                            ? CircleAvatar(
+                                child: Container(
+                                  height: _appBarHeight * 0.5,
+                                  width: _appBarHeight * 0.5,
+                                  child: user!.profilePic == null
+                                      ? Image.asset(
+                                          'assets/images/no_profile_pic.png',
+                                          fit: BoxFit.fitHeight,
+                                        )
+                                      : FadeInImage(
+                                          placeholder: AssetImage(
+                                              'assets/images/loading-gif.gif'),
+                                          placeholderErrorBuilder:
+                                              (context, _, __) => Image.asset(
+                                                    'assets/images/loading-gif.gif',
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                          fit: BoxFit.cover,
+                                          image: CachedNetworkImageProvider(
+                                              user!.profilePic!),
+                                          imageErrorBuilder: (image, _, __) =>
+                                              Image.asset(
+                                                'assets/images/ImageUploadError.png',
+                                                fit: BoxFit.contain,
+                                              )),
+                                ),
+                              )
+                            : Container(
+                                height: _appBarHeight * 0.5,
+                                width: _appBarHeight * 0.5,
+                                child: user!.profilePic == null
+                                    ? Image.asset(
+                                        'assets/images/no_profile_pic.png',
+                                        fit: BoxFit.fitHeight,
+                                      )
+                                    : FadeInImage(
+                                        placeholder: AssetImage(
+                                            'assets/images/loading-gif.gif'),
+                                        placeholderErrorBuilder:
+                                            (context, _, __) => Image.asset(
+                                                  'assets/images/loading-gif.gif',
+                                                  fit: BoxFit.contain,
+                                                ),
                                         fit: BoxFit.contain,
-                                      ),
-                                  fit: BoxFit.contain,
-                                  image: CachedNetworkImageProvider(
-                                      user!.profilePic!),
-                                  imageErrorBuilder: (image, _, __) =>
-                                      Image.asset(
-                                        'assets/images/ImageUploadError.png',
-                                        fit: BoxFit.contain,
-                                      )),
-                        ),
+                                        image: CachedNetworkImageProvider(
+                                            user!.profilePic!),
+                                        imageErrorBuilder: (image, _, __) =>
+                                            Image.asset(
+                                              'assets/images/ImageUploadError.png',
+                                              fit: BoxFit.contain,
+                                            )),
+                              ),
                         SizedBox(
                           width: _mediaQuery.size.width * 0.05,
                         ),
