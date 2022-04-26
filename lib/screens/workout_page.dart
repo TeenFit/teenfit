@@ -230,37 +230,62 @@ class _WorkoutPageState extends State<WorkoutPage> {
         automaticallyImplyLeading: true,
         backgroundColor: Colors.transparent,
       ),
-      body: Container(
-        height: _mediaQuery.size.height,
-        width: double.infinity,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.only(top: _mediaQuery.padding.top),
-                height: _mediaQuery.size.height * 0.35,
-                width: _mediaQuery.size.width,
-                child: Stack(
-                  fit: StackFit.expand,
+      body: isInit == false
+          ? Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 4,
+                backgroundColor: _theme.shadowColor,
+                color: Colors.white,
+              ),
+            )
+          : Container(
+              height: _mediaQuery.size.height,
+              width: double.infinity,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    workout!.bannerImageLink == null
-                        ? workout!.bannerImage == null
-                            ? Container(
-                                height: _mediaQuery.size.height * 0.35,
-                                width: _mediaQuery.size.width,
-                                child: Image.asset(
-                                  'assets/images/BannerImageUnavailable.png',
-                                  fit: BoxFit.cover,
-                                ),
-                              )
-                            : Container(
-                                height: _mediaQuery.size.height * 0.35,
-                                width: _mediaQuery.size.width,
-                                margin: EdgeInsets.zero,
-                                padding: EdgeInsets.zero,
-                                child: FadeInImage(
+                    Container(
+                      padding: EdgeInsets.only(top: _mediaQuery.padding.top),
+                      height: _mediaQuery.size.height * 0.35,
+                      width: _mediaQuery.size.width,
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          workout!.bannerImageLink == null
+                              ? workout!.bannerImage == null
+                                  ? Container(
+                                      height: _mediaQuery.size.height * 0.35,
+                                      width: _mediaQuery.size.width,
+                                      child: Image.asset(
+                                        'assets/images/BannerImageUnavailable.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : Container(
+                                      height: _mediaQuery.size.height * 0.35,
+                                      width: _mediaQuery.size.width,
+                                      margin: EdgeInsets.zero,
+                                      padding: EdgeInsets.zero,
+                                      child: FadeInImage(
+                                        placeholder: AssetImage(
+                                            'assets/images/loading-gif.gif'),
+                                        placeholderErrorBuilder:
+                                            (context, _, __) => Image.asset(
+                                          'assets/images/loading-gif.gif',
+                                          fit: BoxFit.cover,
+                                        ),
+                                        image: FileImage(workout!.bannerImage!),
+                                        fit: BoxFit.cover,
+                                        imageErrorBuilder: (image, _, __) =>
+                                            Image.asset(
+                                          'assets/images/ImageUploadError.png',
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                    )
+                              : FadeInImage(
                                   placeholder: AssetImage(
                                       'assets/images/loading-gif.gif'),
                                   placeholderErrorBuilder: (context, _, __) =>
@@ -268,148 +293,133 @@ class _WorkoutPageState extends State<WorkoutPage> {
                                     'assets/images/loading-gif.gif',
                                     fit: BoxFit.cover,
                                   ),
-                                  image: FileImage(workout!.bannerImage!),
+                                  image: CachedNetworkImageProvider(
+                                      workout!.bannerImageLink!),
                                   fit: BoxFit.cover,
                                   imageErrorBuilder: (image, _, __) =>
                                       Image.asset(
                                     'assets/images/ImageUploadError.png',
-                                    fit: BoxFit.contain,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                              )
-                        : FadeInImage(
-                            placeholder:
-                                AssetImage('assets/images/loading-gif.gif'),
-                            placeholderErrorBuilder: (context, _, __) =>
-                                Image.asset(
-                              'assets/images/loading-gif.gif',
-                              fit: BoxFit.cover,
-                            ),
-                            image: CachedNetworkImageProvider(
-                                workout!.bannerImageLink!),
-                            fit: BoxFit.cover,
-                            imageErrorBuilder: (image, _, __) => Image.asset(
-                              'assets/images/ImageUploadError.png',
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                    FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: Container(
-                        height: _mediaQuery.size.height * 0.35,
-                        width: _mediaQuery.size.width,
-                        child: Container(
-                          height: _mediaQuery.size.height * 0.28,
-                          width: _mediaQuery.size.width,
-                          child: Center(
-                            child: Text(
-                              workout!.workoutName,
-                              maxLines: 2,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Roboto',
-                                fontSize: _mediaQuery.size.height * 0.07,
-                                letterSpacing: 1,
-                                shadows: <Shadow>[
-                                  Shadow(
-                                    offset: Offset(2.5, 2.5),
-                                    blurRadius: 1.0,
-                                    color: Color.fromARGB(255, 128, 128, 128),
+                          FittedBox(
+                            fit: BoxFit.fitHeight,
+                            child: Container(
+                              height: _mediaQuery.size.height * 0.35,
+                              width: _mediaQuery.size.width,
+                              child: Container(
+                                height: _mediaQuery.size.height * 0.28,
+                                width: _mediaQuery.size.width,
+                                child: Center(
+                                  child: Text(
+                                    workout!.workoutName,
+                                    maxLines: 2,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Roboto',
+                                      fontSize: _mediaQuery.size.height * 0.07,
+                                      letterSpacing: 1,
+                                      shadows: <Shadow>[
+                                        Shadow(
+                                          offset: Offset(2.5, 2.5),
+                                          blurRadius: 1.0,
+                                          color: Color.fromARGB(
+                                              255, 128, 128, 128),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                        width: _mediaQuery.size.width,
+                        height: _mediaQuery.size.height * 0.05,
+                        color: _theme.primaryColor,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.remove_red_eye,
+                              color: Colors.black,
+                              size: _mediaQuery.size.height * 0.04,
+                            ),
+                            SizedBox(
+                              width: _mediaQuery.size.width * 0.04,
+                            ),
+                            Text(
+                              workout!.views.toString(),
+                              style: TextStyle(
+                                  fontFamily: 'PTSans',
+                                  fontSize: _mediaQuery.size.height * 0.02),
+                            ),
+                          ],
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 5),
+                      child: Container(
+                        height: _mediaQuery.size.height * 0.07,
+                        width: _mediaQuery.size.width,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              primary: _theme.secondaryHeaderColor),
+                          child: Text(
+                            'Start Workout',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'PTSans',
+                                fontSize: _mediaQuery.size.height * 0.035),
+                          ),
+                          onPressed: () async {
+                            await Provider.of<Workouts>(context, listen: false)
+                                .incrementView(workout!.creatorId,
+                                    workout!.workoutId, context);
+                            showDialog(
+                                context: context,
+                                builder: (ctx) => CustomDialogBox(
+                                    'Are You Ready?',
+                                    'Grab a water bottle, warmup, lets do this',
+                                    'assets/images/water_bottle.jpg',
+                                    ExerciseScreen.routeName,
+                                    workout!.exercises));
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Container(
+                        height: _mediaQuery.size.height * 0.51,
+                        width: _mediaQuery.size.width,
+                        child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (ctx, index) => ExerciseTiles(
+                            key: ValueKey(workout!.exercises[index].exerciseId),
+                            exercise: workout!.exercises[index],
+                            size: _mediaQuery.size.width,
+                            isDeleteable: false,
+                            addExercise: () {},
+                            delete: () {},
+                            updateExercise: () {},
+                          ),
+                          itemCount: workout!.exercises.length,
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              Container(
-                  width: _mediaQuery.size.width,
-                  height: _mediaQuery.size.height * 0.05,
-                  color: _theme.primaryColor,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.remove_red_eye,
-                        color: Colors.black,
-                        size: _mediaQuery.size.height * 0.04,
-                      ),
-                      SizedBox(
-                        width: _mediaQuery.size.width * 0.04,
-                      ),
-                      Text(
-                        workout!.views.toString(),
-                        style: TextStyle(
-                            fontFamily: 'PTSans',
-                            fontSize: _mediaQuery.size.height * 0.02),
-                      ),
-                    ],
-                  )),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                child: Container(
-                  height: _mediaQuery.size.height * 0.07,
-                  width: _mediaQuery.size.width,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        primary: _theme.secondaryHeaderColor),
-                    child: Text(
-                      'Start Workout',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'PTSans',
-                          fontSize: _mediaQuery.size.height * 0.035),
-                    ),
-                    onPressed: () async {
-                      await Provider.of<Workouts>(context, listen: false)
-                          .incrementView(
-                              workout!.creatorId, workout!.workoutId, context);
-                      showDialog(
-                          context: context,
-                          builder: (ctx) => CustomDialogBox(
-                              'Are You Ready?',
-                              'Grab a water bottle, warmup, lets do this',
-                              'assets/images/water_bottle.jpg',
-                              ExerciseScreen.routeName,
-                              workout!.exercises));
-                    },
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Container(
-                  height: _mediaQuery.size.height * 0.51,
-                  width: _mediaQuery.size.width,
-                  child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (ctx, index) => ExerciseTiles(
-                      key: ValueKey(workout!.exercises[index].exerciseId),
-                      exercise: workout!.exercises[index],
-                      size: _mediaQuery.size.width,
-                      isDeleteable: false,
-                      addExercise: () {},
-                      delete: () {},
-                      updateExercise: () {},
-                    ),
-                    itemCount: workout!.exercises.length,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }
