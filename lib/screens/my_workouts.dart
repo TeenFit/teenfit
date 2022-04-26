@@ -71,14 +71,25 @@ class _CreateWorkoutState extends State<CreateWorkout> {
       }
 
       setState(() {
-        queryWorkout = FirebaseFirestore.instance
-            .collection('/workouts')
-            .where('creatorId', isEqualTo: uid)
-            .orderBy('date', descending: true)
-            .withConverter<Workout>(
-                fromFirestore: (snapshot, _) =>
-                    Workout.fromJson(snapshot.data()!),
-                toFirestore: (worKout, _) => worKout.toJson());
+        queryWorkout =
+            currentUserUID == Provider.of<Auth>(context, listen: false).userId!
+                ? FirebaseFirestore.instance
+                    .collection('/workouts')
+                    .where('creatorId', isEqualTo: uid)
+                    .orderBy('date', descending: true)
+                    .withConverter<Workout>(
+                        fromFirestore: (snapshot, _) =>
+                            Workout.fromJson(snapshot.data()!),
+                        toFirestore: (worKout, _) => worKout.toJson())
+                : FirebaseFirestore.instance
+                    .collection('/workouts')
+                    .where('pending', isEqualTo: false)
+                    .where('failed', isEqualTo: false)
+                    .orderBy('date', descending: true)
+                    .withConverter<Workout>(
+                        fromFirestore: (snapshot, _) =>
+                            Workout.fromJson(snapshot.data()!),
+                        toFirestore: (worKout, _) => worKout.toJson());
       });
 
       setState(() {

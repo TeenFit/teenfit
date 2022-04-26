@@ -9,9 +9,6 @@ import 'package:teenfit/screens/my_workouts.dart';
 import 'package:teenfit/screens/user_screen.dart';
 import 'package:teenfit/screens/workout_page.dart';
 
-import '../providers/exercise.dart';
-import '../providers/workout.dart';
-
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home-screen';
 
