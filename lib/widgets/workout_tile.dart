@@ -101,19 +101,7 @@ class _WorkoutTileState extends State<WorkoutTile> {
               onTap: () {
                 Navigator.of(context)
                     .pushNamed(WorkoutPage.routeName, arguments: {
-                  'workout': Workout(
-                    views: widget.workout.views,
-                    searchTerms: widget.workout.searchTerms,
-                    failed: false,
-                    pending: widget.workout.pending,
-                    date: widget.workout.date,
-                    creatorId: widget.workout.creatorId,
-                    workoutId: widget.workout.workoutId,
-                    workoutName: widget.workout.workoutName,
-                    bannerImage: widget.workout.bannerImage,
-                    bannerImageLink: widget.workout.bannerImageLink,
-                    exercises: widget.workout.exercises,
-                  ),
+                  'workout': widget.workout.workoutId,
                   'isDeletable': widget.isDeletable,
                 });
               },
@@ -189,19 +177,7 @@ class _WorkoutTileState extends State<WorkoutTile> {
                     onTap: () async {
                       Navigator.of(context)
                           .pushNamed(WorkoutPage.routeName, arguments: {
-                        'workout': Workout(
-                          views: widget.workout.views,
-                          searchTerms: widget.workout.searchTerms,
-                          failed: false,
-                          pending: widget.workout.pending,
-                          date: widget.workout.date,
-                          creatorId: widget.workout.creatorId,
-                          workoutId: widget.workout.workoutId,
-                          workoutName: widget.workout.workoutName,
-                          bannerImage: widget.workout.bannerImage,
-                          bannerImageLink: widget.workout.bannerImageLink,
-                          exercises: widget.workout.exercises,
-                        ),
+                        'workout': widget.workout.workoutId,
                         'isDeletable': widget.isDeletable,
                       });
                     },
@@ -257,19 +233,7 @@ class _WorkoutTileState extends State<WorkoutTile> {
                           onTap: () {
                             Navigator.of(context)
                                 .pushNamed(WorkoutPage.routeName, arguments: {
-                              'workout': Workout(
-                                views: widget.workout.views,
-                                searchTerms: widget.workout.searchTerms,
-                                failed: false,
-                                pending: widget.workout.pending,
-                                date: widget.workout.date,
-                                creatorId: widget.workout.creatorId,
-                                workoutId: widget.workout.workoutId,
-                                workoutName: widget.workout.workoutName,
-                                bannerImage: widget.workout.bannerImage,
-                                bannerImageLink: widget.workout.bannerImageLink,
-                                exercises: widget.workout.exercises,
-                              ),
+                              'workout': widget.workout.workoutId,
                               'isDeletable': widget.isDeletable
                             });
                           },

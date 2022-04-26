@@ -27,35 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _handleMessage(RemoteMessage message) {
     if (message.data['type'] == 'newWorkout') {
       Navigator.of(context).pushNamed(WorkoutPage.routeName, arguments: {
-        'workout': Workout(
-          views: message.data['views'],
-          searchTerms: message.data['searchTerms'],
-          failed: message.data['failed'],
-          pending: message.data['pending'],
-          date: DateTime.parse(message.data['date']),
-          creatorId: message.data['creatorId'],
-          workoutId: message.data['workoutId'],
-          workoutName: message.data['workoutName'],
-          bannerImage: null,
-          bannerImageLink: message.data['bannerImage'],
-          exercises: (message.data['exercises'] as List)
-              .toList()
-              .map(
-                (e) => Exercise(
-                  name2: e['name2'],
-                  exerciseId: e['exerciseId'],
-                  name: e['name'],
-                  exerciseImageLink: e['exerciseImage'],
-                  exerciseImageLink2: e['exerciseImage2'],
-                  reps2: e['reps2'],
-                  reps: e['reps'],
-                  sets: e['sets'],
-                  restTime: e['restTime'],
-                  timeSeconds: e['timeSeconds'],
-                ),
-              )
-              .toList(),
-        ),
+        'workout': message.data['workoutId'],
         'isDeletable': false,
       });
     }
