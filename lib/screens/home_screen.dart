@@ -7,6 +7,9 @@ import 'package:teenfit/screens/auth/login_screen.dart';
 import 'package:teenfit/screens/discovery_page.dart';
 import 'package:teenfit/screens/my_workouts.dart';
 import 'package:teenfit/screens/user_screen.dart';
+import 'package:teenfit/screens/workout_page.dart';
+
+import '../providers/workout.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home-screen';
@@ -22,14 +25,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _handleMessage(RemoteMessage message) {
     if (message.data['type'] == 'newWorkout') {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => CreateWorkout(
-            true,
-            message.data['uid'],
-          ),
+      Navigator.of(context).pushNamed(WorkoutPage.routeName, arguments: {
+        'workout': Workout(
+          views: message.data['workout']['views'],
+          searchTerms: message.data['workout']['searchTerms'],
+          failed: message.data['workout']['failed'],
+          pending: message.data['workout']['pending'],
+          date: DateTime.parse(message.data['workout']['date']),
+          creatorId: message.data['workout']['creatorId'],
+          workoutId: message.data['workout']['workoutId'],
+          workoutName: message.data['workout']['workoutName'],
+          bannerImage: null,
+          bannerImageLink: message.data['workout']['bannerImage'],
+          exercises: message.data['workout']['exercises'],
         ),
-      );
+        'isDeletable': false,
+      });
     }
   }
 
