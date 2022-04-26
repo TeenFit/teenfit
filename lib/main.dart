@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import 'package:teenfit/providers/userProv.dart';
 import 'package:teenfit/screens/admin_screen.dart';
 import 'package:teenfit/screens/edit_profile.dart';
 import 'package:teenfit/screens/home_screen.dart';
+import 'package:teenfit/screens/my_workouts.dart';
 import 'package:teenfit/screens/privacy_policy_screen.dart';
 import 'package:teenfit/screens/user_screen.dart';
 import 'package:teenfit/screens/workout_page.dart';
@@ -43,6 +45,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool isInit = false;
   bool isLoading = true;
+  RemoteMessage? initialMessage;
 
   @override
   void didChangeDependencies() async {
@@ -50,6 +53,7 @@ class _MyAppState extends State<MyApp> {
 
     if (isInit == false) {
       await Firebase.initializeApp();
+      initialMessage = await FirebaseMessaging.instance.getInitialMessage();
     }
     if (this.mounted) {
       setState(() {
@@ -113,7 +117,11 @@ class _MyAppState extends State<MyApp> {
                       }
                       // Once complete, show your application
                       if (snapshot.connectionState == ConnectionState.done) {
-                        return HomeScreen();
+                        if (initialMessage != null) {
+                          return _handleMessage(initialMessage!, context);
+                        } else {
+                          return HomeScreen();
+                        }
                       }
                       // Otherwise, show something whilst waiting for initialization to complete
                       return LoadingScreen();
@@ -137,4 +145,15 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
+}
+
+Widget _handleMessage(RemoteMessage message, BuildContext context) {
+  Widget? returnedWidget;
+
+  if (message.data['type'] == 'newWorkout') {
+    returnedWidget = CreateWorkout(true, message.data['uid']);
+  }
+  returnedWidget == null ? HomeScreen() : returnedWidget;
+
+  return returnedWidget!;
 }

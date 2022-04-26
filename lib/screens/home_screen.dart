@@ -24,21 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void didChangeDependencies() async {
     super.didChangeDependencies();
     if (isInit == false) {
-      bool isAuth = Provider.of<Auth>(context).isAuth();
-
-      if (isAuth) {
-        Provider.of<UserProv>(context).fetchAndSetUser(context);
-      }
-
-      pageView = PageView(
-        controller: pageController,
-        children: [
-          DiscoveryPage(),
-          isAuth == true ? CreateWorkout(false, null) : LoginScreen(),
-          UserScreen(),
-        ],
-      );
-
       FirebaseMessaging messaging = FirebaseMessaging.instance;
 
       settings = await messaging.requestPermission(
@@ -50,6 +35,24 @@ class _HomeScreenState extends State<HomeScreen> {
         provisional: true,
         sound: true,
       );
+      bool isAuth = Provider.of<Auth>(context, listen: false).isAuth();
+
+      if (isAuth) {
+        Provider.of<UserProv>(context, listen: false).fetchAndSetUser(context);
+      }
+
+      pageView = PageView(
+        controller: pageController,
+        children: [
+          DiscoveryPage(),
+          isAuth == true ? CreateWorkout(false, null) : LoginScreen(),
+          UserScreen(),
+        ],
+      );
+
+      setState(() {
+        isInit = true;
+      });
     }
   }
 
