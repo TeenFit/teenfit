@@ -67,8 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (isInit == false) {
       FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-      await setupInteractedMessage();
-
       settings = await messaging.requestPermission(
         alert: true,
         announcement: false,
@@ -78,6 +76,11 @@ class _HomeScreenState extends State<HomeScreen> {
         provisional: true,
         sound: true,
       );
+
+      if (settings!.authorizationStatus == AuthorizationStatus.authorized) {
+        await setupInteractedMessage();
+      }
+
       bool isAuth = Provider.of<Auth>(context, listen: false).isAuth();
 
       if (isAuth) {
