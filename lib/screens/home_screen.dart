@@ -20,11 +20,43 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget? pageView;
   NotificationSettings? settings;
 
+  void _handleMessage(RemoteMessage message) {
+    if (message.data['type'] == 'newWorkout') {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => CreateWorkout(
+            true,
+            message.data['uid'],
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> setupInteractedMessage() async {
+    // Get any messages which caused the application to open from
+    // a terminated state.
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+
+    // If the message also contains a data property with a "type" of "chat",
+    // navigate to a chat screen
+    if (initialMessage != null) {
+      _handleMessage(initialMessage);
+    }
+
+    // Also handle any interaction when the app is in the background via a
+    // Stream listener
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  }
+
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
     if (isInit == false) {
       FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+      await setupInteractedMessage();
 
       settings = await messaging.requestPermission(
         alert: true,
