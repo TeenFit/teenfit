@@ -139,7 +139,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     }
 
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       backgroundColor: _theme.primaryColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -179,7 +179,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                       ? SuperSet(exerciseProv)
                       : SetsAndReps(exerciseProv),
               SizedBox(
-                height: _mediaQuery.size.height * 0.3,
+                height: _mediaQuery.size.height * 0.03,
               ),
             ],
           ),
