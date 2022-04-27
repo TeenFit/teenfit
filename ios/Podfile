@@ -27,6 +27,8 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 
 flutter_ios_podfile_setup
 
+pod 'GoogleUtilities'
+
 target 'Runner' do
   pod 'FirebaseFirestore', :git => 'https://github.com/invertase/firestore-ios-sdk-frameworks.git', :tag => '8.11.0'
   pod 'DKImagePickerController/PhotoGallery', :git => 'https://github.com/miguelpruivo/DKImagePickerController.git'
