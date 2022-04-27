@@ -75,7 +75,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
               .toList(),
         );
       } else {
-        workout = prov['workout'];
+        workout = prov['workout'] as Workout;
       }
 
       isDeletable = prov['isDeletable'];
@@ -173,8 +173,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                 : InkWell(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              CreateWorkout(true, user!.uid)));
+                          builder: (context) => CreateWorkout(true, user)));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,

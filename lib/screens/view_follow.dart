@@ -158,7 +158,7 @@ class _ViewFollowState extends State<ViewFollow> {
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
-                                          CreateWorkout(true, user.uid)));
+                                          CreateWorkout(true, user)));
                                 },
                               ),
                             )
@@ -268,7 +268,7 @@ class _ViewFollowState extends State<ViewFollow> {
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
-                                          CreateWorkout(true, user.uid)));
+                                          CreateWorkout(true, user)));
                                 },
                               ),
                             )

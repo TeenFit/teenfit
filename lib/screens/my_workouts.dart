@@ -20,9 +20,9 @@ import '/widgets/workout_tile.dart';
 
 class CreateWorkout extends StatefulWidget {
   final bool isView;
-  final String? viewUid;
+  final User? viewUser;
 
-  CreateWorkout(this.isView, this.viewUid);
+  CreateWorkout(this.isView, this.viewUser);
 
   @override
   State<CreateWorkout> createState() => _CreateWorkoutState();
@@ -50,20 +50,12 @@ class _CreateWorkoutState extends State<CreateWorkout> {
   void didChangeDependencies() async {
     super.didChangeDependencies();
 
-    auth = Provider.of<Auth>(context, listen: false);
-
-    var currentUserUID = auth!.isAuth()
-        ? Provider.of<Auth>(context, listen: false).userId!
-        : null;
-    uid = isView != true && auth!.isAuth() ? currentUserUID : widget.viewUid;
-
     if (isInit == false) {
-      if (currentUserUID == widget.viewUid) {
-        setState(() {
-          isView = false;
-        });
-      }
-      user = await Provider.of<UserProv>(context).fetchAUser(context, uid);
+      auth = Provider.of<Auth>(context, listen: false);
+
+      uid = widget.viewUser!.uid;
+
+      user = widget.viewUser;
 
       if (user!.followers != null && auth!.isAuth()) {
         isFollowing = user!.followers!.contains(auth!.userId!);
@@ -71,27 +63,29 @@ class _CreateWorkoutState extends State<CreateWorkout> {
         isFollowing = false;
       }
 
-      setState(() {
-        queryWorkout =
-            currentUserUID == Provider.of<Auth>(context, listen: false).userId!
-                ? FirebaseFirestore.instance
-                    .collection('/workouts')
-                    .where('creatorId', isEqualTo: uid)
-                    .orderBy('date', descending: true)
-                    .withConverter<Workout>(
-                        fromFirestore: (snapshot, _) =>
-                            Workout.fromJson(snapshot.data()!),
-                        toFirestore: (worKout, _) => worKout.toJson())
-                : FirebaseFirestore.instance
-                    .collection('/workouts')
-                    .where('pending', isEqualTo: false)
-                    .where('failed', isEqualTo: false)
-                    .orderBy('date', descending: true)
-                    .withConverter<Workout>(
-                        fromFirestore: (snapshot, _) =>
-                            Workout.fromJson(snapshot.data()!),
-                        toFirestore: (worKout, _) => worKout.toJson());
-      });
+      if (auth!.userId == widget.viewUser!.uid) {
+        isView = false;
+      }
+
+      queryWorkout = auth!.isAuth() && isView != true
+          ? FirebaseFirestore.instance
+              .collection('/workouts')
+              .where('creatorId', isEqualTo: uid)
+              .orderBy('date', descending: true)
+              .withConverter<Workout>(
+                  fromFirestore: (snapshot, _) =>
+                      Workout.fromJson(snapshot.data()!),
+                  toFirestore: (worKout, _) => worKout.toJson())
+          : FirebaseFirestore.instance
+              .collection('/workouts')
+              .where('pending', isEqualTo: false)
+              .where('failed', isEqualTo: false)
+              .where('creatorId', isEqualTo: uid)
+              .orderBy('date', descending: true)
+              .withConverter<Workout>(
+                  fromFirestore: (snapshot, _) =>
+                      Workout.fromJson(snapshot.data()!),
+                  toFirestore: (worKout, _) => worKout.toJson());
 
       setState(() {
         isInit = true;
