@@ -110,7 +110,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
 
         var image = await FlutterNativeImage.compressImage(
           croppedImage!.path,
-          quality: 60,
+          quality: 40,
           percentage: 100,
         );
 

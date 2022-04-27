@@ -139,7 +139,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
     }
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       backgroundColor: _theme.primaryColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -160,29 +160,32 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       body: Container(
         height: _mediaQuery.size.height - _appBarHeight,
         width: _mediaQuery.size.width,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
+        child: NestedScrollView(
+          headerSliverBuilder: (context, _) {
+            return [
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    SizedBox(
+                      height: (_mediaQuery.size.height - _appBarHeight) * 0.01,
+                    ),
+                    SizedBox(
+                      height: _mediaQuery.size.height * 0.03,
+                    ),
+                    buildDropDown(),
+                    SizedBox(
+                      height: _mediaQuery.size.height * 0.03,
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(
-                height: _mediaQuery.size.height * 0.03,
-              ),
-              buildDropDown(),
-              SizedBox(
-                height: _mediaQuery.size.height * 0.03,
-              ),
-              exerciseType == 'Time'
-                  ? TimeExercise(exerciseProv)
-                  : exerciseType == 'Superset'
-                      ? SuperSet(exerciseProv)
-                      : SetsAndReps(exerciseProv),
-              SizedBox(
-                height: _mediaQuery.size.height * 0.03,
-              ),
-            ],
-          ),
+            ];
+          },
+          body: exerciseType == 'Time'
+              ? TimeExercise(exerciseProv)
+              : exerciseType == 'Superset'
+                  ? SuperSet(exerciseProv)
+                  : SetsAndReps(exerciseProv),
         ),
       ),
     );
