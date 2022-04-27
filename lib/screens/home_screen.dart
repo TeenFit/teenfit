@@ -23,10 +23,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _handleMessage(RemoteMessage message) {
     if (message.data['type'] == 'newWorkout') {
-      Navigator.of(context).pushNamed(WorkoutPage.routeName, arguments: {
-        'workout': message.data['workoutId'],
-        'isDeletable': false,
-      });
+      Navigator.of(context).pushNamed(
+        WorkoutPage.routeName,
+        arguments: {
+          'workout': message.data['workoutId'],
+          'isDeletable': false,
+        },
+      );
     }
   }
 
