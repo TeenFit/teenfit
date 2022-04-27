@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -91,7 +92,7 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
 
     if (result != null) {
       if (this.mounted) {
-        var image = await ImageCropper().cropImage(
+        var croppedImage = await ImageCropper().cropImage(
           sourcePath: result.files.single.path!,
           compressQuality: 60,
           compressFormat: ImageCompressFormat.png,
@@ -106,6 +107,13 @@ class _ExerciseImagePickerState extends State<ExerciseImagePicker> {
             title: 'Crop Your Image',
           ),
         );
+
+        var image = await FlutterNativeImage.compressImage(
+          croppedImage!.path,
+          quality: 60,
+          percentage: 100,
+        );
+
         setState(() {
           _pickedImage = image;
           isLoading = false;
