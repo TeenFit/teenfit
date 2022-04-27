@@ -9,6 +9,7 @@ import 'package:teenfit/providers/auth.dart';
 import 'package:teenfit/providers/user.dart';
 import 'package:teenfit/providers/userProv.dart';
 import 'package:teenfit/screens/edit_profile.dart';
+import 'package:teenfit/screens/view_follow.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 
@@ -246,67 +247,87 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                 SizedBox(
                                   width: _mediaQuery.size.width * 0.06,
                                 ),
-                                Container(
-                                  height: (_mediaQuery.size.height -
-                                          _appBarHeight) *
-                                      0.15,
-                                  width: _mediaQuery.size.width * 0.25,
-                                  child: Center(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          user!.followers == null
-                                              ? '0'
-                                              : user!.followers!.length
-                                                  .toString(),
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: _appBarHeight * 0.27),
-                                        ),
-                                        Text(
-                                          'followers',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: _appBarHeight * 0.15),
-                                        ),
-                                      ],
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed(
+                                        ViewFollow.routeName,
+                                        arguments: {
+                                          'followers': user!.followers,
+                                          'following': user!.following
+                                        });
+                                  },
+                                  child: Container(
+                                    height: (_mediaQuery.size.height -
+                                            _appBarHeight) *
+                                        0.15,
+                                    width: _mediaQuery.size.width * 0.25,
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            user!.followers == null
+                                                ? '0'
+                                                : user!.followers!.length
+                                                    .toString(),
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: _appBarHeight * 0.27),
+                                          ),
+                                          Text(
+                                            'followers',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: _appBarHeight * 0.15),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  height: (_mediaQuery.size.height -
-                                          _appBarHeight) *
-                                      0.15,
-                                  width: _mediaQuery.size.width * 0.25,
-                                  child: Center(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          user!.following == null
-                                              ? '0'
-                                              : user!.following!.length
-                                                  .toString(),
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: _appBarHeight * 0.27),
-                                        ),
-                                        Text(
-                                          'following',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: _appBarHeight * 0.15),
-                                        ),
-                                      ],
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed(
+                                        ViewFollow.routeName,
+                                        arguments: {
+                                          'followers': user!.followers,
+                                          'following': user!.following
+                                        });
+                                  },
+                                  child: Container(
+                                    height: (_mediaQuery.size.height -
+                                            _appBarHeight) *
+                                        0.15,
+                                    width: _mediaQuery.size.width * 0.25,
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            user!.following == null
+                                                ? '0'
+                                                : user!.following!.length
+                                                    .toString(),
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: _appBarHeight * 0.27),
+                                          ),
+                                          Text(
+                                            'following',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: _appBarHeight * 0.15),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

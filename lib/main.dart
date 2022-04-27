@@ -12,6 +12,7 @@ import 'package:teenfit/screens/edit_profile.dart';
 import 'package:teenfit/screens/home_screen.dart';
 import 'package:teenfit/screens/privacy_policy_screen.dart';
 import 'package:teenfit/screens/user_screen.dart';
+import 'package:teenfit/screens/view_follow.dart';
 import 'package:teenfit/screens/workout_page.dart';
 
 import './screens/auth/reset_pass_screen.dart';
@@ -134,6 +135,7 @@ class _MyAppState extends State<MyApp> {
             AdminScreen.routeName: (ctx) => AdminScreen(),
             PrivacyPolicyScreen.routeName: (ctx) => PrivacyPolicyScreen(),
             EditProfile.routeName: (ctx) => EditProfile(),
+            ViewFollow.routeName: (ctx) => ViewFollow(),
           },
         ),
       ),
