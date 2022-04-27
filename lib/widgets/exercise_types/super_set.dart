@@ -529,9 +529,6 @@ class _SuperSetState extends State<SuperSet> {
                   ),
                 ),
               ),
-                SizedBox(
-                  height: _mediaQuery.size.height * 0.08,
-                ),
             ],
           ),
         ),
