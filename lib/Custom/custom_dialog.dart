@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:teenfit/screens/home_screen.dart';
 import '../screens/exercise_screen.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
@@ -161,8 +162,9 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                         await Provider.of<Workouts>(context,
                                                 listen: false)
                                             .deleteWorkout(widget.arguments)
-                                            .then((_) =>
-                                                Navigator.of(context).pop());
+                                            .then((_) => Navigator.of(context)
+                                                .popUntil(ModalRoute.withName(
+                                                    HomeScreen.routeName)));
                                       } catch (e) {
                                         _showToast(
                                             'Unable To Delete Workout Try Again Later');
