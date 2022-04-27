@@ -6,7 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:permission_handler/permission_handler.dart';
-
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
 
 class CircleImagePicker extends StatefulWidget {
@@ -71,7 +71,7 @@ class _CircleImagePickerState extends State<CircleImagePicker> {
 
     if (result != null) {
       if (this.mounted) {
-        var image = await ImageCropper().cropImage(
+        var croppedImage = await ImageCropper().cropImage(
           sourcePath: result.files.single.path!,
           compressQuality: 70,
           cropStyle: CropStyle.circle,
@@ -86,6 +86,12 @@ class _CircleImagePickerState extends State<CircleImagePicker> {
             showCancelConfirmationDialog: true,
             title: 'Crop Your Image',
           ),
+        );
+
+        var image = await FlutterNativeImage.compressImage(
+          croppedImage!.path,
+          quality: 40,
+          percentage: 100,
         );
 
         setState(() {
