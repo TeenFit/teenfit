@@ -179,7 +179,7 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                       ? SuperSet(exerciseProv)
                       : SetsAndReps(exerciseProv),
               SizedBox(
-                height: _mediaQuery.size.height * 0.03,
+                height: _mediaQuery.size.height * 0.3,
               ),
             ],
           ),
