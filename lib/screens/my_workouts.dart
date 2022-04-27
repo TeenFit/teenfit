@@ -55,6 +55,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
     uid = widget.viewUser!.uid;
 
     user = widget.viewUser;
+
     if (isInit == false) {
       if (user!.followers != null && auth!.isAuth()) {
         isFollowing = user!.followers!.contains(auth!.userId!);
