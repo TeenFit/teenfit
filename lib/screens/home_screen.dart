@@ -60,10 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       settings = await messaging.requestPermission(
         alert: true,
-        announcement: false,
         badge: true,
-        carPlay: false,
-        criticalAlert: false,
         provisional: true,
         sound: true,
       );
