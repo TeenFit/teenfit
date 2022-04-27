@@ -35,11 +35,14 @@ class _WorkoutPageState extends State<WorkoutPage> {
     super.didChangeDependencies();
 
     if (isInit == false) {
-      if (prov['workout'] == null) {
-        prov = ModalRoute.of(context)!.settings.arguments as Map;
+      prov = ModalRoute.of(context)!.settings.arguments as Map;
+
+      var workoutId = prov['workoutId'];
+
+      if (workoutId != null) {
         var workoutDoc = await FirebaseFirestore.instance
             .collection('workouts')
-            .doc(prov['workoutId'])
+            .doc(workoutId)
             .get();
 
         workout = Workout(
