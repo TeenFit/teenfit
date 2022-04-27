@@ -142,7 +142,6 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
       resizeToAvoidBottomInset: true,
       backgroundColor: _theme.primaryColor,
       appBar: AppBar(
-       
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.black),
@@ -179,6 +178,9 @@ class _AddExerciseScreenState extends State<AddExerciseScreen> {
                   : exerciseType == 'Superset'
                       ? SuperSet(exerciseProv)
                       : SetsAndReps(exerciseProv),
+              SizedBox(
+                height: _mediaQuery.size.height * 0.03,
+              ),
             ],
           ),
         ),
