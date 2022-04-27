@@ -79,7 +79,10 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: pageController,
         children: [
           DiscoveryPage(),
-          isAuth == true ? CreateWorkout(false, null) : LoginScreen(),
+          isAuth == true
+              ? CreateWorkout(
+                  false, Provider.of<UserProv>(context, listen: false).getUser)
+              : LoginScreen(),
           UserScreen(),
         ],
       );
