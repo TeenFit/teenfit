@@ -13,8 +13,8 @@ import 'auth.dart';
 class UserProv with ChangeNotifier {
   User? _user;
 
-  User get getUser {
-    return _user!;
+  User? get getUser {
+    return _user;
   }
 
   Future<Map> authAccount() async {

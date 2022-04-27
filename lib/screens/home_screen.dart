@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/providers/auth.dart';
+import 'package:teenfit/providers/user.dart';
 import 'package:teenfit/providers/userProv.dart';
 import 'package:teenfit/screens/auth/login_screen.dart';
 import 'package:teenfit/screens/discovery_page.dart';
@@ -72,8 +73,11 @@ class _HomeScreenState extends State<HomeScreen> {
       bool isAuth = Provider.of<Auth>(context, listen: false).isAuth();
 
       if (isAuth) {
-        Provider.of<UserProv>(context, listen: false).fetchAndSetUser(context);
+        await Provider.of<UserProv>(context, listen: false)
+            .fetchAndSetUser(context);
       }
+
+      User? user = Provider.of<UserProv>(context, listen: false).getUser;
 
       pageView = PageView(
         controller: pageController,
@@ -81,7 +85,9 @@ class _HomeScreenState extends State<HomeScreen> {
           DiscoveryPage(),
           isAuth == true
               ? CreateWorkout(
-                  false, Provider.of<UserProv>(context, listen: false).getUser)
+                  false,
+                  user,
+                )
               : LoginScreen(),
           UserScreen(),
         ],
