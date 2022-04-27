@@ -50,13 +50,12 @@ class _CreateWorkoutState extends State<CreateWorkout> {
   void didChangeDependencies() async {
     super.didChangeDependencies();
 
+    auth = Provider.of<Auth>(context, listen: false);
+
+    uid = widget.viewUser!.uid;
+
+    user = widget.viewUser;
     if (isInit == false) {
-      auth = Provider.of<Auth>(context, listen: false);
-
-      uid = widget.viewUser!.uid;
-
-      user = widget.viewUser;
-
       if (user!.followers != null && auth!.isAuth()) {
         isFollowing = user!.followers!.contains(auth!.userId!);
       } else {
