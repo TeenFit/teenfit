@@ -101,7 +101,8 @@ class _WorkoutTileState extends State<WorkoutTile> {
               onTap: () {
                 Navigator.of(context)
                     .pushNamed(WorkoutPage.routeName, arguments: {
-                  'workout': widget.workout.workoutId,
+                  'workoutId': null,
+                  'workout': widget.workout,
                   'isDeletable': widget.isDeletable,
                 });
               },
@@ -177,7 +178,8 @@ class _WorkoutTileState extends State<WorkoutTile> {
                     onTap: () async {
                       Navigator.of(context)
                           .pushNamed(WorkoutPage.routeName, arguments: {
-                        'workout': widget.workout.workoutId,
+                        'workoutId': null,
+                        'workout': widget.workout,
                         'isDeletable': widget.isDeletable,
                       });
                     },
@@ -233,7 +235,8 @@ class _WorkoutTileState extends State<WorkoutTile> {
                           onTap: () {
                             Navigator.of(context)
                                 .pushNamed(WorkoutPage.routeName, arguments: {
-                              'workout': widget.workout.workoutId,
+                              'workoutId': null,
+                              'workout': widget.workout,
                               'isDeletable': widget.isDeletable
                             });
                           },

@@ -26,7 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.of(context).pushNamed(
         WorkoutPage.routeName,
         arguments: {
-          'workout': message.data['workoutId'],
+          'workoutId': message.data['workoutId'],
+          'workout': null,
           'isDeletable': false,
         },
       );
