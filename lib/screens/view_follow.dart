@@ -142,7 +142,7 @@ class _ViewFollowState extends State<ViewFollow> {
                                         ),
                                 ),
                                 title: FittedBox(
-                                  fit: BoxFit.contain,
+                                  fit: BoxFit.scaleDown,
                                   child: Text(
                                     '@' + user.name!,
                                     maxLines: 1,
