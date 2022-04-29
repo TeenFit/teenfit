@@ -167,7 +167,6 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
             controller: controller,
             body: FloatingSearchBarScrollNotifier(
               child: SearchResultWorkouts(
-                selectedTerm,
                 queryWorkout,
               ),
             ),
@@ -190,7 +189,8 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                         .where('pending', isEqualTo: false)
                         .where('failed', isEqualTo: false)
                         .where('searchTerms',
-                            arrayContains: selectedTerm.toString().trim())
+                            arrayContains:
+                                selectedTerm.toString().trim().toLowerCase())
                         .orderBy('date', descending: true)
                         .withConverter<Workout>(
                             fromFirestore: (snapshot, _) =>
@@ -288,8 +288,10 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                                   .where('pending', isEqualTo: false)
                                   .where('failed', isEqualTo: false)
                                   .where('searchTerms',
-                                      arrayContains:
-                                          controller.query.toString().trim())
+                                      arrayContains: controller.query
+                                          .toString()
+                                          .trim()
+                                          .toLowerCase())
                                   .orderBy('date', descending: true)
                                   .withConverter<Workout>(
                                       fromFirestore: (snapshot, _) =>
@@ -331,8 +333,10 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                                             .where('pending', isEqualTo: false)
                                             .where('failed', isEqualTo: false)
                                             .where('searchTerms',
-                                                arrayContains:
-                                                    term.toString().trim())
+                                                arrayContains: term
+                                                    .toString()
+                                                    .trim()
+                                                    .toLowerCase())
                                             .orderBy('date', descending: true)
                                             .withConverter<Workout>(
                                                 fromFirestore: (snapshot, _) =>

@@ -6,10 +6,9 @@ import 'package:teenfit/providers/workout.dart';
 import '../widgets/workout_tile.dart';
 
 class SearchResultWorkouts extends StatefulWidget {
-  final String? searchTerm;
   final Query<Workout>? queryWorkout;
 
-  SearchResultWorkouts(this.searchTerm, this.queryWorkout);
+  SearchResultWorkouts(this.queryWorkout);
 
   @override
   State<SearchResultWorkouts> createState() => _SearchResultWorkoutsState();

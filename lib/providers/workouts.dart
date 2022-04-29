@@ -599,9 +599,10 @@ class Workouts with ChangeNotifier {
   Future<void> acceptWorkout(Workout workouT) async {
     DateTime time = DateTime.now();
 
-    await workoutsCollection
-        .doc(workouT.workoutId)
-        .update({'pending': false, 'date': time.toString()});
+    await workoutsCollection.doc(workouT.workoutId).update({
+      'pending': false,
+      // 'date': time.toString(),
+    });
 
     notifyListeners();
   }
