@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +28,14 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
   late List<String> filteredSearchHistory;
 
   String? selectedTerm;
+  Query<Workout>? queryWorkout = FirebaseFirestore.instance
+      .collection('/workouts')
+      .where('pending', isEqualTo: false)
+      .where('failed', isEqualTo: false)
+      .orderBy('date', descending: true)
+      .withConverter<Workout>(
+          fromFirestore: (snapshot, _) => Workout.fromJson(snapshot.data()!),
+          toFirestore: (worKout, _) => worKout.toJson());
 
   List<String> filterSearchTerms(
     String? filter,
@@ -37,7 +46,6 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
       return _searchHistory.reversed.toList();
     }
   }
-
 
   @override
   void didChangeDependencies() async {
@@ -160,12 +168,34 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
             body: FloatingSearchBarScrollNotifier(
               child: SearchResultWorkouts(
                 selectedTerm,
+                queryWorkout,
               ),
             ),
             onSubmitted: (query) {
               setState(() {
                 addSearchTerm(query);
                 selectedTerm = query;
+                queryWorkout = selectedTerm == null
+                    ? FirebaseFirestore.instance
+                        .collection('/workouts')
+                        .where('pending', isEqualTo: false)
+                        .where('failed', isEqualTo: false)
+                        .orderBy('date', descending: true)
+                        .withConverter<Workout>(
+                            fromFirestore: (snapshot, _) =>
+                                Workout.fromJson(snapshot.data()!),
+                            toFirestore: (worKout, _) => worKout.toJson())
+                    : FirebaseFirestore.instance
+                        .collection('/workouts')
+                        .where('pending', isEqualTo: false)
+                        .where('failed', isEqualTo: false)
+                        .where('searchTerms',
+                            arrayContains: selectedTerm.toString().trim())
+                        .orderBy('date', descending: true)
+                        .withConverter<Workout>(
+                            fromFirestore: (snapshot, _) =>
+                                Workout.fromJson(snapshot.data()!),
+                            toFirestore: (worKout, _) => worKout.toJson());
               });
               controller.close();
             },
@@ -208,8 +238,20 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                                   onPressed: () {
                                     setState(() {
                                       selectedTerm = null;
+                                      queryWorkout = FirebaseFirestore.instance
+                                          .collection('/workouts')
+                                          .where('pending', isEqualTo: false)
+                                          .where('failed', isEqualTo: false)
+                                          .orderBy('date', descending: true)
+                                          .withConverter<Workout>(
+                                              fromFirestore: (snapshot, _) =>
+                                                  Workout.fromJson(
+                                                      snapshot.data()!),
+                                              toFirestore: (worKout, _) =>
+                                                  worKout.toJson());
+
+                                      controller.close();
                                     });
-                                    controller.close();
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -241,6 +283,19 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                             setState(() {
                               addSearchTerm(controller.query);
                               selectedTerm = controller.query;
+                              queryWorkout = FirebaseFirestore.instance
+                                  .collection('/workouts')
+                                  .where('pending', isEqualTo: false)
+                                  .where('failed', isEqualTo: false)
+                                  .where('searchTerms',
+                                      arrayContains:
+                                          controller.query.toString().trim())
+                                  .orderBy('date', descending: true)
+                                  .withConverter<Workout>(
+                                      fromFirestore: (snapshot, _) =>
+                                          Workout.fromJson(snapshot.data()!),
+                                      toFirestore: (worKout, _) =>
+                                          worKout.toJson());
                             });
                             controller.close();
                           },
@@ -270,6 +325,21 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                                       setState(() {
                                         putSearchTermFirst(term);
                                         selectedTerm = term;
+                                        queryWorkout = FirebaseFirestore
+                                            .instance
+                                            .collection('/workouts')
+                                            .where('pending', isEqualTo: false)
+                                            .where('failed', isEqualTo: false)
+                                            .where('searchTerms',
+                                                arrayContains:
+                                                    term.toString().trim())
+                                            .orderBy('date', descending: true)
+                                            .withConverter<Workout>(
+                                                fromFirestore: (snapshot, _) =>
+                                                    Workout.fromJson(
+                                                        snapshot.data()!),
+                                                toFirestore: (worKout, _) =>
+                                                    worKout.toJson());
                                       });
                                       controller.close();
                                     },
@@ -287,6 +357,17 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                                   onPressed: () {
                                     setState(() {
                                       selectedTerm = null;
+                                      queryWorkout = FirebaseFirestore.instance
+                                          .collection('/workouts')
+                                          .where('pending', isEqualTo: false)
+                                          .where('failed', isEqualTo: false)
+                                          .orderBy('date', descending: true)
+                                          .withConverter<Workout>(
+                                              fromFirestore: (snapshot, _) =>
+                                                  Workout.fromJson(
+                                                      snapshot.data()!),
+                                              toFirestore: (worKout, _) =>
+                                                  worKout.toJson());
                                     });
                                     controller.close();
                                   },

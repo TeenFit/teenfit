@@ -3,61 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:teenfit/providers/workout.dart';
-
-import '../providers/user.dart';
 import '../widgets/workout_tile.dart';
 
 class SearchResultWorkouts extends StatefulWidget {
   final String? searchTerm;
+  final Query<Workout>? queryWorkout;
 
-  SearchResultWorkouts(this.searchTerm);
+  SearchResultWorkouts(this.searchTerm, this.queryWorkout);
 
   @override
   State<SearchResultWorkouts> createState() => _SearchResultWorkoutsState();
 }
 
 class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
-  Query<Workout>? queryWorkout;
-  Query<User>? userQuery;
-  bool isInit = false;
+  var searcHTerm;
 
   Future<void> _refreshWorkouts(BuildContext context) async {
-    setState(() {
-      isInit = true;
-    });
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    if (isInit == false) {
-      queryWorkout = widget.searchTerm == null
-          ? FirebaseFirestore.instance
-              .collection('/workouts')
-              .where('pending', isEqualTo: false)
-              .where('failed', isEqualTo: false)
-              .orderBy('date', descending: true)
-              .withConverter<Workout>(
-                  fromFirestore: (snapshot, _) =>
-                      Workout.fromJson(snapshot.data()!),
-                  toFirestore: (worKout, _) => worKout.toJson())
-          : FirebaseFirestore.instance
-              .collection('/workouts')
-              .where('pending', isEqualTo: false)
-              .where('failed', isEqualTo: false)
-              .where('searchTerms',
-                  arrayContains: widget.searchTerm.toString().trim())
-              .orderBy('date', descending: true)
-              .withConverter<Workout>(
-                  fromFirestore: (snapshot, _) =>
-                      Workout.fromJson(snapshot.data()!),
-                  toFirestore: (worKout, _) => worKout.toJson());
-
-      setState(() {
-        isInit = false;
-      });
-    }
+    setState(() {});
   }
 
   @override
@@ -123,7 +85,7 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
             padding: EdgeInsets.only(
                 top: fsb!.value.height + fsb.value.margins.vertical,
                 bottom: _mediaQuery.padding.bottom),
-            query: queryWorkout!,
+            query: widget.queryWorkout!,
             pageSize: 5,
             itemBuilder: (context, snapshot) {
               final workout = snapshot.data();

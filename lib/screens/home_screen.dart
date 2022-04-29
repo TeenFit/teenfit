@@ -6,6 +6,7 @@ import 'package:teenfit/providers/user.dart';
 import 'package:teenfit/providers/userProv.dart';
 import 'package:teenfit/screens/auth/login_screen.dart';
 import 'package:teenfit/screens/discovery_page.dart';
+import 'package:teenfit/screens/logging_screen.dart';
 import 'package:teenfit/screens/my_workouts.dart';
 import 'package:teenfit/screens/user_screen.dart';
 import 'package:teenfit/screens/workout_page.dart';
@@ -89,6 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   user,
                 )
               : LoginScreen(),
+          LoggingScreen(),
           UserScreen(),
         ],
       );
@@ -131,6 +133,8 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
               icon: Icon(Icons.search_rounded), label: 'Find'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.table_chart), label: 'Logging'),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings), label: 'Settings'),
         ],
