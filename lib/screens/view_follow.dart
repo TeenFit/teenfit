@@ -24,8 +24,8 @@ class _ViewFollowState extends State<ViewFollow> {
     if (isInit == false) {
       var prov = ModalRoute.of(context)!.settings.arguments as Map;
 
-      var provFollowers = prov['followers'] == null ? [''] : prov['followers'];
-      var provFollowing = prov['following'] == null ? [''] : prov['following'];
+      var provFollowers = prov['followers'] == null ? [' '] : prov['followers'];
+      var provFollowing = prov['following'] == null ? [' '] : prov['following'];
 
       followers = FirebaseFirestore.instance
           .collection('/users')
