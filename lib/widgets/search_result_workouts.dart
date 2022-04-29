@@ -19,9 +19,45 @@ class SearchResultWorkouts extends StatefulWidget {
 class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
   Query<Workout>? queryWorkout;
   Query<User>? userQuery;
+  bool isInit = false;
 
   Future<void> _refreshWorkouts(BuildContext context) async {
-    setState(() {});
+    setState(() {
+      isInit = true;
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (isInit == false) {
+      queryWorkout = widget.searchTerm == null
+          ? FirebaseFirestore.instance
+              .collection('/workouts')
+              .where('pending', isEqualTo: false)
+              .where('failed', isEqualTo: false)
+              .orderBy('date', descending: true)
+              .withConverter<Workout>(
+                  fromFirestore: (snapshot, _) =>
+                      Workout.fromJson(snapshot.data()!),
+                  toFirestore: (worKout, _) => worKout.toJson())
+          : FirebaseFirestore.instance
+              .collection('/workouts')
+              .where('pending', isEqualTo: false)
+              .where('failed', isEqualTo: false)
+              .where('searchTerms',
+                  arrayContains: widget.searchTerm.toString().trim())
+              .orderBy('date', descending: true)
+              .withConverter<Workout>(
+                  fromFirestore: (snapshot, _) =>
+                      Workout.fromJson(snapshot.data()!),
+                  toFirestore: (worKout, _) => worKout.toJson());
+
+      setState(() {
+        isInit = false;
+      });
+    }
   }
 
   @override
@@ -33,38 +69,16 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
 
     final fsb = FloatingSearchBar.of(context);
 
-    queryWorkout = widget.searchTerm == null
-        ? FirebaseFirestore.instance
-            .collection('/workouts')
-            .where('pending', isEqualTo: false)
-            .where('failed', isEqualTo: false)
-            .orderBy('date', descending: true)
-            .withConverter<Workout>(
-                fromFirestore: (snapshot, _) =>
-                    Workout.fromJson(snapshot.data()!),
-                toFirestore: (worKout, _) => worKout.toJson())
-        : FirebaseFirestore.instance
-            .collection('/workouts')
-            .where('pending', isEqualTo: false)
-            .where('failed', isEqualTo: false)
-            .where('searchTerms',
-                arrayContains: widget.searchTerm.toString().trim())
-            .orderBy('date', descending: true)
-            .withConverter<Workout>(
-                fromFirestore: (snapshot, _) =>
-                    Workout.fromJson(snapshot.data()!),
-                toFirestore: (worKout, _) => worKout.toJson());
-
-    userQuery = widget.searchTerm != null
-        ? FirebaseFirestore.instance
-            .collection('/users')
-            .where('searchterms',
-                arrayContains: widget.searchTerm.toString().trim())
-            .orderBy('date', descending: true)
-            .withConverter<User>(
-                fromFirestore: (snapshot, _) => User.fromJson(snapshot.data()!),
-                toFirestore: (useR, _) => useR.toJson())
-        : null;
+    // userQuery = widget.searchTerm != null
+    //     ? FirebaseFirestore.instance
+    //         .collection('/users')
+    //         .where('searchterms',
+    //             arrayContains: widget.searchTerm.toString().trim())
+    //         .orderBy('date', descending: true)
+    //         .withConverter<User>(
+    //             fromFirestore: (snapshot, _) => User.fromJson(snapshot.data()!),
+    //             toFirestore: (useR, _) => useR.toJson())
+    //     : null;
 
     return Container(
       color: _theme.primaryColor,
