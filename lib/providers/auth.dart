@@ -77,8 +77,8 @@ class Auth with ChangeNotifier {
         'uid': ('$userId'),
         'date': DateTime.now().toString(),
         'searchTerms': [
-          'user_$userId ${email.substring(0, email.indexOf('@')).toLowerCase()}'
-              .substring(0, 30),
+          'user_$userId ${email.substring(0, email.indexOf('@'))}'
+              .substring(0, 30).toLowerCase(),
           ''
         ],
         'link': null,

@@ -57,7 +57,7 @@ class Workouts with ChangeNotifier {
 
     Future<void> addSearchTerms(String workoutName) async {
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(0, i));
+        searchTermsList.add(workoutName.substring(0, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
@@ -65,43 +65,53 @@ class Workouts with ChangeNotifier {
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(0, i).toUpperCase());
+        searchTermsList
+            .add(workoutName.substring(i - 2 < 0 ? 0 : i - 2, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 2 < 0 ? 0 : i - 2, i));
+        searchTermsList
+            .add(workoutName.substring(i - 2 < 0 ? 0 : i - 2, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 3 < 0 ? 0 : i - 3, i));
+        searchTermsList
+            .add(workoutName.substring(i - 3 < 0 ? 0 : i - 3, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 4 < 0 ? 0 : i - 4, i));
+        searchTermsList
+            .add(workoutName.substring(i - 4 < 0 ? 0 : i - 4, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 5 < 0 ? 0 : i - 5, i));
+        searchTermsList
+            .add(workoutName.substring(i - 5 < 0 ? 0 : i - 5, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 6 < 0 ? 0 : i - 6, i));
+        searchTermsList
+            .add(workoutName.substring(i - 6 < 0 ? 0 : i - 6, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 7 < 0 ? 0 : i - 7, i));
+        searchTermsList
+            .add(workoutName.substring(i - 7 < 0 ? 0 : i - 7, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 8 < 0 ? 0 : i - 8, i));
+        searchTermsList
+            .add(workoutName.substring(i - 8 < 0 ? 0 : i - 8, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 9 < 0 ? 0 : i - 9, i));
+        searchTermsList
+            .add(workoutName.substring(i - 9 < 0 ? 0 : i - 9, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 10 < 0 ? 0 : i - 10, i));
+        searchTermsList.add(
+            workoutName.substring(i - 10 < 0 ? 0 : i - 10, i).toLowerCase());
       }
 
       searchTermsList = searchTermsList.toSet().toList();
@@ -261,7 +271,7 @@ class Workouts with ChangeNotifier {
 
     Future<void> addSearchTerms(String workoutName) async {
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(0, i));
+        searchTermsList.add(workoutName.substring(0, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
@@ -269,43 +279,53 @@ class Workouts with ChangeNotifier {
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(0, i).toUpperCase());
+        searchTermsList
+            .add(workoutName.substring(i - 2 < 0 ? 0 : i - 2, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 2 < 0 ? 0 : i - 2, i));
+        searchTermsList
+            .add(workoutName.substring(i - 2 < 0 ? 0 : i - 2, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 3 < 0 ? 0 : i - 3, i));
+        searchTermsList
+            .add(workoutName.substring(i - 3 < 0 ? 0 : i - 3, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 4 < 0 ? 0 : i - 4, i));
+        searchTermsList
+            .add(workoutName.substring(i - 4 < 0 ? 0 : i - 4, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 5 < 0 ? 0 : i - 5, i));
+        searchTermsList
+            .add(workoutName.substring(i - 5 < 0 ? 0 : i - 5, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 6 < 0 ? 0 : i - 6, i));
+        searchTermsList
+            .add(workoutName.substring(i - 6 < 0 ? 0 : i - 6, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 7 < 0 ? 0 : i - 7, i));
+        searchTermsList
+            .add(workoutName.substring(i - 7 < 0 ? 0 : i - 7, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 8 < 0 ? 0 : i - 8, i));
+        searchTermsList
+            .add(workoutName.substring(i - 8 < 0 ? 0 : i - 8, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 9 < 0 ? 0 : i - 9, i));
+        searchTermsList
+            .add(workoutName.substring(i - 9 < 0 ? 0 : i - 9, i).toLowerCase());
       }
 
       for (var i = 0; i <= workoutName.characters.length; i++) {
-        searchTermsList.add(workoutName.substring(i - 10 < 0 ? 0 : i - 10, i));
+        searchTermsList.add(
+            workoutName.substring(i - 10 < 0 ? 0 : i - 10, i).toLowerCase());
       }
 
       searchTermsList = searchTermsList.toSet().toList();
