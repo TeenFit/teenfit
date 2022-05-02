@@ -21,29 +21,26 @@ class _ViewFollowState extends State<ViewFollow> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
+    Map<String, List> prov =
+        ModalRoute.of(context)!.settings.arguments as Map<String, List>;
+
+    List? provFollowers = prov['followers'];
+    List? provFollowing = prov['following'];
+
     if (isInit == false) {
-      var prov = ModalRoute.of(context)!.settings.arguments as Map;
-
-      var provFollowers = prov['followers'] == null || prov['followers'] == []
-          ? ['']
-          : prov['followers'];
-      var provFollowing = prov['following'] == null || prov['following'] == []
-          ? ['']
-          : prov['following'];
-
       followers = FirebaseFirestore.instance
           .collection('/users')
-          .where('uid', whereIn: provFollowers)
+          .where('uid', whereIn: provFollowers!)
           .withConverter<User>(
               fromFirestore: (snapshot, _) => User.fromJson(snapshot.data()!),
-              toFirestore: (worKout, _) => worKout.toJson());
+              toFirestore: (useR, _) => useR.toJson());
 
       following = FirebaseFirestore.instance
           .collection('/users')
-          .where('uid', whereIn: provFollowing)
+          .where('uid', whereIn: provFollowing!)
           .withConverter<User>(
               fromFirestore: (snapshot, _) => User.fromJson(snapshot.data()!),
-              toFirestore: (worKout, _) => worKout.toJson());
+              toFirestore: (useR, _) => useR.toJson());
 
       setState(() {
         isInit = true;
@@ -103,7 +100,7 @@ class _ViewFollowState extends State<ViewFollow> {
                     ),
                   )
                 : FirestoreListView<User>(
-                    query: followers,
+                    query: followers!,
                     pageSize: 15,
                     itemBuilder: (ctx, snapshot) {
                       final user = snapshot.data();
@@ -210,7 +207,7 @@ class _ViewFollowState extends State<ViewFollow> {
                     ),
                   )
                 : FirestoreListView<User>(
-                    query: following,
+                    query: following!,
                     pageSize: 5,
                     itemBuilder: (ctx, snapshot) {
                       final user = snapshot.data();

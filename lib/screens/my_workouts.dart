@@ -243,11 +243,34 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                 ),
                                 TextButton(
                                   onPressed: () {
+                                    print(
+                                      user!.followers == null ||
+                                              user!.following!.isEmpty
+                                          ? [
+                                              'a',
+                                              'b',
+                                            ]
+                                          : user!.followers!,
+                                    );
                                     Navigator.of(context).pushNamed(
                                         ViewFollow.routeName,
                                         arguments: {
-                                          'followers': user!.followers,
-                                          'following': user!.following
+                                          'followers':
+                                              user!.followers == null ||
+                                                      user!.following!.isEmpty
+                                                  ? [
+                                                      'a',
+                                                      'b',
+                                                    ]
+                                                  : user!.followers!,
+                                          'following':
+                                              user!.following == null ||
+                                                      user!.following!.isEmpty
+                                                  ? [
+                                                      'a',
+                                                      'b',
+                                                    ]
+                                                  : user!.following!
                                         });
                                   },
                                   child: Container(
