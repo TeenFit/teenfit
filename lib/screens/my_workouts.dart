@@ -243,21 +243,12 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    print(
-                                      user!.followers == null ||
-                                              user!.following!.isEmpty
-                                          ? [
-                                              'a',
-                                              'b',
-                                            ]
-                                          : user!.followers!,
-                                    );
                                     Navigator.of(context).pushNamed(
                                         ViewFollow.routeName,
                                         arguments: {
                                           'followers':
                                               user!.followers == null ||
-                                                      user!.following!.isEmpty
+                                                      user!.followers!.isEmpty
                                                   ? [
                                                       'a',
                                                       'b',
