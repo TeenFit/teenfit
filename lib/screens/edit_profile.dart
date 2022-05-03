@@ -121,7 +121,7 @@ class _EditProfileScreenState extends State<EditProfile> {
       try {
         await Provider.of<UserProv>(context, listen: false)
             .updateUser(user, context);
-        Navigator.pop(context, true);
+        Navigator.of(context).pop('fam');
       } catch (e) {
         _showToast('Unable To Add Workout Try Again Later');
       }

@@ -31,7 +31,7 @@ class CreateWorkout extends StatefulWidget {
 class _CreateWorkoutState extends State<CreateWorkout> {
   String? uid;
   bool isInit = false;
-  bool isUpdated = false;
+  bool isLoading = false;
   bool isView = false;
   var queryWorkout;
   Auth? auth;
@@ -55,23 +55,12 @@ class _CreateWorkoutState extends State<CreateWorkout> {
 
     uid = widget.viewUser!.uid;
 
-    if (isUpdated == true) {
-      bool isAuth = Provider.of<Auth>(context, listen: false).isAuth();
-
-      if (isAuth) {
-        await Provider.of<UserProv>(context, listen: false)
-            .fetchAndSetUser(context);
-      }
-
-      user = Provider.of<UserProv>(context, listen: false).getUser;
-
-      setState(() {
-        isUpdated = false;
-      });
-    }
+    user = widget.viewUser;
 
     if (isInit == false) {
-      user = widget.viewUser;
+      setState(() {
+        isLoading = true;
+      });
 
       if (user!.followers != null && auth!.isAuth()) {
         isFollowing = user!.followers!.contains(auth!.userId!);
@@ -105,6 +94,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
 
       setState(() {
         isInit = true;
+        isLoading = false;
       });
     }
   }
@@ -135,7 +125,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
         preferredSize: Size.fromHeight(_mediaQuery.size.height * 0.07),
         child: AppBar(
           elevation: 5,
-          title: isInit == false
+          title: isLoading == true
               ? Center(
                   child: CircularProgressIndicator(
                     strokeWidth: 4,
@@ -189,7 +179,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
           ],
         ),
       ),
-      body: isInit == false
+      body: isLoading == true
           ? Center(
               child: CircularProgressIndicator(
                 strokeWidth: 4,
@@ -436,17 +426,30 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                                 }
                                               });
                                             }
-                                          : () {
-                                              Navigator.of(context)
-                                                  .pushNamed(
-                                                      EditProfile.routeName,
-                                                      arguments: user)
-                                                  .then((value) => setState(() {
-                                                        value != null
-                                                            ? isUpdated = true
-                                                            : isUpdated =
-                                                                isUpdated;
-                                                      }));
+                                          : () async {
+                                              final result =
+                                                  await Navigator.of(context)
+                                                      .pushNamed(
+                                                          EditProfile.routeName,
+                                                          arguments: user);
+
+                                              if (result == 'fam') {
+                                                setState(() {
+                                                  isLoading = true;
+                                                });
+
+                                                final userProv =
+                                                    Provider.of<UserProv>(
+                                                        context,
+                                                        listen: false);
+                                                await userProv
+                                                    .fetchAndSetUser(context);
+
+                                                setState(() {
+                                                  user = userProv.getUser;
+                                                  isLoading = false;
+                                                });
+                                              }
                                             },
                                       child: Text(
                                         isView == true
