@@ -302,8 +302,22 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                     Navigator.of(context).pushNamed(
                                         ViewFollow.routeName,
                                         arguments: {
-                                          'followers': user!.followers,
-                                          'following': user!.following
+                                          'followers':
+                                              user!.followers == null ||
+                                                      user!.followers!.isEmpty
+                                                  ? [
+                                                      'a',
+                                                      'b',
+                                                    ]
+                                                  : user!.followers!,
+                                          'following':
+                                              user!.following == null ||
+                                                      user!.following!.isEmpty
+                                                  ? [
+                                                      'a',
+                                                      'b',
+                                                    ]
+                                                  : user!.following!
                                         });
                                   },
                                   child: Container(
