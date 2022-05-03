@@ -31,6 +31,7 @@ class CreateWorkout extends StatefulWidget {
 class _CreateWorkoutState extends State<CreateWorkout> {
   String? uid;
   bool isInit = false;
+  bool isUpdated = false;
   bool isView = false;
   var queryWorkout;
   Auth? auth;
@@ -54,9 +55,24 @@ class _CreateWorkoutState extends State<CreateWorkout> {
 
     uid = widget.viewUser!.uid;
 
-    user = widget.viewUser;
+    if (isUpdated == true) {
+      bool isAuth = Provider.of<Auth>(context, listen: false).isAuth();
+
+      if (isAuth) {
+        await Provider.of<UserProv>(context, listen: false)
+            .fetchAndSetUser(context);
+      }
+
+      user = Provider.of<UserProv>(context, listen: false).getUser;
+
+      setState(() {
+        isUpdated = false;
+      });
+    }
 
     if (isInit == false) {
+      user = widget.viewUser;
+
       if (user!.followers != null && auth!.isAuth()) {
         isFollowing = user!.followers!.contains(auth!.userId!);
       } else {
@@ -427,8 +443,9 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                                       arguments: user)
                                                   .then((value) => setState(() {
                                                         value != null
-                                                            ? isInit = false
-                                                            : isInit = isInit;
+                                                            ? isUpdated = true
+                                                            : isUpdated =
+                                                                isUpdated;
                                                       }));
                                             },
                                       child: Text(
