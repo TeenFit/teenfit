@@ -75,7 +75,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
       queryWorkout = auth!.isAuth() && isView != true
           ? FirebaseFirestore.instance
               .collection('/workouts')
-              // .where('creatorId', isEqualTo: uid)
+              .where('creatorId', isEqualTo: uid)
               .orderBy('date', descending: true)
               .withConverter<Workout>(
                   fromFirestore: (snapshot, _) =>
