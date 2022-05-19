@@ -3,6 +3,7 @@ import 'package:teenfit/providers/exercise.dart';
 
 class Workout {
   final int views;
+  final String? keywords;
   final String creatorId;
   final String workoutId;
   final String workoutName;
@@ -16,6 +17,7 @@ class Workout {
 
   const Workout({
     required this.views,
+    this.keywords,
     this.searchTerms,
     required this.date,
     required this.creatorId,
@@ -30,6 +32,7 @@ class Workout {
 
   Workout.fromJson(Map<String, dynamic> e)
       : this(
+          keywords: e['keywords'],
           views: e['views'],
           searchTerms: e['searchTerms'],
           failed: e['failed'],
@@ -60,6 +63,7 @@ class Workout {
         );
 
   Map<String, Object?> toJson() => {
+        'keywords': keywords,
         'views': views,
         'searchTerms': searchTerms,
         'failed': failed,

@@ -32,8 +32,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
   List<Exercise>? exerciseEditList;
 
-
-
   @override
   void didChangeDependencies() async {
     workoutProv = ModalRoute.of(context)!.settings.arguments;
@@ -45,6 +43,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
 
     if (isInit == false) {
       newWorkout = Workout(
+        keywords: workout!.keywords,
         views: workout!.views,
         searchTerms: workout!.searchTerms,
         failed: false,
@@ -117,6 +116,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
     void _pickImage(File? image) {
       setState(() {
         newWorkout = Workout(
+          keywords: newWorkout!.keywords,
           views: workout!.views,
           searchTerms: workout!.searchTerms,
           failed: false,
@@ -166,6 +166,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       _formKey3.currentState!.save();
 
       newWorkout = Workout(
+        keywords: newWorkout!.keywords,
         views: newWorkout!.views,
         failed: false,
         searchTerms: newWorkout!.searchTerms,
@@ -239,6 +240,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
             },
             onSaved: (input) {
               newWorkout = Workout(
+                keywords: newWorkout!.keywords,
                 views: newWorkout!.views,
                 searchTerms: newWorkout!.searchTerms,
                 failed: false,
@@ -247,6 +249,49 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 creatorId: newWorkout!.creatorId,
                 workoutId: newWorkout!.workoutId,
                 workoutName: input.toString().trim(),
+                bannerImage: newWorkout!.bannerImage,
+                bannerImageLink: newWorkout!.bannerImageLink,
+                exercises: newWorkout!.exercises,
+              );
+            },
+          ),
+        ),
+      );
+    }
+
+    Widget buildKeywords() {
+      return Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Container(
+          height: (_mediaQuery.size.height - _appBarHeight) * 0.08,
+          width: _mediaQuery.size.width,
+          child: TextFormField(
+            initialValue: workout!.keywords,
+            decoration: InputDecoration(
+              hintText: 'Keywords: seperate words by a comma',
+              hintStyle: TextStyle(fontSize: _mediaQuery.size.height * 0.02),
+            ),
+            style: TextStyle(
+              fontSize: 20,
+            ),
+            textInputAction: TextInputAction.next,
+            validator: (value) {
+              if (value.toString().trim().length > 100) {
+                return 'Stay Under 100 Characters Please';
+              }
+              return null;
+            },
+            onSaved: (input) {
+              newWorkout = Workout(
+                keywords: input.toString().trim(),
+                views: newWorkout!.views,
+                searchTerms: newWorkout!.searchTerms,
+                failed: false,
+                pending: newWorkout!.pending,
+                date: newWorkout!.date,
+                creatorId: newWorkout!.creatorId,
+                workoutId: newWorkout!.workoutId,
+                workoutName: newWorkout!.workoutName,
                 bannerImage: newWorkout!.bannerImage,
                 bannerImageLink: newWorkout!.bannerImageLink,
                 exercises: newWorkout!.exercises,
@@ -385,7 +430,6 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       resizeToAvoidBottomInset: true,
       backgroundColor: _theme.primaryColor,
       appBar: AppBar(
-    
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.black),
@@ -416,6 +460,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                     _pickImage, workout!.bannerImageLink, workout!.bannerImage),
                 buildWorkoutName(),
                 buildAddExercises(),
+                buildKeywords(),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Container(
@@ -460,7 +505,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                     ),
                   ),
                 ),
-                  SizedBox(
+                SizedBox(
                   height: _mediaQuery.size.height * 0.08,
                 ),
               ],
