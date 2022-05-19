@@ -121,7 +121,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                     AddWorkoutScreen.routeName,
                     arguments: {
                       'workout': Workout(
-                        keywords: '',
+            
                         views: 0,
                         searchTerms: [],
                         failed: false,

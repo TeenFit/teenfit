@@ -46,7 +46,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
             .get();
 
         workout = Workout(
-          keywords: workoutDoc.data()!['keywords'],
+ 
           views: workoutDoc.data()!['views'],
           searchTerms: workoutDoc.data()!['searchTerms'],
           failed: workoutDoc.data()!['failed'],
