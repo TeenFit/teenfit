@@ -119,15 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       backgroundColor: _theme.primaryColor,
-      body: isInit == false
-          ? Center(
-              child: CircularProgressIndicator(
-                strokeWidth: 4,
-                backgroundColor: _theme.shadowColor,
-                color: Colors.white,
-              ),
-            )
-          : pageView,
+      body: pageView,
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
