@@ -637,7 +637,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.162;
+				MARKETING_VERSION = 2.163;
 				PRODUCT_BUNDLE_IDENTIFIER = com.muqeeth.teenfit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -777,7 +777,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.162;
+				MARKETING_VERSION = 2.163;
 				PRODUCT_BUNDLE_IDENTIFIER = com.muqeeth.teenfit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -807,7 +807,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.162;
+				MARKETING_VERSION = 2.163;
 				PRODUCT_BUNDLE_IDENTIFIER = com.muqeeth.teenfit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
