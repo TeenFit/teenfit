@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:teenfit/screens/day_scedule_screen.dart';
 
-class LoggingScreen extends StatelessWidget {
+import '../providers/user.dart';
+
+class PlanningScreen extends StatelessWidget {
+  final User? userData;
+
+  PlanningScreen(this.userData);
+
   @override
   Widget build(BuildContext context) {
     final _mediaQuery = MediaQuery.of(context);
@@ -51,8 +57,8 @@ class LoggingScreen extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.of(context)
-                    .pushNamed(DaySchedule.routeName, arguments: 'Monday');
+                Navigator.of(context).pushNamed(DaySchedule.routeName,
+                    arguments: {'day': 'Monday', 'user': userData});
               },
             ),
             Divider(
@@ -71,8 +77,8 @@ class LoggingScreen extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.of(context)
-                    .pushNamed(DaySchedule.routeName, arguments: 'Tuesday');
+                Navigator.of(context).pushNamed(DaySchedule.routeName,
+                    arguments: {'day': 'Tuesday', 'user': userData});
               },
             ),
             Divider(
@@ -91,8 +97,8 @@ class LoggingScreen extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.of(context)
-                    .pushNamed(DaySchedule.routeName, arguments: 'Wednesday');
+                Navigator.of(context).pushNamed(DaySchedule.routeName,
+                    arguments: {'day': 'Wednesday', 'user': userData});
               },
             ),
             Divider(
@@ -111,8 +117,8 @@ class LoggingScreen extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.of(context)
-                    .pushNamed(DaySchedule.routeName, arguments: 'Thursday');
+                Navigator.of(context).pushNamed(DaySchedule.routeName,
+                    arguments: {'day': 'Thursday', 'user': userData});
               },
             ),
             Divider(
@@ -131,8 +137,8 @@ class LoggingScreen extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.of(context)
-                    .pushNamed(DaySchedule.routeName, arguments: 'Friday');
+                Navigator.of(context).pushNamed(DaySchedule.routeName,
+                    arguments: {'day': 'Friday', 'user': userData});
               },
             ),
             Divider(
@@ -151,8 +157,8 @@ class LoggingScreen extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.of(context)
-                    .pushNamed(DaySchedule.routeName, arguments: 'Satuday');
+                Navigator.of(context).pushNamed(DaySchedule.routeName,
+                    arguments: {'day': 'Satuday', 'user': userData});
               },
             ),
             Divider(
@@ -171,8 +177,8 @@ class LoggingScreen extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.of(context)
-                    .pushNamed(DaySchedule.routeName, arguments: 'Sunday');
+                Navigator.of(context).pushNamed(DaySchedule.routeName,
+                    arguments: {'day': 'Sunday', 'user': userData});
               },
             ),
             Divider(

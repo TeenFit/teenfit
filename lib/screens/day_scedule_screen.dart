@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teenfit/providers/user.dart';
 
 class DaySchedule extends StatefulWidget {
   static const routeName = '/day-schedule';
@@ -9,12 +10,15 @@ class DaySchedule extends StatefulWidget {
 
 class _DayScheduleState extends State<DaySchedule> {
   String? day;
+  User? user;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    day = ModalRoute.of(context)!.settings.arguments as String;
+    Map prov = ModalRoute.of(context)!.settings.arguments as Map;
+    day = prov['day'];
+    user = prov['user'];
   }
 
   @override
@@ -26,6 +30,13 @@ class _DayScheduleState extends State<DaySchedule> {
 
     return Scaffold(
       backgroundColor: _theme.primaryColor,
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: _theme.secondaryHeaderColor,
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          )),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(_mediaQuery.size.height * 0.07),
         child: AppBar(
@@ -33,11 +44,25 @@ class _DayScheduleState extends State<DaySchedule> {
           backgroundColor: _theme.secondaryHeaderColor,
           foregroundColor: Colors.white,
           title: Text(
-            "${day}'s Workouts",
+            "$day's Workout",
             style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: _appBarHieght * 0.3),
+          ),
+        ),
+      ),
+      body: Container(
+        height: _mediaQuery.size.height,
+        width: _mediaQuery.size.width,
+        child: Center(
+          child: Text(
+            'Rest Day',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: _appBarHieght * 1.5),
           ),
         ),
       ),
