@@ -327,6 +327,7 @@ class UserProv with ChangeNotifier {
     // });
 
     _user = User(
+      plannedDays: userDoc.data()!['plannedDays'],
       email: userDoc.data()!['email'],
       name: userDoc.data()!['name'],
       uid: userDoc.data()!['uid'],
@@ -348,6 +349,7 @@ class UserProv with ChangeNotifier {
         await FirebaseFirestore.instance.collection('/users').doc(uid).get();
 
     return User(
+      plannedDays: userDoc.data()!['plannedDays'],
       email: userDoc.data()!['email'],
       name: userDoc.data()!['name'],
       uid: userDoc.data()!['uid'],
@@ -492,7 +494,7 @@ class UserProv with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeFollower(String uid) {
+  void unfollow(String uid) {
     FirebaseFirestore.instance.collection('/users').doc(uid.toString()).update({
       'followers': FieldValue.arrayRemove([_user!.uid.toString()])
     });
@@ -505,5 +507,23 @@ class UserProv with ChangeNotifier {
     });
 
     notifyListeners();
+  }
+
+  Future<void> planWorkout(String day, String workoutId) async {
+    await FirebaseFirestore.instance
+        .collection('/users')
+        .doc(_user!.uid.toString())
+        .update({
+      'plannedDays.$day': FieldValue.arrayUnion([workoutId])
+    });
+  }
+
+  Future<void> removePlannedWorkout(String day, String workoutId) async {
+    await FirebaseFirestore.instance
+        .collection('/users')
+        .doc(_user!.uid.toString())
+        .update({
+      'plannedDays.$day': FieldValue.arrayRemove([workoutId])
+    });
   }
 }

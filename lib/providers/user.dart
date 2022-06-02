@@ -14,11 +14,13 @@ class User {
   final String? instagram;
   final String? tiktok;
   final File? profilePicFile;
+  final Map? plannedDays;
 
   const User({
     required this.email,
     required this.name,
     required this.uid,
+    this.plannedDays,
     this.date,
     this.bio,
     this.profilePic,
@@ -33,20 +35,20 @@ class User {
 
   User.fromJson(Map<String, dynamic> e)
       : this(
-          email: e['email'],
-          name: e['name'],
-          uid: e['uid'],
-          date: e['date'],
-          bio: e['bio'],
-          profilePic: e['profilePic'],
-          followers: e['followers'],
-          following: e['following'],
-          searchTerms: e['searchTerms'],
-          link: e['link'],
-          tiktok: e['tiktok'],
-          instagram: e['instagram'],
-          profilePicFile: null,
-        );
+            email: e['email'],
+            name: e['name'],
+            uid: e['uid'],
+            date: e['date'],
+            bio: e['bio'],
+            profilePic: e['profilePic'],
+            followers: e['followers'],
+            following: e['following'],
+            searchTerms: e['searchTerms'],
+            link: e['link'],
+            tiktok: e['tiktok'],
+            instagram: e['instagram'],
+            profilePicFile: null,
+            plannedDays: e['plannedDays']);
 
   Map<String, Object?> toJson() => {
         'email': email,
@@ -61,5 +63,6 @@ class User {
         'link': link,
         'instagram': instagram,
         'tiktok': tiktok,
+        'plannedDays': plannedDays
       };
 }

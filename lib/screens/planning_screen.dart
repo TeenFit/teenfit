@@ -1,12 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:teenfit/screens/day_scedule_screen.dart';
 
 import '../providers/user.dart';
+import '../providers/userProv.dart';
 
-class PlanningScreen extends StatelessWidget {
+class PlanningScreen extends StatefulWidget {
   final User? userData;
 
   PlanningScreen(this.userData);
+
+  @override
+  State<PlanningScreen> createState() => _PlanningScreenState();
+}
+
+class _PlanningScreenState extends State<PlanningScreen> {
+  User? userData;
+  bool isLoading = false;
+  bool isInit = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (isInit == false) {
+      userData = widget.userData;
+      setState(() {
+        isInit = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +48,7 @@ class PlanningScreen extends StatelessWidget {
           backgroundColor: _theme.secondaryHeaderColor,
           foregroundColor: Colors.white,
           title: Text(
-            'Log Workouts',
+            'Plan Workouts',
             style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -33,161 +56,281 @@ class PlanningScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Container(
-        color: _theme.primaryColor,
-        height: _mediaQuery.size.height - _appBarHieght,
-        width: _mediaQuery.size.width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Divider(
-              thickness: 3,
-              color: Colors.black,
-            ),
-            ListTile(
-              title: Text(
-                'MONDAY',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w900,
-                  fontSize: _mediaQuery.size.height * 0.04,
-                ),
+      body: isLoading
+          ? Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 4,
+                backgroundColor: _theme.shadowColor,
+                color: _theme.secondaryHeaderColor,
               ),
-              onTap: () {
-                Navigator.of(context).pushNamed(DaySchedule.routeName,
-                    arguments: {'day': 'Monday', 'user': userData});
-              },
-            ),
-            Divider(
-              thickness: 3,
-              color: Colors.black,
-            ),
-            ListTile(
-              title: Text(
-                'TUESDAY',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w900,
-                  fontSize: _mediaQuery.size.height * 0.04,
-                ),
+            )
+          : Container(
+              color: _theme.primaryColor,
+              height: _mediaQuery.size.height - _appBarHieght,
+              width: _mediaQuery.size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Divider(
+                    thickness: 3,
+                    color: Colors.black,
+                  ),
+                  ListTile(
+                    title: Text(
+                      'MONDAY',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w900,
+                        fontSize: _mediaQuery.size.height * 0.04,
+                      ),
+                    ),
+                    onTap: () async {
+                      final result = await Navigator.of(context).pushNamed(
+                          DaySchedule.routeName,
+                          arguments: {'day': 'Monday', 'user': userData});
+
+                      if (result == 'fam') {
+                        setState(() {
+                          isLoading = true;
+                        });
+
+                        final userProv =
+                            Provider.of<UserProv>(context, listen: false);
+                        await userProv.fetchAndSetUser(context);
+
+                        setState(() {
+                          userData = userProv.getUser;
+                          isLoading = false;
+                        });
+                      }
+                    },
+                  ),
+                  Divider(
+                    thickness: 3,
+                    color: Colors.black,
+                  ),
+                  ListTile(
+                    title: Text(
+                      'TUESDAY',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w900,
+                        fontSize: _mediaQuery.size.height * 0.04,
+                      ),
+                    ),
+                    onTap: () async {
+                      final result = await Navigator.of(context).pushNamed(
+                          DaySchedule.routeName,
+                          arguments: {'day': 'Tuesday', 'user': userData});
+
+                      if (result == 'fam') {
+                        setState(() {
+                          isLoading = true;
+                        });
+
+                        final userProv =
+                            Provider.of<UserProv>(context, listen: false);
+                        await userProv.fetchAndSetUser(context);
+
+                        setState(() {
+                          userData = userProv.getUser;
+                          isLoading = false;
+                        });
+                      }
+                    },
+                  ),
+                  Divider(
+                    thickness: 3,
+                    color: Colors.black,
+                  ),
+                  ListTile(
+                    title: Text(
+                      'WEDNESDAY',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w900,
+                        fontSize: _mediaQuery.size.height * 0.04,
+                      ),
+                    ),
+                    onTap: () async {
+                      final result = await Navigator.of(context).pushNamed(
+                          DaySchedule.routeName,
+                          arguments: {'day': 'Wednesday', 'user': userData});
+
+                      if (result == 'fam') {
+                        setState(() {
+                          isLoading = true;
+                        });
+
+                        final userProv =
+                            Provider.of<UserProv>(context, listen: false);
+                        await userProv.fetchAndSetUser(context);
+
+                        setState(() {
+                          userData = userProv.getUser;
+                          isLoading = false;
+                        });
+                      }
+                    },
+                  ),
+                  Divider(
+                    thickness: 3,
+                    color: Colors.black,
+                  ),
+                  ListTile(
+                    title: Text(
+                      'THURSDAY',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w900,
+                        fontSize: _mediaQuery.size.height * 0.04,
+                      ),
+                    ),
+                    onTap: () async {
+                      final result = await Navigator.of(context).pushNamed(
+                          DaySchedule.routeName,
+                          arguments: {'day': 'Thursday', 'user': userData});
+
+                      if (result == 'fam') {
+                        setState(() {
+                          isLoading = true;
+                        });
+
+                        final userProv =
+                            Provider.of<UserProv>(context, listen: false);
+                        await userProv.fetchAndSetUser(context);
+
+                        setState(() {
+                          userData = userProv.getUser;
+                          isLoading = false;
+                        });
+                      }
+                    },
+                  ),
+                  Divider(
+                    thickness: 3,
+                    color: Colors.black,
+                  ),
+                  ListTile(
+                    title: Text(
+                      'FRIDAY',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w900,
+                        fontSize: _mediaQuery.size.height * 0.04,
+                      ),
+                    ),
+                    onTap: () async {
+                      final result = await Navigator.of(context).pushNamed(
+                          DaySchedule.routeName,
+                          arguments: {'day': 'Friday', 'user': userData});
+
+                      if (result == 'fam') {
+                        setState(() {
+                          isLoading = true;
+                        });
+
+                        final userProv =
+                            Provider.of<UserProv>(context, listen: false);
+                        await userProv.fetchAndSetUser(context);
+
+                        setState(() {
+                          userData = userProv.getUser;
+                          isLoading = false;
+                        });
+                      }
+                    },
+                  ),
+                  Divider(
+                    thickness: 3,
+                    color: Colors.black,
+                  ),
+                  ListTile(
+                    title: Text(
+                      'SATURDAY',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w900,
+                        fontSize: _mediaQuery.size.height * 0.04,
+                      ),
+                    ),
+                    onTap: () async {
+                      final result = await Navigator.of(context).pushNamed(
+                          DaySchedule.routeName,
+                          arguments: {'day': 'Saturday', 'user': userData});
+
+                      if (result == 'fam') {
+                        setState(() {
+                          isLoading = true;
+                        });
+
+                        final userProv =
+                            Provider.of<UserProv>(context, listen: false);
+                        await userProv.fetchAndSetUser(context);
+
+                        setState(() {
+                          userData = userProv.getUser;
+                          isLoading = false;
+                        });
+                      }
+                    },
+                  ),
+                  Divider(
+                    thickness: 3,
+                    color: Colors.black,
+                  ),
+                  ListTile(
+                    title: Text(
+                      'SUNDAY',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.w900,
+                        fontSize: _mediaQuery.size.height * 0.04,
+                      ),
+                    ),
+                    onTap: () async {
+                      final result = await Navigator.of(context).pushNamed(
+                          DaySchedule.routeName,
+                          arguments: {'day': 'Sunday', 'user': userData});
+
+                      if (result == 'fam') {
+                        setState(() {
+                          isLoading = true;
+                        });
+
+                        final userProv =
+                            Provider.of<UserProv>(context, listen: false);
+                        await userProv.fetchAndSetUser(context);
+
+                        setState(() {
+                          userData = userProv.getUser;
+                          isLoading = false;
+                        });
+                      }
+                    },
+                  ),
+                  Divider(
+                    thickness: 3,
+                    color: Colors.black,
+                  ),
+                ],
               ),
-              onTap: () {
-                Navigator.of(context).pushNamed(DaySchedule.routeName,
-                    arguments: {'day': 'Tuesday', 'user': userData});
-              },
             ),
-            Divider(
-              thickness: 3,
-              color: Colors.black,
-            ),
-            ListTile(
-              title: Text(
-                'WEDNESDAY',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w900,
-                  fontSize: _mediaQuery.size.height * 0.04,
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pushNamed(DaySchedule.routeName,
-                    arguments: {'day': 'Wednesday', 'user': userData});
-              },
-            ),
-            Divider(
-              thickness: 3,
-              color: Colors.black,
-            ),
-            ListTile(
-              title: Text(
-                'THURSDAY',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w900,
-                  fontSize: _mediaQuery.size.height * 0.04,
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pushNamed(DaySchedule.routeName,
-                    arguments: {'day': 'Thursday', 'user': userData});
-              },
-            ),
-            Divider(
-              thickness: 3,
-              color: Colors.black,
-            ),
-            ListTile(
-              title: Text(
-                'FRIDAY',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w900,
-                  fontSize: _mediaQuery.size.height * 0.04,
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pushNamed(DaySchedule.routeName,
-                    arguments: {'day': 'Friday', 'user': userData});
-              },
-            ),
-            Divider(
-              thickness: 3,
-              color: Colors.black,
-            ),
-            ListTile(
-              title: Text(
-                'SATURDAY',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w900,
-                  fontSize: _mediaQuery.size.height * 0.04,
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pushNamed(DaySchedule.routeName,
-                    arguments: {'day': 'Satuday', 'user': userData});
-              },
-            ),
-            Divider(
-              thickness: 3,
-              color: Colors.black,
-            ),
-            ListTile(
-              title: Text(
-                'SUNDAY',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.w900,
-                  fontSize: _mediaQuery.size.height * 0.04,
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).pushNamed(DaySchedule.routeName,
-                    arguments: {'day': 'Sunday', 'user': userData});
-              },
-            ),
-            Divider(
-              thickness: 3,
-              color: Colors.black,
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

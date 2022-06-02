@@ -7,8 +7,10 @@ import '../widgets/workout_tile.dart';
 
 class SearchResultWorkouts extends StatefulWidget {
   final Query<Workout>? queryWorkout;
+  final bool? isPlanning;
+  final String? day;
 
-  SearchResultWorkouts(this.queryWorkout);
+  SearchResultWorkouts(this.queryWorkout, this.isPlanning, this.day);
 
   @override
   State<SearchResultWorkouts> createState() => _SearchResultWorkoutsState();
@@ -92,11 +94,13 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
                   ? Container(
                       height: (_mediaQuery.size.height - _appBarHieght) * 0.22,
                       child: WorkoutTile(
-                        workout,
-                        false,
-                        false,
-                        false,
-                      ),
+                          workout,
+                          false,
+                          false,
+                          false,
+                          widget.isPlanning!,
+                          false,
+                           widget.day,),
                     )
                   : Container(
                       height: (_mediaQuery.size.height - _appBarHieght),

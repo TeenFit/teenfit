@@ -119,14 +119,27 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
           20,
           0,
         ),
-        automaticallyImplyBackButton: isPlanning!,
+        automaticallyImplyBackButton: false,
         autocorrect: true,
+        leadingActions: [
+          isPlanning!
+              ? IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  ),
+                )
+              : SizedBox()
+        ],
         actions: [
           FloatingSearchBarAction.searchToClear(),
           // Padding(
           //   padding: const EdgeInsets.symmetric(horizontal: 5.0),
           //   child:
-          auth.isAuth()
+          auth.isAuth() && isPlanning != true
               ? IconButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed(
@@ -168,6 +181,8 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
         body: FloatingSearchBarScrollNotifier(
           child: SearchResultWorkouts(
             queryWorkout,
+            isPlanning!,
+            day,
           ),
         ),
         onSubmitted: (query) {

@@ -54,7 +54,10 @@ class AdminScreen extends StatelessWidget {
                     workout,
                     false,
                     true,
-                    false
+                    false,
+                    false,
+                    false,
+                    null,
                   )
                 : Container(
                     height: (_mediaQuery.size.height - _appBarHeight),

@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:teenfit/providers/userProv.dart';
 
 import '../Custom/custom_dialog.dart';
 import '../screens/workout_page.dart';
@@ -11,8 +13,12 @@ class WorkoutTile extends StatefulWidget {
   bool isDeletable;
   bool isAdmin;
   bool isGrid;
+  bool isAddPlanning;
+  bool isRemovePlanning;
+  String? day;
 
-  WorkoutTile(this.workout, this.isDeletable, this.isAdmin, this.isGrid);
+  WorkoutTile(this.workout, this.isDeletable, this.isAdmin, this.isGrid,
+      this.isAddPlanning, this.isRemovePlanning, this.day);
 
   @override
   State<WorkoutTile> createState() => _WorkoutTileState();
@@ -171,50 +177,207 @@ class _WorkoutTileState extends State<WorkoutTile> {
                         iconSize: (_mediaQuery.size.height * 0.06)),
                   ],
                 )
-              : Container(
-                  height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
-                  width: double.infinity,
-                  child: InkWell(
-                    onTap: () async {
-                      Navigator.of(context)
-                          .pushNamed(WorkoutPage.routeName, arguments: {
-                        'workoutId': null,
-                        'workout': widget.workout,
-                        'isDeletable': widget.isDeletable,
-                      });
-                    },
-                    child: Center(
-                      child: Container(
-                        width: _mediaQuery.size.width * 0.8,
-                        height:
-                            (_mediaQuery.size.height - _appBarHieght) * 0.25,
-                        alignment: Alignment.center,
-                        child: Text(
-                          widget.workout.workoutName,
-                          maxLines: widget.isGrid ? 3 : 2,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: widget.isGrid
-                                ? (_mediaQuery.size.height - _appBarHieght) *
-                                    0.045
-                                : (_mediaQuery.size.height - _appBarHieght) *
-                                    0.06,
-                            shadows: <Shadow>[
-                              Shadow(
-                                offset: Offset(3.0, 3.0),
-                                blurRadius: 1.0,
-                                color: Color.fromARGB(255, 128, 128, 128),
+              : widget.isAddPlanning
+                  ? Container(
+                      height: (_mediaQuery.size.height - _appBarHieght) * 0.3,
+                      width: double.infinity,
+                      child: InkWell(
+                        onTap: () async {
+                          Navigator.of(context)
+                              .pushNamed(WorkoutPage.routeName, arguments: {
+                            'workoutId': null,
+                            'workout': widget.workout,
+                            'isDeletable': widget.isDeletable,
+                          });
+                        },
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(3.0),
+                              child: Container(
+                                width: _mediaQuery.size.width * 0.6,
+                                height:
+                                    (_mediaQuery.size.height - _appBarHieght) *
+                                        0.25,
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  widget.workout.workoutName,
+                                  maxLines: 2,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: (_mediaQuery.size.height -
+                                            _appBarHieght) *
+                                        0.05,
+                                    shadows: <Shadow>[
+                                      Shadow(
+                                        offset: Offset(3.0, 3.0),
+                                        blurRadius: 1.0,
+                                        color:
+                                            Color.fromARGB(255, 128, 128, 128),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                            ],
-                          ),
+                            ),
+                            Container(
+                              height:
+                                  (_mediaQuery.size.height - _appBarHieght) *
+                                      0.25,
+                              width: _mediaQuery.size.width * 0.2,
+                              child: Center(
+                                child: IconButton(
+                                  onPressed: () async {
+                                    await Provider.of<UserProv>(context,
+                                            listen: false)
+                                        .planWorkout(widget.day!,
+                                            widget.workout.workoutId);
+
+                                    Navigator.of(context).pop('fam');
+                                  },
+                                  alignment: Alignment.center,
+                                  icon: Icon(
+                                    Icons.add_box,
+                                    color: Colors.green,
+                                    size: _mediaQuery.size.width * 0.15,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ),
-                ),
+                    )
+                  : widget.isRemovePlanning
+                      ? Container(
+                          height:
+                              (_mediaQuery.size.height - _appBarHieght) * 0.3,
+                          width: double.infinity,
+                          child: InkWell(
+                            onTap: () async {
+                              Navigator.of(context)
+                                  .pushNamed(WorkoutPage.routeName, arguments: {
+                                'workoutId': null,
+                                'workout': widget.workout,
+                                'isDeletable': widget.isDeletable,
+                              });
+                            },
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Container(
+                                    width: _mediaQuery.size.width * 0.6,
+                                    height: (_mediaQuery.size.height -
+                                            _appBarHieght) *
+                                        0.25,
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      widget.workout.workoutName,
+                                      maxLines: 2,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: (_mediaQuery.size.height -
+                                                _appBarHieght) *
+                                            0.05,
+                                        shadows: <Shadow>[
+                                          Shadow(
+                                            offset: Offset(3.0, 3.0),
+                                            blurRadius: 1.0,
+                                            color: Color.fromARGB(
+                                                255, 128, 128, 128),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: (_mediaQuery.size.height -
+                                          _appBarHieght) *
+                                      0.25,
+                                  width: _mediaQuery.size.width * 0.2,
+                                  child: Center(
+                                    child: IconButton(
+                                      onPressed: () async {
+                                        await Provider.of<UserProv>(context,
+                                                listen: false)
+                                            .removePlannedWorkout(widget.day!,
+                                                widget.workout.workoutId);
+                                        setState(() {});
+                                      },
+                                      alignment: Alignment.center,
+                                      icon: Icon(
+                                        Icons.remove_circle,
+                                        color: Colors.red,
+                                        size: _mediaQuery.size.width * 0.15,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      : Container(
+                          height:
+                              (_mediaQuery.size.height - _appBarHieght) * 0.3,
+                          width: double.infinity,
+                          child: InkWell(
+                            onTap: () async {
+                              Navigator.of(context)
+                                  .pushNamed(WorkoutPage.routeName, arguments: {
+                                'workoutId': null,
+                                'workout': widget.workout,
+                                'isDeletable': widget.isDeletable,
+                              });
+                            },
+                            child: Center(
+                              child: Container(
+                                width: _mediaQuery.size.width * 0.8,
+                                height:
+                                    (_mediaQuery.size.height - _appBarHieght) *
+                                        0.25,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  widget.workout.workoutName,
+                                  maxLines: widget.isGrid ? 3 : 2,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: widget.isGrid
+                                        ? (_mediaQuery.size.height -
+                                                _appBarHieght) *
+                                            0.045
+                                        : (_mediaQuery.size.height -
+                                                _appBarHieght) *
+                                            0.06,
+                                    shadows: <Shadow>[
+                                      Shadow(
+                                        offset: Offset(3.0, 3.0),
+                                        blurRadius: 1.0,
+                                        color:
+                                            Color.fromARGB(255, 128, 128, 128),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
           widget.isAdmin
               ? SizedBox()
               : widget.workout.pending

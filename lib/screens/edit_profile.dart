@@ -41,6 +41,7 @@ class _EditProfileScreenState extends State<EditProfile> {
     void _pickImage(File? image) {
       setState(() {
         user = User(
+          plannedDays: user!.plannedDays,
           email: user!.email,
           name: user!.name,
           uid: user!.uid,
@@ -61,6 +62,7 @@ class _EditProfileScreenState extends State<EditProfile> {
     void _removeImage() {
       setState(() {
         user = User(
+          plannedDays: user!.plannedDays,
           email: user!.email,
           name: user!.name,
           uid: user!.uid,
@@ -99,6 +101,7 @@ class _EditProfileScreenState extends State<EditProfile> {
       _formKey11.currentState!.save();
 
       user = User(
+        plannedDays: user!.plannedDays,
         email: user!.email,
         name: user!.name,
         uid: user!.uid,
@@ -168,6 +171,7 @@ class _EditProfileScreenState extends State<EditProfile> {
             },
             onSaved: (input) {
               user = User(
+                plannedDays: user!.plannedDays,
                 email: user!.email,
                 name: input.toString().trim(),
                 uid: user!.uid,
@@ -215,6 +219,7 @@ class _EditProfileScreenState extends State<EditProfile> {
             },
             onSaved: (input) {
               user = User(
+                plannedDays: user!.plannedDays,
                 email: user!.email,
                 name: user!.name,
                 uid: user!.uid,
@@ -264,6 +269,7 @@ class _EditProfileScreenState extends State<EditProfile> {
             },
             onSaved: (input) {
               user = User(
+                plannedDays: user!.plannedDays,
                 email: user!.email,
                 name: user!.name,
                 uid: user!.uid,
@@ -312,6 +318,7 @@ class _EditProfileScreenState extends State<EditProfile> {
             },
             onSaved: (input) {
               user = User(
+                plannedDays: user!.plannedDays,
                 email: user!.email,
                 name: user!.name,
                 uid: user!.uid,

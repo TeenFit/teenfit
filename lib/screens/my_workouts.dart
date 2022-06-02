@@ -412,7 +412,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                               if (isFollowing! &&
                                                   auth!.isAuth()) {
                                                 userProv
-                                                    .removeFollower(user!.uid!);
+                                                    .unfollow(user!.uid!);
                                               } else if (!isFollowing! &&
                                                   auth!.isAuth()) {
                                                 userProv
@@ -609,6 +609,9 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                   !isView,
                                   false,
                                   true,
+                                  false,
+                                  false,
+                                  null,
                                 )
                               : Container(
                                   height:
