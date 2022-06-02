@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   user,
                 )
               : LoginScreen(),
-          // LoggingScreen(),
+          LoggingScreen(),
           UserScreen(),
         ],
       );
@@ -125,8 +125,8 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
               icon: Icon(Icons.search_rounded), label: 'Find'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-          // BottomNavigationBarItem(
-          //     icon: Icon(Icons.table_chart), label: 'Logging'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.table_chart), label: 'Logging'),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings), label: 'Settings'),
         ],
