@@ -9,6 +9,7 @@ import 'package:teenfit/providers/basic.dart';
 import 'package:teenfit/providers/userProv.dart';
 import 'package:teenfit/screens/admin_screen.dart';
 import 'package:teenfit/screens/day_scedule_screen.dart';
+import 'package:teenfit/screens/discovery_page.dart';
 import 'package:teenfit/screens/edit_profile.dart';
 import 'package:teenfit/screens/home_screen.dart';
 import 'package:teenfit/screens/privacy_policy_screen.dart';
@@ -126,6 +127,7 @@ class _MyAppState extends State<MyApp> {
                 ),
           routes: {
             SignupScreen.routeName: (ctx) => SignupScreen(),
+            DiscoveryPage.routeName: (ctx) => DiscoveryPage(),
             HomeScreen.routeName: (ctx) => HomeScreen(),
             ExerciseScreen.routeName: (ctx) => ExerciseScreen(),
             WorkoutPage.routeName: (ctx) => WorkoutPage(),

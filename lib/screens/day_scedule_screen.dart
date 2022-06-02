@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:teenfit/providers/user.dart';
+import 'package:teenfit/screens/discovery_page.dart';
 
 class DaySchedule extends StatefulWidget {
   static const routeName = '/day-schedule';
@@ -31,7 +32,10 @@ class _DayScheduleState extends State<DaySchedule> {
     return Scaffold(
       backgroundColor: _theme.primaryColor,
       floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(DiscoveryPage.routeName,
+                arguments: {'isPlanning': true, 'day': day});
+          },
           backgroundColor: _theme.secondaryHeaderColor,
           child: Icon(
             Icons.add,

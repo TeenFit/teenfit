@@ -9,12 +9,16 @@ import '../widgets/search_result_workouts.dart';
 import 'create_workout.dart';
 
 class DiscoveryPage extends StatefulWidget {
+  static const routeName = 'discovery-page';
+
   @override
   _DiscoveryPageState createState() => _DiscoveryPageState();
 }
 
 class _DiscoveryPageState extends State<DiscoveryPage> {
-  FloatingSearchBarController controller = FloatingSearchBarController();
+  FloatingSearchBarController controller2 = FloatingSearchBarController();
+  bool? isPlanning;
+  String? day;
 
   static const historyLength = 3;
 
@@ -48,8 +52,15 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
 
   @override
   void didChangeDependencies() async {
+    Map? prov = ModalRoute.of(context)!.settings.arguments as Map?;
     if (this.mounted) {
       setState(() {
+        isPlanning = prov == null || prov['isPlanning'] == null
+            ? false
+            : prov['isPlanning'];
+
+        day = prov == null || prov['day'] == null ? null : prov['day'];
+
         filteredSearchHistory = filterSearchTerms(null);
       });
     }
@@ -85,7 +96,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
 
   @override
   void dispose() {
-    controller.dispose();
+    controller2.dispose();
     super.dispose();
   }
 
@@ -107,7 +118,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
         20,
         0,
       ),
-      automaticallyImplyBackButton: false,
+      automaticallyImplyBackButton: isPlanning!,
       autocorrect: true,
       actions: [
         FloatingSearchBarAction.searchToClear(),
@@ -121,7 +132,6 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                     AddWorkoutScreen.routeName,
                     arguments: {
                       'workout': Workout(
-            
                         views: 0,
                         searchTerms: [],
                         failed: false,
@@ -153,7 +163,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
         style: Theme.of(context).textTheme.headline6,
       ),
       hint: 'Search...',
-      controller: controller,
+      controller: controller2,
       body: FloatingSearchBarScrollNotifier(
         child: SearchResultWorkouts(
           queryWorkout,
@@ -186,7 +196,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                           Workout.fromJson(snapshot.data()!),
                       toFirestore: (worKout, _) => worKout.toJson());
         });
-        controller.close();
+        controller2.close();
       },
       builder: (context, transition) {
         return ClipRRect(
@@ -196,7 +206,8 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
             elevation: 0,
             child: Builder(
               builder: (context) {
-                if (filteredSearchHistory.isEmpty && controller.query.isEmpty) {
+                if (filteredSearchHistory.isEmpty &&
+                    controller2.query.isEmpty) {
                   return Column(
                     children: [
                       Container(
@@ -237,7 +248,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                                         toFirestore: (worKout, _) =>
                                             worKout.toJson());
 
-                                controller.close();
+                                controller2.close();
                               });
                             },
                             child: Row(
@@ -262,18 +273,18 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                   );
                 } else if (filteredSearchHistory.isEmpty) {
                   return ListTile(
-                    title: Text(controller.query),
+                    title: Text(controller2.query),
                     leading: const Icon(Icons.search),
                     onTap: () {
                       setState(() {
-                        addSearchTerm(controller.query);
-                        selectedTerm = controller.query;
+                        addSearchTerm(controller2.query);
+                        selectedTerm = controller2.query;
                         queryWorkout = FirebaseFirestore.instance
                             .collection('/workouts')
                             .where('pending', isEqualTo: false)
                             .where('failed', isEqualTo: false)
                             .where('searchTerms',
-                                arrayContains: controller.query
+                                arrayContains: controller2.query
                                     .toString()
                                     .trim()
                                     .toLowerCase())
@@ -283,7 +294,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                                     Workout.fromJson(snapshot.data()!),
                                 toFirestore: (worKout, _) => worKout.toJson());
                       });
-                      controller.close();
+                      controller2.close();
                     },
                   );
                 } else {
@@ -328,7 +339,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                                           toFirestore: (worKout, _) =>
                                               worKout.toJson());
                                 });
-                                controller.close();
+                                controller2.close();
                               },
                             ),
                           )
@@ -355,7 +366,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
                                         toFirestore: (worKout, _) =>
                                             worKout.toJson());
                               });
-                              controller.close();
+                              controller2.close();
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,

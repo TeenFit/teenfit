@@ -117,41 +117,48 @@ class _HomeScreenState extends State<HomeScreen> {
     final _mediaQuery = MediaQuery.of(context);
     final _theme = Theme.of(context);
 
-    return Scaffold(
-      backgroundColor: _theme.primaryColor,
-      body: pageView,
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search_rounded), label: 'Find'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.table_chart), label: 'Planning'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings), label: 'Settings'),
-        ],
-        elevation: 5,
-        currentIndex: _selectedIndex,
-        selectedItemColor: _theme.secondaryHeaderColor,
-        unselectedItemColor: Colors.grey,
-        showSelectedLabels: true,
-        showUnselectedLabels: false,
-        backgroundColor: _theme.primaryColor,
-        selectedLabelStyle: TextStyle(
-          color: _theme.cardColor,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'PTSans',
-          letterSpacing: 1,
-        ),
-        unselectedLabelStyle: TextStyle(
-          color: _theme.cardColor,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'PTSans',
-          letterSpacing: 1,
-        ),
-        onTap: onTap,
-        iconSize: _mediaQuery.size.height * 0.05,
-      ),
-    );
+    return isInit == false
+        ? Container(
+            color: _theme.primaryColor,
+            height: _mediaQuery.size.height,
+            width: _mediaQuery.size.width,
+          )
+        : Scaffold(
+            backgroundColor: _theme.primaryColor,
+            body: pageView,
+            bottomNavigationBar: BottomNavigationBar(
+              items: [
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.search_rounded), label: 'Find'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.person), label: 'Profile'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.table_chart), label: 'Planning'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.settings), label: 'Settings'),
+              ],
+              elevation: 5,
+              currentIndex: _selectedIndex,
+              selectedItemColor: _theme.secondaryHeaderColor,
+              unselectedItemColor: Colors.grey,
+              showSelectedLabels: true,
+              showUnselectedLabels: false,
+              backgroundColor: _theme.primaryColor,
+              selectedLabelStyle: TextStyle(
+                color: _theme.cardColor,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'PTSans',
+                letterSpacing: 1,
+              ),
+              unselectedLabelStyle: TextStyle(
+                color: _theme.cardColor,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'PTSans',
+                letterSpacing: 1,
+              ),
+              onTap: onTap,
+              iconSize: _mediaQuery.size.height * 0.05,
+            ),
+          );
   }
 }
