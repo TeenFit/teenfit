@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:teenfit/providers/userProv.dart';
+import 'package:teenfit/screens/day_scedule_screen.dart';
 
 import '../Custom/custom_dialog.dart';
 import '../screens/workout_page.dart';
@@ -314,7 +315,6 @@ class _WorkoutTileState extends State<WorkoutTile> {
                                                 listen: false)
                                             .removePlannedWorkout(widget.day!,
                                                 widget.workout.workoutId);
-                                        setState(() {});
                                       },
                                       alignment: Alignment.center,
                                       icon: Icon(

@@ -516,6 +516,8 @@ class UserProv with ChangeNotifier {
         .update({
       'plannedDays.$day': FieldValue.arrayUnion([workoutId])
     });
+
+    notifyListeners();
   }
 
   Future<void> removePlannedWorkout(String day, String workoutId) async {
@@ -525,5 +527,6 @@ class UserProv with ChangeNotifier {
         .update({
       'plannedDays.$day': FieldValue.arrayRemove([workoutId])
     });
+    notifyListeners();
   }
 }
