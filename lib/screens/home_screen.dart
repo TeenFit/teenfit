@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   user,
                 )
               : LoginScreen(),
-          PlanningScreen(user),
+          isAuth == true ? PlanningScreen(user) : LoginScreen(),
           UserScreen(),
         ],
       );
@@ -119,9 +119,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return isInit == false
         ? Container(
-            color: _theme.primaryColor,
+            color: _theme.secondaryHeaderColor,
             height: _mediaQuery.size.height,
             width: _mediaQuery.size.width,
+            child: Center(
+                child: Container(
+                    width: _mediaQuery.size.width * 0.5,
+                    height: _mediaQuery.size.width * 0.5,
+                    child: Image.asset(
+                      'assets/images/teen_fit_logo_white_withpeople.png',
+                      fit: BoxFit.contain,
+                    ))),
           )
         : Scaffold(
             backgroundColor: _theme.primaryColor,
