@@ -22,15 +22,30 @@ class _DayScheduleState extends State<DaySchedule> {
   bool isInit = false;
   bool isLoading = false;
   var workoutQuery;
+  List provWorkouts = [];
 
   void setWorkoutQuery(List provWorkouts) {
-    workoutQuery = FirebaseFirestore.instance
-        .collection('/workouts')
-        .where('workoutId', whereIn: provWorkouts)
-        .orderBy('date', descending: true)
-        .withConverter<Workout>(
-            fromFirestore: (snapshot, _) => Workout.fromJson(snapshot.data()!),
-            toFirestore: (workouT, _) => workouT.toJson());
+    if (provWorkouts.isNotEmpty) {
+      workoutQuery = FirebaseFirestore.instance
+          .collection('/workouts')
+          .where('workoutId', whereIn: provWorkouts)
+          .orderBy('date', descending: true)
+          .withConverter<Workout>(
+              fromFirestore: (snapshot, _) =>
+                  Workout.fromJson(snapshot.data()!),
+              toFirestore: (workouT, _) => workouT.toJson());
+    }
+  }
+
+  Future<void> removePlannedWorkout(String daY, String workouTId) async {
+    await Provider.of<UserProv>(context, listen: false)
+        .removePlannedWorkout(daY, workouTId);
+
+    provWorkouts.removeWhere((element) => element == workouTId);
+
+    setWorkoutQuery(provWorkouts);
+
+    setState(() {});
   }
 
   @override
@@ -41,7 +56,7 @@ class _DayScheduleState extends State<DaySchedule> {
     day = prov['day'];
     user = prov['user'];
 
-    List provWorkouts = user!.plannedDays![day];
+    provWorkouts = user!.plannedDays![day];
 
     if (isInit == false && provWorkouts.isNotEmpty) {
       setWorkoutQuery(provWorkouts);
@@ -77,7 +92,9 @@ class _DayScheduleState extends State<DaySchedule> {
 
               user = userProv.getUser;
 
-              setWorkoutQuery(user!.plannedDays![day]);
+              provWorkouts = user!.plannedDays![day];
+
+              setWorkoutQuery(provWorkouts);
 
               setState(() {
                 isLoading = false;
@@ -162,7 +179,7 @@ class _DayScheduleState extends State<DaySchedule> {
                                   false,
                                   false,
                                   false,
-                                  true,
+                                  removePlannedWorkout,
                                   day,
                                 ),
                               )

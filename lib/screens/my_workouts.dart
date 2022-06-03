@@ -610,7 +610,7 @@ class _CreateWorkoutState extends State<CreateWorkout> {
                                   false,
                                   true,
                                   false,
-                                  false,
+                                  null,
                                   null,
                                 )
                               : Container(

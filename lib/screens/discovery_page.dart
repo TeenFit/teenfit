@@ -19,6 +19,7 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
   FloatingSearchBarController controller2 = FloatingSearchBarController();
   bool? isPlanning;
   String? day;
+  
 
   static const historyLength = 3;
 

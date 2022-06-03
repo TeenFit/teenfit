@@ -99,7 +99,7 @@ class _SearchResultWorkoutsState extends State<SearchResultWorkouts> {
                           false,
                           false,
                           widget.isPlanning!,
-                          false,
+                          null,
                            widget.day,),
                     )
                   : Container(
