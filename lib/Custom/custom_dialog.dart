@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:in_app_review/in_app_review.dart';
-import '../screens/exercise_screen.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
 
