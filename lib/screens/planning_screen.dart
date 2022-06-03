@@ -62,8 +62,8 @@ class _PlanningScreenState extends State<PlanningScreen> {
     super.didChangeDependencies();
 
     if (isInit == false) {
-      if( Provider.of<Auth>(context, listen: false).isAdmin() == false) {
-       _initAd();
+      if (Provider.of<Auth>(context, listen: false).isAdmin() == false) {
+        _initAd();
       }
       userData = widget.userData;
       setState(() {
@@ -152,24 +152,24 @@ class _PlanningScreenState extends State<PlanningScreen> {
                         // show ads here
                         if (_isAdLoaded) {
                           await _interstitialAd.show();
-                          final result = await Navigator.of(context).pushNamed(
-                              DaySchedule.routeName,
-                              arguments: {'day': 'Monday', 'user': userData});
+                        }
+                        final result = await Navigator.of(context).pushNamed(
+                            DaySchedule.routeName,
+                            arguments: {'day': 'Monday', 'user': userData});
 
-                          if (result == 'fam') {
-                            setState(() {
-                              isLoading = true;
-                            });
+                        if (result == 'fam') {
+                          setState(() {
+                            isLoading = true;
+                          });
 
-                            final userProv =
-                                Provider.of<UserProv>(context, listen: false);
-                            await userProv.fetchAndSetUser(context);
+                          final userProv =
+                              Provider.of<UserProv>(context, listen: false);
+                          await userProv.fetchAndSetUser(context);
 
-                            setState(() {
-                              userData = userProv.getUser;
-                              isLoading = false;
-                            });
-                          }
+                          setState(() {
+                            userData = userProv.getUser;
+                            isLoading = false;
+                          });
                         }
                       }
                     },
@@ -190,23 +190,48 @@ class _PlanningScreenState extends State<PlanningScreen> {
                       ),
                     ),
                     onTap: () async {
-                      final result = await Navigator.of(context).pushNamed(
-                          DaySchedule.routeName,
-                          arguments: {'day': 'Tuesday', 'user': userData});
+                      if (Provider.of<Auth>(context, listen: false).isAdmin()) {
+                        final result = await Navigator.of(context).pushNamed(
+                            DaySchedule.routeName,
+                            arguments: {'day': 'Tuesday', 'user': userData});
 
-                      if (result == 'fam') {
-                        setState(() {
-                          isLoading = true;
-                        });
+                        if (result == 'fam') {
+                          setState(() {
+                            isLoading = true;
+                          });
 
-                        final userProv =
-                            Provider.of<UserProv>(context, listen: false);
-                        await userProv.fetchAndSetUser(context);
+                          final userProv =
+                              Provider.of<UserProv>(context, listen: false);
+                          await userProv.fetchAndSetUser(context);
 
-                        setState(() {
-                          userData = userProv.getUser;
-                          isLoading = false;
-                        });
+                          setState(() {
+                            userData = userProv.getUser;
+                            isLoading = false;
+                          });
+                        }
+                      } else {
+                        // show ads here
+                        if (_isAdLoaded) {
+                          await _interstitialAd.show();
+                        }
+                        final result = await Navigator.of(context).pushNamed(
+                            DaySchedule.routeName,
+                            arguments: {'day': 'Tuesday', 'user': userData});
+
+                        if (result == 'fam') {
+                          setState(() {
+                            isLoading = true;
+                          });
+
+                          final userProv =
+                              Provider.of<UserProv>(context, listen: false);
+                          await userProv.fetchAndSetUser(context);
+
+                          setState(() {
+                            userData = userProv.getUser;
+                            isLoading = false;
+                          });
+                        }
                       }
                     },
                   ),
@@ -226,23 +251,48 @@ class _PlanningScreenState extends State<PlanningScreen> {
                       ),
                     ),
                     onTap: () async {
-                      final result = await Navigator.of(context).pushNamed(
-                          DaySchedule.routeName,
-                          arguments: {'day': 'Wednesday', 'user': userData});
+                      if (Provider.of<Auth>(context, listen: false).isAdmin()) {
+                        final result = await Navigator.of(context).pushNamed(
+                            DaySchedule.routeName,
+                            arguments: {'day': 'Wednesday', 'user': userData});
 
-                      if (result == 'fam') {
-                        setState(() {
-                          isLoading = true;
-                        });
+                        if (result == 'fam') {
+                          setState(() {
+                            isLoading = true;
+                          });
 
-                        final userProv =
-                            Provider.of<UserProv>(context, listen: false);
-                        await userProv.fetchAndSetUser(context);
+                          final userProv =
+                              Provider.of<UserProv>(context, listen: false);
+                          await userProv.fetchAndSetUser(context);
 
-                        setState(() {
-                          userData = userProv.getUser;
-                          isLoading = false;
-                        });
+                          setState(() {
+                            userData = userProv.getUser;
+                            isLoading = false;
+                          });
+                        }
+                      } else {
+                        // show ads here
+                        if (_isAdLoaded) {
+                          await _interstitialAd.show();
+                        }
+                        final result = await Navigator.of(context).pushNamed(
+                            DaySchedule.routeName,
+                            arguments: {'day': 'Wednesday', 'user': userData});
+
+                        if (result == 'fam') {
+                          setState(() {
+                            isLoading = true;
+                          });
+
+                          final userProv =
+                              Provider.of<UserProv>(context, listen: false);
+                          await userProv.fetchAndSetUser(context);
+
+                          setState(() {
+                            userData = userProv.getUser;
+                            isLoading = false;
+                          });
+                        }
                       }
                     },
                   ),
@@ -262,23 +312,48 @@ class _PlanningScreenState extends State<PlanningScreen> {
                       ),
                     ),
                     onTap: () async {
-                      final result = await Navigator.of(context).pushNamed(
-                          DaySchedule.routeName,
-                          arguments: {'day': 'Thursday', 'user': userData});
+                      if (Provider.of<Auth>(context, listen: false).isAdmin()) {
+                        final result = await Navigator.of(context).pushNamed(
+                            DaySchedule.routeName,
+                            arguments: {'day': 'Thursday', 'user': userData});
 
-                      if (result == 'fam') {
-                        setState(() {
-                          isLoading = true;
-                        });
+                        if (result == 'fam') {
+                          setState(() {
+                            isLoading = true;
+                          });
 
-                        final userProv =
-                            Provider.of<UserProv>(context, listen: false);
-                        await userProv.fetchAndSetUser(context);
+                          final userProv =
+                              Provider.of<UserProv>(context, listen: false);
+                          await userProv.fetchAndSetUser(context);
 
-                        setState(() {
-                          userData = userProv.getUser;
-                          isLoading = false;
-                        });
+                          setState(() {
+                            userData = userProv.getUser;
+                            isLoading = false;
+                          });
+                        }
+                      } else {
+                        // show ads here
+                        if (_isAdLoaded) {
+                          await _interstitialAd.show();
+                        }
+                        final result = await Navigator.of(context).pushNamed(
+                            DaySchedule.routeName,
+                            arguments: {'day': 'Thursday', 'user': userData});
+
+                        if (result == 'fam') {
+                          setState(() {
+                            isLoading = true;
+                          });
+
+                          final userProv =
+                              Provider.of<UserProv>(context, listen: false);
+                          await userProv.fetchAndSetUser(context);
+
+                          setState(() {
+                            userData = userProv.getUser;
+                            isLoading = false;
+                          });
+                        }
                       }
                     },
                   ),
@@ -298,23 +373,48 @@ class _PlanningScreenState extends State<PlanningScreen> {
                       ),
                     ),
                     onTap: () async {
-                      final result = await Navigator.of(context).pushNamed(
-                          DaySchedule.routeName,
-                          arguments: {'day': 'Friday', 'user': userData});
+                      if (Provider.of<Auth>(context, listen: false).isAdmin()) {
+                        final result = await Navigator.of(context).pushNamed(
+                            DaySchedule.routeName,
+                            arguments: {'day': 'Firday', 'user': userData});
 
-                      if (result == 'fam') {
-                        setState(() {
-                          isLoading = true;
-                        });
+                        if (result == 'fam') {
+                          setState(() {
+                            isLoading = true;
+                          });
 
-                        final userProv =
-                            Provider.of<UserProv>(context, listen: false);
-                        await userProv.fetchAndSetUser(context);
+                          final userProv =
+                              Provider.of<UserProv>(context, listen: false);
+                          await userProv.fetchAndSetUser(context);
 
-                        setState(() {
-                          userData = userProv.getUser;
-                          isLoading = false;
-                        });
+                          setState(() {
+                            userData = userProv.getUser;
+                            isLoading = false;
+                          });
+                        }
+                      } else {
+                        // show ads here
+                        if (_isAdLoaded) {
+                          await _interstitialAd.show();
+                        }
+                        final result = await Navigator.of(context).pushNamed(
+                            DaySchedule.routeName,
+                            arguments: {'day': 'Friday', 'user': userData});
+
+                        if (result == 'fam') {
+                          setState(() {
+                            isLoading = true;
+                          });
+
+                          final userProv =
+                              Provider.of<UserProv>(context, listen: false);
+                          await userProv.fetchAndSetUser(context);
+
+                          setState(() {
+                            userData = userProv.getUser;
+                            isLoading = false;
+                          });
+                        }
                       }
                     },
                   ),
@@ -334,23 +434,48 @@ class _PlanningScreenState extends State<PlanningScreen> {
                       ),
                     ),
                     onTap: () async {
-                      final result = await Navigator.of(context).pushNamed(
-                          DaySchedule.routeName,
-                          arguments: {'day': 'Saturday', 'user': userData});
+                      if (Provider.of<Auth>(context, listen: false).isAdmin()) {
+                        final result = await Navigator.of(context).pushNamed(
+                            DaySchedule.routeName,
+                            arguments: {'day': 'Saturday', 'user': userData});
 
-                      if (result == 'fam') {
-                        setState(() {
-                          isLoading = true;
-                        });
+                        if (result == 'fam') {
+                          setState(() {
+                            isLoading = true;
+                          });
 
-                        final userProv =
-                            Provider.of<UserProv>(context, listen: false);
-                        await userProv.fetchAndSetUser(context);
+                          final userProv =
+                              Provider.of<UserProv>(context, listen: false);
+                          await userProv.fetchAndSetUser(context);
 
-                        setState(() {
-                          userData = userProv.getUser;
-                          isLoading = false;
-                        });
+                          setState(() {
+                            userData = userProv.getUser;
+                            isLoading = false;
+                          });
+                        }
+                      } else {
+                        // show ads here
+                        if (_isAdLoaded) {
+                          await _interstitialAd.show();
+                        }
+                        final result = await Navigator.of(context).pushNamed(
+                            DaySchedule.routeName,
+                            arguments: {'day': 'Saturday', 'user': userData});
+
+                        if (result == 'fam') {
+                          setState(() {
+                            isLoading = true;
+                          });
+
+                          final userProv =
+                              Provider.of<UserProv>(context, listen: false);
+                          await userProv.fetchAndSetUser(context);
+
+                          setState(() {
+                            userData = userProv.getUser;
+                            isLoading = false;
+                          });
+                        }
                       }
                     },
                   ),
@@ -370,23 +495,48 @@ class _PlanningScreenState extends State<PlanningScreen> {
                       ),
                     ),
                     onTap: () async {
-                      final result = await Navigator.of(context).pushNamed(
-                          DaySchedule.routeName,
-                          arguments: {'day': 'Sunday', 'user': userData});
+                      if (Provider.of<Auth>(context, listen: false).isAdmin()) {
+                        final result = await Navigator.of(context).pushNamed(
+                            DaySchedule.routeName,
+                            arguments: {'day': 'Sunday', 'user': userData});
 
-                      if (result == 'fam') {
-                        setState(() {
-                          isLoading = true;
-                        });
+                        if (result == 'fam') {
+                          setState(() {
+                            isLoading = true;
+                          });
 
-                        final userProv =
-                            Provider.of<UserProv>(context, listen: false);
-                        await userProv.fetchAndSetUser(context);
+                          final userProv =
+                              Provider.of<UserProv>(context, listen: false);
+                          await userProv.fetchAndSetUser(context);
 
-                        setState(() {
-                          userData = userProv.getUser;
-                          isLoading = false;
-                        });
+                          setState(() {
+                            userData = userProv.getUser;
+                            isLoading = false;
+                          });
+                        }
+                      } else {
+                        // show ads here
+                        if (_isAdLoaded) {
+                          await _interstitialAd.show();
+                        }
+                        final result = await Navigator.of(context).pushNamed(
+                            DaySchedule.routeName,
+                            arguments: {'day': 'Sunday', 'user': userData});
+
+                        if (result == 'fam') {
+                          setState(() {
+                            isLoading = true;
+                          });
+
+                          final userProv =
+                              Provider.of<UserProv>(context, listen: false);
+                          await userProv.fetchAndSetUser(context);
+
+                          setState(() {
+                            userData = userProv.getUser;
+                            isLoading = false;
+                          });
+                        }
                       }
                     },
                   ),
