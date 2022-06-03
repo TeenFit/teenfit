@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:teenfit/providers/adState.dart';
 import 'package:teenfit/providers/basic.dart';
 import 'package:teenfit/providers/userProv.dart';
 import 'package:teenfit/screens/admin_screen.dart';
@@ -16,7 +18,6 @@ import 'package:teenfit/screens/privacy_policy_screen.dart';
 import 'package:teenfit/screens/user_screen.dart';
 import 'package:teenfit/screens/view_follow.dart';
 import 'package:teenfit/screens/workout_page.dart';
-
 import './screens/auth/reset_pass_screen.dart';
 import './providers/auth.dart';
 import './screens/auth/error_screen.dart';
@@ -29,6 +30,7 @@ import './providers/workouts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await MobileAds.instance.initialize();
   await Firebase.initializeApp();
   await FirebaseMessaging.instance.setAutoInitEnabled(true);
   SystemChrome.setPreferredOrientations([
@@ -78,6 +80,9 @@ class _MyAppState extends State<MyApp> {
       },
       child: MultiProvider(
         providers: [
+          ChangeNotifierProvider<AdState>(
+            create: (ctx) => AdState(),
+          ),
           ChangeNotifierProvider<BasicCommands>(
             create: (ctx) => BasicCommands(),
           ),

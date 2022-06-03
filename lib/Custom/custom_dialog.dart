@@ -125,34 +125,6 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                         inAppReview.requestReview();
                                       }
                                     } else if (widget.dialogOrganizerId ==
-                                        '/exercise-screen') {
-                                      setState(() {
-                                        isLoading = true;
-                                      });
-
-                                      Navigator.of(context).pushNamed(
-                                          ExerciseScreen.routeName,
-                                          arguments: widget.arguments);
-
-                                      // if (Provider.of<Auth>(context,
-                                      //         listen: false)
-                                      //     .isAdmin()) {
-                                      //   Navigator.of(context).pushNamed(
-                                      //       ExerciseScreen.routeName,
-                                      //       arguments: widget.arguments);
-                                      // } else {
-                                      //   //show ads here
-                                      //   Navigator.of(context).pushNamed(
-                                      //       ExerciseScreen.routeName,
-                                      //       arguments: widget.arguments);
-                                      // }
-
-                                      if (this.mounted) {
-                                        setState(() {
-                                          isLoading = false;
-                                        });
-                                      }
-                                    } else if (widget.dialogOrganizerId ==
                                         'pop') {
                                       setState(() {
                                         isLoading = true;

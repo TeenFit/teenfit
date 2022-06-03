@@ -1,15 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'package:provider/provider.dart';
 import 'package:teenfit/Custom/custom_dialog.dart';
+import 'package:teenfit/providers/adState.dart';
 import 'package:teenfit/providers/user.dart';
 import 'package:teenfit/providers/userProv.dart';
 import 'package:teenfit/screens/exercise_screen.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:teenfit/screens/my_workouts.dart';
 
+import '../providers/auth.dart';
 import '../providers/exercise.dart';
 import '../providers/workouts.dart';
 import '../widgets/exercise_tiles.dart';
@@ -24,17 +27,56 @@ class WorkoutPage extends StatefulWidget {
 }
 
 class _WorkoutPageState extends State<WorkoutPage> {
+  bool isLoading = false;
   bool isInit = false;
   bool isDeletable = false;
   User? user;
   var prov;
   Workout? workout;
+  late InterstitialAd _interstitialAd;
+  bool _isAdLoaded = false;
+
+  void onAdLoaded(InterstitialAd ad) {
+    print('AdLoaded');
+    _interstitialAd = ad;
+    _isAdLoaded = true;
+
+    _interstitialAd.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (InterstitialAd ad) =>
+          print('onAdShowedFullScreenContent.'),
+      onAdDismissedFullScreenContent: (InterstitialAd ad) {
+        print('onAdDismissedFullScreenContent.');
+        _interstitialAd.dispose();
+      },
+      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+        print('onAdFailedToShowFullScreenContent');
+        _interstitialAd.dispose();
+      },
+    );
+  }
+
+  Future<void> _initAd() async {
+    await InterstitialAd.load(
+      adUnitId: Provider.of<AdState>(context, listen: false).interstitialAdUnit,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: onAdLoaded,
+        onAdFailedToLoad: (error) {
+          print('InterstitialAd failed to load: $error');
+        },
+      ),
+    );
+  }
 
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
 
     if (isInit == false) {
+      if (Provider.of<Auth>(context, listen: false).isAdmin() == false) {
+        await _initAd();
+      }
+
       prov = ModalRoute.of(context)!.settings.arguments as Map;
 
       var workoutId = prov['workoutId'];
@@ -46,7 +88,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
             .get();
 
         workout = Workout(
- 
           views: workoutDoc.data()!['views'],
           searchTerms: workoutDoc.data()!['searchTerms'],
           failed: workoutDoc.data()!['failed'],
@@ -382,25 +423,51 @@ class _WorkoutPageState extends State<WorkoutPage> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               primary: _theme.secondaryHeaderColor),
-                          child: Text(
-                            'Start Workout',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'PTSans',
-                                fontSize: _mediaQuery.size.height * 0.035),
-                          ),
+                          child: isLoading
+                              ? Center(
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 4,
+                                    backgroundColor: _theme.shadowColor,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : Text(
+                                  'Start Workout',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'PTSans',
+                                      fontSize:
+                                          _mediaQuery.size.height * 0.035),
+                                ),
                           onPressed: () async {
+                            setState(() {
+                              isLoading = true;
+                            });
+
                             await Provider.of<Workouts>(context, listen: false)
                                 .incrementView(workout!.creatorId,
                                     workout!.workoutId, context);
-                            showDialog(
-                                context: context,
-                                builder: (ctx) => CustomDialogBox(
-                                    'Are You Ready?',
-                                    'Grab a water bottle, warmup, lets do this',
-                                    'assets/images/water_bottle.jpg',
+
+                            if (Provider.of<Auth>(context, listen: false)
+                                .isAdmin()) {
+                              Navigator.of(context).pushNamed(
+                                  ExerciseScreen.routeName,
+                                  arguments: workout!.exercises);
+                            } else {
+                              // show ads here
+                              if (_isAdLoaded) {
+                                await _interstitialAd.show();
+                                Navigator.of(context).pushNamed(
                                     ExerciseScreen.routeName,
-                                    workout!.exercises));
+                                    arguments: workout!.exercises);
+                              }
+                            }
+
+                            if (this.mounted) {
+                              setState(() {
+                                isLoading = false;
+                              });
+                            }
                           },
                         ),
                       ),
