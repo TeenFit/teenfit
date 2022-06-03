@@ -288,41 +288,105 @@ class UserProv with ChangeNotifier {
     //   },
     //   {
     //     'email': 'sammyk378@icloud.com',
-    //     'uid': 'vH2slwy8LEZUl1Gyly6RGLqJoK52',},
-    //  {
-    //  'email': 'alexhughes2006@icloud.com',
-    //  'uid': 'JrpgkvdF70PhQLIo2bVpb90Rpev1',
-    //  },
-    // {
-    //  'email': 'chefcasidy@gmail.com',
-    //  'uid': 'DAY0y52iNXT1TqRU2JQ7oc8IdED2',
-    //  },
+    //     'uid': 'vH2slwy8LEZUl1Gyly6RGLqJoK52',
+    //   },
+    //   {
+    //     'email': 'alexhughes2006@icloud.com',
+    //     'uid': 'JrpgkvdF70PhQLIo2bVpb90Rpev1',
+    //   },
+    //   {
+    //     'email': 'chefcasidy@gmail.com',
+    //     'uid': 'DAY0y52iNXT1TqRU2JQ7oc8IdED2',
+    //   },
+    //   {
+    //     'email': 'chefcasidy@gmail.com',
+    //     'uid': 'DAY0y52iNXT1TqRU2JQ7oc8IdED2',
+    //   },
+    //   {
+    //     'email': 'connormeako@gmail.com',
+    //     'uid': 'pCyLuqXdOucPbAotKMaoYvfcFwg2',
+    //   },
+    //   {
+    //     'email': 'carterweddind2019@cagmail.com',
+    //     'uid': 'cTlHuSFeE7c87jPAsGwQ0A429fp2',
+    //   },
+    //   {
+    //     'email': 'mmill143@uwyo.edu',
+    //     'uid': 'Rq5ByiLIUVev8ryiHqTOZAHIPYD2',
+    //   },
+    //   {
+    //     'email': 'erica1291@icloud.com',
+    //     'uid': 'h4ZgzHDnlEMSe3OQtoo0Eg49yfi2',
+    //   },
+    //   {
+    //     'email': 'lheitman4197@gmail.com',
+    //     'uid': 'aJ3zgqVB5lhIwyx3kOwLEnSbrB03',
+    //   },
+    //   {
+    //     'email': 'cervantesheather1506@gmail.com',
+    //     'uid': 'H7NNTVLG7kZYpfgBTRfvinxJtMI3',
+    //   },
+    //   {
+    //     'email': 'monkeymorgan04@icloud.com',
+    //     'uid': 'lipbhKqCLDQP6DlqxKNADN4mh763',
+    //   },
+    //   {
+    //     'email': 'jazzymill06@gmail.com',
+    //     'uid': 'fdMne3AUtbVD1D6CCJv7IZM9Qgj2',
+    //   },
+    //   {
+    //     'email': 'jennafaz323@gmail.com',
+    //     'uid': 'bzihIKqiAWYdrFzLciIougq8Fvf2',
+    //   },
+    //   {
+    //     'email': 'divyk3456@gmail.com',
+    //     'uid': '2GLwgS4PiSPhBsUoOuWNtL9pHOQ2',
+    //   },
+    //   {
+    //     'email': 'missarissa0213@icloud.com',
+    //     'uid': 'rd2DreSUP1XBg7jvQBdvNTBzBQo1',
+    //   },
+    //   {
+    //     'email': 'sumairtaher@gmail.com',
+    //     'uid': '1rbNtSyPpIVzNr34APk0DGJXhtl2',
+    //   },
+    //   {
+    //     'email': 'dylan@mmdfamily.com',
+    //     'uid': 'yf8o27qfaVfmZ7z2Vp06WhQaKT03',
+    //   },
     // ];
 
     // usersList.forEach((element) async {
+    //   var userDoc = await FirebaseFirestore.instance
+    //       .collection('/users')
+    //       .doc(element['uid'])
+    //       .get();
+
     //   await FirebaseFirestore.instance
     //       .collection('/users')
     //       .doc(element['uid'])
     //       .set({
     //     'email': element['email'],
-    //     'name':
-    //         'user_${element['uid']} ${element['email'].substring(0, element['email'].indexOf('@')).toLowerCase()}'
-    //             .substring(0, 30),
-    //     'bio': null,
-    //     'profilePic': null,
-    //     'following': null,
-    //     'followers': null,
+    //     'name': userDoc.data()!['name'],
+    //     'bio': userDoc.data()!['bio'],
+    //     'profilePic': userDoc.data()!['profilePic'],
+    //     'following': userDoc.data()!['following'],
+    //     'followers': userDoc.data()!['followers'],
     //     'uid': '${element['uid']}',
-    //     'date': DateTime.now().toString(),
-    //     'searchTerms': [
-    //       'user_${element['uid']} ${element['email'].substring(0, element['email'].indexOf('@')).toLowerCase()}'
-    //           .substring(0, 30),
-    //       '${element['uid']} ${element['email'].substring(0, element['email'].indexOf('@')).toLowerCase()}'
-    //           .substring(0, 30)
-    //     ],
-    //     'link': null,
-    //     'instagram': null,
-    //     'tiktok': null,
+    //     'date': userDoc.data()!['date'],
+    //     'searchTerms': userDoc.data()!['searchTerms'],
+    //     'link': userDoc.data()!['link'],
+    //     'instagram': userDoc.data()!['instagram'],
+    //     'tiktok': userDoc.data()!['tiktok'],
+    //     'plannedDays': {
+    //       'Monday': [],
+    //       'Tuesday': [],
+    //       'Wednesday': [],
+    //       'Thursday': [],
+    //       'Friday': [],
+    //       'Saturday': [],
+    //       'Sunday': [],
+    //     },
     //   });
     // });
 
