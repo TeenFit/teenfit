@@ -457,10 +457,10 @@ class _WorkoutPageState extends State<WorkoutPage> {
                               // show ads here
                               if (_isAdLoaded) {
                                 await _interstitialAd.show();
-                                Navigator.of(context).pushNamed(
-                                    ExerciseScreen.routeName,
-                                    arguments: workout!.exercises);
                               }
+                              Navigator.of(context).pushNamed(
+                                  ExerciseScreen.routeName,
+                                  arguments: workout!.exercises);
                             }
 
                             if (this.mounted) {
