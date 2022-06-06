@@ -116,8 +116,7 @@ class _PlanningScreenState extends State<PlanningScreen> {
                       } else {
                         // show ads here
                         if (adProv.isAdLoaded == true) {
-                          await adProv.interstitialAd
-                              .show();
+                          await adProv.interstitialAd.show();
                         }
                         final result = await Navigator.of(context).pushNamed(
                             DaySchedule.routeName,
@@ -177,9 +176,8 @@ class _PlanningScreenState extends State<PlanningScreen> {
                         }
                       } else {
                         // show ads here
-                      if (adProv.isAdLoaded == true) {
-                          await adProv.interstitialAd
-                              .show();
+                        if (adProv.isAdLoaded == true) {
+                          await adProv.interstitialAd.show();
                         }
                         final result = await Navigator.of(context).pushNamed(
                             DaySchedule.routeName,
@@ -240,8 +238,7 @@ class _PlanningScreenState extends State<PlanningScreen> {
                       } else {
                         // show ads here
                         if (adProv.isAdLoaded == true) {
-                          await adProv.interstitialAd
-                              .show();
+                          await adProv.interstitialAd.show();
                         }
                         final result = await Navigator.of(context).pushNamed(
                             DaySchedule.routeName,
@@ -301,9 +298,8 @@ class _PlanningScreenState extends State<PlanningScreen> {
                         }
                       } else {
                         // show ads here
-                      if (adProv.isAdLoaded == true) {
-                          await adProv.interstitialAd
-                              .show();
+                        if (adProv.isAdLoaded == true) {
+                          await adProv.interstitialAd.show();
                         }
                         final result = await Navigator.of(context).pushNamed(
                             DaySchedule.routeName,
@@ -363,9 +359,8 @@ class _PlanningScreenState extends State<PlanningScreen> {
                         }
                       } else {
                         // show ads here
-                       if (adProv.isAdLoaded == true) {
-                          await adProv.interstitialAd
-                              .show();
+                        if (adProv.isAdLoaded == true) {
+                          await adProv.interstitialAd.show();
                         }
                         final result = await Navigator.of(context).pushNamed(
                             DaySchedule.routeName,
@@ -425,9 +420,8 @@ class _PlanningScreenState extends State<PlanningScreen> {
                         }
                       } else {
                         // show ads here
-                       if (adProv.isAdLoaded == true) {
-                          await adProv.interstitialAd
-                              .show();
+                        if (adProv.isAdLoaded == true) {
+                          await adProv.interstitialAd.show();
                         }
                         final result = await Navigator.of(context).pushNamed(
                             DaySchedule.routeName,
@@ -487,9 +481,8 @@ class _PlanningScreenState extends State<PlanningScreen> {
                         }
                       } else {
                         // show ads here
-                       if (adProv.isAdLoaded == true) {
-                          await adProv.interstitialAd
-                              .show();
+                        if (adProv.isAdLoaded == true) {
+                          await adProv.interstitialAd.show();
                         }
                         final result = await Navigator.of(context).pushNamed(
                             DaySchedule.routeName,

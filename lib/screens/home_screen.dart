@@ -79,10 +79,6 @@ class _HomeScreenState extends State<HomeScreen> {
             .fetchAndSetUser(context);
       }
 
-      if (!auth.isAdmin()) {
-        await Provider.of<AdState>(context, listen: false).initAd(context);
-      }
-
       User? user = Provider.of<UserProv>(context, listen: false).getUser;
 
       pageView = PageView(

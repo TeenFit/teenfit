@@ -46,10 +46,12 @@ class AdState with ChangeNotifier {
       onAdShowedFullScreenContent: (InterstitialAd ad) =>
           print('onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
+        _isAdLoaded = false;
         print('onAdDismissedFullScreenContent.');
         _interstitialAd.dispose();
       },
       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+        _isAdLoaded = false;
         print('onAdFailedToShowFullScreenContent');
         _interstitialAd.dispose();
       },

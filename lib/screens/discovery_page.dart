@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
+import '../providers/adState.dart';
 import '../providers/auth.dart';
 import '../providers/workout.dart';
 import '../widgets/search_result_workouts.dart';
@@ -19,7 +20,6 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
   FloatingSearchBarController controller2 = FloatingSearchBarController();
   bool? isPlanning;
   String? day;
-  
 
   static const historyLength = 3;
 
@@ -54,7 +54,14 @@ class _DiscoveryPageState extends State<DiscoveryPage> {
   @override
   void didChangeDependencies() async {
     Map? prov = ModalRoute.of(context)!.settings.arguments as Map?;
+    var adProv = Provider.of<AdState>(context);
+
     if (this.mounted) {
+      if (!Provider.of<Auth>(context, listen: false).isAdmin() &&
+          !adProv.isAdLoaded) {
+        adProv.initAd(context);
+      }
+
       setState(() {
         isPlanning = prov == null || prov['isPlanning'] == null
             ? false
