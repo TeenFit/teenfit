@@ -22,50 +22,15 @@ class _PlanningScreenState extends State<PlanningScreen> {
   bool isLoading = false;
   bool isInit = false;
   late InterstitialAd _interstitialAd;
-  bool _isAdLoaded = false;
-
-  void onAdLoaded(InterstitialAd ad) {
-    print('AdLoaded');
-    _interstitialAd = ad;
-    _isAdLoaded = true;
-
-    _interstitialAd.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (InterstitialAd ad) =>
-          print('onAdShowedFullScreenContent.'),
-      onAdDismissedFullScreenContent: (InterstitialAd ad) {
-        print('onAdDismissedFullScreenContent.');
-        _interstitialAd.dispose();
-      },
-      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-        print('onAdFailedToShowFullScreenContent');
-        _interstitialAd.dispose();
-      },
-    );
-  }
-
-  Future<void> _initAd() async {
-    await InterstitialAd.load(
-      adUnitId:
-          Provider.of<AdState>(context, listen: false).interstitialAdUnit2,
-      request: AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: onAdLoaded,
-        onAdFailedToLoad: (error) {
-          print('InterstitialAd failed to load: $error');
-        },
-      ),
-    );
-  }
+  var adProv;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     if (isInit == false) {
-      if (Provider.of<Auth>(context, listen: false).isAdmin() == false) {
-        _initAd();
-      }
       userData = widget.userData;
+      adProv = Provider.of<AdState>(context);
       setState(() {
         isInit = true;
       });
@@ -150,8 +115,9 @@ class _PlanningScreenState extends State<PlanningScreen> {
                         }
                       } else {
                         // show ads here
-                        if (_isAdLoaded) {
-                          await _interstitialAd.show();
+                        if (adProv.isAdLoaded == true) {
+                          await adProv.interstitialAd
+                              .show();
                         }
                         final result = await Navigator.of(context).pushNamed(
                             DaySchedule.routeName,
@@ -211,8 +177,9 @@ class _PlanningScreenState extends State<PlanningScreen> {
                         }
                       } else {
                         // show ads here
-                        if (_isAdLoaded) {
-                          await _interstitialAd.show();
+                      if (adProv.isAdLoaded == true) {
+                          await adProv.interstitialAd
+                              .show();
                         }
                         final result = await Navigator.of(context).pushNamed(
                             DaySchedule.routeName,
@@ -272,8 +239,9 @@ class _PlanningScreenState extends State<PlanningScreen> {
                         }
                       } else {
                         // show ads here
-                        if (_isAdLoaded) {
-                          await _interstitialAd.show();
+                        if (adProv.isAdLoaded == true) {
+                          await adProv.interstitialAd
+                              .show();
                         }
                         final result = await Navigator.of(context).pushNamed(
                             DaySchedule.routeName,
@@ -333,8 +301,9 @@ class _PlanningScreenState extends State<PlanningScreen> {
                         }
                       } else {
                         // show ads here
-                        if (_isAdLoaded) {
-                          await _interstitialAd.show();
+                      if (adProv.isAdLoaded == true) {
+                          await adProv.interstitialAd
+                              .show();
                         }
                         final result = await Navigator.of(context).pushNamed(
                             DaySchedule.routeName,
@@ -394,8 +363,9 @@ class _PlanningScreenState extends State<PlanningScreen> {
                         }
                       } else {
                         // show ads here
-                        if (_isAdLoaded) {
-                          await _interstitialAd.show();
+                       if (adProv.isAdLoaded == true) {
+                          await adProv.interstitialAd
+                              .show();
                         }
                         final result = await Navigator.of(context).pushNamed(
                             DaySchedule.routeName,
@@ -455,8 +425,9 @@ class _PlanningScreenState extends State<PlanningScreen> {
                         }
                       } else {
                         // show ads here
-                        if (_isAdLoaded) {
-                          await _interstitialAd.show();
+                       if (adProv.isAdLoaded == true) {
+                          await adProv.interstitialAd
+                              .show();
                         }
                         final result = await Navigator.of(context).pushNamed(
                             DaySchedule.routeName,
@@ -516,8 +487,9 @@ class _PlanningScreenState extends State<PlanningScreen> {
                         }
                       } else {
                         // show ads here
-                        if (_isAdLoaded) {
-                          await _interstitialAd.show();
+                       if (adProv.isAdLoaded == true) {
+                          await adProv.interstitialAd
+                              .show();
                         }
                         final result = await Navigator.of(context).pushNamed(
                             DaySchedule.routeName,

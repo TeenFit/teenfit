@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:teenfit/providers/adState.dart';
 import 'package:teenfit/providers/auth.dart';
 import 'package:teenfit/providers/user.dart';
 import 'package:teenfit/providers/userProv.dart';
@@ -71,11 +72,15 @@ class _HomeScreenState extends State<HomeScreen> {
         await setupInteractedMessage();
       }
 
-      bool isAuth = Provider.of<Auth>(context, listen: false).isAuth();
+      var auth = Provider.of<Auth>(context, listen: false);
 
-      if (isAuth) {
+      if (auth.isAuth()) {
         await Provider.of<UserProv>(context, listen: false)
             .fetchAndSetUser(context);
+      }
+
+      if (!auth.isAdmin()) {
+        await Provider.of<AdState>(context, listen: false).initAd(context);
       }
 
       User? user = Provider.of<UserProv>(context, listen: false).getUser;
@@ -84,13 +89,13 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: pageController,
         children: [
           DiscoveryPage(),
-          isAuth == true
+          auth.isAuth() == true
               ? CreateWorkout(
                   false,
                   user,
                 )
               : LoginScreen(),
-          isAuth == true ? PlanningScreen(user) : LoginScreen(),
+          auth.isAuth() == true ? PlanningScreen(user) : LoginScreen(),
           UserScreen(),
         ],
       );
