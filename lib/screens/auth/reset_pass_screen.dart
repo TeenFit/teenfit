@@ -15,7 +15,7 @@ class ResetPasswordScreen extends StatefulWidget {
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   String? _email;
   bool _isLoading = false;
-  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formkey100 = GlobalKey<FormState>();
 
   void _showToast(String msg) {
     Fluttertoast.showToast(
@@ -29,10 +29,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   }
 
   Future<void> _submit() async {
-    if (!_formkey.currentState!.validate()) {
+    if (!_formkey100.currentState!.validate()) {
       return;
     }
-    _formkey.currentState!.save();
+    _formkey100.currentState!.save();
     setState(() {
       _isLoading = true;
     });
@@ -94,7 +94,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           return null;
         },
         onSaved: (input) {
-          _email = input.toString();
+          _email = input.toString().trim();
         },
       );
     }
@@ -115,7 +115,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             height: (_mediaQuery.size.height),
             width: _mediaQuery.size.width,
             child: Form(
-              key: _formkey,
+              key: _formkey100,
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
