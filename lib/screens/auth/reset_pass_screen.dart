@@ -39,7 +39,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     try {
       await Provider.of<Auth>(context, listen: false)
           .passwordReset(_email!)
-          .then((_) => _showToast('Password Reset Email Sent'))
+          .then((_) => _showToast('Email Sent (Check Spam)'))
           .then((_) => Navigator.of(context).pop());
     } catch (e) {
       _showToast('Could Not Send Reset Password');
