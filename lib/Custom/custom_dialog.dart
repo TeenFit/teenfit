@@ -116,13 +116,13 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                                       }
                                     } else if (widget.dialogOrganizerId ==
                                         '/workout-page-first') {
+                                      if (await inAppReview.isAvailable()) {
+                                        await inAppReview.requestReview();
+                                      }
+
                                       Navigator.of(context).popUntil(
                                           ModalRoute.withName(
                                               WorkoutPage.routeName));
-
-                                      if (await inAppReview.isAvailable()) {
-                                        inAppReview.requestReview();
-                                      }
                                     } else if (widget.dialogOrganizerId ==
                                         'pop') {
                                       setState(() {
